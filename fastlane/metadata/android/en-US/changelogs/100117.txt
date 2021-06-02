@@ -1,4 +1,4 @@
-**InviZible Pro beta 1.1.7**
+**Fulldive VPN beta 1.1.7**
 * Tor apps selection improvements.
 * Updated obfs4proxy (fixed meek_lite bridge).
 * Updated snowflake.

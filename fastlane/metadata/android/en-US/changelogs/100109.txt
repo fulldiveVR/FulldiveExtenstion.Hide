@@ -1,4 +1,4 @@
-**InviZible Pro beta 1.0.9**
+**Fulldive VPN beta 1.0.9**
 * Updated snowflake.
 * Updated German language
 * Changed method of defining own uid to fix backup and restore using third party applications.

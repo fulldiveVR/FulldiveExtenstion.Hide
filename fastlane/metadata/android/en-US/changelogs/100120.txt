@@ -1,4 +1,4 @@
-**InviZible Pro beta 1.2.0**
+**Fulldive VPN beta 1.2.0**
 * Update Tor to version 4.5.3.
 * Updated DNSCrypt to version 2.0.45.
 * Updated DNSCrypt default configuration.

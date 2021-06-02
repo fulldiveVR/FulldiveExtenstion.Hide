@@ -155,6 +155,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+        <provider
+            android:name=".extensionapps.VpnExtensionAPI"
+            android:authorities="com.fulldive.tordnscrypt"
+            android:exported="true" />
     </application>
-
 </manifest>

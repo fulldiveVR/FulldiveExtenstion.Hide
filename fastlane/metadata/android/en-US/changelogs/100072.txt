@@ -1,4 +1,4 @@
-**InviZible Pro beta 0.7.2**
+**Fulldive VPN beta 0.7.2**
 * Added Indonesian language.
 * Updated languages.
 * Added Edit configuration files options.

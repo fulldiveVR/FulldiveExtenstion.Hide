@@ -1,4 +1,4 @@
-**InviZible Pro beta 0.6.2**
+**Fulldive VPN beta 0.6.2**
 * Implemented "Refresh rules" option to control iptables rules update on every connectivity change.
 * Implemented clear module folder option for Tor and I2P.
 * Changed Tor configuration to stay active longer in the background.

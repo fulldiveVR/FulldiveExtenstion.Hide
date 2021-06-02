@@ -1,4 +1,4 @@
-**InviZible Pro beta 0.7.5**
+**Fulldive VPN beta 0.7.5**
 * Updated DNSCrypt to version 2.0.42.
 * Updated DNSCrypt configuration file.
 * Updated snowflake binary.

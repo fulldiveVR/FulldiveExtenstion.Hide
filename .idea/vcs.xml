@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/PurpleI2PBuildScript" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TorBuildScript" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/android-filepicker" vcs="Git" />
+  </component>
+</project>

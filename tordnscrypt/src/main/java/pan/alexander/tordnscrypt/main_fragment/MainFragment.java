@@ -1,30 +1,32 @@
 package pan.alexander.tordnscrypt.main_fragment;
 
 /*
-    This file is part of InviZible Pro.
+    This file is part of Fulldive VPN.
 
-    InviZible Pro is free software: you can redistribute it and/or modify
+    Fulldive VPN is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    InviZible Pro is distributed in the hope that it will be useful,
+    Fulldive VPN is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
+    along with Fulldive VPN.  If not, see <http://www.gnu.org/licenses/>.
 
     Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spanned;
 import android.util.Log;
@@ -55,6 +57,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.TopFragment;
+import pan.alexander.tordnscrypt.extensionapps.VpnExtensionAPI;
 import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentPresenter;
 import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentReceiver;
 import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentView;
@@ -75,6 +78,7 @@ import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
 import static pan.alexander.tordnscrypt.TopFragment.ITPDVersion;
 import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
 import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
+import static pan.alexander.tordnscrypt.extensionapps.VpnExtensionAPIKt.getContentUri;
 import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
@@ -274,11 +278,15 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
 
     @Override
     public void onClick(View v) {
-
         Context context = getActivity();
         if (context == null) {
             return;
         }
+
+        ContentValues values = new ContentValues();
+        values.put(VpnExtensionAPI.WORK_STATUS, modulesStatus.getTorState().toString());
+        Uri uri = getContentUri(VpnExtensionAPI.WORK_STATUS, VpnExtensionAPI.STRING_TYPE);
+        context.getContentResolver().insert(uri, values);
 
         if (dnsCryptFragmentPresenter == null
                 || torFragmentPresenter == null

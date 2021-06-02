@@ -1,4 +1,4 @@
-**InviZible Pro beta 1.2.2**
+**Fulldive VPN beta 1.2.2**
 * Improved app update feature.
 * Updated Purple I2P.
 * Updated Purple I2P default configuration.

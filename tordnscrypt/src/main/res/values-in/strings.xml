@@ -42,8 +42,8 @@
     <!-- "Saya setuju" are more closed with this -->
     <string name="agree">"Setuju"</string>
     <string name="disagree">"Tolak"</string>
-    <string name="message_no_root_used">"Anda dapat menggunakan InviZible Pro dengan modus VPN lokal, atau aplikasi proxy atau lokal VPN dengan fitur mode proxy."</string>
-    <string name="message_no_root_used_kitkat">"Anda bisa menggunakan InviZible Pro dengan aplikasi dengan proxy atau Lokal VPN dengan fitur di proxy mode."</string>
+    <string name="message_no_root_used">"Anda dapat menggunakan Fulldive VPN dengan modus VPN lokal, atau aplikasi proxy atau lokal VPN dengan fitur mode proxy."</string>
+    <string name="message_no_root_used_kitkat">"Anda bisa menggunakan Fulldive VPN dengan aplikasi dengan proxy atau Lokal VPN dengan fitur di proxy mode."</string>
     <string name="write_file_error">"Galat menyimpan berkas!"</string>
     <string name="drawer_menu_commonSettings">"Setelan Umum"</string>
     <string name="drawer_menu_DNSSettings">"Setelan DNSCrypt"</string>
@@ -115,7 +115,7 @@
 
     <!-- Pemutakhiran otomatis -->
     <string name="pref_fast_auto_update">"Perbarui Otomatis"</string>
-    <string name="pref_fast_auto_update_summ">"Cek InviZible Pro dan perbarui modul setiap hari"</string>
+    <string name="pref_fast_auto_update_summ">"Cek Fulldive VPN dan perbarui modul setiap hari"</string>
     <string name="pref_fast_chek_update">"Periksa Pembaruan"</string>
     <string name="pref_fast_chek_update_summ">"Periksa jika versi baru sudah tersedia"</string>
     <string name="pref_fast_through_tor_update">"Perbarui secara ketat melalui Tor"</string>
@@ -134,10 +134,10 @@
     <string name="pref_common_wakelock_summ">"Perlindungan tambahan untuk modus tanpa Root agar aplikasi tidak dimatikan sistem Android. Fitur ini akan menguras daya baterai"</string>
     <string name="pref_common_show_help">"Pesan bantuan"</string>
     <string name="pref_common_show_help_summ">"Selalu Tampilkan pesan Bantuan"</string>
-    <string name="pref_common_notification_helper">"Silahkan hapus InviZible Pro dari daftar pengoptimalan baterai Android
+    <string name="pref_common_notification_helper">"Silahkan hapus Fulldive VPN dari daftar pengoptimalan baterai Android
 	Jika tidak, Sistem Android akan mematikan DNSCrypt, Tor, atau I2P kapanpun. 
-Sistem Operasi seperti MIUI membutuhkan langkah khusus untuk menghapus InviZible Pro dari daftar Pengoptimalan Baterai (misal. Pengaturan-&gt;Baterai-&gt;Penghemat Daya-&gt;Pilih InviZible Pro-&gt;Tidak ada batasan Latar Belakang,
-	Pengaturan-&gt;ijinkan mulai otomatis dan Tekan Tahan Tombol Home-&gt;Buka Recent App-&gt;Kemudian swipe kebawah InviZible Pro
+Sistem Operasi seperti MIUI membutuhkan langkah khusus untuk menghapus Fulldive VPN dari daftar Pengoptimalan Baterai (misal. Pengaturan-&gt;Baterai-&gt;Penghemat Daya-&gt;Pilih Fulldive VPN-&gt;Tidak ada batasan Latar Belakang,
+	Pengaturan-&gt;ijinkan mulai otomatis dan Tekan Tahan Tombol Home-&gt;Buka Recent App-&gt;Kemudian swipe kebawah Fulldive VPN
 	dan klik kunci pada memori)."</string>
     <string name="pref_common_use_busybox">"Pilih BusyBox"</string>
     <string name="pref_common_categ_hotspot">"Experimental-HOTSPOT"</string>
@@ -318,8 +318,8 @@ Periksa pengaturan perangkat!"</string>
     <string name="helper_itpd_stopped">"Sepertinya I2P dimatikan Sistem Android.
 Koneksi internet anda telah pulih. 
 Periksa pengaturan perangkat!"</string>
-    <string name="helper_dnscrypt_no_internet">"Sepertinya InviZible Pro TIDAK BISA terhubung ke INTERNET.
-        Silakan periksa aturan FIREWALL, lalu Setujui perijinan koneksi untuk aplikasi InviZible Pro dan setujui akses ROOT."</string>
+    <string name="helper_dnscrypt_no_internet">"Sepertinya Fulldive VPN TIDAK BISA terhubung ke INTERNET.
+        Silakan periksa aturan FIREWALL, lalu Setujui perijinan koneksi untuk aplikasi Fulldive VPN dan setujui akses ROOT."</string>
     <string name="helper_tor_use_bridges">"Sepertinya Tor TIDAK BISA terhubung ke INTERNET.
         Penyedia jasa Internet anda mungkin memblokir koneksi Tor. Aktifkan fitur Bridge di Tor dengan cara tekan Menu -&gt; Pengaturan Cepat -&gt; Bridge"</string>
     <string name="action_mode_child_lock">"Child Lock"</string>
@@ -337,12 +337,12 @@ Periksa pengaturan perangkat!"</string>
     <string name="update_core_yes">"Memperbarui"</string>
     <string name="update_core_no">"Nanti"</string>
     <string name="update_core_not_show_again">"Jangan tanya lagi"</string>
-    <string name="update_core_restart">"Silakan mulai kembali InviZible Pro dan ijinkan seluruh proses pemasangan! Jika anda memakai HOTSPOT, silakan atur ulang pengaturan HOTSPOTnya"</string>
+    <string name="update_core_restart">"Silakan mulai kembali Fulldive VPN dan ijinkan seluruh proses pemasangan! Jika anda memakai HOTSPOT, silakan atur ulang pengaturan HOTSPOTnya"</string>
     <string name="update_notification">"Mengunduh berkas"</string>
     <string name="update_interrupt_notification">"Unduhan dihentikan"</string>
     <string name="cancel_download">"BATALKAN UNDUHAN"</string>
     <string name="update_new_version">"Versi baru:"</string>
-    <string name="update_ipro_has_apdate">"Pembaruan InviZible Pro tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
+    <string name="update_ipro_has_apdate">"Pembaruan Fulldive VPN tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
     <string name="update_dnscrypt_has_apdate">"Pembaruan DNSCrypt tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
     <string name="update_tor_has_apdate">"Pembaruan Tor tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
     <string name="update_itpd_has_apdate">"Pembaruan Purple I2P tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
@@ -357,15 +357,14 @@ Periksa pengaturan perangkat!"</string>
     <string name="update_installed">"Pembaruan telah diinstal."</string>
     <string name="update_over_three_activations">"Sepertinya Anda sudah mengaktifkan 3 salinan InviZible dengan kode ini. Jika salah, silakan hubungi pengembang."</string>
     <string name="update_wrong_code">"Sepertinya kode PRO Anda salah. Silakan hubungi pengembang."</string>
-    <string name="update_over_five_times">"Anda memeriksa pembaruan InviZible Pro lebih dari 5 pada hari ini. Silakan coba lagi nanti."</string>
-    <string name="verifier_error">"Hati-hati! Versi Invizible Pro yang anda pakai tidak resmi!"</string>
+    <string name="update_over_five_times">"Anda memeriksa pembaruan Fulldive VPN lebih dari 5 pada hari ini. Silakan coba lagi nanti."</string>
     <string name="only_for_pro">"Hanya untuk versi PRO"</string>
     <string name="donate">"Donasi"</string>
     <string name="donate_project">"Proyek Pro InviZible membutuhkan bantuan Anda. Silakan kunjungi halaman donasi atau masukkan kode registrasi yang anda terima."</string>
     <string name="donate_button">"Kunjungi"</string>
     <string name="enter_code_button">"Masukkan kode"</string>
     <string name="enter_code">"Masukkan kode"</string>
-    <string name="thanks_for_donate">"Pengembang Invizible Pro menyampaikan apresiasi kepada anda atas dukungannya. Apakah anda ingin meningkatkan ke versi PRO? Proses pembaruan akan berjalan di latar belakang"</string>
+    <string name="thanks_for_donate">"Pengembang Fulldive VPN menyampaikan apresiasi kepada anda atas dukungannya. Apakah anda ingin meningkatkan ke versi PRO? Proses pembaruan akan berjalan di latar belakang"</string>
     <string name="pref_dnscrypt_relays_summ">"Alamat remote daftar relai tersedia"</string>
     <string name="vpn_mode_active">"Modus VPN aktif"</string>
     <string name="vpn_mode_off">"Modus VPN tidak aktif"</string>
@@ -375,7 +374,7 @@ Periksa pengaturan perangkat!"</string>
     <string name="main_fragment_protect_dns">"Lindungi DNS dengan DNSCRYPT"</string>
     <string name="main_fragment_access_i2p">"Akses ke situs I2P dengan Purple I2P"</string>
     <string name="ask_force_close_title">"Perhatian"</string>
-    <string name="ask_force_close_text">"InviZible Pro tidak dapat memulai %s! Silakan periksa pengaturan %s atau coba tutup paksa aplikasi.
+    <string name="ask_force_close_text">"Fulldive VPN tidak dapat memulai %s! Silakan periksa pengaturan %s atau coba tutup paksa aplikasi.
         Jika masih belum berfungsi, silakan mulai ulang perangkat anda."</string>
     <string name="ask_force_close_btn">"Tutup paksa"</string>
     <string name="add_custom_server_title">"Tambahkan server khusus"</string>
@@ -384,15 +383,15 @@ Periksa pengaturan perangkat!"</string>
     <string name="buy_premium_gp">"Proyek Pro InviZible membutuhkan bantuan Anda. Tekan OK untuk membeli fitur premium."</string>
     <string name="wrong_purchase_signature_gp">"Maaf, tetapi tidak mungkin untuk mengkonfirmasi pembelian Anda. Anda akan menerima pengembalian dana setelah 3 hari."</string>
     <string name="only_premium_feature">"Sayangnya, fitur ini hanya tersedia untuk versi premium."</string>
-    <string name="agreement_text">"        \tTerima kasih telah memilih InviZible Pro. Saya harap ini bermanfaat untuk privasi Anda dan kenyamanan penggunaan Internet.
+    <string name="agreement_text">"        \tTerima kasih telah memilih Fulldive VPN. Saya harap ini bermanfaat untuk privasi Anda dan kenyamanan penggunaan Internet.
         
-\tInviZible Pro menyisipkan Tor, DNSCrypt dan Purple I2P sebagai modul.
+\tFulldive VPN menyisipkan Tor, DNSCrypt dan Purple I2P sebagai modul.
         
-\tInviZible Pro dapat menggunakan hak akses root, jika perangkat anda mempunyai akses root, atau dengan VPN lokal untuk mengirimkan lalu lintas Internet ke jaringan Tor, DNSCrypt, dan I2P.
+\tFulldive VPN dapat menggunakan hak akses root, jika perangkat anda mempunyai akses root, atau dengan VPN lokal untuk mengirimkan lalu lintas Internet ke jaringan Tor, DNSCrypt, dan I2P.
         
 \tProduk ini diproduksi secara independen dari perangkat lunak Tor®, DNSCrypt, Purple I2P dan tidak memberikan jaminan dari The Above Projects mengenai kualitas, kesesuaian, atau apa pun.
         
-\tInviZible Pro didistribusikan dengan harapan akan bermanfaat, tetapi TANPA GARANSI APA PUN; bahkan tanpa jaminan tersirat DAGANG atau KECOCOKAN UNTUK TUJUAN TERTENTU.
+\tFulldive VPN didistribusikan dengan harapan akan bermanfaat, tetapi TANPA GARANSI APA PUN; bahkan tanpa jaminan tersirat DAGANG atau KECOCOKAN UNTUK TUJUAN TERTENTU.
         
 \tHak cipta © 2019-2021
         
@@ -413,7 +412,7 @@ Periksa pengaturan perangkat!"</string>
     <string name="pref_tor_edit_conf">"Sunting tor.conf langsung"</string>
     <string name="pref_itpd_edit_conf">"Sunting i2pd.conf langsung"</string>
     <string name="pref_itpd_edit_tunnels">"Sunting tunnels.conf langsung"</string>
-    <string name="config_changes_dialog_message">"Apakah anda ingin menyimpan perubahan setelan? Hal ini akan merusak kinerja Invizible Pro"</string>
+    <string name="config_changes_dialog_message">"Apakah anda ingin menyimpan perubahan setelan? Hal ini akan merusak kinerja Fulldive VPN"</string>
     <string name="pref_dnscrypt_ipv4_servers_summ">"Pakai server yang dapat dijangkau lewat IPv4"</string>
     <string name="pref_dnscrypt_ipv6_servers_summ">"Pakai server yang dapat dijangkau lewat IPv6"</string>
     <string name="pref_dnscrypt_import_forwarding_rules">"Muat aturan forwading"</string>
@@ -449,7 +448,7 @@ Periksa pengaturan perangkat!"</string>
     <string name="pref_common_arp_block_internet_summ">"Koneksi internet akan diblokir ketika ada serangan"</string>
     <string name="pref_common_proxy_categ">"Proxy"</string>
     <string name="pref_common_proxy">"Pakai proxy socks5"</string>
-    <string name="pref_common_proxy_summ">"Invizible Pro akan mengalihkan semua koneksi melalui proxy SOCKS5"</string>
+    <string name="pref_common_proxy_summ">"Fulldive VPN akan mengalihkan semua koneksi melalui proxy SOCKS5"</string>
     <string name="pref_common_compatibility_mode">"Modus kompabilitas"</string>
     <string name="pref_common_compatibility_mode_summ">"Hidupkan fitur ini jika perangkat anda terpasang ROM kustom dan koneksi hilang ketika menekan tombol START"</string>
     <string name="pref_common_shell_control">"Hidupkan skrip kontrol"</string>
@@ -532,5 +531,5 @@ Matikan dan hidupkan wifi beberapa saat, hotspot Wi-Fi yang anda akses saat ini 
     <string name="btnResetSettings">"Reset Settings"</string>
     <string name="backupSaved">"Backup saved"</string>
     <string name="backupRestored">"Backup restored"</string>
-    <string name="thanks_for_donate_gp">"Pengembang Invizible Pro menyampaikan apresiasi kepada anda atas dukungannya."</string>
+    <string name="thanks_for_donate_gp">"Pengembang Fulldive VPN menyampaikan apresiasi kepada anda atas dukungannya."</string>
 </resources>

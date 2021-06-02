@@ -42,10 +42,10 @@
     <string name="disagree">"Eu discordo"</string>
 
     <!-- Fuzzy -->
-    <string name="message_no_root_used">"Você pode usar o InviZible Pro com o modo VPN local, ou aplicativos com seu próprio proxy ou uma função de VPN local no modo proxy."</string>
+    <string name="message_no_root_used">"Você pode usar o Fulldive VPN com o modo VPN local, ou aplicativos com seu próprio proxy ou uma função de VPN local no modo proxy."</string>
 
     <!-- Fuzzy -->
-    <string name="message_no_root_used_kitkat">"Você pode usar o InviZible Pro com aplicativos com seu próprio proxy ou uma função de VPN local no modo proxy."</string>
+    <string name="message_no_root_used_kitkat">"Você pode usar o Fulldive VPN com aplicativos com seu próprio proxy ou uma função de VPN local no modo proxy."</string>
     <string name="write_file_error">"Salvar aquivo de Erro!"</string>
     <string name="drawer_menu_commonSettings">"Configurações comuns"</string>
     <string name="drawer_menu_DNSSettings">"Configurações do DNSCrypt"</string>
@@ -107,7 +107,7 @@
     <string name="pref_fast_block_http_summ">"Negar conexões para o http porta 80"</string>
     <string name="pref_fast_categ_update">"Atualizações"</string>
     <string name="pref_fast_auto_update">"Atualização automática"</string>
-    <string name="pref_fast_auto_update_summ">"Verificar por atualizações do InviZible Pro e de seus módulos diariamente"</string>
+    <string name="pref_fast_auto_update_summ">"Verificar por atualizações do Fulldive VPN e de seus módulos diariamente"</string>
     <string name="pref_fast_chek_update">"Verificar atualizações"</string>
     <string name="pref_fast_chek_update_summ">"Verificar se alguma nova versão está disponível agora"</string>
     <string name="pref_fast_through_tor_update">"Atualizar estritamente através do Tor"</string>
@@ -127,7 +127,7 @@
     <string name="pref_common_show_help">"Mensagens de ajuda"</string>
     <string name="pref_common_show_help_summ">"Sempre mostrar mensagens de ajuda"</string>
     <string name="pref_common_notification_helper">"
-Por favor, exclua o InviZible Pro da optimização da bateria de androd. Caso contrário, o andróide parará DNSCrypt, Tor ou I2P em qualquer momento. Em sistemas especiais, como o MIUI, foram necessários alguns passos adicionais, para excluir o InviZible Pro da optimização da bateria (por exemplo, Apps e notificações-&gt;Acesso especial a apps-&gt;Otimização de Bateria). Selecione InviZible Pro e o remova da otimização de bateria."</string>
+Por favor, exclua o Fulldive VPN da optimização da bateria de androd. Caso contrário, o andróide parará DNSCrypt, Tor ou I2P em qualquer momento. Em sistemas especiais, como o MIUI, foram necessários alguns passos adicionais, para excluir o Fulldive VPN da optimização da bateria (por exemplo, Apps e notificações-&gt;Acesso especial a apps-&gt;Otimização de Bateria). Selecione Fulldive VPN e o remova da otimização de bateria."</string>
     <string name="pref_common_use_busybox">"Selecionar BusyBox"</string>
     <string name="pref_common_categ_hotspot">"HOTSPOT-Experimental"</string>
 
@@ -317,7 +317,7 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="helper_dnscrypt_stopped">"Parece que o DNSCrypt foi morto pelo sistema Android. Sua conexão com a Internet foi restaurada. Verifique as configurações do dispositivo!"</string>
     <string name="helper_tor_stopped">"Parece que o Tor foi morto pelo sistema Android. Sua conexão com a Internet foi restaurada. Verifique as configurações do dispositivo!"</string>
     <string name="helper_itpd_stopped">"Parece que o I2P foi morto pelo sistema Android. Sua conexão com a Internet foi restaurada. Verifique as configurações do dispositivo!"</string>
-    <string name="helper_dnscrypt_no_internet">"Parece que o InviZible Pro NÃO PODE se conectar à INTERNET. Verifique as regras do FIREWALL. Permitir conexão para aplicativos InviZible Pro e ROOT."</string>
+    <string name="helper_dnscrypt_no_internet">"Parece que o Fulldive VPN NÃO PODE se conectar à INTERNET. Verifique as regras do FIREWALL. Permitir conexão para aplicativos Fulldive VPN e ROOT."</string>
     <string name="helper_tor_use_bridges">"Parece que o Tor NÃO PODE se conectar à INTERNET. O ISP pode bloquear as conexões do Tor. Você pode tentar usar pontes de tor. Encontre-os em MENU -&gt; Configurações Rápidas -&gt; Pontes"</string>
     <string name="action_mode_child_lock">"Bloqueio para crianças"</string>
     <string name="action_mode_dialog_message_lock">"Você pode bloquear o controle deste aplicativo. Por favor, digite a senha ou use a anterior."</string>
@@ -334,12 +334,12 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="update_core_yes">"Atualize"</string>
     <string name="update_core_no">"Depois"</string>
     <string name="update_core_not_show_again">"Não pergunte novamente"</string>
-    <string name="update_core_restart">"Reinicie InviZible Pro e permita a instalação completa! Após a instalação, reconfigure o HOTSPOT, se for usá-lo!"</string>
+    <string name="update_core_restart">"Reinicie Fulldive VPN e permita a instalação completa! Após a instalação, reconfigure o HOTSPOT, se for usá-lo!"</string>
     <string name="update_notification">"Baixando arquivo"</string>
     <string name="update_interrupt_notification">"Download foi interrompido"</string>
     <string name="cancel_download">"CANCELAR O DOWNLOAD"</string>
     <string name="update_new_version">"Nova Versão:"</string>
-    <string name="update_ipro_has_apdate">"A atualização do InviZible Pro está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
+    <string name="update_ipro_has_apdate">"A atualização do Fulldive VPN está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
     <string name="update_dnscrypt_has_apdate">"A atualização do DNSCrypt Pro está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
     <string name="update_tor_has_apdate">"A atualização do Tor está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
     <string name="update_itpd_has_apdate">"A atualização do I2P está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
@@ -354,15 +354,14 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="update_installed">"Atualizações foram instaladas."</string>
     <string name="update_over_three_activations">"Parece que você já ativou 3 cópias do InviZible com este código. Se estiver errado, entre em contato com o desenvolvedor."</string>
     <string name="update_wrong_code">"Parece que seu código PRO está errado. Entre em contato com o desenvolvedor."</string>
-    <string name="update_over_five_times">"Você verificou as atualizações do InviZible Pro mais de 5 vezes por dia. Por favor, tente novamente mais tarde."</string>
-    <string name="verifier_error">"Parece que esta versão não é oficial do InviZible. Por favor, cuide disso!"</string>
+    <string name="update_over_five_times">"Você verificou as atualizações do Fulldive VPN mais de 5 vezes por dia. Por favor, tente novamente mais tarde."</string>
     <string name="only_for_pro">"Apenas para a versão PRO"</string>
     <string name="donate">"Doação"</string>
-    <string name="donate_project">"O Projeto InviZible Pro precisa de sua ajuda. Visite a página de doações ou insira o código de registro recebido."</string>
+    <string name="donate_project">"O Projeto Fulldive VPN precisa de sua ajuda. Visite a página de doações ou insira o código de registro recebido."</string>
     <string name="donate_button">"Visite"</string>
     <string name="enter_code_button">"Coloque o código"</string>
     <string name="enter_code">"Coloque o código"</string>
-    <string name="thanks_for_donate">"O Projeto InviZible Pro e seu autor agradecem a ajuda. Gostaria de baixar e atualizar para o PRO? A atualização continuará em segundo plano."</string>
+    <string name="thanks_for_donate">"O Projeto Fulldive VPN e seu autor agradecem a ajuda. Gostaria de baixar e atualizar para o PRO? A atualização continuará em segundo plano."</string>
     <string name="pref_dnscrypt_relays_summ">"Listas remotas de retransmissores disponíveis."</string>
     <string name="vpn_mode_active">"Modo VPN está ativo"</string>
     <string name="vpn_mode_off">"Modo VPN esta desativado"</string>
@@ -372,19 +371,19 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="main_fragment_protect_dns">"Proteger DNS com DNSCRYPT"</string>
     <string name="main_fragment_access_i2p">"Acessar sites com I2P"</string>
     <string name="ask_force_close_title">"Atenção"</string>
-    <string name="ask_force_close_text">"InviZible Pro não pode iniciar %s! Verifique as configurações de %s ou tente forçar o fechamento do aplicativo. Se isso não ajudar, reinicie seu dispositivo."</string>
+    <string name="ask_force_close_text">"Fulldive VPN não pode iniciar %s! Verifique as configurações de %s ou tente forçar o fechamento do aplicativo. Se isso não ajudar, reinicie seu dispositivo."</string>
     <string name="ask_force_close_btn">"Força o fechamennto"</string>
     <string name="add_custom_server_title">"Adicionar servidor customizado"</string>
     <string name="add_custom_server_error">"Configuração de servidor personalizado inválida. Verifique o campo SDNS."</string>
     <string name="pending_purchase">"Observe que você tem uma compra pendente:"</string>
-    <string name="buy_premium_gp">"O Projeto InviZible Pro precisa de sua ajuda. Pressione OK para adquirir recursos premium."</string>
+    <string name="buy_premium_gp">"O Projeto Fulldive VPN precisa de sua ajuda. Pressione OK para adquirir recursos premium."</string>
     <string name="wrong_purchase_signature_gp">"Desculpe, mas é impossível confirmar sua compra. Você receberá um reembolso após 3 dias."</string>
     <string name="only_premium_feature">"Infelizmente, esse recurso está disponível apenas para a versão premium."</string>
-    <string name="agreement_text">"\ tObrigado por escolher o InviZible Pro. Espero que seja útil para sua privacidade e uso confortável da Internet.
-\ tInviZible Pro inclui Tor, DNSCrypt e Purple I2P como módulos.
-\ tInviZible Pro pode usar root, se o seu dispositivo tiver privilégios de root, ou usar uma VPN local para entregar tráfego de Internet para redes Tor, DNSCrypt e I2P.
+    <string name="agreement_text">"\ tObrigado por escolher o Fulldive VPN. Espero que seja útil para sua privacidade e uso confortável da Internet.
+\ tFulldive VPN inclui Tor, DNSCrypt e Purple I2P como módulos.
+\ tFulldive VPN pode usar root, se o seu dispositivo tiver privilégios de root, ou usar uma VPN local para entregar tráfego de Internet para redes Tor, DNSCrypt e I2P.
 \ tEste produto é produzido independentemente do software Tor®, DNSCrypt, Purple I2P e não traz nenhuma garantia dos Projetos Acima sobre qualidade, adequação ou qualquer outra coisa.
-\ tInviZible Pro é distribuído na esperança de ser útil, mas SEM NENHUMA GARANTIA; sem mesmo a garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM DETERMINADO FIM.
+\ tFulldive VPN é distribuído na esperança de ser útil, mas SEM NENHUMA GARANTIA; sem mesmo a garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM DETERMINADO FIM.
 \ tCopyright © 2019-2021
 \ tGarmatin Oleksandr
 \ tinvizible.soft@gmail.com
@@ -400,7 +399,7 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="pref_tor_edit_conf">"Edite tor.conf diretamente"</string>
     <string name="pref_itpd_edit_conf">"Edite i2pd.conf diretamente"</string>
     <string name="pref_itpd_edit_tunnels">"Edite tunnels.conf diretamente"</string>
-    <string name="config_changes_dialog_message">"Você quer salvar as alterações? Ele pode quebrar o InviZible Pro."</string>
+    <string name="config_changes_dialog_message">"Você quer salvar as alterações? Ele pode quebrar o Fulldive VPN."</string>
     <string name="pref_dnscrypt_ipv4_servers_summ">"Use servidores acessíveis em IPv4"</string>
     <string name="pref_dnscrypt_ipv6_servers_summ">"Use servidores acessíveis em IPv6"</string>
     <string name="pref_dnscrypt_import_forwarding_rules">"Importar regras de encaminhamento"</string>
@@ -436,7 +435,7 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="pref_common_arp_block_internet_summ">"A conexão com a Internet será bloqueada durante o ataque"</string>
     <string name="pref_common_proxy_categ">"Proxy"</string>
     <string name="pref_common_proxy">"Use socks5 proxy"</string>
-    <string name="pref_common_proxy_summ">"InviZible Pro fará todas as conexões através do proxy SOCKS5"</string>
+    <string name="pref_common_proxy_summ">"Fulldive VPN fará todas as conexões através do proxy SOCKS5"</string>
     <string name="pref_common_compatibility_mode">"Modo de compatibilidade"</string>
     <string name="pref_common_compatibility_mode_summ">"Ative se o seu dispositivo com uma ROM personalizada e a conexão for perdida quando você pressiona o botão INICIAR"</string>
     <string name="pref_common_shell_control">"Habilitar controle de script"</string>
@@ -516,5 +515,5 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="btnResetSettings">"Restaurar configurações"</string>
     <string name="backupSaved">"Backup salvo"</string>
     <string name="backupRestored">"Backup restaurado"</string>
-    <string name="thanks_for_donate_gp">"InviZible Pro Project e seu Autor agradece a ajuda."</string>
+    <string name="thanks_for_donate_gp">"Fulldive VPN Project e seu Autor agradece a ajuda."</string>
 </resources>

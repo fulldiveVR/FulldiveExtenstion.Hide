@@ -1,4 +1,4 @@
-**InviZible Pro beta 1.1.9**
+**Fulldive VPN beta 1.1.9**
 * Added notification if private DNS or proxy is enabled.
 * Implemented automatic Tor geoip update.
 * Fixed allowing Internet for newly installed apps by default.

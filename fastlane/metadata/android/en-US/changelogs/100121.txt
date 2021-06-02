@@ -1,4 +1,4 @@
-**InviZible Pro beta 1.2.1**
+**Fulldive VPN beta 1.2.1**
 * Optimized using iptables in Root mode.
 * Improved websites handling for the Tor Exclude/Select websites feature.
 * Improved backup/restore feature.

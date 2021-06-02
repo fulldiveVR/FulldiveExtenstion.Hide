@@ -52,8 +52,8 @@
     <string name="premium">"نسخه پیشرفته"</string>
     <string name="agree">"می‌پذیرم"</string>
     <string name="disagree">"نمی‌پذیرم"</string>
-    <string name="message_no_root_used">"شما می‌توانید با استفاده از InviZible Pro  تمام دستگاه خود را در حالت VPN تونل کنید، یا در حالت پروکسی داخلی در برنامه‌ها استفاده کنید."</string>
-    <string name="message_no_root_used_kitkat">"شما می‌توانید از برنامه‌های دارای پراکسی و VPN داخلی، روی InviZible Pro در حالت پراکسی استفاده کنید."</string>
+    <string name="message_no_root_used">"شما می‌توانید با استفاده از Fulldive VPN  تمام دستگاه خود را در حالت VPN تونل کنید، یا در حالت پروکسی داخلی در برنامه‌ها استفاده کنید."</string>
+    <string name="message_no_root_used_kitkat">"شما می‌توانید از برنامه‌های دارای پراکسی و VPN داخلی، روی Fulldive VPN در حالت پراکسی استفاده کنید."</string>
 
     <!-- مشکل در ذخیره‌ی فایل -->
     <string name="write_file_error">"مشکل در ذخیره فایل!"</string>
@@ -127,7 +127,7 @@
     <string name="pref_fast_block_http_summ">"مسدودسازی ارتباط با HTTP Port 80"</string>
     <string name="pref_fast_categ_update">"بروزرسانی"</string>
     <string name="pref_fast_auto_update">"بروزرسانی خودکار"</string>
-    <string name="pref_fast_auto_update_summ">"بروزرسانی‌های InviZible Pro و ماژول‌ها را روزانه بررسی کنید"</string>
+    <string name="pref_fast_auto_update_summ">"بروزرسانی‌های Fulldive VPN و ماژول‌ها را روزانه بررسی کنید"</string>
     <string name="pref_fast_chek_update">"بررسی بروزرسانی"</string>
     <string name="pref_fast_chek_update_summ">"بررسی کنید نسخه‌های جدید اکنون موجود هستند یا خیر"</string>
     <string name="pref_fast_through_tor_update">"مؤکداً انجام بروزرسانی‌ها از طریق TOR"</string>
@@ -146,8 +146,8 @@
     <string name="pref_common_wakelock_summ">"حفاظت بیش‌تر بدون حالت Root برای جلوگیری از توقف برنامه توسط اندروید. ممکن است باعث تخلیه زودتر باتری شود."</string>
     <string name="pref_common_show_help">"راهنمایی‌ها"</string>
     <string name="pref_common_show_help_summ">"همیشه پیغام‌های راهنما را نشان بده"</string>
-    <string name="pref_common_notification_helper">"لطفا InviZible Pro را در بهینه‌سازی باتری دستگاه قرار ندهید‌. در غیر این صورت، ممکن است اندروید DNSCrypt و TOR و یا I2P را در هر زمان خاموش کند.
-در بعضی سیستم عامل‌های استثناء همانند سیستم عامل گوشی‌های شیائومی باید چند گام اضافه را انجام داد تا InviZible Pro را از تنظیمات ویژه باتری مستثنی نماید (مثلاً در بخش حفاظت -&gt; باتری -&gt; ذخیره نیرو -&gt; انتخاب InviZible Pro -&gt; محدود نساختن فعالیت‌های پس‌زمینه را انتخاب نمایید، و سپس در بخش حفاظت -&gt; مجاز به شروع خودکار را انتخاب نمایید و با فشار طولانی دکمه Home -&gt; باز کردن برنامه‌های اخیر -&gt; سپس InviZible Pro را به سمت پایین بکشید و قفل نشانه‌ای را در حافظه انتخاب نمایید)."</string>
+    <string name="pref_common_notification_helper">"لطفا Fulldive VPN را در بهینه‌سازی باتری دستگاه قرار ندهید‌. در غیر این صورت، ممکن است اندروید DNSCrypt و TOR و یا I2P را در هر زمان خاموش کند.
+در بعضی سیستم عامل‌های استثناء همانند سیستم عامل گوشی‌های شیائومی باید چند گام اضافه را انجام داد تا Fulldive VPN را از تنظیمات ویژه باتری مستثنی نماید (مثلاً در بخش حفاظت -&gt; باتری -&gt; ذخیره نیرو -&gt; انتخاب Fulldive VPN -&gt; محدود نساختن فعالیت‌های پس‌زمینه را انتخاب نمایید، و سپس در بخش حفاظت -&gt; مجاز به شروع خودکار را انتخاب نمایید و با فشار طولانی دکمه Home -&gt; باز کردن برنامه‌های اخیر -&gt; سپس Fulldive VPN را به سمت پایین بکشید و قفل نشانه‌ای را در حافظه انتخاب نمایید)."</string>
     <string name="pref_common_use_busybox">"انتخاب BusyBox"</string>
     <string name="pref_common_categ_hotspot">"هات اسپات-آزمایشی"</string>
     <string name="pref_common_tethering_autostart">"شروع Tethering هنگام راه‌اندازی مجدد"</string>
@@ -324,7 +324,7 @@
     <string name="helper_dnscrypt_stopped">"به نظر می‌رسد DNSCrypt توسط سیستم اندرویدی اجباراً بسته شده است. اتصال اینترنتی شما بازیابی شد. تنظیمات دستگاه را بررسی کنید!"</string>
     <string name="helper_tor_stopped">"به نظر می‌رسد که TOR توسط سیستم اندرویدی اجباراً بسته شده است. اتصال اینترنتی شما بازیابی شد. تنظیمات دستگاه را بررسی کنید!"</string>
     <string name="helper_itpd_stopped">"به نظر می‌رسد I2P توسط سیستم اندرویدی اجباراً بسته شده است. تنظیمات دستگاه را بررسی کنید!"</string>
-    <string name="helper_dnscrypt_no_internet">"به نظر می‌رسد InviZible Pro نمی‌تواند به اینترنت متصل شود. لطفاً قوانین فایروال را بررسی کنید. اتصال برای InviZible Pro و برنامه‌های روت شده را مجاز کنید."</string>
+    <string name="helper_dnscrypt_no_internet">"به نظر می‌رسد Fulldive VPN نمی‌تواند به اینترنت متصل شود. لطفاً قوانین فایروال را بررسی کنید. اتصال برای Fulldive VPN و برنامه‌های روت شده را مجاز کنید."</string>
     <string name="helper_tor_use_bridges">"به نظر می‌رسد TOR نمی‌تواند به اینترنت وصل شود. ممکن‌ است سرویس‌دهنده اینترنت اتصالات TOR را مسدود کرده است. شما می‌توانید از پل‌های TOR استفاده کنید. لطفا آن‌ها را در منو -&gt; تنظیمات سریع -&gt; پل‌ها پیدا کنید."</string>
     <string name="action_mode_child_lock">"قفل کودک"</string>
     <string name="action_mode_dialog_message_lock">"شما می‌توانید کنترل این برنامه را قفل کنید. لطفاً رمز عبور را وارد نمایید، یا از رمز عبور قبلی استفاده نمایید."</string>
@@ -347,12 +347,12 @@
 
     <!-- مجدد سوال نکنید -->
     <string name="update_core_not_show_again">"مجدداً پرسیده نشود"</string>
-    <string name="update_core_restart">"لطفا InviZible Pro را مجدداً راه‌اندازی نمایید و اجازه دهید تا کاملاً نصب شود! بعد از نصب اگر از هات‌اسپات استفاده می‌نمایید، آن را مجدداً تنظیم نمایید!"</string>
+    <string name="update_core_restart">"لطفا Fulldive VPN را مجدداً راه‌اندازی نمایید و اجازه دهید تا کاملاً نصب شود! بعد از نصب اگر از هات‌اسپات استفاده می‌نمایید، آن را مجدداً تنظیم نمایید!"</string>
     <string name="update_notification">"در حال دانلود فایل"</string>
     <string name="update_interrupt_notification">"دانلود متوقف شد"</string>
     <string name="cancel_download">"لغو کردن دانلود"</string>
     <string name="update_new_version">"نسخه جدید:"</string>
-    <string name="update_ipro_has_apdate">"آپدیت InviZible Pro در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
+    <string name="update_ipro_has_apdate">"آپدیت Fulldive VPN در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
     <string name="update_dnscrypt_has_apdate">"آپدیت DNSCrypt در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
     <string name="update_tor_has_apdate">"آپدیت TOR در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
     <string name="update_itpd_has_apdate">"آپدیت Purple I2P در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
@@ -368,15 +368,14 @@
     <string name="update_over_three_activations">"به نظر می‌رسد شما ۳ نسخه از InviZible را با این کد فعال کرده‌اید. درغیر این صورت، با توسعه‌دهنده تماس بگیرید.
 "</string>
     <string name="update_wrong_code">"کد نسخه PRO شما اشتباه است. با توسعه‌دهنده تماس بگیرید."</string>
-    <string name="update_over_five_times">"شما بروزرسانی‌های InviZible Pro را بیش از ۵ بار در روز بررسی کرده‌اید. لطفا بعداً مجدداً سعی نمایید."</string>
-    <string name="verifier_error">"به نظر می‌رسد این نسخه غیررسمی از InviZible است. لطفاً مراقب آن باشید!"</string>
+    <string name="update_over_five_times">"شما بروزرسانی‌های Fulldive VPN را بیش از ۵ بار در روز بررسی کرده‌اید. لطفا بعداً مجدداً سعی نمایید."</string>
     <string name="only_for_pro">"فقط برای نسخه PRO"</string>
     <string name="donate">"کمک مالی"</string>
-    <string name="donate_project">"پروژه InviZible Pro به کمک شما احتیاج دارد. لطفاً از صفحه کمک مالی بازدید و یا کد ثبت‌نام دریافتی را وارد نمایید."</string>
+    <string name="donate_project">"پروژه Fulldive VPN به کمک شما احتیاج دارد. لطفاً از صفحه کمک مالی بازدید و یا کد ثبت‌نام دریافتی را وارد نمایید."</string>
     <string name="donate_button">"بازدید"</string>
     <string name="enter_code_button">"کد را وارد کنید"</string>
     <string name="enter_code">"کد را وارد کنید"</string>
-    <string name="thanks_for_donate">"پروژه InviZible Pro و سازنده آن از کمک‌ها قدردانی می‌کنند. آیا می‌خواهید PRO را دانلود و بروزرسانی کنید؟ بروزرسانی در پس زمینه ادامه خواهد یافت."</string>
+    <string name="thanks_for_donate">"پروژه Fulldive VPN و سازنده آن از کمک‌ها قدردانی می‌کنند. آیا می‌خواهید PRO را دانلود و بروزرسانی کنید؟ بروزرسانی در پس زمینه ادامه خواهد یافت."</string>
     <string name="pref_dnscrypt_relays_summ">"لیست‌های ریموت از رله‌های موجود."</string>
     <string name="vpn_mode_active">"حالت VPN فعال است"</string>
     <string name="vpn_mode_off">"حالت VPN خاموش است"</string>
@@ -389,24 +388,24 @@
     <string name="main_fragment_protect_dns">"حفاظت از DNS توسط DNSCrypt"</string>
     <string name="main_fragment_access_i2p">"دسترسی به سایت‌های I2P توسط Purple I2P"</string>
     <string name="ask_force_close_title">"توجه"</string>
-    <string name="ask_force_close_text">"اپلیکیشن InviZible Pro نمی‌تواند اجرا شود%s! لطفاً تنظیمات %s را بررسی نمایید و یا سعی نمایید برنامه را به‌صورت اجباری ببندید.
+    <string name="ask_force_close_text">"اپلیکیشن Fulldive VPN نمی‌تواند اجرا شود%s! لطفاً تنظیمات %s را بررسی نمایید و یا سعی نمایید برنامه را به‌صورت اجباری ببندید.
 اگر این موارد پاسخگو نبودند، لطفاً دستگاه خود را مجدداً راه‌اندازی نمایید."</string>
     <string name="ask_force_close_btn">"بستن اجباری"</string>
     <string name="add_custom_server_title">"افزودن سرور سفارشی"</string>
     <string name="add_custom_server_error">"تنظیمات سرور سفارشی نامعتبر است. لطفاً قسمت SDNS را بررسی نمایید."</string>
     <string name="pending_purchase">"لطفاً توجه نمایید که شما یک خرید در حالت انتظار دارید:"</string>
-    <string name="buy_premium_gp">"پروژه InviZible Pro به کمک شما نیاز دارد. بر روی OK کلیک کرده تا نسخه پیشرفته را خریداری نمایید."</string>
+    <string name="buy_premium_gp">"پروژه Fulldive VPN به کمک شما نیاز دارد. بر روی OK کلیک کرده تا نسخه پیشرفته را خریداری نمایید."</string>
     <string name="wrong_purchase_signature_gp">"متأسفیم، اما خرید شما تأیید نشد. طی ۳ روز آینده وجه به حساب شما برمی‌گردد."</string>
     <string name="only_premium_feature">"متأسفانه، این قابلیت فقط برای نسخه کامل برنامه قابل استفاده است."</string>
-    <string name="agreement_text">"از انتخاب InviZible Pro متشکرم. امیدوارم که برای حفظ حریم شخصی شما و استفاده راحت از اینترنت مفید باشد.
+    <string name="agreement_text">"از انتخاب Fulldive VPN متشکرم. امیدوارم که برای حفظ حریم شخصی شما و استفاده راحت از اینترنت مفید باشد.
 
-اپلیکیشن InviZible Pro شامل TOR و DNSCrypt و Purple I2P به‌عنوان ماژول است.
+اپلیکیشن Fulldive VPN شامل TOR و DNSCrypt و Purple I2P به‌عنوان ماژول است.
 
-اگر دستگاه شما دارای قابلیت دسترسی به ریشه باشد، یا از VPN محلی برای انتقال ترافیک اینترنت به شبکه‌های TOR و DNSCrypt و I2P استفاده کند، InviZible Pro می تواند از ROOT استفاده کند.
+اگر دستگاه شما دارای قابلیت دسترسی به ریشه باشد، یا از VPN محلی برای انتقال ترافیک اینترنت به شبکه‌های TOR و DNSCrypt و I2P استفاده کند، Fulldive VPN می تواند از ROOT استفاده کند.
 
 این محصول مستقلاً از نرم‌افزار TOR® ، DNSCrypt ، Purple I2P تولید شده است و هیچ‌گونه تضمینی از Above Projects در مورد کیفیت، مناسب بودن یا هر چیز دیگری ندارد.
         
-اپلیکیشن InviZible Pro با این امید که مفید واقع شود، توزیع می‌شود، اما بدون هیچ‌گونه ضمانتی؛ حتی بدون ضمانت ضمنی قابلیت دستیابی یا تناسب برای یک هدف خاص.
+اپلیکیشن Fulldive VPN با این امید که مفید واقع شود، توزیع می‌شود، اما بدون هیچ‌گونه ضمانتی؛ حتی بدون ضمانت ضمنی قابلیت دستیابی یا تناسب برای یک هدف خاص.
         
 حق چاپ © 2019-2021
 
@@ -464,7 +463,7 @@ invizible.net/en/privacy
     <string name="pref_common_arp_block_internet_summ">"اتصال اینترنت در هنگام حمله مسدود خواهد شد"</string>
     <string name="pref_common_proxy_categ">"پروکسی"</string>
     <string name="pref_common_proxy">"از پروکسی socks5 استفاده کنید"</string>
-    <string name="pref_common_proxy_summ">"اپلیکیشن InviZible Pro تمام ارتباطات را از طریق پروکسی SOCKS5 برقرار می کند"</string>
+    <string name="pref_common_proxy_summ">"اپلیکیشن Fulldive VPN تمام ارتباطات را از طریق پروکسی SOCKS5 برقرار می کند"</string>
     <string name="pref_common_compatibility_mode">"حالت سازگاری"</string>
     <string name="pref_common_compatibility_mode_summ">"اگر روی گوشی موبایل خود کاستوم‌رام نصب کرده‌اید و با فشار دادن دکمه شروع، اتصال قطع میشود، آن را فعال کنید."</string>
     <string name="pref_common_shell_control">"کنترل اسکریپت را فعال کنید"</string>
@@ -545,5 +544,5 @@ invizible.net/en/privacy
     <string name="btnResetSettings">"Reset Settings"</string>
     <string name="backupSaved">"Backup saved"</string>
     <string name="backupRestored">"Backup restored"</string>
-    <string name="thanks_for_donate_gp">"InviZible Pro Project and its author express appreciation for the assistance."</string>
+    <string name="thanks_for_donate_gp">"Fulldive VPN Project and its author express appreciation for the assistance."</string>
 </resources>

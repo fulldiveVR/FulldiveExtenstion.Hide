@@ -4,13 +4,12 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 30
 
-
     flavorDimensions "version", "processor"
 
     productFlavors {
 
         fdroid{
-            applicationId "com.fulldive.tordnscrypt.stable"
+            applicationId "com.fulldive.tordnscrypt"
             versionName "5.3.0"
             dimension = 'version'
             resValue 'string', 'package_name', applicationId

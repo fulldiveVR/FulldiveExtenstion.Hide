@@ -134,11 +134,8 @@ public class MainActivity extends LangAppCompatActivity
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setDayNightTheme();
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -196,15 +193,10 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-
         vpnRequested = false;
-
         childLockActive = isInterfaceLocked();
-
         checkUpdates();
-
         handleMitmAttackWarning();
-
         registerBroadcastReceiver();
 
         if (appVersion.equals("gp")) {
@@ -216,7 +208,6 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-
         if (new PrefManager(this).getBoolPref("refresh_main_activity")) {
             new PrefManager(this).setBoolPref("refresh_main_activity", false);
             recreate();
@@ -226,7 +217,6 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
         super.onAttachFragment(fragment);
-
         if (fragment instanceof DNSCryptRunFragment) {
             dNSCryptRunFragment = (DNSCryptRunFragment) fragment;
         } else if (fragment instanceof TorRunFragment) {
@@ -272,7 +262,6 @@ public class MainActivity extends LangAppCompatActivity
     }
 
     private void checkUpdates() {
-
         if (appVersion.equals("gp") || appVersion.equals("fd")) {
             return;
         }
@@ -531,23 +520,18 @@ public class MainActivity extends LangAppCompatActivity
 
     private void showNewTorIdentityIcon(Menu menu) {
         newIdentityMenuItem = menu.findItem(R.id.item_new_identity);
-
         if (newIdentityMenuItem == null || modulesStatus == null) {
             return;
         }
-
         newIdentityMenuItem.setVisible(modulesStatus.getTorState() != STOPPED
                 && modulesStatus.getTorState() != ModuleState.UNDEFINED);
     }
 
     public void showNewTorIdentityIcon(boolean show) {
-
         if (newIdentityMenuItem == null || modulesStatus == null) {
             return;
         }
-
         newIdentityMenuItem.setVisible(show);
-
         invalidateOptionsMenu();
     }
 
@@ -660,9 +644,7 @@ public class MainActivity extends LangAppCompatActivity
     }
 
     private void checkHotspotState() {
-
         checkHotspotStateTimer = new Timer();
-
         checkHotspotStateTimer.scheduleAtFixedRate(new TimerTask() {
             int loop = 0;
 
@@ -692,13 +674,11 @@ public class MainActivity extends LangAppCompatActivity
         }
     }
 
-
     private void childLock(final MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialogTheme);
         builder.setTitle(R.string.action_mode_child_lock);
         builder.setMessage(R.string.action_mode_dialog_message_lock);
         builder.setIcon(R.drawable.ic_lock_outline_blue_24dp);
-
 
         LayoutInflater inflater = getLayoutInflater();
         @SuppressLint("InflateParams") final View inputView = inflater.inflate(R.layout.edit_text_for_dialog, null, false);
@@ -766,26 +746,20 @@ public class MainActivity extends LangAppCompatActivity
                 Toast.makeText(getApplicationContext(), getText(R.string.action_mode_dialog_wrong_pass), Toast.LENGTH_LONG).show();
             }
         });
-
         builder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.cancel());
-
         builder.show();
-
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         int id = item.getItemId();
-
         if (isInterfaceLocked()) {
             Toast.makeText(this, getText(R.string.action_mode_dialog_locked), Toast.LENGTH_LONG).show();
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return false;
         }
-
         if (id == R.id.nav_backup) {
             Intent intent = new Intent(this, BackupActivity.class);
             startActivity(intent);
@@ -881,9 +855,7 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     public void prepareVPNService() {
         Log.i(LOG_TAG, "MainActivity prepare VPN Service");
-
         final Intent prepareIntent = VpnService.prepare(this);
-
         if (prepareIntent == null) {
             startVPNService(RESULT_OK);
         } else if (!vpnRequested && !isFinishing()) {
@@ -896,9 +868,7 @@ public class MainActivity extends LangAppCompatActivity
                 }
                 Log.e(LOG_TAG, "Main Activity prepareVPNService exception " + e.getMessage() + " " + e.getCause());
             }
-
         }
-
     }
 
     private void startVPNService(int resultCode) {
@@ -975,20 +945,16 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-
         unregisterBroadcastReceiver();
-
         if (accelerateDevelop != null) {
             accelerateDevelop.removeActivity();
             accelerateDevelop = null;
         }
-
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         if (ModulesService.serviceIsRunning && modulesStatus.getMode() == VPN_MODE
                 && (modulesStatus.getDnsCryptState() == STOPPED || modulesStatus.getDnsCryptState() == FAULT || modulesStatus.getDnsCryptState() == ModuleState.UNDEFINED)
                 && (modulesStatus.getTorState() == STOPPED || modulesStatus.getTorState() == FAULT || modulesStatus.getTorState() == ModuleState.UNDEFINED)
@@ -1032,7 +998,6 @@ public class MainActivity extends LangAppCompatActivity
 
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK && handler != null) {
             Log.e(LOG_TAG, "FORCE CLOSE ALL");
 
@@ -1045,10 +1010,7 @@ public class MainActivity extends LangAppCompatActivity
                 intent.setAction(ModulesService.actionStopService);
                 startService(intent);
             }, 3000);
-
             handler.postDelayed(() -> System.exit(0), 5000);
-
-
             return true;
         }
         return super.onKeyLongPress(keyCode, event);

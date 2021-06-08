@@ -1,4 +1,4 @@
-**Fulldive VPN beta 1.2.9**
+**VPN beta 1.2.9**
 * Improved DNS handling.
 * Using better compiler optimizations.
 * Updated Tor.

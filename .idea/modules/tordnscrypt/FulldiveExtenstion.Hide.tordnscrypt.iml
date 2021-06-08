@@ -71,6 +71,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/build/generated/source/buildConfig/fdroidArm64/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/build/generated/res/resValues/fdroidArm64/debug" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/build/generated/ap_generated_sources/fdroidArm64Debug/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/src/main/jni/invizible" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/src/main/jni/invizible" />
       <excludeFolder url="file://$MODULE_DIR$/../../../tordnscrypt/.cxx" />
       <excludeFolder url="file://$MODULE_DIR$/../../../tordnscrypt/.externalNativeBuild" />

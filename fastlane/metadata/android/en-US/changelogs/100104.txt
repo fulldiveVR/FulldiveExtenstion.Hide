@@ -1,4 +1,4 @@
-**Fulldive VPN beta 1.0.4**
+**VPN beta 1.0.4**
 * Implemented multi-user support.
 * Implemented xtables lock for iptables.
 * Implemented default Tor bridges update.

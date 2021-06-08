@@ -1,2 +1,2 @@
-**Fulldive VPN beta 0.8.9**
+**VPN beta 0.8.9**
 * Real-time Internet connections logs fixes and performance improvements

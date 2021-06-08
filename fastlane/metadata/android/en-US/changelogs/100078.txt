@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.7.8**
+**VPN beta 0.7.8**
 * Implemented iptables execution control.
 * Built in ip6tables.
 * Updated German language.

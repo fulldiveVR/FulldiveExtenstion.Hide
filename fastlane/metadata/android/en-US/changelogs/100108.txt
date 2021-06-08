@@ -1,4 +1,4 @@
-**Fulldive VPN beta 1.0.8**
+**VPN beta 1.0.8**
 * Added bypass Tor option for LAN and IANA addresses.
 * Added Purple I2P build script.
 * Updated Purple I2P.

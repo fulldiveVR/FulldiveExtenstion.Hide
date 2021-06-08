@@ -1,4 +1,4 @@
-**Fulldive VPN beta 1.0.5**
+**VPN beta 1.0.5**
 * Added script for building Tor for Android from source using Gitlab CI / CD.
 * Updated Tor to version 4.4.5.
 * Changed default I2P outproxy address.

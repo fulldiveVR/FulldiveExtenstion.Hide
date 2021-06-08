@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.9.6**
+**VPN beta 0.9.6**
 * Implemented allowed and excluded sites for Tor in VPN mode.
 * Selected DNSCrypt servers and Tor applications are displayed at the top of the list.
 * Added chronometer to notification.

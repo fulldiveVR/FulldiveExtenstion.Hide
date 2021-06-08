@@ -1,2 +1,2 @@
-**Fulldive VPN beta 0.6.8**
+**VPN beta 0.6.8**
 * Fixed rare bugs related to tor bridges, hotspot, tor nodes selection.

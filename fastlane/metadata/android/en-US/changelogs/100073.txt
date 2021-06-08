@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.7.3**
+**VPN beta 0.7.3**
 * Updated DNSCrypt version to 2.0.40.
 * Updated DNSCrypt configuration file.
 * Updated Tor configuration file.

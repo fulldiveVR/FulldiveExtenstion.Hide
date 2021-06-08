@@ -121,7 +121,7 @@
     <string name="pref_fast_block_http_summ">Zablokuj polaczenia z portem http	80</string>
     <string name="pref_fast_categ_update">Aktualizacja</string>
     <string name="pref_fast_auto_update">Aktualizacja automatyczna</string>
-    <string name="pref_fast_auto_update_summ">Sprawdzaj aktualizacje Fulldive VPN i modulow codziennie</string>
+    <string name="pref_fast_auto_update_summ">Sprawdzaj aktualizacje VPN i modulow codziennie</string>
     <string name="pref_fast_chek_update">Sprawdz aktuaizacje</string>
     <string name="pref_fast_chek_update_summ">Sprawdz czy sa dostepne nowe wersje</string>
     <string name="pref_fast_through_tor_update">Aktualizuj tylko przez Tor</string>
@@ -137,11 +137,11 @@
     <string name="pref_common_show_notification">Pokaz powiadomienia</string>
     <string name="pref_common_show_help">Podpowiedzi</string>
     <string name="pref_common_show_help_summ">Zawsze pokazuj podpowiedzi</string>
-    <string name="pref_common_notification_helper">Prosze wykluczyc Fulldive VPN z optymalizacji baterii.
+    <string name="pref_common_notification_helper">Prosze wykluczyc VPN z optymalizacji baterii.
         W innym przypadku Android moze zatrzymac proces DNSCrypt, Tor or I2P w kazdej chwili. Systemy niest-
-        andardowe jak MIUI, wymagaja dodatowych czynnosci, wykluczajacych Fulldive VPN z optymalizacji baterii
-        (np. Safety->Battery->Power Saving->Select Fulldive VPN->No Background Restrictions,
-        Safety->allow auto start and Long Press The Home Button->Open the Recent App->Then Swipe Fulldive VPN
+        andardowe jak MIUI, wymagaja dodatowych czynnosci, wykluczajacych VPN z optymalizacji baterii
+        (np. Safety->Battery->Power Saving->Select VPN->No Background Restrictions,
+        Safety->allow auto start and Long Press The Home Button->Open the Recent App->Then Swipe VPN
         Downward i kliknac sign lock in memory).</string>
     <string name="pref_common_use_busybox">Wybierz BusyBox</string>
     <string-array name="pref_common_categ_use_busybox_titles">
@@ -352,8 +352,8 @@
     <string name="helper_tor_stopped">Wyglada na to ze system android wylaczyl Tor.
         Twoje polaczenie z siecia zostalo przywrocone. Szprawdz ustawienia urzadzenia!</string>
     <string name="helper_itpd_stopped">Wyglada ze system android wylaczyl I2P. sprawdz ustawienia urzadzenia!</string>
-    <string name="helper_dnscrypt_no_internet">Wyglada ze Fulldive VPN NIE MOZE polaczyc sie z siecia.
-        Prosze sprawdzic reguly FIREWALLa. Prosze zzwolic na polaczenie Fulldive VPN oraz aplikacji z uprawnieniami ROOTa.</string>
+    <string name="helper_dnscrypt_no_internet">Wyglada ze VPN NIE MOZE polaczyc sie z siecia.
+        Prosze sprawdzic reguly FIREWALLa. Prosze zzwolic na polaczenie VPN oraz aplikacji z uprawnieniami ROOTa.</string>
     <string name="helper_tor_use_bridges">Wyglada ze Tor NIE MOZE polaczyc sie z siecia.
         Twoj ISP moze blokowac polaczenie. Mozesz sprobowac uzyc mostka. UStawienia w MENU -> Szybkie ustawienia -> Pomosty</string>
     <string name="action_mode_child_lock">Child Lock</string>
@@ -373,13 +373,13 @@
     <string name="update_core_yes">Aktualizacja</string>
     <string name="update_core_no">Pozniej</string>
     <string name="update_core_not_show_again">Nie pytaj ponownie</string>
-    <string name="update_core_restart">Prosze uruchomic ponownie Fulldive VPN i dokonczyc instalacje!         Po instalacji ponownie ustaw Punkt Dostepu, jesli go uzywasz!</string>
+    <string name="update_core_restart">Prosze uruchomic ponownie VPN i dokonczyc instalacje!         Po instalacji ponownie ustaw Punkt Dostepu, jesli go uzywasz!</string>
 
     <string name="update_notification">Sciagam plik</string>
     <string name="update_interrupt_notification">Sciaganie zostalo zatrzymane</string>
     <string name="cancel_download">Anuluj sciaganie</string>
     <string name="update_new_version">Nowa wersja:</string>
-    <string name="update_ipro_has_apdate">Jest dostepna nowa wersja Fulldive VPN. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
+    <string name="update_ipro_has_apdate">Jest dostepna nowa wersja VPN. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="update_dnscrypt_has_apdate">Jest dostepna aktualizacja DNSCrypt. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="update_tor_has_apdate">Jest dostepna aktualizacja Tora. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="update_itpd_has_apdate">Jest dostepna aktualizacja Purple I2P. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
@@ -398,16 +398,16 @@
 
     <string name="only_for_pro">Tylko wersja PRO</string>
     <string name="donate">Dotacja</string>
-    <string name="donate_project">Projekt Fulldive VPN potrzebuje Twojego wsparcia. Prosze odwiedz strone dotacji lub wprowadz otrzymany kod rejestracyjny.</string>
+    <string name="donate_project">Projekt VPN potrzebuje Twojego wsparcia. Prosze odwiedz strone dotacji lub wprowadz otrzymany kod rejestracyjny.</string>
     <string name="donate_button">Odwiedz</string>
     <string name="enter_code_button">Wprowadz kod</string>
     <string name="enter_code">wprowadz kod</string>
-    <string name="thanks_for_donate">Projekt Fulldive VPN Project i jego Autor wyrazaja podziekowania
+    <string name="thanks_for_donate">Projekt VPN Project i jego Autor wyrazaja podziekowania
         za wsparcie. Czy chcialbys pobrac i wykonac upgrade do wersji PRO? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="pref_common_wakelock_summ">Dodatkowa ochrona bez trybu rootowania, aby zapobiec śmierci aplikacji przez Androida. Może wyczerpać baterię</string>
     <string name="pref_common_wakelock">Zapobiegaj uśpieniu urządzenia</string>
-    <string name="message_no_root_used">Możesz używać Fulldive VPN z lokalnym trybem VPN lub aplikacjami z własnym proxy lub lokalną funkcją VPN w trybie proxy.</string>
-    <string name="message_no_root_used_kitkat">Możesz używać Fulldive VPN z aplikacjami z własnym proxy lub lokalną funkcją VPN w trybie proxy.</string>
+    <string name="message_no_root_used">Możesz używać VPN z lokalnym trybem VPN lub aplikacjami z własnym proxy lub lokalną funkcją VPN w trybie proxy.</string>
+    <string name="message_no_root_used_kitkat">Możesz używać VPN z aplikacjami z własnym proxy lub lokalną funkcją VPN w trybie proxy.</string>
     <string name="pref_dnscrypt_relays">Zrodla</string>
     <string name="pref_dnscrypt_relays_delay_summ">Lista  przekaźnik wygasa po uplywie refresh_delay godzin.</string>
     <string name="pref_dnscrypt_relays_categ">Przekaźnik</string>
@@ -427,29 +427,26 @@
     <string name="main_fragment_access_i2p">" Dostęp do stron I2P za pomocą Purple I2P"</string>
     <string name="tvTorConnecting">Złączony</string>
     <string name="ask_force_close_title">Attention</string>
-    <string name="ask_force_close_text">Fulldive VPN cannot start %s! Please check %s settings or try to Force Close the application. If this does not help, please reboot your device.</string>
+    <string name="ask_force_close_text">VPN cannot start %s! Please check %s settings or try to Force Close the application. If this does not help, please reboot your device.</string>
     <string name="ask_force_close_btn">Force close</string>
     <string name="add_custom_server_title">Dodaj serwer</string>
     <string name="add_custom_server_error">Niepoprawna niestandardowa konfiguracja serwera. Sprawdź pole SDNS.</string>
     <string name="pref_tor_clean_module_folder">Wyczyść folder modułu</string>
     <string name="done">Gotowy</string>
     <string name="pending_purchase">Pamiętaj, że masz oczekujący zakup:</string>
-    <string name="buy_premium_gp">Projekt Fulldive VPN potrzebuje Twojego wsparcia. Naciśnij OK, aby kupić funkcje premium.</string>
+    <string name="buy_premium_gp">Projekt VPN potrzebuje Twojego wsparcia. Naciśnij OK, aby kupić funkcje premium.</string>
     <string name="wrong_purchase_signature_gp">Przepraszamy, ale nie można potwierdzić zakupu. Otrzymasz zwrot pieniędzy po 3 dniach.</string>
     <string name="premium">Wersja premium</string>
     <string name="only_premium_feature">Niestety ta funkcja jest dostępna tylko w wersji premium.</string>
     <string name="agree">Zgadzam</string>
     <string name="disagree">Nie zgadzam</string>
     <string name="agreement_text">
-        \tThanks for choosing Fulldive VPN. I hope that it will be useful for your privacy and comfortable use of the Internet.
-        \n\tFulldive VPN includes Tor, DNSCrypt and Purple I2P as modules.
-        \n\tFulldive VPN can use root, if your device has root privileges, or uses a local VPN to deliver Internet traffic to Tor, DNSCrypt and I2P networks.
+        \tThanks for choosing VPN. I hope that it will be useful for your privacy and comfortable use of the Internet.
+        \n\tVPN includes Tor, DNSCrypt and Purple I2P as modules.
+        \n\tVPN can use root, if your device has root privileges, or uses a local VPN to deliver Internet traffic to Tor, DNSCrypt and I2P networks.
         \n\tThis product is produced independently from the Tor®, DNSCrypt, Purple I2P software and carries no guarantee from The Above Projects about quality, suitability or anything else.
-        \n\tFulldive VPN is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-        \n\tCopyright © 2019-2021
-        \n\tGarmatin Oleksandr
-        \n\tinvizible.soft@gmail.com
-        \n\tinvizible.net/en/privacy
+        \n\thttps://www.fulldive.com
+        \n\thttps://www.fulldive.com/privacy-policy
     </string>
     <string name="pref_common_refresh_rules_summ">Zaktualizuj reguły przy każdej zmianie łączności</string>
     <string name="pref_common_refresh_rules">Odśwież reguły</string>
@@ -458,5 +455,5 @@
     <string name="pref_itpd_use_Socks_outproxy">SOCKS outproxy</string>
     <string name="pref_itpd_Socks_outproxy_address">SOCKS outproxy address</string>
     <string name="pref_itpd_Socks_outproxy_port">SOCKS outproxy port</string>
-    <string name="thanks_for_donate_gp">"Projekt Fulldive VPN Project i jego Autor wyrazaja podziekowania za wsparcie."</string>
+    <string name="thanks_for_donate_gp">"Projekt VPN Project i jego Autor wyrazaja podziekowania za wsparcie."</string>
 </resources>

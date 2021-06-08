@@ -1,2 +1,2 @@
-**Fulldive VPN beta 0.6.4**
+**VPN beta 0.6.4**
 * Bug fixes and stability improvements.

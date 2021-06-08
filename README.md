@@ -1,4 +1,4 @@
-# Fulldive VPN
+# VPN
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gedsh/invizible?style=plastic)
 ![GitHub Releases](https://img.shields.io/github/downloads/gedsh/invizible/latest/total?color=blue&style=plastic)
@@ -15,7 +15,7 @@
 
 *Keeps privacy, protects your device from dangerous sites, prevents tracking, gets access to blocked on-line resources*
 
-**Fulldive VPN** includes well-known modules such as **DNSCrypt**, **Tor** and **Purple I2P**.
+**VPN** includes well-known modules such as **DNSCrypt**, **Tor** and **Purple I2P**.
 They are used to achieve maximum security, privacy and comfortable use of the Internet.
 
 ### DNSCrypt
@@ -43,18 +43,18 @@ They are used to achieve maximum security, privacy and comfortable use of the In
 * Provides access to the hidden anonymous network Invisible Internet and "i2p" sites
 * Open-source
 
-To start using **Fulldive VPN**, all you need is an android phone.
+To start using **VPN**, all you need is an android phone.
 Just run all three modules and enjoy safe and comfortable Internet surfing. However,
 if you want to get full control over the application and your Internet connection - no problem!
 There is access to a large number of both simple and professional settings.
-You can flexibly configure **Fulldive VPN** itself, as well as its modules - **DNSCrypt**,
+You can flexibly configure **VPN** itself, as well as its modules - **DNSCrypt**,
 **Tor** and **Purple I2P**, to satisfy the most non-standard requirements.
 
-**Fulldive VPN** is an all-in-one application. After installation, you can remove all of your VPN applications and ad blockers.
- In most cases, **Fulldive VPN** works better, is more stable, and faster than free VPNs.
+**VPN** is an all-in-one application. After installation, you can remove all of your VPN applications and ad blockers.
+ In most cases, **VPN** works better, is more stable, and faster than free VPNs.
  It does not contain any ads, bloatware and does not spy upon its users.
  
-### Why Fulldive VPN is better than other similar applications:
+### Why VPN is better than other similar applications:
 * There are no analogs))).
 * The only application that provides handy use of **DNSCrypt** on Android.
 * It is often more stable than the Orbot application, which also uses the Tor network.
@@ -70,7 +70,7 @@ You can flexibly configure **Fulldive VPN** itself, as well as its modules - **D
 
 ## Compatibility
 
-**Fulldive VPN** can be used both with a rooted or non-rooted device.
+**VPN** can be used both with a rooted or non-rooted device.
 
 Please visit the [wiki](https://github.com/Gedsh/InviZible/wiki) to find out how to use it.
 
@@ -95,9 +95,9 @@ Telegram channel: [InviZiblePro](https://t.me/InviZibleProRus)
 
 Telegram group: [InviZiblePro_Group](https://t.me/InviZibleProRus_Group)
 
-There is support for the latest version of **Fulldive VPN** only.
+There is support for the latest version of **VPN** only.
 
-There is no support for things that are not directly related to **Fulldive VPN**.
+There is no support for things that are not directly related to **VPN**.
 
 There is no support for building and developing things by yourself.
 
@@ -109,7 +109,7 @@ To clone a project, use the command:
 git clone --recursive https://github.com/Gedsh/InviZible
 ```
 
-To build **Fulldive VPN** please use **Android Studio**.
+To build **VPN** please use **Android Studio**.
 
 If you see something like this:
 _Illegal character in opaque part at index 2: C:\KStore\keystore.properties_
@@ -124,19 +124,19 @@ project(':filepicker').projectDir = new File('android-filepicker/filepicker')
 ```
 
 It is expected that you can solve build problems yourself, so there is no support for building. 
-If you cannot build yourself, there are prebuilt versions of **Fulldive VPN** available [here](https://github.com/Gedsh/InviZible/releases/latest).
+If you cannot build yourself, there are prebuilt versions of **VPN** available [here](https://github.com/Gedsh/InviZible/releases/latest).
 
 #### Translating
 
 If you would like to translate this application into other languages,
 please send an email to the developer [invizible.soft@gmail.com](mailto:invizible.soft@gmail.com)
 
-Thanks to [POEditor](https://poeditor.com/), you can translate Fulldive VPN into your language with pleasure and for free.
+Thanks to [POEditor](https://poeditor.com/), you can translate VPN into your language with pleasure and for free.
 Just follow this [link](https://poeditor.com/join/project/h6ulNL9gEd).
 
 ## Attribution
 
-Fulldive VPN uses:
+VPN uses:
 
 * [DNSCrypt](https://github.com/jedisct1/dnscrypt-proxy)
 * [Tor](https://www.torproject.org/)
@@ -170,12 +170,12 @@ Copyright (c) 2019-2021 Garmatin Oleksandr invizible.soft@gmail.com
 
 All rights reserved
 
-This file is part of **Fulldive VPN**.
+This file is part of **VPN**.
 
-**Fulldive VPN** is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your discretion) any later version.
+**VPN** is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your discretion) any later version.
 
-**Fulldive VPN** is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+**VPN** is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with **Fulldive VPN**. If not, see [http://www.gnu.org/licenses/](https://www.gnu.org/licenses/)
+You should have received a copy of the GNU General Public License along with **VPN**. If not, see [http://www.gnu.org/licenses/](https://www.gnu.org/licenses/)
 
 

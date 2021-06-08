@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.8.2**
+**VPN beta 0.8.2**
 * Added DNS queries real-time log for the tethered device in Root mode with the Fix TTL option enabled.
 * Implemented iptables rules update when installing or uninstalling an application.
 * Improved request for new Tor bridges.

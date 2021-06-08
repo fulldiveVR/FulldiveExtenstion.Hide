@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.6.9**
+**VPN beta 0.6.9**
 * Updated Purple I2P to 2.30.0.
 * Removed dnswarden servers from the default settings.
 * Fixed modules autostart on some devices.

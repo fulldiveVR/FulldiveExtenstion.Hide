@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.7.2**
+**VPN beta 0.7.2**
 * Added Indonesian language.
 * Updated languages.
 * Added Edit configuration files options.

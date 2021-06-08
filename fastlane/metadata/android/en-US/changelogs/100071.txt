@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.7.1**
+**VPN beta 0.7.1**
 * Fixed Tor bridges for android 4.4.2.
 * Added German and Persian languages.
 * Added I2P outproxy options.

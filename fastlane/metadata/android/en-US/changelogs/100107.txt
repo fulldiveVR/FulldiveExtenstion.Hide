@@ -1,4 +1,4 @@
-**Fulldive VPN beta 1.0.7**
+**VPN beta 1.0.7**
 * Improved ARP spoofing and rogue DHCP attacks detection when always-on VPN is active.
 * Updated Persian language.
 * Minor fixes.

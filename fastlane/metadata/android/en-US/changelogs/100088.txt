@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.8.8**
+**VPN beta 0.8.8**
 * Updated Purple I2P to version 2.32.0.
 * Updated Purple I2P default configuration.
 * Fixed modules logs when Run modules with root option is enabled.

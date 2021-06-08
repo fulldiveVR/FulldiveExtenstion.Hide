@@ -1,2 +1,2 @@
-**Fulldive VPN beta 0.6.6**
+**VPN beta 0.6.6**
 * Bug fixes and performance improvements

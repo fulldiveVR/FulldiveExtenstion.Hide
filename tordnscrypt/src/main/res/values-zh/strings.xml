@@ -46,8 +46,8 @@
     <string name="premium">"高级版"</string>
     <string name="agree">"我同意"</string>
     <string name="disagree">"我拒绝"</string>
-    <string name="message_no_root_used">"您可以在本地 VPN 模式使用 Fulldive VPN，或在代理模式下使用具有代理或本地 VPN 功能的应用。"</string>
-    <string name="message_no_root_used_kitkat">"您可以在代理模式下通过具有代理或本地 VPN 功能的应用使用 Fulldive VPN。"</string>
+    <string name="message_no_root_used">"您可以在本地 VPN 模式使用 VPN，或在代理模式下使用具有代理或本地 VPN 功能的应用。"</string>
+    <string name="message_no_root_used_kitkat">"您可以在代理模式下通过具有代理或本地 VPN 功能的应用使用 VPN。"</string>
     <string name="write_file_error">"保存文件出错！"</string>
     <string name="drawer_menu_commonSettings">"通用设置"</string>
     <string name="drawer_menu_DNSSettings">"DNSCrypt 设置"</string>
@@ -109,7 +109,7 @@
     <string name="pref_fast_block_http_summ">"拒绝连接到 http 端口 80"</string>
     <string name="pref_fast_categ_update">"更新"</string>
     <string name="pref_fast_auto_update">"自动更新"</string>
-    <string name="pref_fast_auto_update_summ">"每日检查 Fulldive VPN 和模块更新"</string>
+    <string name="pref_fast_auto_update_summ">"每日检查 VPN 和模块更新"</string>
     <string name="pref_fast_chek_update">"检查更新"</string>
     <string name="pref_fast_chek_update_summ">"立即检查是否有新版本"</string>
     <string name="pref_fast_through_tor_update">"严格通过 Tor 更新"</string>
@@ -128,7 +128,7 @@
     <string name="pref_common_wakelock_summ">"无 Root 模式下的附加保护防止应用被 Android 系统杀死。可能消耗电池"</string>
     <string name="pref_common_show_help">"帮助信息"</string>
     <string name="pref_common_show_help_summ">"总是显示帮助信息"</string>
-    <string name="pref_common_notification_helper">"请对 Fulldive VPN 关闭 Android 电池优化。 否则 Android 将随时杀死 DNSCrypt，Tor 或 I2P。在特定系统上，如 MIUI，需要一些额外步骤关闭对 Fulldive VPN 的电池优化 （例如安全-&gt;电池-&gt;省电-&gt;选择 Fulldive VPN-&gt;无后台限制， 安全-&gt;允许自启动并长按主页键-&gt;打开最近应用-&gt;向下滑动 Fulldive VPN 并点击内存锁标志）。"</string>
+    <string name="pref_common_notification_helper">"请对 VPN 关闭 Android 电池优化。 否则 Android 将随时杀死 DNSCrypt，Tor 或 I2P。在特定系统上，如 MIUI，需要一些额外步骤关闭对 VPN 的电池优化 （例如安全-&gt;电池-&gt;省电-&gt;选择 VPN-&gt;无后台限制， 安全-&gt;允许自启动并长按主页键-&gt;打开最近应用-&gt;向下滑动 VPN 并点击内存锁标志）。"</string>
     <string name="pref_common_use_busybox">"选择 BusyBox"</string>
     <string name="pref_common_categ_hotspot">"热点-实验性"</string>
     <string name="pref_common_tethering_autostart">"设备启动时启动数据共享"</string>
@@ -290,7 +290,7 @@
     <string name="helper_dnscrypt_stopped">"似乎 DNSCrypt 被 Android 系统杀死了。 您的互联网连接已恢复。检查设备设置!"</string>
     <string name="helper_tor_stopped">"似乎 Tor 被 Android 系统杀死了。 您的互联网连接已恢复。检查设备设置!"</string>
     <string name="helper_itpd_stopped">"似乎 I2P 被 Android 系统杀死了。检查设备设置!"</string>
-    <string name="helper_dnscrypt_no_internet">"似乎 Fulldive VPN 无法连接到互联网。 请检查防火墙规则。允许 Fulldive VPN 和 ROOT 应用连接。"</string>
+    <string name="helper_dnscrypt_no_internet">"似乎 VPN 无法连接到互联网。 请检查防火墙规则。允许 VPN 和 ROOT 应用连接。"</string>
     <string name="helper_tor_use_bridges">"似乎 Tor 无法连接到互联网。 ISP 可能阻止 Tor 连接。您可以尝试使用网桥。请前往菜单 -&gt; 快速设置 -&gt; 网桥设置"</string>
     <string name="action_mode_child_lock">"儿童锁"</string>
     <string name="action_mode_dialog_message_lock">"您可以锁定此应用控制。请输入密码或使用先前的。"</string>
@@ -307,12 +307,12 @@
     <string name="update_core_yes">"更新"</string>
     <string name="update_core_no">"稍候"</string>
     <string name="update_core_not_show_again">"不再询问"</string>
-    <string name="update_core_restart">"请重启 Fulldive VPN 并允许完全安装！ 如果您使用热点请在安装后重新配置！"</string>
+    <string name="update_core_restart">"请重启 VPN 并允许完全安装！ 如果您使用热点请在安装后重新配置！"</string>
     <string name="update_notification">"正在下载文件"</string>
     <string name="update_interrupt_notification">"下载已停止"</string>
     <string name="cancel_download">"取消下载"</string>
     <string name="update_new_version">"新版本："</string>
-    <string name="update_ipro_has_apdate">"Fulldive VPN 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
+    <string name="update_ipro_has_apdate">"VPN 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
     <string name="update_dnscrypt_has_apdate">"DNSCrypt 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
     <string name="update_tor_has_apdate">"Tor 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
     <string name="update_itpd_has_apdate">"Purple I2P 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
@@ -327,14 +327,14 @@
     <string name="update_installed">"更新已安装。"</string>
     <string name="update_over_three_activations">"似乎您已激活使用此代码激活了 InviZible 的三份副本。如果有问题，请联系开发者。"</string>
     <string name="update_wrong_code">"似乎您的 PRO 是错的。请联系开发者。"</string>
-    <string name="update_over_five_times">"您今天已检查 Fulldive VPN 更新 5 次以上了。请稍后重试。"</string>
+    <string name="update_over_five_times">"您今天已检查 VPN 更新 5 次以上了。请稍后重试。"</string>
     <string name="only_for_pro">"仅用于 PRO 版本"</string>
     <string name="donate">"捐助"</string>
-    <string name="donate_project">"Fulldive VPN 项目需要您的帮助。请访问捐助页面或输入收到的注册码。"</string>
+    <string name="donate_project">"VPN 项目需要您的帮助。请访问捐助页面或输入收到的注册码。"</string>
     <string name="donate_button">"访问"</string>
     <string name="enter_code_button">"输入代码"</string>
     <string name="enter_code">"输入代码"</string>
-    <string name="thanks_for_donate">"Fulldive VPN 项目及其作者感谢您的帮助。 您想要下载并升级到 PRO 吗？更新将在后台继续。"</string>
+    <string name="thanks_for_donate">"VPN 项目及其作者感谢您的帮助。 您想要下载并升级到 PRO 吗？更新将在后台继续。"</string>
     <string name="pref_dnscrypt_relays_summ">"可用中继的远程列表。"</string>
     <string name="vpn_mode_active">"VPN 模式已激活"</string>
     <string name="vpn_mode_off">"VPN 模式已关闭"</string>
@@ -344,23 +344,21 @@
     <string name="main_fragment_protect_dns">"使用 DNSCRYPT 保护 DNS"</string>
     <string name="main_fragment_access_i2p">"使用 Purple I2P 访问 I2P 站点"</string>
     <string name="ask_force_close_title">"注意"</string>
-    <string name="ask_force_close_text">"Fulldive VPN 无法启动 %s！请检查 %s 设置或尝试强制关闭应用。 如果不起作用，请重启您的设备。"</string>
+    <string name="ask_force_close_text">"VPN 无法启动 %s！请检查 %s 设置或尝试强制关闭应用。 如果不起作用，请重启您的设备。"</string>
     <string name="ask_force_close_btn">"强制关闭"</string>
     <string name="add_custom_server_title">"添加自定义服务器"</string>
     <string name="add_custom_server_error">"无效自定义服务器配置。请检查 SDNS 字段。"</string>
     <string name="pending_purchase">"请注意您有一个待完成的购买："</string>
-    <string name="buy_premium_gp">"Fulldive VPN 项目需要您的帮助。点按 OK 购买高级功能。"</string>
+    <string name="buy_premium_gp">"VPN 项目需要您的帮助。点按 OK 购买高级功能。"</string>
     <string name="wrong_purchase_signature_gp">"抱歉，无法确认您的购买。您将在 3 日后收到退款。"</string>
     <string name="only_premium_feature">"不幸的是，此功能仅高级版可用。"</string>
-    <string name="agreement_text">"\t感谢选择 Fulldive VPN。我希望它将对您的隐私有帮助并使您舒适地使用互联网。
-\tFulldive VPN 包含 Tor，DNSCrypt 和 Purple I2P 模块。
-\tFulldive VPN 可以使用 root，如果您的设备拥有 root 权限，或使用本地 VPN 将互联网流量传入 Tor，DNSCrypt 和 I2P 网络。
+    <string name="agreement_text">"\t感谢选择 VPN。我希望它将对您的隐私有帮助并使您舒适地使用互联网。
+\tVPN 包含 Tor，DNSCrypt 和 Purple I2P 模块。
+\tVPN 可以使用 root，如果您的设备拥有 root 权限，或使用本地 VPN 将互联网流量传入 Tor，DNSCrypt 和 I2P 网络。
 \t此产品独立于 Tor®，DNSCrypt，Purple I2P 软件，不附带来自上述项目的任何关于质量，适用性或任何其它方面的担保。
-\tFulldive VPN 在希望有用的愿景下分发，但没有任何担保；甚至不隐含对特定目的的可销售性和可用性的担保。
-\tCopyright © 2019-2021
-\tGarmatin Oleksandr
-\tinvizible.soft@gmail.com
-\tinvizible.net/en/privacy"</string>
+\tVPN 在希望有用的愿景下分发，但没有任何担保；甚至不隐含对特定目的的可销售性和可用性的担保。
+   \n\thttps://www.fulldive.com
+        \n\thttps://www.fulldive.com/privacy-policy</string>
     <string name="pref_itpd_use_HTTP_outproxy">"HTTP 出口代理"</string>
     <string name="pref_itpd_HTTP_outproxy_address">"HTTP 出口代理地址"</string>
     <string name="pref_itpd_use_Socks_outproxy">"SOCKS 出口代理"</string>
@@ -372,7 +370,7 @@
     <string name="pref_tor_edit_conf">"直接编辑 tor.conf"</string>
     <string name="pref_itpd_edit_conf">"直接编辑 i2pd.conf"</string>
     <string name="pref_itpd_edit_tunnels">"直接编辑 tunnels.conf"</string>
-    <string name="config_changes_dialog_message">"您想要保存更改吗？它会破坏 Fulldive VPN。"</string>
+    <string name="config_changes_dialog_message">"您想要保存更改吗？它会破坏 VPN。"</string>
     <string name="pref_dnscrypt_ipv4_servers_summ">"使用 IPv4 可达的服务器"</string>
     <string name="pref_dnscrypt_ipv6_servers_summ">"使用 IPv6 可达的服务器"</string>
     <string name="pref_dnscrypt_import_forwarding_rules">"导入转发规则"</string>
@@ -408,7 +406,7 @@
     <string name="pref_common_arp_block_internet_summ">"攻击期间互联网连接将被阻止"</string>
     <string name="pref_common_proxy_categ">"代理"</string>
     <string name="pref_common_proxy">"使用 socks5 代理"</string>
-    <string name="pref_common_proxy_summ">"Fulldive VPN 将使所有连接通过 SOCKS5 代理"</string>
+    <string name="pref_common_proxy_summ">"VPN 将使所有连接通过 SOCKS5 代理"</string>
     <string name="pref_common_compatibility_mode">"兼容模式"</string>
     <string name="pref_common_compatibility_mode_summ">"如果您的设备使用自定义 ROM 并且当点按启动按钮时连接丢失，启用此模式"</string>
     <string name="pref_common_shell_control">"启用脚本控制"</string>
@@ -488,5 +486,5 @@
     <string name="btnResetSettings">"重置设置"</string>
     <string name="backupSaved">"备份已保存："</string>
     <string name="backupRestored">"备份已恢复"</string>
-    <string name="thanks_for_donate_gp">"Fulldive VPN 项目及其作者感谢您的帮助。"</string>
+    <string name="thanks_for_donate_gp">"VPN 项目及其作者感谢您的帮助。"</string>
 </resources>

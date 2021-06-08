@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.9.1**
+**VPN beta 0.9.1**
 * Real-time Internet connections logs improvements.
 * Performance improvements.
 * Attempt to fix RemoteServiceException.

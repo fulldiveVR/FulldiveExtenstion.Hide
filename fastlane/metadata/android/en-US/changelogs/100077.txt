@@ -1,4 +1,4 @@
-**Fulldive VPN beta 0.7.7**
+**VPN beta 0.7.7**
 * Improved power wakelock and implemented wifi wakelock for Prevent device sleep option and app update.
 * Fixed use of system DNS when ignore_system_dns is disabled.
 * Fixed use of system DNS with snowflake bridges.

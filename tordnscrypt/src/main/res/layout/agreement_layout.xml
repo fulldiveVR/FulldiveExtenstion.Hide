@@ -14,7 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:cropToPadding="true"
-        app:srcCompat="@drawable/ic_help_title"
+        app:srcCompat="@drawable/ic_fd_vpn"
         tools:ignore="ContentDescription" />
 
     <androidx.appcompat.widget.AppCompatTextView

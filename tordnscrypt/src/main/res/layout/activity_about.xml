@@ -30,7 +30,7 @@
                     android:adjustViewBounds="true"
                     android:background="@color/ic_launcher_background"
                     android:cropToPadding="true"
-                    app:srcCompat="@drawable/ic_help_title"
+                    app:srcCompat="@drawable/ic_fd_vpn"
                     tools:ignore="ContentDescription" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -38,7 +38,7 @@
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:layout_gravity="bottom|end"
-                    app:srcCompat="@drawable/gplv3" />
+                    app:srcCompat="@drawable/ic_fd_vpn" />
             </FrameLayout>
 
             <androidx.appcompat.widget.LinearLayoutCompat

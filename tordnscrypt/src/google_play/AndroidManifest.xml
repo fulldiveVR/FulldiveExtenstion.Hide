@@ -59,7 +59,7 @@
         android:name=".ApplicationBase"
         android:allowBackup="false"
         android:appCategory="productivity"
-        android:banner="@drawable/banner_tv"
+        android:banner="@mipmap/ic_launcher"
         android:extractNativeLibs="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"

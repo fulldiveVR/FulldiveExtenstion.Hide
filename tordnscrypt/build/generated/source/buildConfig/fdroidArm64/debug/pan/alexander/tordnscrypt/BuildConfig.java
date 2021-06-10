@@ -13,5 +13,5 @@ public final class BuildConfig {
   public static final int VERSION_CODE = 3133;
   public static final String VERSION_NAME = "5.3.0";
   // Field from default config.
-  public static final java.util.Date BUILD_TIME = new java.util.Date(1623313685530L);
+  public static final java.util.Date BUILD_TIME = new java.util.Date(1623315541771L);
 }

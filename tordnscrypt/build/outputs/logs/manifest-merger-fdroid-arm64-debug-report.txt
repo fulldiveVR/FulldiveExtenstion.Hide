@@ -1,0 +1,717 @@
+-- Merging decision tree log ---
+provider#androidx.core.content.FileProvider
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:149:9-157:20
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:149:9-157:20
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:149:9-157:20
+	android:grantUriPermissions
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:162:13-47
+	android:authorities
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:160:13-64
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:161:13-37
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:159:13-62
+manifest
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:1-163:12
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:1-163:12
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:1-163:12
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:1-163:12
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:1-163:12
+MERGED from [androidx.databinding:viewbinding:4.2.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b7c1cea6c631d0b3240476715bd5e0ee/viewbinding-4.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.material:material:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b8721f2d746093988e747bf0dc3e8f30/material-1.3.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c627a146c7a3766ceee070eb3539ded4/constraintlayout-2.0.4/AndroidManifest.xml:2:1-11:12
+MERGED from [:filepicker] /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/android-filepicker/filepicker/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.preference:preference-ktx:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/215f8f12a31f94dc5070ac1220f6d430/preference-ktx-1.1.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.preference:preference:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1be957a213cb2629f904ba59cb6bbccb/preference-1.1.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a0c6fc41702bd7dbd95c65a4f4d7cfa8/appcompat-1.3.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/189bedbe71747a16aac89be471222cc0/legacy-support-v4-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/71dfdc8778c4c4d0ec3d4e4a4db57e42/viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.recyclerview:recyclerview:1.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c61287afbd6b4e61b2f5c8f2ff0d39b6/recyclerview-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [eu.chainfire:libsuperuser:1.1.0.202004101746] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1060c8656113a5d1bf8da769bfd4f51f/libsuperuser-1.1.0.202004101746/AndroidManifest.xml:2:1-11:12
+MERGED from [com.jrummyapps:android-shell:1.0.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/225453f9d86e7157ffc56b65f5b6a213/android-shell-1.0.1/AndroidManifest.xml:2:1-10:12
+MERGED from [androidx.fragment:fragment-ktx:1.2.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/537aaa2b294d36a719f1f70c2519be7d/fragment-ktx-1.2.4/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity-ktx:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/526d951c456237515522c9194f2fcdaa/activity-ktx-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core-ktx:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7e08e71c97c8de0f8a2c8197f8f66601/core-ktx-1.5.0/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.fragment:fragment:1.3.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/e52100aea45ea449724ae082f7823544/fragment-1.3.4/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.2.3] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/48c830a03c6b2f69c14bea545d880f10/activity-1.2.3/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/75d8e552a9f616ba1816320a2d5eae2d/appcompat-resources-1.3.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c29d8a471347608dea2aa4eed9dad3fe/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0d1d8d0288eb2489e88793639c27f97f/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c5ff3aaa4d3378ae6e3f40bd372583a6/media-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/877fc727c2e11696c734ca16140e1d0b/dynamicanimation-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/90ba0ad88321ba57ba46c7c41b5c23eb/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0ba253e7c4ff6345db2fd19941bd1cfb/coordinatorlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/bd839e4409fdc73eb11500bb6abba1fd/transition-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/02df51ec2503c6c142e07bf215f12540/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/59548ff2976703e57236df7e47cb14af/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0594e3d1642e234a37e24f68a1ef280e/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/80930e05b22369eb5e9c6c793faab7ab/slidingpanelayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a64774bf1ccaad151af6580ad157e552/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/3ded1a78659d35ebe1b63d0031548a4b/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b01c8761475865138c9498971307124b/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7a4a8747fd4262cc2af39a6a9362680f/asynclayoutinflater-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/967826c52c5558ea22060f7728ba7d3b/core-1.5.0/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/2a2abeba04c77eb7580326d77a02cd94/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a650477e21556eb951e2ebfabac8975b/lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/69ec76d61e284b02a89b85d4e831374e/savedstate-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d4942d7dcc1b5aed89d7dcb472d70ed9/lifecycle-runtime-ktx-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7a90a1dded65a771acf453f0a4866973/lifecycle-runtime-2.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/238715376c70b590c35278c6392f0099/lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/09dfd543c5083a55a543a07b910e9d5f/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c24949a4d0d17ce79ca10f533d267c96/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c0ffd22c92d538124695a21a53574ee8/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a2c0d241c1430bb4c4e8eaa2e041383a/tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/6fe840036c5d264381ccf0caf0e125a3/lifecycle-livedata-core-ktx-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/aa4f2bec0563be32a9526f12c36b5a7c/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/60b22109e486a9f22a91253ee7db7262/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/5be0ad23f665fde781d660f6702ea073/core-runtime-2.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0967fe5e45bd58c5aa622f7a4ff108f2/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/6b8ba596ea3a5610a0a6f4321d32f9ac/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/dd369a177b84f646b7c056e3f9d98125/print-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/46c85ba6b01157e32d44fbd61dd3fc00/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:17:1-28:12
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:17:1-75:12
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android-androidx:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/eb072ba1074eb8f4faca665ad286f2de/leakcanary-object-watcher-android-androidx-2.6/AndroidManifest.xml:2:1-7:12
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android-support-fragments:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/84a87da80bee32a34e38ca90f293a443/leakcanary-object-watcher-android-support-fragments-2.6/AndroidManifest.xml:2:1-7:12
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:2:1-15:12
+MERGED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:2:1-15:12
+MERGED from [com.squareup.leakcanary:leakcanary-android-utils:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1d1fa706612143f9bde166b90186d7dd/leakcanary-android-utils-2.6/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b485d7dcb73f50fda850fbfec292a113/annotation-experimental-1.0.0/AndroidManifest.xml:17:1-24:12
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:2:1-169:12
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:2:1-169:12
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:2:1-169:12
+	package
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:4:5-40
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:1-163:12
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:1-163:12
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:2:11-69
+	tools:targetApi
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:7:5-24
+	android:targetSandboxVersion
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:6:5-37
+	android:installLocation
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:5:5-43
+uses-feature#android.software.leanback
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:9:5-11:36
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:9:5-11:36
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:9:5-11:36
+	android:required
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:11:9-33
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:10:9-49
+uses-feature#android.hardware.touchscreen
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:12:5-14:36
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:12:5-14:36
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:12:5-14:36
+	android:required
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:14:9-33
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:13:9-52
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:16:5-18:38
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:16:5-18:38
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:16:5-18:38
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:24:5-81
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:24:5-81
+	android:maxSdkVersion
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:18:9-35
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:17:9-65
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:19:5-80
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:19:5-80
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:19:5-80
+MERGED from [:filepicker] /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/android-filepicker/filepicker/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-80
+MERGED from [:filepicker] /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/android-filepicker/filepicker/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-80
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:23:5-80
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:23:5-80
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:19:22-77
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:20:5-81
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:20:5-81
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:20:5-81
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:20:22-78
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:21:5-76
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:21:5-76
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:21:5-76
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:21:22-73
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:22:5-79
+REJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:22:5-79
+	tools:node
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:24:9-28
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:22:22-76
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:23:5-76
+REJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:23:5-76
+	tools:node
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:27:9-28
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:23:22-73
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:24:5-79
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:24:5-79
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:24:22-76
+uses-permission#android.permission.INTERNET
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:25:5-67
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:25:5-67
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:25:5-67
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:25:22-64
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:26:5-77
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:26:5-77
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:26:5-77
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:26:5-77
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:26:5-77
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:26:22-74
+uses-permission#android.permission.REQUEST_INSTALL_PACKAGES
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:27:5-83
+REJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:27:5-83
+	tools:node
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:33:9-28
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:27:22-80
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:28:5-68
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:28:5-68
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:28:5-68
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:28:22-65
+uses-permission#android.permission.QUERY_ALL_PACKAGES
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:29:5-31:53
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:29:5-31:53
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:29:5-31:53
+	tools:ignore
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:31:9-50
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:30:9-61
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:32:5-66
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:32:5-66
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:32:5-66
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:32:22-63
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:34:5-36:47
+REJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:34:5-36:47
+	tools:node
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:43:9-28
+	tools:ignore
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:36:9-44
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:35:9-57
+uses-permission#android.permission.MANAGE_USERS
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:37:5-39:47
+REJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:37:5-39:47
+	tools:node
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:47:9-28
+	tools:ignore
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:39:9-44
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:38:9-55
+uses-permission#android.permission.INTERACT_ACROSS_USERS
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:40:5-42:47
+REJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:40:5-42:47
+	tools:node
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:51:9-28
+	tools:ignore
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:42:9-44
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:41:9-64
+application
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:44:5-162:19
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:44:5-162:19
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:44:5-162:19
+MERGED from [com.google.android.material:material:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b8721f2d746093988e747bf0dc3e8f30/material-1.3.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b8721f2d746093988e747bf0dc3e8f30/material-1.3.0/AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c627a146c7a3766ceee070eb3539ded4/constraintlayout-2.0.4/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c627a146c7a3766ceee070eb3539ded4/constraintlayout-2.0.4/AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/967826c52c5558ea22060f7728ba7d3b/core-1.5.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/967826c52c5558ea22060f7728ba7d3b/core-1.5.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c0ffd22c92d538124695a21a53574ee8/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c0ffd22c92d538124695a21a53574ee8/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:22:5-26:19
+MERGED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:22:5-26:19
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:28:5-73:19
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:28:5-73:19
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:7:5-13:19
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:7:5-13:19
+MERGED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:7:5-13:19
+MERGED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:7:5-13:19
+	android:extractNativeLibs
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:49:9-41
+	android:appCategory
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:47:9-43
+	android:roundIcon
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:56:9-54
+	android:largeHeap
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:53:9-33
+	android:icon
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:51:9-43
+	android:banner
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:48:9-45
+	android:networkSecurityConfig
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:55:9-69
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/967826c52c5558ea22060f7728ba7d3b/core-1.5.0/AndroidManifest.xml:24:18-86
+	android:supportsRtl
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:57:9-35
+	android:label
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:52:9-41
+	android:hardwareAccelerated
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:50:9-43
+	tools:targetApi
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:60:9-28
+	android:allowBackup
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:46:9-36
+	android:theme
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:58:9-40
+	android:logo
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:54:9-43
+	android:usesCleartextTraffic
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:59:9-44
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:45:9-40
+service#pan.alexander.tordnscrypt.utils.AppExitDetectService
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:62:9-66:43
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:62:9-66:43
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:62:9-66:43
+	android:enabled
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:64:13-35
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:65:13-37
+	android:stopWithTask
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:66:13-40
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:63:13-55
+service#pan.alexander.tordnscrypt.update.UpdateService
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:67:9-70:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:67:9-70:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:67:9-70:40
+	android:enabled
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:69:13-35
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:70:13-37
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:68:13-49
+activity#pan.alexander.tordnscrypt.help.HelpActivity
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:72:9-55
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:72:9-55
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:72:9-55
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:72:19-52
+service#pan.alexander.tordnscrypt.utils.RootExecService
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:74:9-77:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:74:9-77:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:74:9-77:40
+	android:enabled
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:76:13-35
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:77:13-37
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:75:13-50
+service#pan.alexander.tordnscrypt.modules.ModulesService
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:78:9-81:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:78:9-81:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:78:9-81:40
+	android:enabled
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:80:13-35
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:81:13-37
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:79:13-51
+activity#pan.alexander.tordnscrypt.MainActivity
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:83:9-106:20
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:83:9-106:20
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:83:9-106:20
+	android:label
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:85:13-56
+	android:theme
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:86:13-56
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:84:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER+category:name:android.intent.category.LEANBACK_LAUNCHER
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:87:13-92:29
+action#android.intent.action.MAIN
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:88:17-69
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:88:25-66
+category#android.intent.category.LEANBACK_LAUNCHER
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:90:17-86
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:90:27-83
+category#android.intent.category.LAUNCHER
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:91:17-77
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:91:27-74
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:invizible.net+data:host:www.invizible.net+data:scheme:http+data:scheme:https
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:93:13-105:29
+action#android.intent.action.VIEW
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:94:17-69
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:94:25-66
+category#android.intent.category.DEFAULT
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:96:17-76
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:96:27-73
+category#android.intent.category.BROWSABLE
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:97:17-78
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:97:27-75
+data
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:99:17-101:46
+	android:host
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:100:21-53
+	android:scheme
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:101:21-43
+receiver#pan.alexander.tordnscrypt.BootCompleteReceiver
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:108:9-120:20
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:108:9-120:20
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:108:9-120:20
+	android:enabled
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:110:13-35
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:109:13-49
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.MY_PACKAGE_REPLACED+action:name:android.intent.action.QUICKBOOT_POWERON+action:name:android.intent.action.REBOOT+action:name:com.htc.intent.action.QUICKBOOT_POWERON+action:name:pan.alexander.tordnscrypt.ALWAYS_ON_VPN+action:name:pan.alexander.tordnscrypt.SHELL_SCRIPT_CONTROL
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:111:13-119:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:112:17-79
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:112:25-76
+action#android.intent.action.QUICKBOOT_POWERON
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:113:17-82
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:113:25-79
+action#android.intent.action.MY_PACKAGE_REPLACED
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:114:17-84
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:114:25-81
+action#pan.alexander.tordnscrypt.ALWAYS_ON_VPN
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:115:17-82
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:115:25-79
+action#pan.alexander.tordnscrypt.SHELL_SCRIPT_CONTROL
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:116:17-89
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:116:25-86
+action#com.htc.intent.action.QUICKBOOT_POWERON
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:117:17-82
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:117:25-79
+action#android.intent.action.REBOOT
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:118:17-71
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:118:25-68
+receiver#pan.alexander.tordnscrypt.settings.firewall.FirewallNotification
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:122:9-124:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:122:9-124:40
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:122:9-124:40
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:124:13-37
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:123:13-67
+activity#pan.alexander.tordnscrypt.backup.BackupActivity
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:126:9-128:47
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:126:9-128:47
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:126:9-128:47
+	android:theme
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:128:13-44
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:127:13-50
+activity#pan.alexander.tordnscrypt.SettingsActivity
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:129:9-132:47
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:129:9-132:47
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:129:9-132:47
+	android:label
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:131:13-49
+	android:theme
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:132:13-44
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:130:13-45
+activity#pan.alexander.tordnscrypt.AboutActivity
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:133:9-51
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:133:9-51
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:133:9-51
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:133:19-48
+service#pan.alexander.tordnscrypt.utils.GetIPsJobService
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:135:9-139:72
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:135:9-139:72
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:135:9-139:72
+	android:enabled
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:137:13-35
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:138:13-36
+	android:permission
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:139:13-69
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:136:13-51
+service#pan.alexander.tordnscrypt.vpn.service.ServiceVPN
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:140:9-147:19
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:140:9-147:19
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:140:9-147:19
+	android:label
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:142:13-45
+	android:permission
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:143:13-69
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:141:13-51
+intent-filter#action:name:android.net.VpnService
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:144:13-146:29
+action#android.net.VpnService
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:145:17-65
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:145:25-62
+provider#pan.alexander.tordnscrypt.appextension.ExtensionContentProvider
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:158:9-161:39
+	android:authorities
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:160:13-59
+	android:exported
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:161:13-36
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:159:13-66
+uses-sdk
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+MERGED from [androidx.databinding:viewbinding:4.2.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b7c1cea6c631d0b3240476715bd5e0ee/viewbinding-4.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.databinding:viewbinding:4.2.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b7c1cea6c631d0b3240476715bd5e0ee/viewbinding-4.2.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b8721f2d746093988e747bf0dc3e8f30/material-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b8721f2d746093988e747bf0dc3e8f30/material-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c627a146c7a3766ceee070eb3539ded4/constraintlayout-2.0.4/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c627a146c7a3766ceee070eb3539ded4/constraintlayout-2.0.4/AndroidManifest.xml:5:5-7:41
+MERGED from [:filepicker] /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/android-filepicker/filepicker/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:filepicker] /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/android-filepicker/filepicker/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.preference:preference-ktx:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/215f8f12a31f94dc5070ac1220f6d430/preference-ktx-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference-ktx:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/215f8f12a31f94dc5070ac1220f6d430/preference-ktx-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1be957a213cb2629f904ba59cb6bbccb/preference-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1be957a213cb2629f904ba59cb6bbccb/preference-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a0c6fc41702bd7dbd95c65a4f4d7cfa8/appcompat-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a0c6fc41702bd7dbd95c65a4f4d7cfa8/appcompat-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/189bedbe71747a16aac89be471222cc0/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/189bedbe71747a16aac89be471222cc0/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/71dfdc8778c4c4d0ec3d4e4a4db57e42/viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/71dfdc8778c4c4d0ec3d4e4a4db57e42/viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c61287afbd6b4e61b2f5c8f2ff0d39b6/recyclerview-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c61287afbd6b4e61b2f5c8f2ff0d39b6/recyclerview-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [eu.chainfire:libsuperuser:1.1.0.202004101746] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1060c8656113a5d1bf8da769bfd4f51f/libsuperuser-1.1.0.202004101746/AndroidManifest.xml:7:5-9:41
+MERGED from [eu.chainfire:libsuperuser:1.1.0.202004101746] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1060c8656113a5d1bf8da769bfd4f51f/libsuperuser-1.1.0.202004101746/AndroidManifest.xml:7:5-9:41
+MERGED from [com.jrummyapps:android-shell:1.0.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/225453f9d86e7157ffc56b65f5b6a213/android-shell-1.0.1/AndroidManifest.xml:6:5-8:41
+MERGED from [com.jrummyapps:android-shell:1.0.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/225453f9d86e7157ffc56b65f5b6a213/android-shell-1.0.1/AndroidManifest.xml:6:5-8:41
+MERGED from [androidx.fragment:fragment-ktx:1.2.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/537aaa2b294d36a719f1f70c2519be7d/fragment-ktx-1.2.4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment-ktx:1.2.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/537aaa2b294d36a719f1f70c2519be7d/fragment-ktx-1.2.4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-ktx:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/526d951c456237515522c9194f2fcdaa/activity-ktx-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-ktx:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/526d951c456237515522c9194f2fcdaa/activity-ktx-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core-ktx:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7e08e71c97c8de0f8a2c8197f8f66601/core-ktx-1.5.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7e08e71c97c8de0f8a2c8197f8f66601/core-ktx-1.5.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.fragment:fragment:1.3.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/e52100aea45ea449724ae082f7823544/fragment-1.3.4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.3.4] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/e52100aea45ea449724ae082f7823544/fragment-1.3.4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.2.3] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/48c830a03c6b2f69c14bea545d880f10/activity-1.2.3/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.2.3] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/48c830a03c6b2f69c14bea545d880f10/activity-1.2.3/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/75d8e552a9f616ba1816320a2d5eae2d/appcompat-resources-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.3.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/75d8e552a9f616ba1816320a2d5eae2d/appcompat-resources-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c29d8a471347608dea2aa4eed9dad3fe/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c29d8a471347608dea2aa4eed9dad3fe/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0d1d8d0288eb2489e88793639c27f97f/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0d1d8d0288eb2489e88793639c27f97f/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c5ff3aaa4d3378ae6e3f40bd372583a6/media-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c5ff3aaa4d3378ae6e3f40bd372583a6/media-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/877fc727c2e11696c734ca16140e1d0b/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/877fc727c2e11696c734ca16140e1d0b/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/90ba0ad88321ba57ba46c7c41b5c23eb/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/90ba0ad88321ba57ba46c7c41b5c23eb/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0ba253e7c4ff6345db2fd19941bd1cfb/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0ba253e7c4ff6345db2fd19941bd1cfb/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/bd839e4409fdc73eb11500bb6abba1fd/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/bd839e4409fdc73eb11500bb6abba1fd/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/02df51ec2503c6c142e07bf215f12540/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/02df51ec2503c6c142e07bf215f12540/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/59548ff2976703e57236df7e47cb14af/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/59548ff2976703e57236df7e47cb14af/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0594e3d1642e234a37e24f68a1ef280e/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0594e3d1642e234a37e24f68a1ef280e/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/80930e05b22369eb5e9c6c793faab7ab/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/80930e05b22369eb5e9c6c793faab7ab/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a64774bf1ccaad151af6580ad157e552/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a64774bf1ccaad151af6580ad157e552/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/3ded1a78659d35ebe1b63d0031548a4b/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/3ded1a78659d35ebe1b63d0031548a4b/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b01c8761475865138c9498971307124b/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b01c8761475865138c9498971307124b/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7a4a8747fd4262cc2af39a6a9362680f/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7a4a8747fd4262cc2af39a6a9362680f/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/967826c52c5558ea22060f7728ba7d3b/core-1.5.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.5.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/967826c52c5558ea22060f7728ba7d3b/core-1.5.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/2a2abeba04c77eb7580326d77a02cd94/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/2a2abeba04c77eb7580326d77a02cd94/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a650477e21556eb951e2ebfabac8975b/lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a650477e21556eb951e2ebfabac8975b/lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/69ec76d61e284b02a89b85d4e831374e/savedstate-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/69ec76d61e284b02a89b85d4e831374e/savedstate-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d4942d7dcc1b5aed89d7dcb472d70ed9/lifecycle-runtime-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d4942d7dcc1b5aed89d7dcb472d70ed9/lifecycle-runtime-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7a90a1dded65a771acf453f0a4866973/lifecycle-runtime-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/7a90a1dded65a771acf453f0a4866973/lifecycle-runtime-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/238715376c70b590c35278c6392f0099/lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/238715376c70b590c35278c6392f0099/lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/09dfd543c5083a55a543a07b910e9d5f/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/09dfd543c5083a55a543a07b910e9d5f/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c24949a4d0d17ce79ca10f533d267c96/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c24949a4d0d17ce79ca10f533d267c96/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c0ffd22c92d538124695a21a53574ee8/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/c0ffd22c92d538124695a21a53574ee8/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a2c0d241c1430bb4c4e8eaa2e041383a/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a2c0d241c1430bb4c4e8eaa2e041383a/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/6fe840036c5d264381ccf0caf0e125a3/lifecycle-livedata-core-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/6fe840036c5d264381ccf0caf0e125a3/lifecycle-livedata-core-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/aa4f2bec0563be32a9526f12c36b5a7c/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/aa4f2bec0563be32a9526f12c36b5a7c/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/60b22109e486a9f22a91253ee7db7262/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/60b22109e486a9f22a91253ee7db7262/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/5be0ad23f665fde781d660f6702ea073/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/5be0ad23f665fde781d660f6702ea073/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0967fe5e45bd58c5aa622f7a4ff108f2/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/0967fe5e45bd58c5aa622f7a4ff108f2/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/6b8ba596ea3a5610a0a6f4321d32f9ac/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/6b8ba596ea3a5610a0a6f4321d32f9ac/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/dd369a177b84f646b7c056e3f9d98125/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/dd369a177b84f646b7c056e3f9d98125/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/46c85ba6b01157e32d44fbd61dd3fc00/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/46c85ba6b01157e32d44fbd61dd3fc00/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:20:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:20:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:20:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:20:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android-androidx:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/eb072ba1074eb8f4faca665ad286f2de/leakcanary-object-watcher-android-androidx-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android-androidx:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/eb072ba1074eb8f4faca665ad286f2de/leakcanary-object-watcher-android-androidx-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android-support-fragments:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/84a87da80bee32a34e38ca90f293a443/leakcanary-object-watcher-android-support-fragments-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android-support-fragments:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/84a87da80bee32a34e38ca90f293a443/leakcanary-object-watcher-android-support-fragments-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-android-utils:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1d1fa706612143f9bde166b90186d7dd/leakcanary-android-utils-2.6/AndroidManifest.xml:5:5-44
+MERGED from [com.squareup.leakcanary:leakcanary-android-utils:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/1d1fa706612143f9bde166b90186d7dd/leakcanary-android-utils-2.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b485d7dcb73f50fda850fbfec292a113/annotation-experimental-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/b485d7dcb73f50fda850fbfec292a113/annotation-experimental-1.0.0/AndroidManifest.xml:20:5-22:41
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml
+INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml
+		INJECTED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:163:13-165:53
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:154:13-156:53
+MERGED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/AndroidManifest.xml:154:13-156:53
+	android:resource
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:165:17-50
+	android:name
+		ADDED from /Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/fdroid/AndroidManifest.xml:164:17-67
+service#leakcanary.internal.HeapAnalyzerService
+ADDED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:23:9-25:40
+	android:exported
+		ADDED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:25:13-37
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/835404766cae37fc2dfb67fa5bcb36c3/leakcanary-android-2.6/AndroidManifest.xml:24:13-67
+provider#leakcanary.internal.LeakCanaryFileProvider
+ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:29:9-37:20
+	android:grantUriPermissions
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:33:13-47
+	android:authorities
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:31:13-88
+	android:exported
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:32:13-37
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:30:13-70
+activity#leakcanary.internal.activity.LeakActivity
+ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:39:9-44:66
+	android:label
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:42:13-71
+	android:icon
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:41:13-52
+	android:theme
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:44:13-63
+	android:taskAffinity
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:43:13-76
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:40:13-69
+activity-alias#leakcanary.internal.activity.LeakLauncherActivity
+ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:46:9-62:26
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:49:13-66
+	android:label
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:51:13-71
+	android:targetActivity
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:52:13-79
+	android:icon
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:50:13-52
+	android:banner
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:48:13-59
+	android:theme
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:54:13-63
+	android:taskAffinity
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:53:13-76
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:47:13-77
+activity#leakcanary.internal.RequestStoragePermissionActivity
+ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:64:9-70:68
+	android:label
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:68:13-82
+	android:excludeFromRecents
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:66:13-46
+	android:icon
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:67:13-52
+	android:theme
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:70:13-65
+	android:taskAffinity
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:69:13-76
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:65:13-80
+receiver#leakcanary.internal.NotificationReceiver
+ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:72:9-77
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android-core:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/d96d471973c17c4eba14bd9be76d27c8/leakcanary-android-core-2.6/AndroidManifest.xml:72:19-74
+provider#leakcanary.internal.AppWatcherInstaller$MainProcess
+ADDED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:8:9-12:40
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:11:13-69
+	android:authorities
+		ADDED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:10:13-72
+	android:exported
+		ADDED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:12:13-37
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-object-watcher-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/a22e93f596f3420951ee044ef30a6fa6/leakcanary-object-watcher-android-2.6/AndroidManifest.xml:9:13-79
+provider#leakcanary.internal.PlumberInstaller
+ADDED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:8:9-12:40
+	android:enabled
+		ADDED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:11:13-69
+	android:authorities
+		ADDED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:10:13-69
+	android:exported
+		ADDED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:12:13-37
+	android:name
+		ADDED from [com.squareup.leakcanary:plumber-android:2.6] /Users/yuliabatova/.gradle/caches/transforms-2/files-2.1/10690ce0f3e44efb116b96a0b2ed0d93/plumber-android-2.6/AndroidManifest.xml:9:13-64

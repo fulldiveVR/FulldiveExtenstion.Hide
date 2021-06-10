@@ -1,0 +1,420 @@
+pan/alexander/tordnscrypt/modules/ModulesVersions.java
+ pan.alexander.tordnscrypt.modules.ModulesVersions
+pan/alexander/tordnscrypt/databinding/ActivityBackupBinding.java
+ pan.alexander.tordnscrypt.databinding.ActivityBackupBinding
+pan/alexander/tordnscrypt/dnscrypt_fragment/DNSCryptFragmentPresenter.java
+ pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter
+ pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter$1
+pan/alexander/tordnscrypt/databinding/FragmentShowLogBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentShowLogBinding
+pan/alexander/tordnscrypt/settings/tor_bridges/BridgeAdapter.java
+ pan.alexander.tordnscrypt.settings.tor_bridges.BridgeAdapter
+ pan.alexander.tordnscrypt.settings.tor_bridges.BridgeAdapter$BridgeViewHolder
+pan/alexander/tordnscrypt/utils/HttpsRequest.java
+ pan.alexander.tordnscrypt.utils.HttpsRequest
+pan/alexander/tordnscrypt/language/Language.java
+ pan.alexander.tordnscrypt.language.Language
+pan/alexander/tordnscrypt/databinding/MainFragmentBinding.java
+ pan.alexander.tordnscrypt.databinding.MainFragmentBinding
+pan/alexander/tordnscrypt/settings/ConfigEditorFragment.java
+ pan.alexander.tordnscrypt.settings.ConfigEditorFragment
+pan/alexander/tordnscrypt/assistance/AccelerateDevelop.java
+ pan.alexander.tordnscrypt.assistance.AccelerateDevelop
+pan/alexander/tordnscrypt/databinding/FragmentPreferencesTorAppsBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentPreferencesTorAppsBinding
+pan/alexander/tordnscrypt/databinding/FragmentTorRunBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentTorRunBinding
+pan/alexander/tordnscrypt/utils/enums/BridgeType.java
+ pan.alexander.tordnscrypt.utils.enums.BridgeType
+pan/alexander/tordnscrypt/modules/ModulesKiller.java
+ pan.alexander.tordnscrypt.modules.ModulesKiller
+pan/alexander/tordnscrypt/settings/tor_bridges/PreferencesTorBridges.java
+ pan.alexander.tordnscrypt.settings.tor_bridges.PreferencesTorBridges
+ pan.alexander.tordnscrypt.settings.tor_bridges.PreferencesTorBridges$1
+pan/alexander/tordnscrypt/dialogs/AskAccelerateDevelop.java
+ pan.alexander.tordnscrypt.dialogs.AskAccelerateDevelop
+pan/alexander/tordnscrypt/settings/tor_bridges/ObfsBridge.java
+ pan.alexander.tordnscrypt.settings.tor_bridges.ObfsBridge
+pan/alexander/tordnscrypt/utils/PrefManager.java
+ pan.alexander.tordnscrypt.utils.PrefManager
+pan/alexander/tordnscrypt/utils/TorRefreshIPsWork.java
+ pan.alexander.tordnscrypt.utils.TorRefreshIPsWork
+pan/alexander/tordnscrypt/databinding/NavHeaderMainBinding.java
+ pan.alexander.tordnscrypt.databinding.NavHeaderMainBinding
+pan/alexander/tordnscrypt/databinding/FragmentPreferencesDnscryptRelaysBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentPreferencesDnscryptRelaysBinding
+pan/alexander/tordnscrypt/settings/tor_ips/UnlockTorIpsFrag.java
+ pan.alexander.tordnscrypt.settings.tor_ips.UnlockTorIpsFrag
+pan/alexander/tordnscrypt/settings/PathVars.java
+ pan.alexander.tordnscrypt.settings.PathVars
+pan/alexander/tordnscrypt/utils/file_operations/FileOperations.java
+ pan.alexander.tordnscrypt.utils.file_operations.FileOperations
+ pan.alexander.tordnscrypt.utils.file_operations.FileOperations$1
+pan/alexander/tordnscrypt/backup/BackupHelper.java
+ pan.alexander.tordnscrypt.backup.BackupHelper
+pan/alexander/tordnscrypt/databinding/FragmentDnscryptRunBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentDnscryptRunBinding
+pan/alexander/tordnscrypt/iptables/ModulesIptablesRules.java
+ pan.alexander.tordnscrypt.iptables.ModulesIptablesRules
+pan/alexander/tordnscrypt/installer/TorExtractCommand.java
+ pan.alexander.tordnscrypt.installer.TorExtractCommand
+pan/alexander/tordnscrypt/utils/file_operations/OnFileOperationsCompleteListener.java
+ pan.alexander.tordnscrypt.utils.file_operations.OnFileOperationsCompleteListener
+pan/alexander/tordnscrypt/dialogs/progressDialogs/ImportRulesDialog.java
+ pan.alexander.tordnscrypt.dialogs.progressDialogs.ImportRulesDialog
+pan/alexander/tordnscrypt/modules/ModulesAux.java
+ pan.alexander.tordnscrypt.modules.ModulesAux
+pan/alexander/tordnscrypt/modules/ModulesStateLoop.java
+ pan.alexander.tordnscrypt.modules.ModulesStateLoop
+pan/alexander/tordnscrypt/dnscrypt_fragment/DNSCryptFragmentPresenterInterface.java
+ pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenterInterface
+pan/alexander/tordnscrypt/databinding/FragmentCountrySelectBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentCountrySelectBinding
+pan/alexander/tordnscrypt/dialogs/AskForceClose.java
+ pan.alexander.tordnscrypt.dialogs.AskForceClose
+pan/alexander/tordnscrypt/dialogs/AddDNSCryptServerDialogFragment.java
+ pan.alexander.tordnscrypt.dialogs.AddDNSCryptServerDialogFragment
+ pan.alexander.tordnscrypt.dialogs.AddDNSCryptServerDialogFragment$OnServerAddedListener
+pan/alexander/tordnscrypt/dialogs/NotificationDialogFragment.java
+ pan.alexander.tordnscrypt.dialogs.NotificationDialogFragment
+pan/alexander/tordnscrypt/BootCompleteReceiver.java
+ pan.alexander.tordnscrypt.BootCompleteReceiver
+pan/alexander/tordnscrypt/settings/tor_ips/DialogEditHostIP.java
+ pan.alexander.tordnscrypt.settings.tor_ips.DialogEditHostIP
+pan/alexander/tordnscrypt/iptables/IptablesRules.java
+ pan.alexander.tordnscrypt.iptables.IptablesRules
+pan/alexander/tordnscrypt/modules/ContextUIDUpdater.java
+ pan.alexander.tordnscrypt.modules.ContextUIDUpdater
+pan/alexander/tordnscrypt/settings/tor_countries/SelectedCountries.java
+ pan.alexander.tordnscrypt.settings.tor_countries.SelectedCountries
+pan/alexander/tordnscrypt/databinding/ActivityAboutBinding.java
+ pan.alexander.tordnscrypt.databinding.ActivityAboutBinding
+pan/alexander/tordnscrypt/modules/ModulesStarterHelper.java
+ pan.alexander.tordnscrypt.modules.ModulesStarterHelper
+pan/alexander/tordnscrypt/databinding/ActivitySettingsBinding.java
+ pan.alexander.tordnscrypt.databinding.ActivitySettingsBinding
+pan/alexander/tordnscrypt/databinding/FragmentProxyBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentProxyBinding
+pan/alexander/tordnscrypt/databinding/FragmentPreferencesTorBridgesBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentPreferencesTorBridgesBinding
+pan/alexander/tordnscrypt/databinding/ContentSettingsBinding.java
+ pan.alexander.tordnscrypt.databinding.ContentSettingsBinding
+pan/alexander/tordnscrypt/dialogs/ExtendedDialogFragment.java
+ pan.alexander.tordnscrypt.dialogs.ExtendedDialogFragment
+pan/alexander/tordnscrypt/databinding/AgreementLayoutBinding.java
+ pan.alexander.tordnscrypt.databinding.AgreementLayoutBinding
+pan/alexander/tordnscrypt/databinding/FragmentItpdRunBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentItpdRunBinding
+pan/alexander/tordnscrypt/utils/enums/FileOperationsVariants.java
+ pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants
+pan/alexander/tordnscrypt/dialogs/NewUpdateDialogFragment.java
+ pan.alexander.tordnscrypt.dialogs.NewUpdateDialogFragment
+pan/alexander/tordnscrypt/installer/Installer.java
+ pan.alexander.tordnscrypt.installer.Installer
+pan/alexander/tordnscrypt/databinding/SwitchItemBinding.java
+ pan.alexander.tordnscrypt.databinding.SwitchItemBinding
+pan/alexander/tordnscrypt/iptables/IptablesRulesSender.java
+ pan.alexander.tordnscrypt.iptables.IptablesRulesSender
+pan/alexander/tordnscrypt/settings/dnscrypt_servers/DNSServersAdapter.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_servers.DNSServersAdapter
+ pan.alexander.tordnscrypt.settings.dnscrypt_servers.DNSServersAdapter$DNSServersViewHolder
+pan/alexander/tordnscrypt/main_fragment/ViewPagerAdapter.java
+ pan.alexander.tordnscrypt.main_fragment.ViewPagerAdapter
+ pan.alexander.tordnscrypt.main_fragment.ViewPagerAdapter$ViewPagerFragment
+pan/alexander/tordnscrypt/help/HelpActivityReceiver.java
+ pan.alexander.tordnscrypt.help.HelpActivityReceiver
+pan/alexander/tordnscrypt/update/DownloadTask.java
+ pan.alexander.tordnscrypt.update.DownloadTask
+pan/alexander/tordnscrypt/settings/tor_countries/Countries.java
+ pan.alexander.tordnscrypt.settings.tor_countries.Countries
+pan/alexander/tordnscrypt/settings/show_rules/ShowRulesRecycleFrag.java
+ pan.alexander.tordnscrypt.settings.show_rules.ShowRulesRecycleFrag
+ pan.alexander.tordnscrypt.settings.show_rules.ShowRulesRecycleFrag$RulesAdapter
+ pan.alexander.tordnscrypt.settings.show_rules.ShowRulesRecycleFrag$RulesAdapter$RuleViewHolder
+ pan.alexander.tordnscrypt.settings.show_rules.ShowRulesRecycleFrag$RulesAdapter$RuleViewHolder$1
+pan/alexander/tordnscrypt/tor_fragment/TorFragmentPresenter.java
+ pan.alexander.tordnscrypt.tor_fragment.TorFragmentPresenter
+ pan.alexander.tordnscrypt.tor_fragment.TorFragmentPresenter$1
+pan/alexander/tordnscrypt/settings/tor_ips/DialogHostIP.java
+ pan.alexander.tordnscrypt.settings.tor_ips.DialogHostIP
+pan/alexander/tordnscrypt/settings/tor_bridges/GetNewBridges.java
+ pan.alexander.tordnscrypt.settings.tor_bridges.GetNewBridges
+pan/alexander/tordnscrypt/dnscrypt_fragment/DNSCryptRunFragment.java
+ pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptRunFragment
+pan/alexander/tordnscrypt/settings/tor_apps/UnlockTorAppsFragment.java
+ pan.alexander.tordnscrypt.settings.tor_apps.UnlockTorAppsFragment
+pan/alexander/tordnscrypt/itpd_fragment/ITPDFragmentView.java
+ pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentView
+pan/alexander/tordnscrypt/databinding/ItemRulesBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemRulesBinding
+pan/alexander/tordnscrypt/databinding/FragmentTopBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentTopBinding
+pan/alexander/tordnscrypt/utils/FileShortener.java
+ pan.alexander.tordnscrypt.utils.FileShortener
+pan/alexander/tordnscrypt/utils/RootExecService.java
+ pan.alexander.tordnscrypt.utils.RootExecService
+ pan.alexander.tordnscrypt.utils.RootExecService$ExecRunnable
+pan/alexander/tordnscrypt/MainActivity.java
+ pan.alexander.tordnscrypt.MainActivity
+ pan.alexander.tordnscrypt.MainActivity$1
+ pan.alexander.tordnscrypt.MainActivity$2
+pan/alexander/tordnscrypt/installer/AssetsExtractCommand.java
+ pan.alexander.tordnscrypt.installer.AssetsExtractCommand
+pan/alexander/tordnscrypt/settings/tor_ips/GetHostIP.java
+ pan.alexander.tordnscrypt.settings.tor_ips.GetHostIP
+pan/alexander/tordnscrypt/utils/ApManager.java
+ pan.alexander.tordnscrypt.utils.ApManager
+ pan.alexander.tordnscrypt.utils.ApManager$1
+pan/alexander/tordnscrypt/iptables/Tethering.java
+ pan.alexander.tordnscrypt.iptables.Tethering
+pan/alexander/tordnscrypt/utils/enums/VPNCommand.java
+ pan.alexander.tordnscrypt.utils.enums.VPNCommand
+pan/alexander/tordnscrypt/utils/file_operations/OnBinaryFileOperationsCompleteListener.java
+ pan.alexander.tordnscrypt.utils.file_operations.OnBinaryFileOperationsCompleteListener
+pan/alexander/tordnscrypt/dialogs/UpdateModulesDialogFragment.java
+ pan.alexander.tordnscrypt.dialogs.UpdateModulesDialogFragment
+pan/alexander/tordnscrypt/databinding/IconImageNewTorIdentityBinding.java
+ pan.alexander.tordnscrypt.databinding.IconImageNewTorIdentityBinding
+pan/alexander/tordnscrypt/vpn/Packet.java
+ pan.alexander.tordnscrypt.vpn.Packet
+pan/alexander/tordnscrypt/installer/InstallerUIChanger.java
+ pan.alexander.tordnscrypt.installer.InstallerUIChanger
+pan/alexander/tordnscrypt/vpn/Forward.java
+ pan.alexander.tordnscrypt.vpn.Forward
+pan/alexander/tordnscrypt/databinding/ActivityHelpBinding.java
+ pan.alexander.tordnscrypt.databinding.ActivityHelpBinding
+pan/alexander/tordnscrypt/vpn/service/ServiceVPNNotification.java
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPNNotification
+pan/alexander/tordnscrypt/utils/GetIPsJobService.java
+ pan.alexander.tordnscrypt.utils.GetIPsJobService
+pan/alexander/tordnscrypt/databinding/DialogImportDnscryptRulesBinding.java
+ pan.alexander.tordnscrypt.databinding.DialogImportDnscryptRulesBinding
+pan/alexander/tordnscrypt/utils/enums/OperationMode.java
+ pan.alexander.tordnscrypt.utils.enums.OperationMode
+pan/alexander/tordnscrypt/dnscrypt_fragment/DNSCryptFragmentReceiver.java
+ pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentReceiver
+pan/alexander/tordnscrypt/vpn/service/ServiceVPN.java
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPN
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPN$1
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPN$2
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPN$3
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPN$4
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPN$VPNBinder
+pan/alexander/tordnscrypt/backup/RestoreHelper.java
+ pan.alexander.tordnscrypt.backup.RestoreHelper
+pan/alexander/tordnscrypt/utils/AppExitDetectService.java
+ pan.alexander.tordnscrypt.utils.AppExitDetectService
+pan/alexander/tordnscrypt/utils/file_operations/ExternalStoragePermissions.java
+ pan.alexander.tordnscrypt.utils.file_operations.ExternalStoragePermissions
+pan/alexander/tordnscrypt/databinding/ContentMainBinding.java
+ pan.alexander.tordnscrypt.databinding.ContentMainBinding
+pan/alexander/tordnscrypt/utils/file_operations/OnTextFileOperationsCompleteListener.java
+ pan.alexander.tordnscrypt.utils.file_operations.OnTextFileOperationsCompleteListener
+pan/alexander/tordnscrypt/settings/tor_preferences/PreferencesTorFragment.java
+ pan.alexander.tordnscrypt.settings.tor_preferences.PreferencesTorFragment
+pan/alexander/tordnscrypt/settings/PreferencesFastFragment.java
+ pan.alexander.tordnscrypt.settings.PreferencesFastFragment
+pan/alexander/tordnscrypt/modules/ModulesStatus.java
+ pan.alexander.tordnscrypt.modules.ModulesStatus
+pan/alexander/tordnscrypt/tor_fragment/TorFragmentReceiver.java
+ pan.alexander.tordnscrypt.tor_fragment.TorFragmentReceiver
+pan/alexander/tordnscrypt/settings/tor_ips/HostIP.java
+ pan.alexander.tordnscrypt.settings.tor_ips.HostIP
+pan/alexander/tordnscrypt/settings/PreferencesITPDFragment.java
+ pan.alexander.tordnscrypt.settings.PreferencesITPDFragment
+pan/alexander/tordnscrypt/utils/enums/ModuleState.java
+ pan.alexander.tordnscrypt.utils.enums.ModuleState
+pan/alexander/tordnscrypt/modules/ModulesRunner.java
+ pan.alexander.tordnscrypt.modules.ModulesRunner
+pan/alexander/tordnscrypt/databinding/LicensesScrollableTextBinding.java
+ pan.alexander.tordnscrypt.databinding.LicensesScrollableTextBinding
+pan/alexander/tordnscrypt/settings/tor_ips/HostIPAdapter.java
+ pan.alexander.tordnscrypt.settings.tor_ips.HostIPAdapter
+ pan.alexander.tordnscrypt.settings.tor_ips.HostIPAdapter$HostIPViewHolder
+pan/alexander/tordnscrypt/dialogs/progressDialogs/RootCheckingProgressDialog.java
+ pan.alexander.tordnscrypt.dialogs.progressDialogs.RootCheckingProgressDialog
+pan/alexander/tordnscrypt/databinding/FragmentFirewallBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentFirewallBinding
+pan/alexander/tordnscrypt/installer/InstallerReceiver.java
+ pan.alexander.tordnscrypt.installer.InstallerReceiver
+pan/alexander/tordnscrypt/installer/BusybExtractCommand.java
+ pan.alexander.tordnscrypt.installer.BusybExtractCommand
+pan/alexander/tordnscrypt/installer/Command.java
+ pan.alexander.tordnscrypt.installer.Command
+pan/alexander/tordnscrypt/itpd_fragment/ITPDFragmentPresenterInterface.java
+ pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentPresenterInterface
+pan/alexander/tordnscrypt/backup/BackupActivity.java
+ pan.alexander.tordnscrypt.backup.BackupActivity
+pan/alexander/tordnscrypt/dialogs/progressDialogs/PleaseWaitProgressDialog.java
+ pan.alexander.tordnscrypt.dialogs.progressDialogs.PleaseWaitProgressDialog
+pan/alexander/tordnscrypt/settings/dnscrypt_servers/DNSServerItem.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_servers.DNSServerItem
+pan/alexander/tordnscrypt/databinding/FragmentPreferencesTorIpsBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentPreferencesTorIpsBinding
+pan/alexander/tordnscrypt/modules/ModulesService.java
+ pan.alexander.tordnscrypt.modules.ModulesService
+pan/alexander/tordnscrypt/databinding/ActivityMainBinding.java
+ pan.alexander.tordnscrypt.databinding.ActivityMainBinding
+pan/alexander/tordnscrypt/databinding/FragmentBackupBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentBackupBinding
+pan/alexander/tordnscrypt/installer/DNSCryptExtractCommand.java
+ pan.alexander.tordnscrypt.installer.DNSCryptExtractCommand
+pan/alexander/tordnscrypt/language/LanguagePreference.java
+ pan.alexander.tordnscrypt.language.LanguagePreference
+pan/alexander/tordnscrypt/modules/ModulesRestarter.java
+ pan.alexander.tordnscrypt.modules.ModulesRestarter
+pan/alexander/tordnscrypt/databinding/FragmentConfigEditorBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentConfigEditorBinding
+pan/alexander/tordnscrypt/settings/tor_countries/CountrySelectFragment.java
+ pan.alexander.tordnscrypt.settings.tor_countries.CountrySelectFragment
+ pan.alexander.tordnscrypt.settings.tor_countries.CountrySelectFragment$1
+ pan.alexander.tordnscrypt.settings.tor_countries.CountrySelectFragment$CountriesAdapter
+ pan.alexander.tordnscrypt.settings.tor_countries.CountrySelectFragment$CountriesAdapter$CountriesViewHolder
+pan/alexander/tordnscrypt/settings/dnscrypt_relays/DNSRelayItem.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_relays.DNSRelayItem
+pan/alexander/tordnscrypt/utils/RootCommands.java
+ pan.alexander.tordnscrypt.utils.RootCommands
+pan/alexander/tordnscrypt/settings/PreferencesCommonFragment.java
+ pan.alexander.tordnscrypt.settings.PreferencesCommonFragment
+ pan.alexander.tordnscrypt.settings.PreferencesCommonFragment$InfoNotificationProtectService
+pan/alexander/tordnscrypt/vpn/service/BuilderVPN.java
+ pan.alexander.tordnscrypt.vpn.service.BuilderVPN
+pan/alexander/tordnscrypt/databinding/TorTransportCodeImageBinding.java
+ pan.alexander.tordnscrypt.databinding.TorTransportCodeImageBinding
+pan/alexander/tordnscrypt/help/HelpActivity.java
+ pan.alexander.tordnscrypt.help.HelpActivity
+pan/alexander/tordnscrypt/databinding/AppBarMainBinding.java
+ pan.alexander.tordnscrypt.databinding.AppBarMainBinding
+pan/alexander/tordnscrypt/vpn/ResourceRecord.java
+ pan.alexander.tordnscrypt.vpn.ResourceRecord
+pan/alexander/tordnscrypt/itpd_fragment/ITPDFragmentPresenter.java
+ pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentPresenter
+ pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentPresenter$1
+pan/alexander/tordnscrypt/settings/show_rules/Rules.java
+ pan.alexander.tordnscrypt.settings.show_rules.Rules
+pan/alexander/tordnscrypt/databinding/ItemFirewallBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemFirewallBinding
+pan/alexander/tordnscrypt/tor_fragment/TorRunFragment.java
+ pan.alexander.tordnscrypt.tor_fragment.TorRunFragment
+pan/alexander/tordnscrypt/update/UpdateCheck.java
+ pan.alexander.tordnscrypt.update.UpdateCheck
+pan/alexander/tordnscrypt/AboutActivity.java
+ pan.alexander.tordnscrypt.AboutActivity
+pan/alexander/tordnscrypt/utils/zipUtil/ZipFileManager.java
+ pan.alexander.tordnscrypt.utils.zipUtil.ZipFileManager
+pan/alexander/tordnscrypt/settings/dnscrypt_relays/PreferencesDNSCryptRelays.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_relays.PreferencesDNSCryptRelays
+ pan.alexander.tordnscrypt.settings.dnscrypt_relays.PreferencesDNSCryptRelays$OnRoutesChangeListener
+pan/alexander/tordnscrypt/installer/ITPDExtractCommand.java
+ pan.alexander.tordnscrypt.installer.ITPDExtractCommand
+pan/alexander/tordnscrypt/settings/dnscrypt_relays/DNSServerRelays.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_relays.DNSServerRelays
+pan/alexander/tordnscrypt/settings/SettingsParser.java
+ pan.alexander.tordnscrypt.settings.SettingsParser
+pan/alexander/tordnscrypt/utils/Verifier.java
+ pan.alexander.tordnscrypt.utils.Verifier
+pan/alexander/tordnscrypt/data/OwnFileReader.java
+ pan.alexander.tordnscrypt.data.OwnFileReader
+pan/alexander/tordnscrypt/vpn/Allowed.java
+ pan.alexander.tordnscrypt.vpn.Allowed
+pan/alexander/tordnscrypt/vpn/Usage.java
+ pan.alexander.tordnscrypt.vpn.Usage
+pan/alexander/tordnscrypt/BuildConfig.java
+ pan.alexander.tordnscrypt.BuildConfig
+pan/alexander/tordnscrypt/settings/dnscrypt_servers/PreferencesDNSCryptServers.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_servers.PreferencesDNSCryptServers
+pan/alexander/tordnscrypt/databinding/FragmentShowRulesRecycleBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentShowRulesRecycleBinding
+pan/alexander/tordnscrypt/tor_fragment/TorFragmentPresenterInterface.java
+ pan.alexander.tordnscrypt.tor_fragment.TorFragmentPresenterInterface
+pan/alexander/tordnscrypt/SettingsActivity.java
+ pan.alexander.tordnscrypt.SettingsActivity
+pan/alexander/tordnscrypt/dialogs/AgreementDialog.java
+ pan.alexander.tordnscrypt.dialogs.AgreementDialog
+pan/alexander/tordnscrypt/dialogs/DialogSaveConfigChanges.java
+ pan.alexander.tordnscrypt.dialogs.DialogSaveConfigChanges
+pan/alexander/tordnscrypt/itpd_fragment/ITPDRunFragment.java
+ pan.alexander.tordnscrypt.itpd_fragment.ITPDRunFragment
+pan/alexander/tordnscrypt/settings/tor_ips/DialogAddHostIP.java
+ pan.alexander.tordnscrypt.settings.tor_ips.DialogAddHostIP
+pan/alexander/tordnscrypt/update/UpdateService.java
+ pan.alexander.tordnscrypt.update.UpdateService
+pan/alexander/tordnscrypt/settings/tor_bridges/PreferencesBridges.java
+ pan.alexander.tordnscrypt.settings.tor_bridges.PreferencesBridges
+pan/alexander/tordnscrypt/modules/ServiceNotification.java
+ pan.alexander.tordnscrypt.modules.ServiceNotification
+pan/alexander/tordnscrypt/installer/ChmodCommand.java
+ pan.alexander.tordnscrypt.installer.ChmodCommand
+pan/alexander/tordnscrypt/main_fragment/MainFragment.java
+ pan.alexander.tordnscrypt.main_fragment.MainFragment
+pan/alexander/tordnscrypt/settings/dnscrypt_relays/DNSRelaysAdapter.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_relays.DNSRelaysAdapter
+ pan.alexander.tordnscrypt.settings.dnscrypt_relays.DNSRelaysAdapter$DNSRelaysViewHolder
+pan/alexander/tordnscrypt/language/LanguageList.java
+ pan.alexander.tordnscrypt.language.LanguageList
+pan/alexander/tordnscrypt/databinding/ItemDnsRelayBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemDnsRelayBinding
+pan/alexander/tordnscrypt/databinding/FragmentPreferencesDnscryptServersRvBinding.java
+ pan.alexander.tordnscrypt.databinding.FragmentPreferencesDnscryptServersRvBinding
+pan/alexander/tordnscrypt/utils/Registration.java
+ pan.alexander.tordnscrypt.utils.Registration
+pan/alexander/tordnscrypt/databinding/ItemDnsServerBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemDnsServerBinding
+pan/alexander/tordnscrypt/databinding/ItemBridgeBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemBridgeBinding
+pan/alexander/tordnscrypt/LangAppCompatActivity.java
+ pan.alexander.tordnscrypt.LangAppCompatActivity
+pan/alexander/tordnscrypt/utils/WakeLocksManager.java
+ pan.alexander.tordnscrypt.utils.WakeLocksManager
+pan/alexander/tordnscrypt/dialogs/NotificationHelper.java
+ pan.alexander.tordnscrypt.dialogs.NotificationHelper
+pan/alexander/tordnscrypt/vpn/Util.java
+ pan.alexander.tordnscrypt.vpn.Util
+pan/alexander/tordnscrypt/settings/ShowLogFragment.java
+ pan.alexander.tordnscrypt.settings.ShowLogFragment
+pan/alexander/tordnscrypt/settings/tor_apps/TorAppsAdapter.java
+ pan.alexander.tordnscrypt.settings.tor_apps.TorAppsAdapter
+ pan.alexander.tordnscrypt.settings.tor_apps.TorAppsAdapter$1
+ pan.alexander.tordnscrypt.settings.tor_apps.TorAppsAdapter$TorAppsViewHolder
+pan/alexander/tordnscrypt/vpn/service/ServiceVPNHandler.java
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPNHandler
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPNHandler$1
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPNHandler$StartFailedException
+pan/alexander/tordnscrypt/backup/BackupFragment.java
+ pan.alexander.tordnscrypt.backup.BackupFragment
+pan/alexander/tordnscrypt/modules/ModulesBroadcastReceiver.java
+ pan.alexander.tordnscrypt.modules.ModulesBroadcastReceiver
+ pan.alexander.tordnscrypt.modules.ModulesBroadcastReceiver$1
+pan/alexander/tordnscrypt/vpn/service/ServiceVPNHelper.java
+ pan.alexander.tordnscrypt.vpn.service.ServiceVPNHelper
+pan/alexander/tordnscrypt/databinding/SelectTorTransportBinding.java
+ pan.alexander.tordnscrypt.databinding.SelectTorTransportBinding
+pan/alexander/tordnscrypt/tor_fragment/TorFragmentView.java
+ pan.alexander.tordnscrypt.tor_fragment.TorFragmentView
+pan/alexander/tordnscrypt/databinding/ItemTorAppBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemTorAppBinding
+pan/alexander/tordnscrypt/itpd_fragment/ITPDFragmentReceiver.java
+ pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentReceiver
+pan/alexander/tordnscrypt/databinding/ItemTorIpsBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemTorIpsBinding
+pan/alexander/tordnscrypt/vpn/IPUtil.java
+ pan.alexander.tordnscrypt.vpn.IPUtil
+ pan.alexander.tordnscrypt.vpn.IPUtil$CIDR
+pan/alexander/tordnscrypt/TopFragment.java
+ pan.alexander.tordnscrypt.TopFragment
+ pan.alexander.tordnscrypt.TopFragment$1
+ pan.alexander.tordnscrypt.TopFragment$2
+ pan.alexander.tordnscrypt.TopFragment$OnActivityChangeListener
+ pan.alexander.tordnscrypt.TopFragment$RootChecker
+pan/alexander/tordnscrypt/settings/dnscrypt_settings/PreferencesDNSFragment.java
+ pan.alexander.tordnscrypt.settings.dnscrypt_settings.PreferencesDNSFragment
+pan/alexander/tordnscrypt/vpn/Rule.java
+ pan.alexander.tordnscrypt.vpn.Rule
+pan/alexander/tordnscrypt/databinding/ItemCountryBinding.java
+ pan.alexander.tordnscrypt.databinding.ItemCountryBinding
+pan/alexander/tordnscrypt/databinding/AddOwnServerBinding.java
+ pan.alexander.tordnscrypt.databinding.AddOwnServerBinding
+pan/alexander/tordnscrypt/dnscrypt_fragment/DNSCryptFragmentView.java
+ pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentView
+pan/alexander/tordnscrypt/databinding/EditTextForDialogBinding.java
+ pan.alexander.tordnscrypt.databinding.EditTextForDialogBinding

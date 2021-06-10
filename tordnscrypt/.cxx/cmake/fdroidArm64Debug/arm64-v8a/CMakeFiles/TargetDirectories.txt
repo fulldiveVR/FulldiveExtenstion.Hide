@@ -1,0 +1,3 @@
+/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/.cxx/cmake/fdroidArm64Debug/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/.cxx/cmake/fdroidArm64Debug/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/.cxx/cmake/fdroidArm64Debug/arm64-v8a/CMakeFiles/invizible.dir

@@ -227,6 +227,7 @@ public class MainActivity extends LangAppCompatActivity
             topFragment = (TopFragment) fragment;
         } else if (fragment instanceof MainFragment) {
             mainFragment = (MainFragment) fragment;
+            mainFragment.setArguments(getIntent().getExtras());
         }
     }
 

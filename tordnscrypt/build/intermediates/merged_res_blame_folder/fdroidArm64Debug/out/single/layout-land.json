@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/build/intermediates/incremental/mergeFdroidArm64DebugResources/stripped.dir/layout-land/fragment_dnscrypt_run.xml",
+        "source": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/res/layout-land/fragment_dnscrypt_run.xml"
+    },
+    {
+        "merged": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/build/intermediates/incremental/mergeFdroidArm64DebugResources/stripped.dir/layout-land/fragment_itpd_run.xml",
+        "source": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/res/layout-land/fragment_itpd_run.xml"
+    },
+    {
+        "merged": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/build/intermediates/incremental/mergeFdroidArm64DebugResources/stripped.dir/layout-land/fragment_tor_run.xml",
+        "source": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/res/layout-land/fragment_tor_run.xml"
+    },
+    {
+        "merged": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/build/intermediates/incremental/mergeFdroidArm64DebugResources/stripped.dir/layout-land/content_main.xml",
+        "source": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/res/layout-land/content_main.xml"
+    },
+    {
+        "merged": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/build/intermediates/incremental/mergeFdroidArm64DebugResources/stripped.dir/layout-land/app_bar_main.xml",
+        "source": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/res/layout-land/app_bar_main.xml"
+    }
+]

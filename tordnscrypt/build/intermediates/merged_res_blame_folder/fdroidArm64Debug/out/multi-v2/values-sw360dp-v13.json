@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/build/intermediates/incremental/mergeFdroidArm64DebugResources/merged.dir/values-sw360dp-v13/values-sw360dp-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/yuliabatova/StudioProjects/FulldiveExtenstion.Hide/tordnscrypt/src/main/res/values-sw360dp-v13/values-preference.xml",
+                    "from": {
+                        "startLines": "3,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "103,230",
+                        "endColumns": "126,117",
+                        "endOffsets": "225,343"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "100,225",
+                        "endColumns": "124,115",
+                        "endOffsets": "220,336"
+                    }
+                }
+            ]
+        }
+    ]
+}

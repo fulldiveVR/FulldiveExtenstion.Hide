@@ -148,5 +148,5 @@ dependencies {
     implementation 'com.jrummyapps:android-shell:1.0.1'
     implementation "androidx.core:core-ktx:1.5.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation project(':filepicker')
+    implementation 'com.github.angads25:filepicker:1.1.1'
 }

@@ -3,3 +3,11 @@
 /build/
 /tordnscrypt/.cxx/
 /tordnscrypt/build/
+/local.properties
+build/**
+*/build/
+.idea/**
+.gradle/**
+build/**
+**/*.iml
+**/*.orig

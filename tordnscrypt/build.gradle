@@ -9,7 +9,7 @@ android {
     productFlavors {
 
         fdroid{
-            applicationId "com.fulldive.tordnscrypt"
+            applicationId "com.fulldive.extension.tordnscrypt"
             versionName "5.3.0"
             dimension = 'version'
             resValue 'string', 'package_name', applicationId

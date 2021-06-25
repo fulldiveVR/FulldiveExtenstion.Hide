@@ -73,7 +73,7 @@
     <string name="pref_fast_unlock_with_tor_summ">"Liste des Sites Web à ouvrir avec Tor. Cette fonctionnalité est inutilisable pour les sites situés derrière un CDN"</string>
     <string name="pref_fast_unlock_apps_with_tor">"Sélectionner les applications"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"Liste des applications à utiliser avec Tor"</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"Liste des applications à utiliser avec VPN"</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Liste des applications à utiliser avec Full TOR</string>
     <string name="pref_fast_exclude_from_tor">"Exclure des sites Web"</string>
     <string name="pref_fast_exclude_from_tor_summ">"Liste des sites Web à ouvrir directement"</string>
     <string name="pref_fast_exclude_apps_from_tor">"Exclure des Applications"</string>
@@ -103,7 +103,7 @@
     <string name="pref_fast_block_http_summ">"Refuser la connexion au port http 80"</string>
     <string name="pref_fast_categ_update">"Mise à Jour"</string>
     <string name="pref_fast_auto_update">"Mise à Jours automatique"</string>
-    <string name="pref_fast_auto_update_summ">"Vérifier quotidiennement les versions d'VPN et de ses modules"</string>
+    <string name="pref_fast_auto_update_summ">Vérifier quotidiennement les versions d\'Full TOR et de ses modules</string>
     <string name="pref_fast_chek_update">"Vérifier les Mise à Jours"</string>
     <string name="pref_fast_chek_update_summ">"Vérifier immédiatement si de nouvelles versions sont disponibles"</string>
     <string name="pref_fast_through_tor_update">"Mettre à jour uniquement via Tor"</string>
@@ -122,12 +122,7 @@
     <string name="pref_common_wakelock_summ">"Protection additionnel du mode sans Privilèges pour éviter que l'application ne soit tuée par le système. Peut décharger la batterie"</string>
     <string name="pref_common_show_help">"Messages d'aide"</string>
     <string name="pref_common_show_help_summ">"Toujours afficher les messages d'aide"</string>
-    <string name="pref_common_notification_helper">"Veuillez exclure VPN de l'optimisation de la batterie d'Android.
-                Sinon, le système tuera les services DNSCrypt, Tor ou I2P à n'importe quel moment. Sur les systèmes spécifiques,
-                comme MIUI, cela nécessite quelques mesures supplémentaires, pour exclure VPN de l'optimisation de la
-                batterie (par exemple, sécurité-&gt;Batterie-&gt;Économie d'énergie&gt;Sélectionner VPN-&gt;Aucune restriction de fonctionnement en arrière plan,
-                Sécurité-&gt;auto-démarrage et pression longue sur le bouton Accueil-&gt;Ouverture des application récentes-&gt;VPN
-                vers le bas et cliquez sur le signe \"verrouillé\" en mémoire)."</string>
+    <string name="pref_common_notification_helper">Veuillez exclure Full TOR de l\'optimisation de la batterie d\'Android.                 Sinon, le système tuera les services DNSCrypt, Tor ou I2P à n\'importe quel moment. Sur les systèmes spécifiques,                 comme MIUI, cela nécessite quelques mesures supplémentaires, pour exclure Full TOR de l\'optimisation de la                 batterie (par exemple, sécurité-&gt;Batterie-&gt;Économie d\'énergie&gt;Sélectionner Full TOR-&gt;Aucune restriction de fonctionnement en arrière plan,                 Sécurité-&gt;auto-démarrage et pression longue sur le bouton Accueil-&gt;Ouverture des application récentes-&gt;Full TOR                 vers le bas et cliquez sur le signe \"verrouillé\" en mémoire).</string>
     <string name="pref_common_use_busybox">"Sélectionnez BusyBox"</string>
     <string name="pref_common_categ_hotspot">"POINT D'ACCÈS-Expérimental"</string>
     <string name="pref_common_tethering_autostart">"Commencer le partage de connexion au démarrage"</string>
@@ -314,16 +309,16 @@
     <string name="help_activity_path">"Chemin des journaux:"</string>
     <string name="help_activity_logs_saved">"Journaux enregistrés. Veuillez envoyer VPNLogs.txt au développeur. Vous pouvez trouver les journaux dans le dossier:"</string>
     <string name="update_core_title">"Mise à Jour"</string>
-    <string name="update_core_message">"Certains des modules d'VPN sont prêts à être mis à jour. Voulez-vous le(s) mettre à jour? Cela écrasera les paramètres de vos modules!"</string>
+    <string name="update_core_message">Certains des modules d\'Full TOR sont prêts à être mis à jour. Voulez-vous le(s) mettre à jour? Cela écrasera les paramètres de vos modules!</string>
     <string name="update_core_yes">"Mise à Jour"</string>
     <string name="update_core_no">"Plus tard"</string>
     <string name="update_core_not_show_again">"Ne pas demander à nouveau"</string>
-    <string name="update_core_restart">"Veuillez redémarrer VPN et autoriser l'installation complète!         Après l'installation, reconfigurez POINT D'ACCÈS, si vous l'utilisez!"</string>
+    <string name="update_core_restart">Veuillez redémarrer Full TOR et autoriser l\'installation complète!         Après l\'installation, reconfigurez POINT D\'ACCÈS, si vous l\'utilisez!</string>
     <string name="update_notification">"Téléchargement du fichier"</string>
     <string name="update_interrupt_notification">"Le téléchargement a été arrêté"</string>
     <string name="cancel_download">"ANNULER LE TÉLÉCHARGEMENT"</string>
     <string name="update_new_version">"Nouvelle Version:"</string>
-    <string name="update_ipro_has_apdate">"Une mise à jour d'VPN est disponible. Voulez-vous la télécharger et l'effectuer? La mise à jour se poursuivra en arrière-plan."</string>
+    <string name="update_ipro_has_apdate">Une mise à jour d\'Full TOR est disponible. Voulez-vous la télécharger et l\'effectuer? La mise à jour se poursuivra en arrière-plan.</string>
     <string name="update_dnscrypt_has_apdate">"Une mise à jour de DNSCrypt est disponible. Voulez-vous la télécharger et l'effectuer? La mise à jour se poursuivra en arrière-plan."</string>
     <string name="update_tor_has_apdate">"Une mise à jour de Tor est disponible. Voulez-vous la télécharger et l'effectuer? La mise à jour se poursuivra en arrière-plan."</string>
     <string name="update_itpd_has_apdate">"Une mise à jour de Purple I2P est disponible. Voulez-vous la télécharger et l'effectuer? La mise à jour se poursuivra en arrière-plan."</string>
@@ -336,17 +331,16 @@
     <string name="update_last_check">"Dernière vérification:"</string>
     <string name="update_found">"Des mises à jour ont été trouvées."</string>
     <string name="update_installed">"Des mises à jour ont été installées."</string>
-    <string name="update_over_three_activations">"Il semble que vous ayez déjà activé 3 copies d'VPN avec ce code. Si ce n'est pas le cas, veuillez contacter le développeur."</string>
+    <string name="update_over_three_activations">Il semble que vous ayez déjà activé 3 copies d\'Full TOR avec ce code. Si ce n\'est pas le cas, veuillez contacter le développeur.</string>
     <string name="update_wrong_code">"Il semble que votre code PRO soit erroné. Veuillez contacter le développeur."</string>
-    <string name="update_over_five_times">"Vous avez vérifié les mises à jour d'VPN plus de 5 fois par jour. Veuillez réessayer plus tard."</string>
+    <string name="update_over_five_times">Vous avez vérifié les mises à jour d\'Full TOR plus de 5 fois par jour. Veuillez réessayer plus tard.</string>
     <string name="only_for_pro">"Uniquement pour la version PRO"</string>
     <string name="donate">"Contribuer"</string>
-    <string name="donate_project">"Le Projet VPN a besoin de votre aide. Veuillez visiter la page de don ou entrer le code d'inscription reçu."</string>
+    <string name="donate_project">Le Projet Full TOR a besoin de votre aide. Veuillez visiter la page de don ou entrer le code d\'inscription reçu.</string>
     <string name="donate_button">"Visiter"</string>
     <string name="enter_code_button">"Entrez le code"</string>
     <string name="enter_code">"Entrez le Code"</string>
-    <string name="thanks_for_donate">"Le Projet VPN et son auteur vous expriment leur reconnaissance
-                pour l'assistance. Souhaitez-vous télécharger et mettre à jour la version PRO? La mise à jour se poursuivra en arrière-plan."</string>
+    <string name="thanks_for_donate">Le Projet Full TOR et son auteur vous expriment leur reconnaissance                 pour l\'assistance. Souhaitez-vous télécharger et mettre à jour la version PRO? La mise à jour se poursuivra en arrière-plan.</string>
     <string name="pref_dnscrypt_relays_summ">"Listes distantes des relais disponibles."</string>
     <string name="vpn_mode_active">"Le mode VPN est actif"</string>
     <string name="vpn_mode_off">"Le mode VPN est désactivé"</string>
@@ -362,7 +356,7 @@
     <string name="add_custom_server_title">"Ajouter un serveur personnalisé"</string>
     <string name="add_custom_server_error">"Configuration du serveur personnalisée non valide. Veuillez vérifier le champ SDNS."</string>
     <string name="pending_purchase">"Veuillez noter que vous avez un achat en attente:"</string>
-    <string name="buy_premium_gp">"Le Projet VPN a besoin de votre aide. Appuyez sur OK pour acheter les fonctionnalités premium."</string>
+    <string name="buy_premium_gp">Le Projet Full TOR a besoin de votre aide. Appuyez sur OK pour acheter les fonctionnalités premium.</string>
     <string name="wrong_purchase_signature_gp">"Désolé, mais il est impossible de confirmer votre achat. Vous serez remboursé au bout de 3 jours."</string>
     <string name="only_premium_feature">"Malheureusement, cette fonctionnalité n'est disponible que dans la version premium."</string>
     <string name="agreement_text">"\tMerci d'avoir choisi VPN. J'espère que cela sera utile à votre vie privée ainsi qu'à une utilisation d'Internet plus confortable.
@@ -497,8 +491,8 @@
     <string name="pref_firewall_allow_internet_for_new_apps">"Permettre aux applications nouvellement installée de ce connecter"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"Les connexions Internet pour les applications nouvellement installées sont autorisées"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"Les connexions Internet pour les applications nouvellement installées sont bloquées"</string>
-    <string name="helper_dnscrypt_proxy_wifi">"Veuillez désactiver le mandataire dans les paramètres du réseau Wifi d'Android. Cette option interfère avec VPN."</string>
-    <string name="helper_dnscrypt_proxy_gsm">"Veuillez désactiver le mandataire dans les paramètres APN du réseau GSM d'Android. Cette option interfère avec InviZible."</string>
+    <string name="helper_dnscrypt_proxy_wifi">Veuillez désactiver le mandataire dans les paramètres du réseau Wifi d\'Android. Cette option interfère avec Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Veuillez désactiver le mandataire dans les paramètres APN du réseau GSM d\'Android. Cette option interfère avec Full TOR.</string>
     <string name="notification_channel_auxiliary">"Notifications auxiliaires"</string>
     <string name="pref_common_dns_rebind_protection">"Protection contre le rebondissements DNS (DNS rebinding)"</string>
     <string name="pref_common_dns_rebind_protection_summ">"Bloquer un site lorsqu'une attaque par rebondissement du DNS est détectée"</string>
@@ -508,5 +502,5 @@
     <string name="btnResetSettings">"Réinitialiser les paramètres"</string>
     <string name="backupSaved">"Sauvegarde enregistré"</string>
     <string name="backupRestored">"Sauvegarde restauré"</string>
-    <string name="thanks_for_donate_gp">"Le Projet VPN et son auteur vous expriment leur reconnaissance pour l'assistance."</string>
+    <string name="thanks_for_donate_gp">Le Projet Full TOR et son auteur vous expriment leur reconnaissance pour l\'assistance.</string>
 </resources>

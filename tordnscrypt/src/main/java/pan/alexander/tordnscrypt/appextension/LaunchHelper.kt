@@ -13,9 +13,8 @@ object LaunchHelper {
     val runningStates =
         listOf(ModuleState.STARTING, ModuleState.RESTARTING, ModuleState.RUNNING)
 
-    fun launchVPN(context: Context) {
+    fun startVPN(context: Context) {
         val modulesStatus = ModulesStatus.getInstance()
-        val state = modulesStatus.torState
         val prefManager = PrefManager(context)
         val hideIp = prefManager.getBoolPref("HideIp")
         val protectDns = prefManager.getBoolPref("ProtectDns")
@@ -31,7 +30,21 @@ object LaunchHelper {
             if (accessITP) {
                 switchItp(context, modulesStatus)
             }
-        } else {
+        }
+
+        val uri = getContentUri(getNewExtensionState(modulesStatus))
+        context.contentResolver.insert(uri, null)
+    }
+
+    fun stopVPN(context: Context) {
+        val modulesStatus = ModulesStatus.getInstance()
+        val prefManager = PrefManager(context)
+        val hideIp = prefManager.getBoolPref("HideIp")
+        val protectDns = prefManager.getBoolPref("ProtectDns")
+        val accessITP = prefManager.getBoolPref("AccessITP")
+
+        if (!(modulesStatus.dnsCryptState == ModuleState.STOPPED && modulesStatus.torState == ModuleState.STOPPED && modulesStatus.itpdState == ModuleState.STOPPED)) {
+
             if (protectDns && modulesStatus.dnsCryptState != ModuleState.STOPPED) {
                 switchDNSCrypt(context, modulesStatus)
             }
@@ -48,7 +61,6 @@ object LaunchHelper {
     }
 
     fun getCurrentExtensionState(modulesStatus: ModulesStatus): String {
-//        Log.d("AppExtensionTest", "getExtensionState $state")
         val states = listOf(
             modulesStatus.torState,
             modulesStatus.dnsCryptState,
@@ -62,7 +74,7 @@ object LaunchHelper {
                 AppExtensionState.FAILURE
             }
             else -> AppExtensionState.STOP
-        }.toString()
+        }.id
     }
 
     private fun getNewExtensionState(modulesStatus: ModulesStatus): String {
@@ -80,7 +92,7 @@ object LaunchHelper {
                 AppExtensionState.FAILURE
             }
             else -> AppExtensionState.START
-        }.toString()
+        }.id
     }
 
     private fun switchDNSCrypt(context: Context, modulesStatus: ModulesStatus) {

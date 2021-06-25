@@ -77,7 +77,7 @@
     <string name="pref_fast_unlock_with_tor_summ">"Lista de websites para abrir com o Tor"</string>
     <string name="pref_fast_unlock_apps_with_tor">"Selecionar aplicativos"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"Lista de aplicativos para utilizar com o Tor"</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"Lista de aplicativos para usar com o InviZible"</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Lista de aplicativos para usar com o Full TOR</string>
     <string name="pref_fast_exclude_from_tor">"Websites ignorados"</string>
     <string name="pref_fast_exclude_from_tor_summ">"Lista de websites para abrir diretamente"</string>
     <string name="pref_fast_exclude_apps_from_tor">"Ignorar aplicativos"</string>
@@ -107,7 +107,7 @@
     <string name="pref_fast_block_http_summ">"Negar conexões para o http porta 80"</string>
     <string name="pref_fast_categ_update">"Atualizações"</string>
     <string name="pref_fast_auto_update">"Atualização automática"</string>
-    <string name="pref_fast_auto_update_summ">"Verificar por atualizações do VPN e de seus módulos diariamente"</string>
+    <string name="pref_fast_auto_update_summ">Verificar por atualizações do Full TOR e de seus módulos diariamente</string>
     <string name="pref_fast_chek_update">"Verificar atualizações"</string>
     <string name="pref_fast_chek_update_summ">"Verificar se alguma nova versão está disponível agora"</string>
     <string name="pref_fast_through_tor_update">"Atualizar estritamente através do Tor"</string>
@@ -330,16 +330,16 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="help_activity_path">"Caminho para logs:"</string>
     <string name="help_activity_logs_saved">"Logs salvos. Envie InvizibleLogs.txt para o desenvolvedor. Você pode encontrar os registros na pasta: "</string>
     <string name="update_core_title">"Atualizar"</string>
-    <string name="update_core_message">"Alguns dos módulos InviZible estão prontos para atualização. Quer atualizá-lo? Isso substituirá as configurações dos seus módulos!"</string>
+    <string name="update_core_message">Alguns dos módulos Full TOR estão prontos para atualização. Quer atualizá-lo? Isso substituirá as configurações dos seus módulos!</string>
     <string name="update_core_yes">"Atualize"</string>
     <string name="update_core_no">"Depois"</string>
     <string name="update_core_not_show_again">"Não pergunte novamente"</string>
-    <string name="update_core_restart">"Reinicie VPN e permita a instalação completa! Após a instalação, reconfigure o HOTSPOT, se for usá-lo!"</string>
+    <string name="update_core_restart">Reinicie Full TOR e permita a instalação completa! Após a instalação, reconfigure o HOTSPOT, se for usá-lo!</string>
     <string name="update_notification">"Baixando arquivo"</string>
     <string name="update_interrupt_notification">"Download foi interrompido"</string>
     <string name="cancel_download">"CANCELAR O DOWNLOAD"</string>
     <string name="update_new_version">"Nova Versão:"</string>
-    <string name="update_ipro_has_apdate">"A atualização do VPN está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
+    <string name="update_ipro_has_apdate">A atualização do Full TOR está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano.</string>
     <string name="update_dnscrypt_has_apdate">"A atualização do DNSCrypt Pro está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
     <string name="update_tor_has_apdate">"A atualização do Tor está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
     <string name="update_itpd_has_apdate">"A atualização do I2P está disponível. Quer fazer o download e atualizá-lo? A atualização continuará em segundo plano."</string>
@@ -352,16 +352,16 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="update_last_check">"Última verificação:"</string>
     <string name="update_found">"Atualizações foram encontradas."</string>
     <string name="update_installed">"Atualizações foram instaladas."</string>
-    <string name="update_over_three_activations">"Parece que você já ativou 3 cópias do InviZible com este código. Se estiver errado, entre em contato com o desenvolvedor."</string>
+    <string name="update_over_three_activations">Parece que você já ativou 3 cópias do Full TOR com este código. Se estiver errado, entre em contato com o desenvolvedor.</string>
     <string name="update_wrong_code">"Parece que seu código PRO está errado. Entre em contato com o desenvolvedor."</string>
-    <string name="update_over_five_times">"Você verificou as atualizações do VPN mais de 5 vezes por dia. Por favor, tente novamente mais tarde."</string>
+    <string name="update_over_five_times">Você verificou as atualizações do Full TOR mais de 5 vezes por dia. Por favor, tente novamente mais tarde.</string>
     <string name="only_for_pro">"Apenas para a versão PRO"</string>
     <string name="donate">"Doação"</string>
-    <string name="donate_project">"O Projeto VPN precisa de sua ajuda. Visite a página de doações ou insira o código de registro recebido."</string>
+    <string name="donate_project">O Projeto Full TOR precisa de sua ajuda. Visite a página de doações ou insira o código de registro recebido.</string>
     <string name="donate_button">"Visite"</string>
     <string name="enter_code_button">"Coloque o código"</string>
     <string name="enter_code">"Coloque o código"</string>
-    <string name="thanks_for_donate">"O Projeto VPN e seu autor agradecem a ajuda. Gostaria de baixar e atualizar para o PRO? A atualização continuará em segundo plano."</string>
+    <string name="thanks_for_donate">O Projeto Full TOR e seu autor agradecem a ajuda. Gostaria de baixar e atualizar para o PRO? A atualização continuará em segundo plano.</string>
     <string name="pref_dnscrypt_relays_summ">"Listas remotas de retransmissores disponíveis."</string>
     <string name="vpn_mode_active">"Modo VPN está ativo"</string>
     <string name="vpn_mode_off">"Modo VPN esta desativado"</string>
@@ -376,7 +376,7 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="add_custom_server_title">"Adicionar servidor customizado"</string>
     <string name="add_custom_server_error">"Configuração de servidor personalizado inválida. Verifique o campo SDNS."</string>
     <string name="pending_purchase">"Observe que você tem uma compra pendente:"</string>
-    <string name="buy_premium_gp">"O Projeto VPN precisa de sua ajuda. Pressione OK para adquirir recursos premium."</string>
+    <string name="buy_premium_gp">O Projeto Full TOR precisa de sua ajuda. Pressione OK para adquirir recursos premium.</string>
     <string name="wrong_purchase_signature_gp">"Desculpe, mas é impossível confirmar sua compra. Você receberá um reembolso após 3 dias."</string>
     <string name="only_premium_feature">"Infelizmente, esse recurso está disponível apenas para a versão premium."</string>
     <string name="agreement_text">"\ tObrigado por escolher o VPN. Espero que seja útil para sua privacidade e uso confortável da Internet.
@@ -502,8 +502,8 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="pref_firewall_allow_internet_for_new_apps">"Permitir conexões para novos aplicativos"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"As conexões de Internet para aplicativos recém-instalados estão permitidos."</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"As conexões de Internet para aplicativos recém-instalados estão bloqueadas."</string>
-    <string name="helper_dnscrypt_proxy_wifi">"Desative o proxy nas configurações de rede WiFi do Android. Esta opção interfere no InviZible."</string>
-    <string name="helper_dnscrypt_proxy_gsm">"Desative o proxy nas configurações de APN da rede móvel Android. Esta opção interfere no InviZible."</string>
+    <string name="helper_dnscrypt_proxy_wifi">Desative o proxy nas configurações de rede WiFi do Android. Esta opção interfere no Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Desative o proxy nas configurações de APN da rede móvel Android. Esta opção interfere no Full TOR.</string>
     <string name="notification_channel_auxiliary">"Notificações auxiliares"</string>
     <string name="pref_common_dns_rebind_protection">"Proteção de religação de Dns"</string>
     <string name="pref_common_dns_rebind_protection_summ">"Bloquear site quando um ataque de religação de DNS for detectado"</string>
@@ -513,5 +513,5 @@ Essas consultas podem revelar a presença de malware, aplicativos quebrados / ob
     <string name="btnResetSettings">"Restaurar configurações"</string>
     <string name="backupSaved">"Backup salvo"</string>
     <string name="backupRestored">"Backup restaurado"</string>
-    <string name="thanks_for_donate_gp">"VPN Project e seu Autor agradece a ajuda."</string>
+    <string name="thanks_for_donate_gp">Full TOR Project e seu Autor agradece a ajuda.</string>
 </resources>

@@ -79,7 +79,7 @@
     <string name="pref_fast_unlock_with_tor_summ">"Daftar website dibuka dengan Tor"</string>
     <string name="pref_fast_unlock_apps_with_tor">"Pilih Aplikasi"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"Daftar aplikasi menggunakan Tor"</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"Daftar aplikasi menggunakan InviZible"</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Daftar aplikasi menggunakan Full TOR</string>
     <string name="pref_fast_exclude_from_tor">"Kecualikan website"</string>
     <string name="pref_fast_exclude_from_tor_summ">"Daftar WebSites untuk membuka secara langsung"</string>
     <string name="pref_fast_exclude_apps_from_tor">"Kecualikan aplikasi"</string>
@@ -115,7 +115,7 @@
 
     <!-- Pemutakhiran otomatis -->
     <string name="pref_fast_auto_update">"Perbarui Otomatis"</string>
-    <string name="pref_fast_auto_update_summ">"Cek VPN dan perbarui modul setiap hari"</string>
+    <string name="pref_fast_auto_update_summ">Cek Full TOR dan perbarui modul setiap hari</string>
     <string name="pref_fast_chek_update">"Periksa Pembaruan"</string>
     <string name="pref_fast_chek_update_summ">"Periksa jika versi baru sudah tersedia"</string>
     <string name="pref_fast_through_tor_update">"Perbarui secara ketat melalui Tor"</string>
@@ -134,11 +134,7 @@
     <string name="pref_common_wakelock_summ">"Perlindungan tambahan untuk modus tanpa Root agar aplikasi tidak dimatikan sistem Android. Fitur ini akan menguras daya baterai"</string>
     <string name="pref_common_show_help">"Pesan bantuan"</string>
     <string name="pref_common_show_help_summ">"Selalu Tampilkan pesan Bantuan"</string>
-    <string name="pref_common_notification_helper">"Silahkan hapus VPN dari daftar pengoptimalan baterai Android
-	Jika tidak, Sistem Android akan mematikan DNSCrypt, Tor, atau I2P kapanpun. 
-Sistem Operasi seperti MIUI membutuhkan langkah khusus untuk menghapus VPN dari daftar Pengoptimalan Baterai (misal. Pengaturan-&gt;Baterai-&gt;Penghemat Daya-&gt;Pilih VPN-&gt;Tidak ada batasan Latar Belakang,
-	Pengaturan-&gt;ijinkan mulai otomatis dan Tekan Tahan Tombol Home-&gt;Buka Recent App-&gt;Kemudian swipe kebawah VPN
-	dan klik kunci pada memori)."</string>
+    <string name="pref_common_notification_helper">Silahkan hapus Full TOR dari daftar pengoptimalan baterai Android \tJika tidak, Sistem Android akan mematikan DNSCrypt, Tor, atau I2P kapanpun.  Sistem Operasi seperti MIUI membutuhkan langkah khusus untuk menghapus Full TOR dari daftar Pengoptimalan Baterai (misal. Pengaturan-&gt;Baterai-&gt;Penghemat Daya-&gt;Pilih Full TOR-&gt;Tidak ada batasan Latar Belakang, \tPengaturan-&gt;ijinkan mulai otomatis dan Tekan Tahan Tombol Home-&gt;Buka Recent App-&gt;Kemudian swipe kebawah Full TOR \tdan klik kunci pada memori).</string>
     <string name="pref_common_use_busybox">"Pilih BusyBox"</string>
     <string name="pref_common_categ_hotspot">"Experimental-HOTSPOT"</string>
     <string name="pref_common_tethering_autostart">"Memulai Penambatan saat Boot"</string>
@@ -333,16 +329,16 @@ Periksa pengaturan perangkat!"</string>
     <string name="help_activity_path">"Path untuk log:"</string>
     <string name="help_activity_logs_saved">"Berkas log tersimpan. Silakan kirim berkas InvizibleLogs.txt ke pengembang. Berkas log tersimpan di folder"</string>
     <string name="update_core_title">"Memperbarui"</string>
-    <string name="update_core_message">"Beberapa modul InviZible siap diperbarui. Apakah Anda ingin memperbarui? Ini akan menimpa pengaturan modul Anda!"</string>
+    <string name="update_core_message">Beberapa modul Full TOR siap diperbarui. Apakah Anda ingin memperbarui? Ini akan menimpa pengaturan modul Anda!</string>
     <string name="update_core_yes">"Memperbarui"</string>
     <string name="update_core_no">"Nanti"</string>
     <string name="update_core_not_show_again">"Jangan tanya lagi"</string>
-    <string name="update_core_restart">"Silakan mulai kembali VPN dan ijinkan seluruh proses pemasangan! Jika anda memakai HOTSPOT, silakan atur ulang pengaturan HOTSPOTnya"</string>
+    <string name="update_core_restart">Silakan mulai kembali Full TOR dan ijinkan seluruh proses pemasangan! Jika anda memakai HOTSPOT, silakan atur ulang pengaturan HOTSPOTnya</string>
     <string name="update_notification">"Mengunduh berkas"</string>
     <string name="update_interrupt_notification">"Unduhan dihentikan"</string>
     <string name="cancel_download">"BATALKAN UNDUHAN"</string>
     <string name="update_new_version">"Versi baru:"</string>
-    <string name="update_ipro_has_apdate">"Pembaruan VPN tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
+    <string name="update_ipro_has_apdate">Pembaruan Full TOR tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang.</string>
     <string name="update_dnscrypt_has_apdate">"Pembaruan DNSCrypt tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
     <string name="update_tor_has_apdate">"Pembaruan Tor tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
     <string name="update_itpd_has_apdate">"Pembaruan Purple I2P tersedia. Apakah Anda ingin mengunduh dan memperbaruinya? Pembaruan akan berlanjut di latar belakang."</string>
@@ -355,16 +351,16 @@ Periksa pengaturan perangkat!"</string>
     <string name="update_last_check">"Cek terakhir:"</string>
     <string name="update_found">"Pembaruan ditemukan."</string>
     <string name="update_installed">"Pembaruan telah diinstal."</string>
-    <string name="update_over_three_activations">"Sepertinya Anda sudah mengaktifkan 3 salinan InviZible dengan kode ini. Jika salah, silakan hubungi pengembang."</string>
+    <string name="update_over_three_activations">Sepertinya Anda sudah mengaktifkan 3 salinan Full TOR dengan kode ini. Jika salah, silakan hubungi pengembang.</string>
     <string name="update_wrong_code">"Sepertinya kode PRO Anda salah. Silakan hubungi pengembang."</string>
-    <string name="update_over_five_times">"Anda memeriksa pembaruan VPN lebih dari 5 pada hari ini. Silakan coba lagi nanti."</string>
+    <string name="update_over_five_times">Anda memeriksa pembaruan Full TOR lebih dari 5 pada hari ini. Silakan coba lagi nanti.</string>
     <string name="only_for_pro">"Hanya untuk versi PRO"</string>
     <string name="donate">"Donasi"</string>
-    <string name="donate_project">"Proyek Pro InviZible membutuhkan bantuan Anda. Silakan kunjungi halaman donasi atau masukkan kode registrasi yang anda terima."</string>
+    <string name="donate_project">Proyek Pro Full TOR membutuhkan bantuan Anda. Silakan kunjungi halaman donasi atau masukkan kode registrasi yang anda terima.</string>
     <string name="donate_button">"Kunjungi"</string>
     <string name="enter_code_button">"Masukkan kode"</string>
     <string name="enter_code">"Masukkan kode"</string>
-    <string name="thanks_for_donate">"Pengembang VPN menyampaikan apresiasi kepada anda atas dukungannya. Apakah anda ingin meningkatkan ke versi PRO? Proses pembaruan akan berjalan di latar belakang"</string>
+    <string name="thanks_for_donate">Pengembang Full TOR menyampaikan apresiasi kepada anda atas dukungannya. Apakah anda ingin meningkatkan ke versi PRO? Proses pembaruan akan berjalan di latar belakang</string>
     <string name="pref_dnscrypt_relays_summ">"Alamat remote daftar relai tersedia"</string>
     <string name="vpn_mode_active">"Modus VPN aktif"</string>
     <string name="vpn_mode_off">"Modus VPN tidak aktif"</string>
@@ -380,7 +376,7 @@ Periksa pengaturan perangkat!"</string>
     <string name="add_custom_server_title">"Tambahkan server khusus"</string>
     <string name="add_custom_server_error">"Konfigurasi server khusus tidak valid. Silakan periksa bidang SDNS."</string>
     <string name="pending_purchase">"Harap perhatikan bahwa Anda memiliki pembelian yang tertunda:"</string>
-    <string name="buy_premium_gp">"Proyek Pro InviZible membutuhkan bantuan Anda. Tekan OK untuk membeli fitur premium."</string>
+    <string name="buy_premium_gp">Proyek Pro Full TOR membutuhkan bantuan Anda. Tekan OK untuk membeli fitur premium.</string>
     <string name="wrong_purchase_signature_gp">"Maaf, tetapi tidak mungkin untuk mengkonfirmasi pembelian Anda. Anda akan menerima pengembalian dana setelah 3 hari."</string>
     <string name="only_premium_feature">"Sayangnya, fitur ini hanya tersedia untuk versi premium."</string>
     <string name="agreement_text">"        \tTerima kasih telah memilih VPN. Saya harap ini bermanfaat untuk privasi Anda dan kenyamanan penggunaan Internet.
@@ -514,8 +510,8 @@ Matikan dan hidupkan wifi beberapa saat, hotspot Wi-Fi yang anda akses saat ini 
     <string name="pref_firewall_allow_internet_for_new_apps">"Allow connections for new apps"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"Internet connections for newly installed apps are allowed."</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"Internet connections for newly installed applications are blocked."</string>
-    <string name="helper_dnscrypt_proxy_wifi">"Please disable proxy in Android WiFi network settings. This option interferes with InviZible."</string>
-    <string name="helper_dnscrypt_proxy_gsm">"Please disable proxy in Android Mobile network APN settings. This option interferes with InviZible."</string>
+    <string name="helper_dnscrypt_proxy_wifi">Please disable proxy in Android WiFi network settings. This option interferes with Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Please disable proxy in Android Mobile network APN settings. This option interferes with Full TOR.</string>
     <string name="notification_channel_auxiliary">"Auxiliary notifications"</string>
     <string name="pref_common_dns_rebind_protection">"DNS rebinding protection"</string>
     <string name="pref_common_dns_rebind_protection_summ">"Block site when DNS rebinding attack is detected"</string>
@@ -525,5 +521,5 @@ Matikan dan hidupkan wifi beberapa saat, hotspot Wi-Fi yang anda akses saat ini 
     <string name="btnResetSettings">"Reset Settings"</string>
     <string name="backupSaved">"Backup saved"</string>
     <string name="backupRestored">"Backup restored"</string>
-    <string name="thanks_for_donate_gp">"Pengembang VPN menyampaikan apresiasi kepada anda atas dukungannya."</string>
+    <string name="thanks_for_donate_gp">Pengembang Full TOR menyampaikan apresiasi kepada anda atas dukungannya.</string>
 </resources>

@@ -341,11 +341,11 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
             return;
         }
         ModuleState state = modulesStatus.getTorState();
-        String appExtensionState = AppExtensionState.START.toString();
+        String appExtensionState = AppExtensionState.START.INSTANCE.getId();
         if (state == ModuleState.STARTING || state == ModuleState.RESTARTING || state == ModuleState.RUNNING) {
-            appExtensionState = AppExtensionState.STOP.toString();
+            appExtensionState = AppExtensionState.STOP.INSTANCE.getId();
         } else if (state == ModuleState.FAULT) {
-            appExtensionState = AppExtensionState.FAILURE.toString();
+            appExtensionState = AppExtensionState.FAILURE.INSTANCE.getId();
         }
 
         Uri uri = getContentUri(appExtensionState);

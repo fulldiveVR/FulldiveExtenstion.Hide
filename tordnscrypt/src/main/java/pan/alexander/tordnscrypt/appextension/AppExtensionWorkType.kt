@@ -1,5 +1,7 @@
 package pan.alexander.tordnscrypt.appextension
 
-enum class AppExtensionWorkType {
-    LAUNCH, OPEN
+sealed class AppExtensionWorkType(val id: String) {
+    object START: AppExtensionWorkType("START")
+    object STOP: AppExtensionWorkType("STOP")
+    object OPEN: AppExtensionWorkType("OPEN")
 }

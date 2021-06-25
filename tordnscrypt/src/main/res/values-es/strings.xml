@@ -73,7 +73,7 @@
     <string name="pref_fast_unlock_with_tor_summ">"Lista de sitios web para abrir con Tor. Este ajuste no funciona para sitios detrás de una CDN"</string>
     <string name="pref_fast_unlock_apps_with_tor">"Seleccione aplicaciones"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"Lista de aplicaciones para usar con Tor"</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"Lista de aplicaciones para usar con InviZible"</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Lista de aplicaciones para usar con Full TOR</string>
     <string name="pref_fast_exclude_from_tor">"Excluir sitios web"</string>
     <string name="pref_fast_exclude_from_tor_summ">"Lista de sitios web a excluir de abrir con Tor. Este ajuste no funciona para sitios detras de una CDN"</string>
     <string name="pref_fast_exclude_apps_from_tor">"Excluir aplicaciones"</string>
@@ -103,7 +103,7 @@
     <string name="pref_fast_block_http_summ">"Bloquear conexiones al puerto 80 de HTTP"</string>
     <string name="pref_fast_categ_update">"Actualizaciones"</string>
     <string name="pref_fast_auto_update">"Actualizaciones automáticas"</string>
-    <string name="pref_fast_auto_update_summ">"Comprueba diariamente actualizaciones para VPN y sus módulos"</string>
+    <string name="pref_fast_auto_update_summ">Comprueba diariamente actualizaciones para Full TOR y sus módulos</string>
     <string name="pref_fast_chek_update">"Comprobar actualizaciones"</string>
     <string name="pref_fast_chek_update_summ">"Comprobar si hay una nueva versión disponible"</string>
     <string name="pref_fast_through_tor_update">"Actualizar solo a través de Tor"</string>
@@ -300,16 +300,16 @@ Con estas peticiones se puede descubrir la presencia de malware, aplicaciones de
     <string name="help_activity_path">"Ruta para registros:"</string>
     <string name="help_activity_logs_saved">"Registros guardados. Por favor, envia el archivo InvizibleLogs.txt al desarrollador. Puedes encontrar los registros en la carpeta:"</string>
     <string name="update_core_title">"Actualizaciones"</string>
-    <string name="update_core_message">"Algunos modulos de InviZible están listos para actualizar. ¿Deseas actualizar ahora? ¡Esto anulará cualquier cambio en la configuración de los módulos! "</string>
+    <string name="update_core_message">"Algunos modulos de Full TOR están listos para actualizar. ¿Deseas actualizar ahora? ¡Esto anulará cualquier cambio en la configuración de los módulos! "</string>
     <string name="update_core_yes">"Actualizar"</string>
     <string name="update_core_no">"Ahora no"</string>
     <string name="update_core_not_show_again">"No preguntar más"</string>
-    <string name="update_core_restart">"Por favor, ¡reinicie VPN o realice una instalación nueva! ¡Después de la instalación reconfigure la compartición de Internet si la estabas usando!"</string>
+    <string name="update_core_restart">Por favor, ¡reinicie Full TOR o realice una instalación nueva! ¡Después de la instalación reconfigure la compartición de Internet si la estabas usando!</string>
     <string name="update_notification">"Descargando archivo"</string>
     <string name="update_interrupt_notification">"La descarga se detuvo"</string>
     <string name="cancel_download">"Cancelar descarga"</string>
     <string name="update_new_version">"Nueva versión:"</string>
-    <string name="update_ipro_has_apdate">"Hay disponible una actualización para VPN. ¿Quieres descargarla y actualizar? La actualización continuará en segundo plano."</string>
+    <string name="update_ipro_has_apdate">Hay disponible una actualización para Full TOR. ¿Quieres descargarla y actualizar? La actualización continuará en segundo plano.</string>
     <string name="update_dnscrypt_has_apdate">"Hay disponible una actualización para DNSCrypt. ¿Quieres descargarla y actualizar? La actualización continuará en segundo plano."</string>
     <string name="update_tor_has_apdate">"Hay disponible una actualización para Tor. ¿Quieres descargarla y actualizar? La actualización continuará en segundo plano."</string>
     <string name="update_itpd_has_apdate">"Hay disponible una actualización para I2P. ¿Quieres descargarla y actualizar? La actualización continuará en segundo plano."</string>
@@ -322,16 +322,16 @@ Con estas peticiones se puede descubrir la presencia de malware, aplicaciones de
     <string name="update_last_check">"Última comprobación:"</string>
     <string name="update_found">"Se han encontrado actualizaciones."</string>
     <string name="update_installed">"La actualización se instalo correctamente."</string>
-    <string name="update_over_three_activations">"Has activado 3 copias de InviZible con este código. Si consideras éste mensaje como erróneo, por favor contacta al desarrollador."</string>
+    <string name="update_over_three_activations">Has activado 3 copias de Full TOR con este código. Si consideras éste mensaje como erróneo, por favor contacta al desarrollador.</string>
     <string name="update_wrong_code">"Código PRO erroneo. Por favor, contacta al desarrollador."</string>
     <string name="update_over_five_times">"Comprobaste hoy más de 5 veces si había actualizaciones. Por favor, inténtalo de nuevo pasado un tiempo."</string>
     <string name="only_for_pro">"Solo versión PRO"</string>
     <string name="donate">"Donaciones"</string>
-    <string name="donate_project">"El proyecto VPN necesita de tu ayuda. Por favor, visita la página para donaciones o introduce el código de registro recibido."</string>
+    <string name="donate_project">El proyecto Full TOR necesita de tu ayuda. Por favor, visita la página para donaciones o introduce el código de registro recibido.</string>
     <string name="donate_button">"Visita"</string>
     <string name="enter_code_button">"Introducir código"</string>
     <string name="enter_code">"Introducir código"</string>
-    <string name="thanks_for_donate">"La comunidad del proyecto VPN y su desarrollador expresan su gratitud por tu ayuda. ¿Te gustaría descargar y actualizar a la versión PRO? La actualización continuará en segundo plano."</string>
+    <string name="thanks_for_donate">La comunidad del proyecto Full TOR y su desarrollador expresan su gratitud por tu ayuda. ¿Te gustaría descargar y actualizar a la versión PRO? La actualización continuará en segundo plano.</string>
     <string name="pref_dnscrypt_relays_summ">"Lista remota de retransmisores disponibles."</string>
     <string name="vpn_mode_active">"Modo VPN activo."</string>
     <string name="vpn_mode_off">"Modo VPN desactivado."</string>
@@ -346,7 +346,7 @@ Con estas peticiones se puede descubrir la presencia de malware, aplicaciones de
     <string name="add_custom_server_title">"Añadir servidor personalizado"</string>
     <string name="add_custom_server_error">"Configuración del servidor personalizado erronea. Por favor, comprueba el campo SDNS."</string>
     <string name="pending_purchase">"Te recordamos que tienes pendiente una compra incompleta:"</string>
-    <string name="buy_premium_gp">"VPN necesita de tu ayuda. Pulsa OK para comprar y obtener funciones exclusivas."</string>
+    <string name="buy_premium_gp">Full TOR necesita de tu ayuda. Pulsa OK para comprar y obtener funciones exclusivas.</string>
     <string name="wrong_purchase_signature_gp">"Lo sentimos, pero no hemos podido verificar tu compra. Recibiras un reembolso en los próximos días (3 días, al menos)."</string>
     <string name="only_premium_feature">"Lo sentimos, pero esa función solo esta disponible en la versión exclusiva."</string>
     <string name="agreement_text">"\tGracias por usar VPN. Esperamos que te sea de utilidad para aumentar la privacidad en Internet y puedas sentir algo más de confianza en su uso, cómo una vez fue, y como debería ser una verdadera red libre.
@@ -475,8 +475,8 @@ Donde 1 - arranca el módulo, y 0 - lo para."</string>
     <string name="pref_firewall_allow_internet_for_new_apps">"Permitir por defecto las conexiones de nuevas aplicaciones"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"Las conexiones de aplicaciones nuevas que se instalen serán permitidas."</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"Las conexiones de aplicaciones nuevas que se instalen serán bloqueadas."</string>
-    <string name="helper_dnscrypt_proxy_wifi">"Por favor, desactiva en los ajustes Wi-Fi el proxy de red en la configuración de Android. Ésta opción entra en conflicto con InviZible."</string>
-    <string name="helper_dnscrypt_proxy_gsm">"Por favor, desactiva en los ajustes APN el proxy de red móvil en la configuración de Android. Ésta opción entra en conflicto con InviZible."</string>
+    <string name="helper_dnscrypt_proxy_wifi">Por favor, desactiva en los ajustes Wi-Fi el proxy de red en la configuración de Android. Ésta opción entra en conflicto con Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Por favor, desactiva en los ajustes APN el proxy de red móvil en la configuración de Android. Ésta opción entra en conflicto con Full TOR.</string>
     <string name="notification_channel_auxiliary">"Notificaciones auxiliares"</string>
     <string name="pref_common_dns_rebind_protection">"Protección de secuestro de enlace DNS."</string>
     <string name="pref_common_dns_rebind_protection_summ">"Bloquear sitio cuando se detecte un ataque de secuentro de enlace DNS"</string>
@@ -486,5 +486,5 @@ Donde 1 - arranca el módulo, y 0 - lo para."</string>
     <string name="btnResetSettings">"Reiniciar configuración"</string>
     <string name="backupSaved">"Copia guardada"</string>
     <string name="backupRestored">"Copia restaurada"</string>
-    <string name="thanks_for_donate_gp">"La comunidad del proyecto VPN y su desarrollador expresan sus agradecimientos por la ayuda."</string>
+    <string name="thanks_for_donate_gp">La comunidad del proyecto Full TOR y su desarrollador expresan sus agradecimientos por la ayuda.</string>
 </resources>

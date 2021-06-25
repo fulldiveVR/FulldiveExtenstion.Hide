@@ -97,7 +97,7 @@
     <!-- انتخاب برنامه ها -->
     <string name="pref_fast_unlock_apps_with_tor">"برنامه‌ها را انتخاب کنید"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"برنامه‌هایی که با TOR می‌توان استفاده کرد"</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"برنامه‌هایی که با InviZible می‌توان استفاده کرد"</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">برنامه‌هایی که با Full TOR می‌توان استفاده کرد</string>
     <string name="pref_fast_exclude_from_tor">"محدودسازی سایت‌ها"</string>
     <string name="pref_fast_exclude_from_tor_summ">"لیست این وب سایتها به طور مستقیم باز می شوند. این ویژگی برای سایتهای پشت CDN کار نمی کند!"</string>
     <string name="pref_fast_exclude_apps_from_tor">"محدود‌سازی برنامه‌ها"</string>
@@ -127,7 +127,7 @@
     <string name="pref_fast_block_http_summ">"مسدودسازی ارتباط با HTTP Port 80"</string>
     <string name="pref_fast_categ_update">"بروزرسانی"</string>
     <string name="pref_fast_auto_update">"بروزرسانی خودکار"</string>
-    <string name="pref_fast_auto_update_summ">"بروزرسانی‌های VPN و ماژول‌ها را روزانه بررسی کنید"</string>
+    <string name="pref_fast_auto_update_summ">بروزرسانی‌های Full TOR و ماژول‌ها را روزانه بررسی کنید</string>
     <string name="pref_fast_chek_update">"بررسی بروزرسانی"</string>
     <string name="pref_fast_chek_update_summ">"بررسی کنید نسخه‌های جدید اکنون موجود هستند یا خیر"</string>
     <string name="pref_fast_through_tor_update">"مؤکداً انجام بروزرسانی‌ها از طریق TOR"</string>
@@ -146,8 +146,7 @@
     <string name="pref_common_wakelock_summ">"حفاظت بیش‌تر بدون حالت Root برای جلوگیری از توقف برنامه توسط اندروید. ممکن است باعث تخلیه زودتر باتری شود."</string>
     <string name="pref_common_show_help">"راهنمایی‌ها"</string>
     <string name="pref_common_show_help_summ">"همیشه پیغام‌های راهنما را نشان بده"</string>
-    <string name="pref_common_notification_helper">"لطفا VPN را در بهینه‌سازی باتری دستگاه قرار ندهید‌. در غیر این صورت، ممکن است اندروید DNSCrypt و TOR و یا I2P را در هر زمان خاموش کند.
-در بعضی سیستم عامل‌های استثناء همانند سیستم عامل گوشی‌های شیائومی باید چند گام اضافه را انجام داد تا VPN را از تنظیمات ویژه باتری مستثنی نماید (مثلاً در بخش حفاظت -&gt; باتری -&gt; ذخیره نیرو -&gt; انتخاب VPN -&gt; محدود نساختن فعالیت‌های پس‌زمینه را انتخاب نمایید، و سپس در بخش حفاظت -&gt; مجاز به شروع خودکار را انتخاب نمایید و با فشار طولانی دکمه Home -&gt; باز کردن برنامه‌های اخیر -&gt; سپس VPN را به سمت پایین بکشید و قفل نشانه‌ای را در حافظه انتخاب نمایید)."</string>
+    <string name="pref_common_notification_helper">لطفا Full TOR را در بهینه‌سازی باتری دستگاه قرار ندهید‌. در غیر این صورت، ممکن است اندروید DNSCrypt و TOR و یا I2P را در هر زمان خاموش کند. در بعضی سیستم عامل‌های استثناء همانند سیستم عامل گوشی‌های شیائومی باید چند گام اضافه را انجام داد تا Full TOR را از تنظیمات ویژه باتری مستثنی نماید (مثلاً در بخش حفاظت -&gt; باتری -&gt; ذخیره نیرو -&gt; انتخاب VPN -&gt; محدود نساختن فعالیت‌های پس‌زمینه را انتخاب نمایید، و سپس در بخش حفاظت -&gt; مجاز به شروع خودکار را انتخاب نمایید و با فشار طولانی دکمه Home -&gt; باز کردن برنامه‌های اخیر -&gt; سپس VPN را به سمت پایین بکشید و قفل نشانه‌ای را در حافظه انتخاب نمایید).</string>
     <string name="pref_common_use_busybox">"انتخاب BusyBox"</string>
     <string name="pref_common_categ_hotspot">"هات اسپات-آزمایشی"</string>
     <string name="pref_common_tethering_autostart">"شروع Tethering هنگام راه‌اندازی مجدد"</string>
@@ -339,7 +338,7 @@
     <string name="help_activity_path">"مسیر وقایع:"</string>
     <string name="help_activity_logs_saved">"وقایع ذخیره شد. لطفاً InvizibleLogs.txt را برای توسعه‌دهنده ارسال کنید. می‌توانید وقایع را در این پوشه پیدا کنید:"</string>
     <string name="update_core_title">"بروزرسانی"</string>
-    <string name="update_core_message">"برخی از ماژول‌های InviZible برای بروزرسانی آماده هستند. آیا می‌خواهید آن را بروزرسانی نمایید؟ این تنظیمات ماژول‌های شما را بازنویسی می‌کنند!"</string>
+    <string name="update_core_message">برخی از ماژول‌های Full TOR برای بروزرسانی آماده هستند. آیا می‌خواهید آن را بروزرسانی نمایید؟ این تنظیمات ماژول‌های شما را بازنویسی می‌کنند!</string>
     <string name="update_core_yes">"بروزرسانی"</string>
 
     <!-- بعدا -->
@@ -347,12 +346,12 @@
 
     <!-- مجدد سوال نکنید -->
     <string name="update_core_not_show_again">"مجدداً پرسیده نشود"</string>
-    <string name="update_core_restart">"لطفا VPN را مجدداً راه‌اندازی نمایید و اجازه دهید تا کاملاً نصب شود! بعد از نصب اگر از هات‌اسپات استفاده می‌نمایید، آن را مجدداً تنظیم نمایید!"</string>
+    <string name="update_core_restart">لطفا Full TOR را مجدداً راه‌اندازی نمایید و اجازه دهید تا کاملاً نصب شود! بعد از نصب اگر از هات‌اسپات استفاده می‌نمایید، آن را مجدداً تنظیم نمایید!</string>
     <string name="update_notification">"در حال دانلود فایل"</string>
     <string name="update_interrupt_notification">"دانلود متوقف شد"</string>
     <string name="cancel_download">"لغو کردن دانلود"</string>
     <string name="update_new_version">"نسخه جدید:"</string>
-    <string name="update_ipro_has_apdate">"آپدیت VPN در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
+    <string name="update_ipro_has_apdate">آپدیت Full TOR در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت.</string>
     <string name="update_dnscrypt_has_apdate">"آپدیت DNSCrypt در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
     <string name="update_tor_has_apdate">"آپدیت TOR در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
     <string name="update_itpd_has_apdate">"آپدیت Purple I2P در دسترس است. آیا می‌خواهید آن را دانلود و آپدیت نمایید؟ آپدیت در پس‌زمینه ادامه خواهد داشت."</string>
@@ -365,17 +364,16 @@
     <string name="update_last_check">"آخرین بررسی:"</string>
     <string name="update_found">"بروزرسانی یافت شد."</string>
     <string name="update_installed">"بروزرسانی نصب شد."</string>
-    <string name="update_over_three_activations">"به نظر می‌رسد شما ۳ نسخه از InviZible را با این کد فعال کرده‌اید. درغیر این صورت، با توسعه‌دهنده تماس بگیرید.
-"</string>
+    <string name="update_over_three_activations">"به نظر می‌رسد شما ۳ نسخه از Full TOR را با این کد فعال کرده‌اید. درغیر این صورت، با توسعه‌دهنده تماس بگیرید. "</string>
     <string name="update_wrong_code">"کد نسخه PRO شما اشتباه است. با توسعه‌دهنده تماس بگیرید."</string>
-    <string name="update_over_five_times">"شما بروزرسانی‌های VPN را بیش از ۵ بار در روز بررسی کرده‌اید. لطفا بعداً مجدداً سعی نمایید."</string>
+    <string name="update_over_five_times">شما بروزرسانی‌های Full TOR را بیش از ۵ بار در روز بررسی کرده‌اید. لطفا بعداً مجدداً سعی نمایید.</string>
     <string name="only_for_pro">"فقط برای نسخه PRO"</string>
     <string name="donate">"کمک مالی"</string>
-    <string name="donate_project">"پروژه VPN به کمک شما احتیاج دارد. لطفاً از صفحه کمک مالی بازدید و یا کد ثبت‌نام دریافتی را وارد نمایید."</string>
+    <string name="donate_project">پروژه Full TOR به کمک شما احتیاج دارد. لطفاً از صفحه کمک مالی بازدید و یا کد ثبت‌نام دریافتی را وارد نمایید.</string>
     <string name="donate_button">"بازدید"</string>
     <string name="enter_code_button">"کد را وارد کنید"</string>
     <string name="enter_code">"کد را وارد کنید"</string>
-    <string name="thanks_for_donate">"پروژه VPN و سازنده آن از کمک‌ها قدردانی می‌کنند. آیا می‌خواهید PRO را دانلود و بروزرسانی کنید؟ بروزرسانی در پس زمینه ادامه خواهد یافت."</string>
+    <string name="thanks_for_donate">پروژه Full TOR و سازنده آن از کمک‌ها قدردانی می‌کنند. آیا می‌خواهید PRO را دانلود و بروزرسانی کنید؟ بروزرسانی در پس زمینه ادامه خواهد یافت.</string>
     <string name="pref_dnscrypt_relays_summ">"لیست‌های ریموت از رله‌های موجود."</string>
     <string name="vpn_mode_active">"حالت VPN فعال است"</string>
     <string name="vpn_mode_off">"حالت VPN خاموش است"</string>
@@ -394,7 +392,7 @@
     <string name="add_custom_server_title">"افزودن سرور سفارشی"</string>
     <string name="add_custom_server_error">"تنظیمات سرور سفارشی نامعتبر است. لطفاً قسمت SDNS را بررسی نمایید."</string>
     <string name="pending_purchase">"لطفاً توجه نمایید که شما یک خرید در حالت انتظار دارید:"</string>
-    <string name="buy_premium_gp">"پروژه VPN به کمک شما نیاز دارد. بر روی OK کلیک کرده تا نسخه پیشرفته را خریداری نمایید."</string>
+    <string name="buy_premium_gp">پروژه Full TOR به کمک شما نیاز دارد. بر روی OK کلیک کرده تا نسخه پیشرفته را خریداری نمایید.</string>
     <string name="wrong_purchase_signature_gp">"متأسفیم، اما خرید شما تأیید نشد. طی ۳ روز آینده وجه به حساب شما برمی‌گردد."</string>
     <string name="only_premium_feature">"متأسفانه، این قابلیت فقط برای نسخه کامل برنامه قابل استفاده است."</string>
     <string name="agreement_text">"از انتخاب VPN متشکرم. امیدوارم که برای حفظ حریم شخصی شما و استفاده راحت از اینترنت مفید باشد.
@@ -527,8 +525,8 @@
     <string name="pref_firewall_allow_internet_for_new_apps">"Allow connections for new apps"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"Internet connections for newly installed apps are allowed."</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"Internet connections for newly installed applications are blocked."</string>
-    <string name="helper_dnscrypt_proxy_wifi">"Please disable proxy in Android WiFi network settings. This option interferes with InviZible."</string>
-    <string name="helper_dnscrypt_proxy_gsm">"Please disable proxy in Android Mobile network APN settings. This option interferes with InviZible."</string>
+    <string name="helper_dnscrypt_proxy_wifi">Please disable proxy in Android WiFi network settings. This option interferes with Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Please disable proxy in Android Mobile network APN settings. This option interferes with Full TOR.</string>
     <string name="notification_channel_auxiliary">"Auxiliary notifications"</string>
     <string name="pref_common_dns_rebind_protection">"DNS rebinding protection"</string>
     <string name="pref_common_dns_rebind_protection_summ">"Block site when DNS rebinding attack is detected"</string>
@@ -538,5 +536,5 @@
     <string name="btnResetSettings">"Reset Settings"</string>
     <string name="backupSaved">"Backup saved"</string>
     <string name="backupRestored">"Backup restored"</string>
-    <string name="thanks_for_donate_gp">"VPN Project and its author express appreciation for the assistance."</string>
+    <string name="thanks_for_donate_gp">Full TOR Project and its author express appreciation for the assistance.</string>
 </resources>

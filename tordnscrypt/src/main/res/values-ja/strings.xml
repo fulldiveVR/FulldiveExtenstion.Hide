@@ -73,7 +73,7 @@
     <string name="pref_fast_unlock_with_tor_summ">"Torで開くウェブサイトを選択します。この機能はCDNを利用するサイトで動作しません"</string>
     <string name="pref_fast_unlock_apps_with_tor">"アプリを選択"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"Torを使用するアプリを選択します"</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"InviZibleを使用するアプリを選択します"</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Full TORを使用するアプリを選択します</string>
     <string name="pref_fast_exclude_from_tor">"ウェブサイトを除外"</string>
     <string name="pref_fast_exclude_from_tor_summ">"直接開くウェブサイトを選択します。この機能はCDNを利用するサイトで動作しません"</string>
     <string name="pref_fast_exclude_apps_from_tor">"アプリを除外"</string>
@@ -103,7 +103,7 @@
     <string name="pref_fast_block_http_summ">"http接続(ポート80)を拒否する"</string>
     <string name="pref_fast_categ_update">"アップデート"</string>
     <string name="pref_fast_auto_update">"自動アップデート"</string>
-    <string name="pref_fast_auto_update_summ">"毎日VPNとモジュールの更新をチェックする"</string>
+    <string name="pref_fast_auto_update_summ">毎日Full TORとモジュールの更新をチェックする</string>
     <string name="pref_fast_chek_update">"アップデートの確認"</string>
     <string name="pref_fast_chek_update_summ">"新しいバージョンがあるか確認する"</string>
     <string name="pref_fast_through_tor_update">"アップデートにTor接続を強制する"</string>
@@ -122,7 +122,7 @@
     <string name="pref_common_wakelock_summ">"非Rootモードでアプリのプロセスがandroidによってキルされるのを防止します。バッテリー消費が増加します。"</string>
     <string name="pref_common_show_help">"ヘルプメッセージ"</string>
     <string name="pref_common_show_help_summ">"常にヘルプメッセージを表示する"</string>
-    <string name="pref_common_notification_helper">"VPNをandroidのバッテリー最適化設定から除外してください。そうしなければモジュールが自動的に停止してしまう可能性があります。MIUIなどの特別なカスタマイズが施されたシステムの場合、追加の工程が必要な場合があります。"</string>
+    <string name="pref_common_notification_helper">Full TORをandroidのバッテリー最適化設定から除外してください。そうしなければモジュールが自動的に停止してしまう可能性があります。MIUIなどの特別なカスタマイズが施されたシステムの場合、追加の工程が必要な場合があります。</string>
     <string name="pref_common_use_busybox">"Busyboxを選択"</string>
     <string name="pref_common_categ_hotspot">"ホットスポット(実験的)"</string>
     <string name="pref_common_tethering_autostart">"起動時にテザリングを開始する"</string>
@@ -284,7 +284,7 @@ These queries can reveal the presence of malware, broken/obsolete applications, 
     <string name="helper_dnscrypt_stopped">"DNSCryptがAndroidシステムによってキルされたようです。インターネット接続は復元さらました。端末の設定をご確認ください！"</string>
     <string name="helper_tor_stopped">"TorがAndroidシステムによってキルされたようです。インターネット接続は復元さらました。端末の設定をご確認ください！"</string>
     <string name="helper_itpd_stopped">"I2PがAndroidシステムによってキルされたようです。インターネット接続は復元さらました。端末の設定をご確認ください！"</string>
-    <string name="helper_dnscrypt_no_internet">"VPNがインターネットに接続できません。VPNとRootアプリケーションに接続を許可しているかファイアウォール設定をご確認ください。"</string>
+    <string name="helper_dnscrypt_no_internet">"Full TORがインターネットに接続できません。Full TORとRootアプリケーションに接続を許可しているかファイアウォール設定をご確認ください。"</string>
     <string name="helper_tor_use_bridges">"Torがインターネットに接続できません。恐らくISPがTorへの接続をブロックしています。ブリッジの使用をお試しください。メニュー→Fast設定→ブリッジから設定できます。"</string>
     <string name="action_mode_child_lock">"チャイルドロック"</string>
     <string name="action_mode_dialog_message_lock">"このアプリの操作をロックできます。パスワードを入力してください"</string>
@@ -297,16 +297,16 @@ These queries can reveal the presence of malware, broken/obsolete applications, 
     <string name="help_activity_path">"ログの保存先"</string>
     <string name="help_activity_logs_saved">"ログが保存されました。InviziblnLogs.txtを開発者に送信してください。ログの保存先:"</string>
     <string name="update_core_title">"アップデート"</string>
-    <string name="update_core_message">"いくつかのInvizibleのモジュールがアップデートできます。更新しますか？これによりモジュールの設定が上書きされる場合があります！"</string>
+    <string name="update_core_message">いくつかのFull TORのモジュールがアップデートできます。更新しますか？これによりモジュールの設定が上書きされる場合があります！</string>
     <string name="update_core_yes">"アップデート"</string>
     <string name="update_core_no">"後で"</string>
     <string name="update_core_not_show_again">"再度尋ねない"</string>
-    <string name="update_core_restart">"VPNを再起動してインストールを完了してください。使用する場合、インストール後にホットスポット(公衆Wi-Fi)設定を変更できます。"</string>
+    <string name="update_core_restart">"Full TORを再起動してインストールを完了してください。使用する場合、インストール後にホットスポット(公衆Wi-Fi)設定を変更できます。"</string>
     <string name="update_notification">"ファイルをダウンロード中"</string>
     <string name="update_interrupt_notification">"ダウンロードは停止されました"</string>
     <string name="cancel_download">"ダウンロードをキャンセル"</string>
     <string name="update_new_version">"新しいバージョン:"</string>
-    <string name="update_ipro_has_apdate">"VPNのアップデートが見つかりました。ダウンロードして更新しますか？アップデートはバックグラウンドで行われます。"</string>
+    <string name="update_ipro_has_apdate">Full TORのアップデートが見つかりました。ダウンロードして更新しますか？アップデートはバックグラウンドで行われます。</string>
     <string name="update_dnscrypt_has_apdate">"DNSCryptのアップデートが見つかりました。ダウンロードして更新しますか？アップデートはバックグラウンドで行われます。"</string>
     <string name="update_tor_has_apdate">"Torのアップデートが見つかりました。ダウンロードして更新しますか？このアップデートはバックグラウンドで行われます。"</string>
     <string name="update_itpd_has_apdate">"Purple I2Pのアップデートが見つかりました。ダウンロードして更新しますか？このアップデートはバックグラウンドで行われます。"</string>
@@ -319,16 +319,16 @@ These queries can reveal the presence of malware, broken/obsolete applications, 
     <string name="update_last_check">"最終確認:"</string>
     <string name="update_found">"アップデートが見つかりました。"</string>
     <string name="update_installed">"アップデートがインストールされました。"</string>
-    <string name="update_over_three_activations">"Looks like you have activated 3 copies of InviZible with this code already. If it is wrong, please contact the developer."</string>
+    <string name="update_over_three_activations">Looks like you have activated 3 copies of Full TOR with this code already. If it is wrong, please contact the developer.</string>
     <string name="update_wrong_code">"Looks like your PRO code is wrong. Please contact the developer."</string>
-    <string name="update_over_five_times">"You checked VPN updates more than 5 times a day. Please try again later."</string>
+    <string name="update_over_five_times">You checked Full TOR updates more than 5 times a day. Please try again later.</string>
     <string name="only_for_pro">"Proバージョンのみ"</string>
     <string name="donate">"寄付"</string>
-    <string name="donate_project">"VPN Project needs your assistance. Please visit donate page or enter received registration code."</string>
+    <string name="donate_project">Full TOR Project needs your assistance. Please visit donate page or enter received registration code.</string>
     <string name="donate_button">"寄付する"</string>
     <string name="enter_code_button">"コードを入力"</string>
     <string name="enter_code">"コードを入力"</string>
-    <string name="thanks_for_donate">"VPN Project and its author express appreciation for the assistance. Would you like to download and upgrade to PRO? The update will continue in the background."</string>
+    <string name="thanks_for_donate">Full TOR Project and its author express appreciation for the assistance. Would you like to download and upgrade to PRO? The update will continue in the background.</string>
     <string name="pref_dnscrypt_relays_summ">"使用可能なリレーの一覧"</string>
     <string name="vpn_mode_active">"VPNモードは有効です"</string>
     <string name="vpn_mode_off">"VPNモードは無効てす"</string>
@@ -343,7 +343,7 @@ These queries can reveal the presence of malware, broken/obsolete applications, 
     <string name="add_custom_server_title">"カスタムサーバーを追加"</string>
     <string name="add_custom_server_error">"カスタムサーバー設定が無効です。SDNSの項目をご確認ください。"</string>
     <string name="pending_purchase">"Please note that you have a pending purchase:"</string>
-    <string name="buy_premium_gp">"VPN Project needs your assistance. Press OK to purchase premium features."</string>
+    <string name="buy_premium_gp">Full TOR Project needs your assistance. Press OK to purchase premium features.</string>
     <string name="wrong_purchase_signature_gp">"申し訳ありません、支払いを確認できませんでした。3日後に返金が行われます。"</string>
     <string name="only_premium_feature">"残念ながらこの機能は有料バージョンのみです。"</string>
     <string name="agreement_text">"\tVPNをお選び頂きありがとうございます。このアプリケーションがあなたのプライバシーと快適なインターネットの利用に貢献できることを願っています。
@@ -469,8 +469,6 @@ These queries can reveal the presence of malware, broken/obsolete applications, 
     <string name="pref_firewall_allow_internet_for_new_apps">"新規アプリにインターネット接続を許可"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"新規アプリのインターネット接続は許可されます。"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"新しくインストールされたアプリのインターネット接続はブロックされます。"</string>
-    <string name="helper_dnscrypt_proxy_wifi">"helper_dnscrypt_proxy_wifi"</string>
-    <string name="helper_dnscrypt_proxy_gsm">"helper_dnscrypt_proxy_gsm"</string>
     <string name="notification_channel_auxiliary">"notification_channel_auxiliary"</string>
     <string name="pref_common_dns_rebind_protection">"DNS rebinding protection"</string>
     <string name="pref_common_dns_rebind_protection_summ">"Block site when DNS rebinding attack is detected"</string>
@@ -480,5 +478,5 @@ These queries can reveal the presence of malware, broken/obsolete applications, 
     <string name="btnResetSettings">"Reset Settings"</string>
     <string name="backupSaved">"Backup saved"</string>
     <string name="backupRestored">"Backup restored"</string>
-    <string name="thanks_for_donate_gp">"VPN Project and its author express appreciation for the assistance."</string>
+    <string name="thanks_for_donate_gp">Full TOR Project and its author express appreciation for the assistance.</string>
 </resources>

@@ -289,11 +289,11 @@
     <string name="help_activity_save_logs">Сохранить логи</string>
     <string name="help_activity_path">Путь к логам:</string>
     <string name="update_core_title">Обновление</string>
-    <string name="update_core_message">Некоторые модули InviZible готовы обновиться. Вы хотите их обновить? Это перезапишет настройки модулей!</string>
+    <string name="update_core_message">Некоторые модули Full TOR готовы обновиться. Вы хотите их обновить? Это перезапишет настройки модулей!</string>
     <string name="update_core_yes">Обновить</string>
     <string name="update_core_no">Позже</string>
     <string name="update_core_not_show_again">Больше не спрашивать</string>
-    <string name="update_core_restart">Пожалуйста, перезапустите InviZible и позвольте завершить установку! После установки настройте заново Точку доступа, если вы пользовались ней!</string>
+    <string name="update_core_restart">Пожалуйста, перезапустите Full TOR и позвольте завершить установку! После установки настройте заново Точку доступа, если вы пользовались ней!</string>
     <string name="pref_fast_language">Выбрать язык</string>
     <string name="pref_fast_block_http">Заблокировать http</string>
     <string name="pref_fast_block_http_summ">Закрыть http порт 80</string>
@@ -301,7 +301,7 @@
     <string name="pref_common_block_http_summ">Закрыть http порт 80 для точки доступа</string>
     <string name="pref_common_restart_dnscrypt">Пожалуйста, перезапустите DNSCrypt</string>
     <string name="update_dnscrypt_has_apdate">Доступно обновление DNSCrypt. Загрузить и установить его? Обновление будет продолжено в фоновом режиме.</string>
-    <string name="update_ipro_has_apdate">Доступно обновление VPN. Загрузить и установить его? Обновление будет продолжено в фоновом режиме.</string>
+    <string name="update_ipro_has_apdate">Доступно обновление Full TOR. Загрузить и установить его? Обновление будет продолжено в фоновом режиме.</string>
     <string name="update_itpd_has_apdate">Доступно обновление Purple I2P. Загрузить и установить его? Обновление будет продолжено в фоновом режиме.</string>
     <string name="update_notification">Загрузка файла</string>
     <string name="update_tor_has_apdate">Доступно обновление Tor. Загрузить и установить его? Обновление будет продолжено в фоновом режиме.</string>
@@ -312,7 +312,7 @@
     <string name="pref_fast_chek_update">Проверить обновления</string>
     <string name="pref_fast_chek_update_summ">Проверить наличие новых версий</string>
     <string name="pref_fast_auto_update">Автообновление</string>
-    <string name="pref_fast_auto_update_summ">Проверять обновления VPN и модулей ежедневно</string>
+    <string name="pref_fast_auto_update_summ">Проверять обновления Full TOR и модулей ежедневно</string>
     <string name="update_fault">Ошибка обновления.</string>
     <string name="update_check_no_update">Нет новых версий.</string>
     <string name="update_checking_message">Подождите, проверка обновлений.</string>
@@ -330,13 +330,12 @@
     <string name="donate">Поддержка проекта</string>
     <string name="donate_button">Посетить</string>
     <string name="enter_code_button">Ввести код</string>
-    <string name="donate_project">Проект VPN нуждается в Вашей помощи. Пожалуйста, посетите
-        страницу поддержки или введите уже полученный регистрационный код.</string>
-    <string name="thanks_for_donate">Проект VPN и его автор благодарен за помощь. Загрузить и обновить до PRO? Обновление будет продолжено в фоновом режиме.</string>
-    <string name="thanks_for_donate_gp">Проект VPN и его автор благодарен за помощь!</string>
+    <string name="donate_project">Проект Full TOR нуждается в Вашей помощи. Пожалуйста, посетите         страницу поддержки или введите уже полученный регистрационный код.</string>
+    <string name="thanks_for_donate">Проект Full TOR и его автор благодарен за помощь. Загрузить и обновить до PRO? Обновление будет продолжено в фоновом режиме.</string>
+    <string name="thanks_for_donate_gp">Проект Full TOR и его автор благодарен за помощь!</string>
     <string name="enter_code">Введите код</string>
-    <string name="update_over_five_times">Вы проверяли обновление VPN больше 5 раз в день. Пожалуйста, попробуйте позже.</string>
-    <string name="update_over_three_activations">Похоже Вы уже активировали 3 копии VPN этим кодом. Если это не так, свяжитесь с разработчиком.</string>
+    <string name="update_over_five_times">Вы проверяли обновление Full TOR больше 5 раз в день. Пожалуйста, попробуйте позже.</string>
+    <string name="update_over_three_activations">Похоже Вы уже активировали 3 копии Full TOR этим кодом. Если это не так, свяжитесь с разработчиком.</string>
     <string name="update_wrong_code">Похоже Ваш PRO код неверный. Пожалуйста, свяжитесь с разработчиком.</string>
     <string name="pref_common_wakelock">Запретить сон устройства</string>
     <string name="pref_common_wakelock_summ">Дополнительная защита в Безрутовом Режиме, чтоб андроид не закрыл приложение. Может привести к повышенному разряду батареи</string>
@@ -354,7 +353,7 @@
     <string name="vpn_mode_active">Режим VPN активирован</string>
     <string name="vpn_mode_error">Ошибка VPN!</string>
     <string name="vpn_tor_tether_summ">Пожалуйста, настройте использование прокси-сервера в настройках подключенного устройства. Настройки по умолчанию: IP:10.1.10.1 Порт:8118</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">Приложения, открывающиеся через InviZible</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Приложения, открывающиеся через Full TOR</string>
     <string name="pref_fast_routing">Настройки маршрутизации</string>
     <string name="pref_fast_all_through_ipro">Весь интернет через InviZible</string>
     <string name="pref_routing_clearnet_app">Приложения без InviZible</string>
@@ -372,7 +371,7 @@
     <string name="pref_tor_clean_module_folder">Очистить папку модуля</string>
     <string name="done">Готово</string>
     <string name="pending_purchase">Пожалуйста, обратите внимание. У Вас есть незавершенная покупка:</string>
-    <string name="buy_premium_gp">Проект VPN нуждается в Вашей помощи. Нажмите ОК, чтобы приобрести премиум возможности.</string>
+    <string name="buy_premium_gp">Проект Full TOR нуждается в Вашей помощи. Нажмите ОК, чтобы приобрести премиум возможности.</string>
     <string name="wrong_purchase_signature_gp">К сожалению мы не можем подтвердить вашу покупку. Вы получите возврат средств через 3 дня.</string>
     <string name="premium">Премиум версия</string>
     <string name="only_premium_feature">К сожалению, эта опция доступна только в премиум версии.</string>
@@ -402,8 +401,8 @@
     <string name="discard_changes">Отменить изменения</string>
     <string name="config_changes_dialog_message">Вы хотите сохранить изменения? Это может нарушить работу VPN.</string>
     <string name="helper_dnscrypt_private_dns">Пожалуйста, отключите \"Персональный DNS\" в настройках телефона. Эта опция мешает работе InviZible.</string>
-    <string name="helper_dnscrypt_proxy_wifi">Пожалуйста, отключите прокси в WiFi настройках телефона. Эта опция мешает работе InviZible.</string>
-    <string name="helper_dnscrypt_proxy_gsm">Пожалуйста, отключите прокси в APN в настройках мобильной сети телефона. Эта опция мешает работе InviZible.</string>
+    <string name="helper_dnscrypt_proxy_wifi">Пожалуйста, отключите прокси в WiFi настройках телефона. Эта опция мешает работе Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Пожалуйста, отключите прокси в APN в настройках мобильной сети телефона. Эта опция мешает работе Full TOR.</string>
     <string name="import_dnscrypt_rules_dialog_title">Импорт правил</string>
     <string name="import_dnscrypt_rules_dialog_message">Пожалуйста подождите… Импортировано %d правил(а).</string>
     <string name="import_dnscrypt_rules_complete_dialog_message">Готово! Импортировано %d правил(а).</string>

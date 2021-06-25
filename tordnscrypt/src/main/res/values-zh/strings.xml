@@ -79,7 +79,7 @@
     <string name="pref_fast_unlock_with_tor_summ">"通过 Tor 打开的网站列表。此功能无法用于 CDN 后的网站"</string>
     <string name="pref_fast_unlock_apps_with_tor">"选择应用"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"使用 Tor 的应用列表"</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"使用 InviZible 的应用列表"</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">使用 Full TOR 的应用列表</string>
     <string name="pref_fast_exclude_from_tor">"排除网站"</string>
     <string name="pref_fast_exclude_from_tor_summ">"直接打开的网站列表。此功能无法用于 CDN 后的网站"</string>
     <string name="pref_fast_exclude_apps_from_tor">"排除应用"</string>
@@ -109,7 +109,7 @@
     <string name="pref_fast_block_http_summ">"拒绝连接到 http 端口 80"</string>
     <string name="pref_fast_categ_update">"更新"</string>
     <string name="pref_fast_auto_update">"自动更新"</string>
-    <string name="pref_fast_auto_update_summ">"每日检查 VPN 和模块更新"</string>
+    <string name="pref_fast_auto_update_summ">每日检查 Full TOR 和模块更新</string>
     <string name="pref_fast_chek_update">"检查更新"</string>
     <string name="pref_fast_chek_update_summ">"立即检查是否有新版本"</string>
     <string name="pref_fast_through_tor_update">"严格通过 Tor 更新"</string>
@@ -128,7 +128,7 @@
     <string name="pref_common_wakelock_summ">"无 Root 模式下的附加保护防止应用被 Android 系统杀死。可能消耗电池"</string>
     <string name="pref_common_show_help">"帮助信息"</string>
     <string name="pref_common_show_help_summ">"总是显示帮助信息"</string>
-    <string name="pref_common_notification_helper">"请对 VPN 关闭 Android 电池优化。 否则 Android 将随时杀死 DNSCrypt，Tor 或 I2P。在特定系统上，如 MIUI，需要一些额外步骤关闭对 VPN 的电池优化 （例如安全-&gt;电池-&gt;省电-&gt;选择 VPN-&gt;无后台限制， 安全-&gt;允许自启动并长按主页键-&gt;打开最近应用-&gt;向下滑动 VPN 并点击内存锁标志）。"</string>
+    <string name="pref_common_notification_helper">请对 Full TOR 关闭 Android 电池优化。 否则 Android 将随时杀死 DNSCrypt，Tor 或 I2P。在特定系统上，如 MIUI，需要一些额外步骤关闭对 Full TOR 的电池优化 （例如安全-&gt;电池-&gt;省电-&gt;选择 VPN-&gt;无后台限制， 安全-&gt;允许自启动并长按主页键-&gt;打开最近应用-&gt;向下滑动 Full TOR 并点击内存锁标志）。</string>
     <string name="pref_common_use_busybox">"选择 BusyBox"</string>
     <string name="pref_common_categ_hotspot">"热点-实验性"</string>
     <string name="pref_common_tethering_autostart">"设备启动时启动数据共享"</string>
@@ -303,16 +303,16 @@
     <string name="help_activity_path">"日志路径："</string>
     <string name="help_activity_logs_saved">"日志已保存。请向开发者发送 InvizibleLogs.txt。您可以在此文件夹中找到日志："</string>
     <string name="update_core_title">"更新"</string>
-    <string name="update_core_message">"一些 InviZible 模块更新已就绪。您想要更新吗？这会覆盖您的设置!"</string>
+    <string name="update_core_message">一些 Full TOR 模块更新已就绪。您想要更新吗？这会覆盖您的设置!</string>
     <string name="update_core_yes">"更新"</string>
     <string name="update_core_no">"稍候"</string>
     <string name="update_core_not_show_again">"不再询问"</string>
-    <string name="update_core_restart">"请重启 VPN 并允许完全安装！ 如果您使用热点请在安装后重新配置！"</string>
+    <string name="update_core_restart">请重启 Full TOR 并允许完全安装！ 如果您使用热点请在安装后重新配置！</string>
     <string name="update_notification">"正在下载文件"</string>
     <string name="update_interrupt_notification">"下载已停止"</string>
     <string name="cancel_download">"取消下载"</string>
     <string name="update_new_version">"新版本："</string>
-    <string name="update_ipro_has_apdate">"VPN 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
+    <string name="update_ipro_has_apdate">Full TOR 更新可用。您想要下载并更新吗？更新将在后台继续。</string>
     <string name="update_dnscrypt_has_apdate">"DNSCrypt 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
     <string name="update_tor_has_apdate">"Tor 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
     <string name="update_itpd_has_apdate">"Purple I2P 更新可用。您想要下载并更新吗？更新将在后台继续。"</string>
@@ -325,16 +325,16 @@
     <string name="update_last_check">"上次检查："</string>
     <string name="update_found">"已找到更新。"</string>
     <string name="update_installed">"更新已安装。"</string>
-    <string name="update_over_three_activations">"似乎您已激活使用此代码激活了 InviZible 的三份副本。如果有问题，请联系开发者。"</string>
+    <string name="update_over_three_activations">似乎您已激活使用此代码激活了 Full TOR 的三份副本。如果有问题，请联系开发者。</string>
     <string name="update_wrong_code">"似乎您的 PRO 是错的。请联系开发者。"</string>
-    <string name="update_over_five_times">"您今天已检查 VPN 更新 5 次以上了。请稍后重试。"</string>
+    <string name="update_over_five_times">您今天已检查 Full TOR 更新 5 次以上了。请稍后重试。</string>
     <string name="only_for_pro">"仅用于 PRO 版本"</string>
     <string name="donate">"捐助"</string>
-    <string name="donate_project">"VPN 项目需要您的帮助。请访问捐助页面或输入收到的注册码。"</string>
+    <string name="donate_project">Full TOR 项目需要您的帮助。请访问捐助页面或输入收到的注册码。</string>
     <string name="donate_button">"访问"</string>
     <string name="enter_code_button">"输入代码"</string>
     <string name="enter_code">"输入代码"</string>
-    <string name="thanks_for_donate">"VPN 项目及其作者感谢您的帮助。 您想要下载并升级到 PRO 吗？更新将在后台继续。"</string>
+    <string name="thanks_for_donate">Full TOR 项目及其作者感谢您的帮助。 您想要下载并升级到 PRO 吗？更新将在后台继续。</string>
     <string name="pref_dnscrypt_relays_summ">"可用中继的远程列表。"</string>
     <string name="vpn_mode_active">"VPN 模式已激活"</string>
     <string name="vpn_mode_off">"VPN 模式已关闭"</string>
@@ -349,7 +349,7 @@
     <string name="add_custom_server_title">"添加自定义服务器"</string>
     <string name="add_custom_server_error">"无效自定义服务器配置。请检查 SDNS 字段。"</string>
     <string name="pending_purchase">"请注意您有一个待完成的购买："</string>
-    <string name="buy_premium_gp">"VPN 项目需要您的帮助。点按 OK 购买高级功能。"</string>
+    <string name="buy_premium_gp">Full TOR 项目需要您的帮助。点按 OK 购买高级功能。</string>
     <string name="wrong_purchase_signature_gp">"抱歉，无法确认您的购买。您将在 3 日后收到退款。"</string>
     <string name="only_premium_feature">"不幸的是，此功能仅高级版可用。"</string>
     <string name="agreement_text">"\t感谢选择 VPN。我希望它将对您的隐私有帮助并使您舒适地使用互联网。
@@ -389,7 +389,7 @@
     <string name="pref_dnscrypt_import_whitelist_summ">"导入域名列表。您可以选择多个文件，重复行将被移除。"</string>
     <string name="pref_dnscrypt_erase_whitelist">"擦除白名单"</string>
     <string name="pref_dnscrypt_block_ipv6_summ">"立即使用空响应响应 IPv6 相关请求。 当没有 IPv6 连接时可以加快速度，但也会对一些解析器造成可靠性问题。"</string>
-    <string name="helper_dnscrypt_private_dns">"请在 Android 网络设置中关闭“私人 DNS”。此选项与 InviZible 冲突。"</string>
+    <string name="helper_dnscrypt_private_dns">请在 Android 网络设置中关闭“私人 DNS”。此选项与 Full TOR 冲突。</string>
     <string name="import_dnscrypt_rules_dialog_title">"导入规则"</string>
     <string name="import_dnscrypt_rules_dialog_message">"请稍候…已导入 %d 条规则。"</string>
     <string name="import_dnscrypt_rules_complete_dialog_message">"完成！已导入 %d 条规则。"</string>
@@ -475,8 +475,8 @@
     <string name="pref_firewall_allow_internet_for_new_apps">"允许新应用连接"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"允许新应用连接互联网。"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"阻止新应用连接互联网。"</string>
-    <string name="helper_dnscrypt_proxy_wifi">"请在 Android WiFi 网络设置中禁用代理。此选项与 InviZible 冲突。"</string>
-    <string name="helper_dnscrypt_proxy_gsm">"请在 Android 移动网络设置中禁用 APN 设置。此选项与 InviZible 冲突。"</string>
+    <string name="helper_dnscrypt_proxy_wifi">请在 Android WiFi 网络设置中禁用代理。此选项与 Full TOR 冲突。</string>
+    <string name="helper_dnscrypt_proxy_gsm">请在 Android 移动网络设置中禁用 APN 设置。此选项与 Full TOR 冲突。</string>
     <string name="notification_channel_auxiliary">"辅助规则"</string>
     <string name="pref_common_dns_rebind_protection">"DNS 重绑定保护"</string>
     <string name="pref_common_dns_rebind_protection_summ">"当检测到 DNS 重绑定时阻止站点"</string>
@@ -486,5 +486,5 @@
     <string name="btnResetSettings">"重置设置"</string>
     <string name="backupSaved">"备份已保存："</string>
     <string name="backupRestored">"备份已恢复"</string>
-    <string name="thanks_for_donate_gp">"VPN 项目及其作者感谢您的帮助。"</string>
+    <string name="thanks_for_donate_gp">Full TOR 项目及其作者感谢您的帮助。</string>
 </resources>

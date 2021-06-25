@@ -73,7 +73,7 @@
     <string name="pref_fast_unlock_with_tor_summ">"Tor:lla avattava nettisivustolista. Tämä ominaisuus ei toimi CDN:n takana olevissa sivustoissa."</string>
     <string name="pref_fast_unlock_apps_with_tor">"Valitse sovellukset"</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">"Tor:ia käyttävä sovelluslista."</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">"InviZible:ä käyttävä sovelluslista."</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Full TOR:ä käyttävä sovelluslista.</string>
     <string name="pref_fast_exclude_from_tor">"Hylkää nettisivustot"</string>
     <string name="pref_fast_exclude_from_tor_summ">"Suoraan avattavat nettisivustot. Tämä ominaisuus ei toimi CDN:n takana olevissa sivustoissa."</string>
     <string name="pref_fast_exclude_apps_from_tor">"Hylkää sovellukset"</string>
@@ -103,7 +103,7 @@
     <string name="pref_fast_block_http_summ">"Estä yhteys http-porttiin 80"</string>
     <string name="pref_fast_categ_update">"Päivitä"</string>
     <string name="pref_fast_auto_update">"Automaattiset päivitykset"</string>
-    <string name="pref_fast_auto_update_summ">"Tarkista VPN:n ja moduulejen päivitykset päivittäin"</string>
+    <string name="pref_fast_auto_update_summ">Tarkista Full TOR:n ja moduulejen päivitykset päivittäin</string>
     <string name="pref_fast_chek_update">"Tarkista päivitys"</string>
     <string name="pref_fast_chek_update_summ">"Tarkista, jos uusia versioita on saatavilla nyt"</string>
     <string name="pref_fast_through_tor_update">"Päivitä pelkästään Tor:in kautta"</string>
@@ -122,10 +122,7 @@
     <string name="pref_common_wakelock_summ">"Lisäsuojaus ilman Root-tilaa, jotta android ei sulje sovellusta. Saattaa tyhjentää akkua"</string>
     <string name="pref_common_show_help">"Ohjeviestit"</string>
     <string name="pref_common_show_help_summ">"Näytä ohjeviestit aina"</string>
-    <string name="pref_common_notification_helper">"Ota VPN pois Android-akun optimoinnista.
-        Muuten android sulkee DNSCryptin, Tor:in tai I2P:n milloin tahansa. Erityisissä järjestelmissä,
-        kuten MIUI, vaati joitain lisävaiheita VPNn poistamiseksi akun optimisoinnista(esim. Turvallisuus-&gt; Akku-&gt; Virransäästö-&gt; Valitse VPN-&gt; Ei taustarajoituksia,
-        Turvallisuus-&gt; Salli automaattinen käynnistys ja paina pitkään Koti-painiketta-&gt; Avaa viimeisin sovellus-&gt; Swaippaa sitten VPN alaspäin ja napsauta \"sign lock in memory\")."</string>
+    <string name="pref_common_notification_helper">Ota Full TOR pois Android-akun optimoinnista.         Muuten android sulkee DNSCryptin, Tor:in tai I2P:n milloin tahansa. Erityisissä järjestelmissä,         kuten MIUI, vaati joitain lisävaiheita Full TOR poistamiseksi akun optimisoinnista(esim. Turvallisuus-&gt; Akku-&gt; Virransäästö-&gt; Valitse Full TOR-&gt; Ei taustarajoituksia,         Turvallisuus-&gt; Salli automaattinen käynnistys ja paina pitkään Koti-painiketta-&gt; Avaa viimeisin sovellus-&gt; Swaippaa sitten Full TOR alaspäin ja napsauta \"sign lock in memory\").</string>
     <string name="pref_common_use_busybox">"Valitse BusyBox"</string>
     <string name="pref_common_categ_hotspot">"Kokeellinen-HOTSPOT"</string>
     <string name="pref_common_tethering_autostart">"Aloita tethering käynnistyksessä"</string>
@@ -313,16 +310,16 @@
     <string name="help_activity_path">"Lokien polku:"</string>
     <string name="help_activity_logs_saved">"Lokit tallennettu. Lähetä InvizibleLogs.txt kehittäjälle. Löydät lokit kansiosta:"</string>
     <string name="update_core_title">"Päivitä"</string>
-    <string name="update_core_message">"Jotkut InviZible-moduulit ovat valmiita päivitykseen. Haluatko päivittää sen? Tämä korvaa moduulien asetukset!"</string>
+    <string name="update_core_message">Jotkut Full TOR-moduulit ovat valmiita päivitykseen. Haluatko päivittää sen? Tämä korvaa moduulien asetukset!</string>
     <string name="update_core_yes">"Päivitä"</string>
     <string name="update_core_no">"Myöhemmin"</string>
     <string name="update_core_not_show_again">"Älä kysy uudelleen"</string>
-    <string name="update_core_restart">"Käynnistä VPN uudelleen ja salli asennus loppuun asti! Asenna asennuksen jälkeen HOTSPOT uudelleen, jos käytät sitä!"</string>
+    <string name="update_core_restart">Käynnistä Full TOR uudelleen ja salli asennus loppuun asti! Asenna asennuksen jälkeen HOTSPOT uudelleen, jos käytät sitä!</string>
     <string name="update_notification">"Ladataan tiedostoa"</string>
     <string name="update_interrupt_notification">"Lataus keskeytettiin"</string>
     <string name="cancel_download">"PERUUTA LATAUS"</string>
     <string name="update_new_version">"Uusi versio:"</string>
-    <string name="update_ipro_has_apdate">"VPN -päivitys on saatavana. Haluatko ladata ja päivittää sen? Päivitys jatkuu taustalla."</string>
+    <string name="update_ipro_has_apdate">Full TOR -päivitys on saatavana. Haluatko ladata ja päivittää sen? Päivitys jatkuu taustalla.</string>
     <string name="update_dnscrypt_has_apdate">"DNSCrypt-päivitys on saatavana. Haluatko ladata ja päivittää sen? Päivitys jatkuu taustalla."</string>
     <string name="update_tor_has_apdate">"Tor-päivitys on saatavana. Haluatko ladata ja päivittää sen? Päivitys jatkuu taustalla."</string>
     <string name="update_itpd_has_apdate">"Purple I2P -päivitys on saatavana. Haluatko ladata ja päivittää sen? Päivitys jatkuu taustalla."</string>
@@ -335,16 +332,16 @@
     <string name="update_last_check">"Viimeinen tarkistus:"</string>
     <string name="update_found">"Päivityksiä löytyi."</string>
     <string name="update_installed">"Päivitykset asennettiin."</string>
-    <string name="update_over_three_activations">"Näyttää siltä, ​​että olet aktivoinut 3 InviZible-kopiota tällä koodilla. Jos et, ota yhteyttä kehittäjään."</string>
+    <string name="update_over_three_activations">Näyttää siltä, ​​että olet aktivoinut 3 Full TOR-kopiota tällä koodilla. Jos et, ota yhteyttä kehittäjään.</string>
     <string name="update_wrong_code">"Näyttää siltä, ​​että PRO-koodisi on väärä. Ota yhteyttä kehittäjään."</string>
-    <string name="update_over_five_times">"Tarkistit VPN -päivitykset yli 5 kertaa päivässä. Yritä uudelleen myöhemmin."</string>
+    <string name="update_over_five_times">Tarkistit Full TOR -päivitykset yli 5 kertaa päivässä. Yritä uudelleen myöhemmin.</string>
     <string name="only_for_pro">"Vain PRO-versiolle"</string>
     <string name="donate">"Lahjoita"</string>
-    <string name="donate_project">"VPN -projekti tarvitsee apuasi. Ole hyvä ja käy lahjoittajasivulla tai kirjoita vastaanotettu rekisteröintikoodisi."</string>
+    <string name="donate_project">Full TOR -projekti tarvitsee apuasi. Ole hyvä ja käy lahjoittajasivulla tai kirjoita vastaanotettu rekisteröintikoodisi.</string>
     <string name="donate_button">"Mene sivulle"</string>
     <string name="enter_code_button">"Syötä koodi"</string>
     <string name="enter_code">"Syötä koodi"</string>
-    <string name="thanks_for_donate">"VPN -projekti ja sen tekijä ilmaisee arvostustaan apuasi varten. Haluatko ladata ja päivittää PRO:hen? Päivitys jatkuu taustalla."</string>
+    <string name="thanks_for_donate">Full TOR -projekti ja sen tekijä ilmaisee arvostustaan apuasi varten. Haluatko ladata ja päivittää PRO:hen? Päivitys jatkuu taustalla.</string>
     <string name="pref_dnscrypt_relays_summ">"Etäluettelot käytettävissä olevista releistä."</string>
     <string name="vpn_mode_active">"VPN-tila on aktiivinen"</string>
     <string name="vpn_mode_off">"VPN-tila ei ole käytössä"</string>
@@ -360,7 +357,7 @@
     <string name="add_custom_server_title">"Lisää mukautettu palvelin"</string>
     <string name="add_custom_server_error">"Virheellinen mukautettu palvelinmääritys. Tarkista SDNS-kenttä."</string>
     <string name="pending_purchase">"Huomaa, että sinulla on vireillä oleva osto:"</string>
-    <string name="buy_premium_gp">"VPN -projekti tarvitsee apuasi. Voit ostaa premium-ominaisuuksia painamalla OK-painiketta."</string>
+    <string name="buy_premium_gp">Full TOR -projekti tarvitsee apuasi. Voit ostaa premium-ominaisuuksia painamalla OK-painiketta.</string>
     <string name="wrong_purchase_signature_gp">"Anteeksi, mutta ostoksesi vahvistaminen on mahdotonta. Saat hyvityksen 3 päivän kuluttua."</string>
     <string name="only_premium_feature">"Valitettavasti tämä ominaisuus on saatavana vain premium-versiolle."</string>
     <string name="agreement_text">"         \tKiitos VPN:n valitsemisesta. Toivon, että siitä on hyötyä yksityisyydellesi ja Internetin mukavalle käytölle.
@@ -494,8 +491,8 @@
     <string name="pref_firewall_allow_internet_for_new_apps">"Allow connections for new apps"</string>
     <string name="pref_firewall_allow_internet_for_new_apps_on_summ">"Internet connections for newly installed apps are allowed."</string>
     <string name="pref_firewall_allow_internet_for_new_apps_off_summ">"Internet connections for newly installed applications are blocked."</string>
-    <string name="helper_dnscrypt_proxy_wifi">"Please disable proxy in Android WiFi network settings. This option interferes with InviZible."</string>
-    <string name="helper_dnscrypt_proxy_gsm">"Please disable proxy in Android Mobile network APN settings. This option interferes with InviZible."</string>
+    <string name="helper_dnscrypt_proxy_wifi">Please disable proxy in Android WiFi network settings. This option interferes with Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Please disable proxy in Android Mobile network APN settings. This option interferes with Full TOR.</string>
     <string name="notification_channel_auxiliary">"Auxiliary notifications"</string>
     <string name="pref_common_dns_rebind_protection">"DNS rebinding protection"</string>
     <string name="pref_common_dns_rebind_protection_summ">"Block site when DNS rebinding attack is detected"</string>
@@ -505,5 +502,5 @@
     <string name="btnResetSettings">"Reset Settings"</string>
     <string name="backupSaved">"Backup saved"</string>
     <string name="backupRestored">"Backup restored"</string>
-    <string name="thanks_for_donate_gp">"VPN -projekti ja sen tekijä ilmaisee arvostustaan apuasi varten."</string>
+    <string name="thanks_for_donate_gp">Full TOR -projekti ja sen tekijä ilmaisee arvostustaan apuasi varten.</string>
 </resources>

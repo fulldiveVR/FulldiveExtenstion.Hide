@@ -1,5 +1,7 @@
 package pan.alexander.tordnscrypt.appextension
 
-enum class AppExtensionState {
-    START, STOP, FAILURE
+sealed class AppExtensionState(val id: String) {
+    object START: AppExtensionState("START")
+    object STOP: AppExtensionState("STOP")
+    object FAILURE: AppExtensionState("FAILURE")
 }

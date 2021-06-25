@@ -6,7 +6,6 @@ import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.core.os.bundleOf
 import pan.alexander.tordnscrypt.MainActivity
 import pan.alexander.tordnscrypt.modules.ModulesStatus
@@ -14,15 +13,20 @@ import pan.alexander.tordnscrypt.modules.ModulesStatus
 class ExtensionContentProvider : ContentProvider() {
 
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle? {
-        Log.d("AppExtensionTest", "VPN call method:$method")
         return when (method) {
-            AppExtensionWorkType.LAUNCH.toString() -> {
+            AppExtensionWorkType.START.id -> {
                 context?.let { context ->
-                    LaunchHelper.launchVPN(context)
+                    LaunchHelper.startVPN(context)
                 }
                 null
             }
-            AppExtensionWorkType.OPEN.toString() -> {
+            AppExtensionWorkType.STOP.id -> {
+                context?.let { context ->
+                    LaunchHelper.stopVPN(context)
+                }
+                null
+            }
+            AppExtensionWorkType.OPEN.id -> {
                 context?.let { context ->
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
@@ -31,8 +35,7 @@ class ExtensionContentProvider : ContentProvider() {
             }
             GET_STATUS -> {
                 val modulesStatus = ModulesStatus.getInstance()
-                val state = modulesStatus.torState
-                bundleOf(Pair(WORK_STATUS, LaunchHelper.getCurrentExtensionState(modulesStatus).toString()))
+                bundleOf(Pair(WORK_STATUS, LaunchHelper.getCurrentExtensionState(modulesStatus)))
             }
             else -> {
                 super.call(method, arg, extras)
@@ -69,9 +72,9 @@ class ExtensionContentProvider : ContentProvider() {
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
     companion object {
-        private const val PREFERENCE_AUTHORITY = "com.fulldive.extension.tordnscrypt"
+        private const val PREFERENCE_AUTHORITY = "com.fulldive.extension.tordnscrypt.FulldiveContentProvider"
         const val BASE_URL = "content://$PREFERENCE_AUTHORITY"
-        const val WORK_STATUS = "WORK_STATUS"
+        const val WORK_STATUS = "work_status"
         const val GET_STATUS = "GET_STATUS"
     }
 }

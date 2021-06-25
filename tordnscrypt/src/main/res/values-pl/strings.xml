@@ -121,7 +121,7 @@
     <string name="pref_fast_block_http_summ">Zablokuj polaczenia z portem http	80</string>
     <string name="pref_fast_categ_update">Aktualizacja</string>
     <string name="pref_fast_auto_update">Aktualizacja automatyczna</string>
-    <string name="pref_fast_auto_update_summ">Sprawdzaj aktualizacje VPN i modulow codziennie</string>
+    <string name="pref_fast_auto_update_summ">Sprawdzaj aktualizacje Full TOR i modulow codziennie</string>
     <string name="pref_fast_chek_update">Sprawdz aktuaizacje</string>
     <string name="pref_fast_chek_update_summ">Sprawdz czy sa dostepne nowe wersje</string>
     <string name="pref_fast_through_tor_update">Aktualizuj tylko przez Tor</string>
@@ -369,17 +369,17 @@
     <string name="help_activity_logs_saved">Logi zapisane. Wyslij InvizibleLogs.txt do developera. Logi znajduja sie w folderze:</string>
 
     <string name="update_core_title">Aktualizacja</string>
-    <string name="update_core_message">Jest dostepna aktualizacje niektorych moduloow InviZible.         Czy chcesz aktualizowac? Aktualizacja nadpisze ustawienia modulow!</string>
+    <string name="update_core_message">Jest dostepna aktualizacje niektorych moduloow Full TOR.         Czy chcesz aktualizowac? Aktualizacja nadpisze ustawienia modulow!</string>
     <string name="update_core_yes">Aktualizacja</string>
     <string name="update_core_no">Pozniej</string>
     <string name="update_core_not_show_again">Nie pytaj ponownie</string>
-    <string name="update_core_restart">Prosze uruchomic ponownie VPN i dokonczyc instalacje!         Po instalacji ponownie ustaw Punkt Dostepu, jesli go uzywasz!</string>
+    <string name="update_core_restart">Prosze uruchomic ponownie Full TOR i dokonczyc instalacje!         Po instalacji ponownie ustaw Punkt Dostepu, jesli go uzywasz!</string>
 
     <string name="update_notification">Sciagam plik</string>
     <string name="update_interrupt_notification">Sciaganie zostalo zatrzymane</string>
     <string name="cancel_download">Anuluj sciaganie</string>
     <string name="update_new_version">Nowa wersja:</string>
-    <string name="update_ipro_has_apdate">Jest dostepna nowa wersja VPN. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
+    <string name="update_ipro_has_apdate">Jest dostepna nowa wersja Full TOR. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="update_dnscrypt_has_apdate">Jest dostepna aktualizacja DNSCrypt. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="update_tor_has_apdate">Jest dostepna aktualizacja Tora. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="update_itpd_has_apdate">Jest dostepna aktualizacja Purple I2P. Czy chcesz ja sciagnac i wykonac aktualizacje? Aktualizacja będzie kontynuowana w tle.</string>
@@ -392,18 +392,17 @@
     <string name="update_last_check">Ostatnio sprawdzono:</string>
     <string name="update_found">Znaleziono aktualizacje.</string>
     <string name="update_installed">Aktualizacje zostaly zainstalowane.</string>
-    <string name="update_over_three_activations">Wyglada ze juz aktywowales 3 kopie InviZible z tym kodem. Jesli to blad, skontaktuj sie z developerem.</string>
+    <string name="update_over_three_activations">Wyglada ze juz aktywowales 3 kopie Full TOR z tym kodem. Jesli to blad, skontaktuj sie z developerem.</string>
     <string name="update_wrong_code">Wyglada ze Twoj kod PRO jest bledny. Skontaktuj sie z deweloperem.</string>
     <string name="update_over_five_times">Dzisiaj sprawdziles aktualizacje 5 razy. Sprawdz ponownie pozniej.</string>
 
     <string name="only_for_pro">Tylko wersja PRO</string>
     <string name="donate">Dotacja</string>
-    <string name="donate_project">Projekt VPN potrzebuje Twojego wsparcia. Prosze odwiedz strone dotacji lub wprowadz otrzymany kod rejestracyjny.</string>
+    <string name="donate_project">Projekt Full TOR potrzebuje Twojego wsparcia. Prosze odwiedz strone dotacji lub wprowadz otrzymany kod rejestracyjny.</string>
     <string name="donate_button">Odwiedz</string>
     <string name="enter_code_button">Wprowadz kod</string>
     <string name="enter_code">wprowadz kod</string>
-    <string name="thanks_for_donate">Projekt VPN Project i jego Autor wyrazaja podziekowania
-        za wsparcie. Czy chcialbys pobrac i wykonac upgrade do wersji PRO? Aktualizacja będzie kontynuowana w tle.</string>
+    <string name="thanks_for_donate">Projekt Full TOR Project i jego Autor wyrazaja podziekowania         za wsparcie. Czy chcialbys pobrac i wykonac upgrade do wersji PRO? Aktualizacja będzie kontynuowana w tle.</string>
     <string name="pref_common_wakelock_summ">Dodatkowa ochrona bez trybu rootowania, aby zapobiec śmierci aplikacji przez Androida. Może wyczerpać baterię</string>
     <string name="pref_common_wakelock">Zapobiegaj uśpieniu urządzenia</string>
     <string name="message_no_root_used">Możesz używać VPN z lokalnym trybem VPN lub aplikacjami z własnym proxy lub lokalną funkcją VPN w trybie proxy.</string>
@@ -417,7 +416,7 @@
     <string name="vpn_mode_off">Tryb VPN jest wyłączony</string>
     <string name="vpn_mode_error">Błąd trybu VPN!</string>
     <string name="vpn_tor_tether_summ">Skonfiguruj użycie serwera proxy w ustawieniach podłączonego urządzenia. Wartości domyślne: IP:10.1.10.1 Port:8118</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">Lista aplikacji laczacych sie przez InviZible</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Lista aplikacji laczacych sie przez Full TOR</string>
     <string name="pref_fast_routing">Ustawienia routingu</string>
     <string name="pref_fast_all_through_ipro">Przekieruj caly ruch przez InviZible</string>
     <string name="pref_routing_clearnet_app">Aplikacje pomijajace InviZible</string>
@@ -434,7 +433,7 @@
     <string name="pref_tor_clean_module_folder">Wyczyść folder modułu</string>
     <string name="done">Gotowy</string>
     <string name="pending_purchase">Pamiętaj, że masz oczekujący zakup:</string>
-    <string name="buy_premium_gp">Projekt VPN potrzebuje Twojego wsparcia. Naciśnij OK, aby kupić funkcje premium.</string>
+    <string name="buy_premium_gp">Projekt Full TOR potrzebuje Twojego wsparcia. Naciśnij OK, aby kupić funkcje premium.</string>
     <string name="wrong_purchase_signature_gp">Przepraszamy, ale nie można potwierdzić zakupu. Otrzymasz zwrot pieniędzy po 3 dniach.</string>
     <string name="premium">Wersja premium</string>
     <string name="only_premium_feature">Niestety ta funkcja jest dostępna tylko w wersji premium.</string>
@@ -455,5 +454,5 @@
     <string name="pref_itpd_use_Socks_outproxy">SOCKS outproxy</string>
     <string name="pref_itpd_Socks_outproxy_address">SOCKS outproxy address</string>
     <string name="pref_itpd_Socks_outproxy_port">SOCKS outproxy port</string>
-    <string name="thanks_for_donate_gp">"Projekt VPN Project i jego Autor wyrazaja podziekowania za wsparcie."</string>
+    <string name="thanks_for_donate_gp">Projekt Full TOR Project i jego Autor wyrazaja podziekowania za wsparcie.</string>
 </resources>

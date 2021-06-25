@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name" translatable="false">VPN</string>
+    <string name="app_name" translatable="false">Full TOR</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="nav_header_title">Tor with DNSCrypt and I2P</string>
@@ -10,7 +10,7 @@
     <string name="btnDNSCryptStart" translatable="false">Start DNSCrypt</string>
     <string name="btnDNSCryptStop" translatable="false">Stop DNSCrypt</string>
     <string name="btnTorStart" translatable="false">Start Tor</string>
-    <string name="btnTorStop" translatable="false">Stop Tor</string>
+    <string name="btnTorStop" translatable="false">Full TOR</string>
 
     <string name="btnITPDStart" translatable="false">Start I2P</string>
     <string name="btnITPDStop" translatable="false">Stop I2P</string>
@@ -121,7 +121,7 @@
     <string name="pref_fast_unlock_with_tor_summ">WebSites list to open with Tor. This feature does not work for sites behind CDN</string>
     <string name="pref_fast_unlock_apps_with_tor">Select Applications</string>
     <string name="pref_fast_unlock_apps_with_tor_summ">Applications list to use with Tor</string>
-    <string name="pref_fast_unlock_apps_with_ipro_summ">Applications list to use with InviZible</string>
+    <string name="pref_fast_unlock_apps_with_ipro_summ">Applications list to use with Full TOR</string>
     <string name="pref_fast_exclude_from_tor">Exclude WebSites</string>
     <string name="pref_fast_exclude_from_tor_summ">WebSites list to open directly. This feature does not work for sites behind CDN</string>
     <string name="pref_fast_exclude_apps_from_tor">Exclude Applications</string>
@@ -173,7 +173,7 @@
     <string name="pref_fast_block_http_summ">Deny connection to http port 80</string>
     <string name="pref_fast_categ_update">Update</string>
     <string name="pref_fast_auto_update">Automatic Updates</string>
-    <string name="pref_fast_auto_update_summ">Check VPN and modules Updates daily</string>
+    <string name="pref_fast_auto_update_summ">Check Full TOR and modules Updates daily</string>
     <string name="pref_fast_chek_update">Check Update</string>
     <string name="pref_fast_chek_update_summ">Check if new versions are available now</string>
     <string name="pref_fast_through_tor_update">Update strictly through Tor</string>
@@ -210,12 +210,7 @@
     <string name="pref_common_shell_control_summ" tools:ignore="TypographyDashes">Use the following command to manage application modules:
         \"am broadcast -a pan.alexander.tordnscrypt.SHELL_SCRIPT_CONTROL
         --ei dnscrypt 1 --ei tor 1 --ei i2p 1 -n %s/.BootCompleteReceiver\". Where 1 - starts, 0 - stops the module.</string>
-    <string name="pref_common_notification_helper">Please exclude VPN from android battery optimisation.
-        Otherwise android will kill DNSCrypt, Tor or I2P at any time. On special systems,
-        like MIUI, required some additional steps, to exclude VPN from battery
-        optimisation (e.g. Safety->Battery->Power Saving->Select VPN->No Background Restrictions,
-        Safety->allow auto start and Long Press The Home Button->Open the Recent App->Then Swipe VPN
-        Downward and click sign lock in memory).</string>
+    <string name="pref_common_notification_helper">Please exclude Full TOR from android battery optimisation.         Otherwise android will kill DNSCrypt, Tor or I2P at any time. On special systems,         like MIUI, required some additional steps, to exclude Full TOR from battery         optimisation (e.g. Safety->Battery->Power Saving->Select Full TOR->No Background Restrictions,         Safety->allow auto start and Long Press The Home Button->Open the Recent App->Then Swipe Full TOR         Downward and click sign lock in memory).</string>
     <string name="pref_common_use_busybox">Select BusyBox</string>
     <string-array name="pref_common_categ_use_busybox_titles">
         <item>Auto</item>
@@ -274,7 +269,7 @@
 
     <string name="pref_dnscrypt_global_settings_categ">GLOBAL SETTINGS</string>
 
-    <string name="pref_advanced"> For advanced user only!</string>
+    <string name="pref_advanced">For advanced user only!</string>
 
     <string name="pref_dnscrypt_select_server_names">Select at least one server!</string>
     <string name="pref_dnscrypt_local_port_summ">Local port to listen to.</string>
@@ -406,9 +401,9 @@
     <string name="pref_dnscrypt_block_ipv6_summ">Immediately respond to IPv6-related queries with an empty response.
         This makes things faster when there is no IPv6 connectivity, but can also cause reliability issues with some stub resolvers.</string>
 
-    <string name="helper_dnscrypt_private_dns">Please turn off \"Private DNS\" in Android network settings. This option interferes with InviZible.</string>
-    <string name="helper_dnscrypt_proxy_wifi">Please disable proxy in Android WiFi network settings. This option interferes with InviZible.</string>
-    <string name="helper_dnscrypt_proxy_gsm">Please disable proxy in Android Mobile network APN settings. This option interferes with InviZible.</string>
+    <string name="helper_dnscrypt_private_dns">Please turn off \"Private DNS\" in Android network settings. This option interferes with Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_wifi">Please disable proxy in Android WiFi network settings. This option interferes with Full TOR.</string>
+    <string name="helper_dnscrypt_proxy_gsm">Please disable proxy in Android Mobile network APN settings. This option interferes with Full TOR.</string>
 
     <string name="import_dnscrypt_rules_dialog_title">Import Rules</string>
     <string name="import_dnscrypt_rules_dialog_message">Please wait… Imported %d rules.</string>
@@ -588,12 +583,11 @@
     <string name="help_activity_logs_saved">Logs Saved. Please send InvizibleLogs.txt to developer. You can find logs in the folder:</string>
 
     <string name="update_core_title">Update</string>
-    <string name="update_core_message">Some of InviZible modules are ready for update.         Do you want to update its? This will overwrite your modules settings!</string>
+    <string name="update_core_message">Some of Full TOR modules are ready for update.         Do you want to update its? This will overwrite your modules settings!</string>
     <string name="update_core_yes">Update</string>
     <string name="update_core_no">Later</string>
     <string name="update_core_not_show_again">Not ask again</string>
-    <string name="update_core_restart">Please restart VPN and allow complete installation!
-        After installation reconfigure HOTSPOT, if you use it!</string>
+    <string name="update_core_restart">Please restart Full TOR and allow complete installation!         After installation reconfigure HOTSPOT, if you use it!</string>
 
     <string name="about_build_ver" translatable="false">Build Version:</string>
     <string name="about_app_ver" translatable="false">Application Version:</string>
@@ -627,7 +621,7 @@
     <string name="update_interrupt_notification">Download was stopped</string>
     <string name="cancel_download">CANCEL DOWNLOAD</string>
     <string name="update_new_version">New Version:</string>
-    <string name="update_ipro_has_apdate">VPN update is available. Do you want to download and update it? The update will continue in the background.</string>
+    <string name="update_ipro_has_apdate">Full TOR update is available. Do you want to download and update it? The update will continue in the background.</string>
     <string name="update_dnscrypt_has_apdate">DNSCrypt update is available. Do you want to download and update it? The update will continue in the background.</string>
     <string name="update_tor_has_apdate">Tor update is available. Do you want to download and update it? The update will continue in the background.</string>
     <string name="update_itpd_has_apdate">Purple I2P update is available. Do you want to download and update it? The update will continue in the background.</string>
@@ -640,19 +634,18 @@
     <string name="update_last_check">Last check:</string>
     <string name="update_found">Updates were found.</string>
     <string name="update_installed">Updates were installed.</string>
-    <string name="update_over_three_activations">Looks like you have activated 3 copies of InviZible with this code already. If it is wrong, please contact the developer.</string>
+    <string name="update_over_three_activations">Looks like you have activated 3 copies of Full TOR with this code already. If it is wrong, please contact the developer.</string>
     <string name="update_wrong_code">Looks like your PRO code is wrong. Please contact the developer.</string>
-    <string name="update_over_five_times">You checked VPN updates more than 5 times a day. Please try again later.</string>
+    <string name="update_over_five_times">You checked Full TOR updates more than 5 times a day. Please try again later.</string>
 
     <string name="only_for_pro">Only for PRO version</string>
     <string name="donate">Donate</string>
-    <string name="donate_project">VPN Project needs your assistance. Please visit donate page or enter received registration code.</string>
+    <string name="donate_project">Full TOR Project needs your assistance. Please visit donate page or enter received registration code.</string>
     <string name="donate_button">Visit</string>
     <string name="enter_code_button">Enter Code</string>
     <string name="enter_code">Enter Code</string>
-    <string name="thanks_for_donate">VPN Project and its author express appreciation
-        for the assistance. Would you like to download and upgrade to PRO? The update will continue in the background.</string>
-    <string name="thanks_for_donate_gp">VPN Project and its author express appreciation for the assistance!</string>
+    <string name="thanks_for_donate">Full TOR Project and its author express appreciation         for the assistance. Would you like to download and upgrade to PRO? The update will continue in the background.</string>
+    <string name="thanks_for_donate_gp">Full TOR Project and its author express appreciation for the assistance!</string>
     <string name="pref_dnscrypt_relays_summ">Remote lists of available relays.</string>
 
     <string name="vpn_mode_active">VPN mode is active</string>
@@ -675,7 +668,7 @@
     <string name="add_custom_server_error">Invalid custom server configuration. Please check the SDNS field.</string>
 
     <string name="pending_purchase">Please note that you have a pending purchase:</string>
-    <string name="buy_premium_gp">VPN Project needs your assistance. Press OK to purchase premium features.</string>
+    <string name="buy_premium_gp">Full TOR Project needs your assistance. Press OK to purchase premium features.</string>
     <string name="wrong_purchase_signature_gp">Sorry, but it is impossible to confirm your purchase. You will receive a refund after 3 days.</string>
     <string name="only_premium_feature">Unfortunately, this feature is available for the premium version only.</string>
     <string name="agreement_text">

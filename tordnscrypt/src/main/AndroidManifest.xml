@@ -41,7 +41,7 @@
         android:name="android.permission.INTERACT_ACROSS_USERS"
         tools:ignore="ProtectedPermissions" />
     <permission
-        android:name="${applicationId}.access.read"
+        android:name="com.fulldive.extension.tordnscrypt.access.read"
         android:protectionLevel="signature" />
 
     <application
@@ -160,8 +160,8 @@
         </provider>
         <provider
             android:name=".appextension.ExtensionContentProvider"
-            android:authorities="${applicationId}.FulldiveContentProvider"
+            android:authorities="com.fulldive.extension.tordnscrypt.FulldiveContentProvider"
             android:exported="true"
-            android:permission="${applicationId}.access.read"/>
+            android:permission="com.fulldive.extension.tordnscrypt.access.read"/>
     </application>
 </manifest>

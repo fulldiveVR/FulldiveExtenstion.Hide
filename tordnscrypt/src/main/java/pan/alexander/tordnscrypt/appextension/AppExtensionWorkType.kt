@@ -1,7 +1,9 @@
 package pan.alexander.tordnscrypt.appextension
 
 sealed class AppExtensionWorkType(val id: String) {
-    object START: AppExtensionWorkType("START")
-    object STOP: AppExtensionWorkType("STOP")
-    object OPEN: AppExtensionWorkType("OPEN")
+    object START: AppExtensionWorkType("start")
+    object STOP: AppExtensionWorkType("stop")
+    object OPEN: AppExtensionWorkType("open")
+    object GetPermissionsRequired : AppExtensionWorkType("get_permissions_required")
+    object GetStatus : AppExtensionWorkType("get_status")
 }

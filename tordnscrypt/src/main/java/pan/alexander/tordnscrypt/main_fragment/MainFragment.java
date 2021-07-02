@@ -188,9 +188,17 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String workStatus = bundle.getString(ExtensionContentProvider.WORK_STATUS);
+            String workStatus = bundle.getString(ExtensionContentProvider.KEY_WORK_STATUS);
             if (workStatus != null) {
                 launchVPN();
+            }
+            boolean isPrepareVPN = bundle.getBoolean(ExtensionContentProvider.PREPARE_VPN);
+            if (isPrepareVPN) {
+                Activity activity = getActivity();
+                if(activity instanceof MainActivity) {
+                    ((MainActivity) getActivity()).prepareVPNService();
+                }
+
             }
         }
     }

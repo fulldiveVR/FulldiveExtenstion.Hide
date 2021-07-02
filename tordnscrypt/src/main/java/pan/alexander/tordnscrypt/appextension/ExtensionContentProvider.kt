@@ -5,15 +5,17 @@ import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
+import android.net.VpnService
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import pan.alexander.tordnscrypt.MainActivity
 import pan.alexander.tordnscrypt.modules.ModulesStatus
+import java.util.*
 
 class ExtensionContentProvider : ContentProvider() {
 
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle? {
-        return when (method) {
+        return when (method.lowercase(Locale.ENGLISH)) {
             AppExtensionWorkType.START.id -> {
                 context?.let { context ->
                     LaunchHelper.startVPN(context)
@@ -29,13 +31,24 @@ class ExtensionContentProvider : ContentProvider() {
             AppExtensionWorkType.OPEN.id -> {
                 context?.let { context ->
                     val intent = Intent(context, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra(PREPARE_VPN, true)
                     context.startActivity(intent)
                 }
                 null
             }
-            GET_STATUS -> {
+            AppExtensionWorkType.GetPermissionsRequired.id -> {
+                bundleOf(
+                    KEY_RESULT to context
+                        ?.let { context ->
+                            VpnService.prepare(context) != null
+                        }
+                        ?.or(false)
+                )
+            }
+            AppExtensionWorkType.GetStatus.id -> {
                 val modulesStatus = ModulesStatus.getInstance()
-                bundleOf(Pair(WORK_STATUS, LaunchHelper.getCurrentExtensionState(modulesStatus)))
+                bundleOf(KEY_WORK_STATUS to LaunchHelper.getCurrentExtensionState(modulesStatus))
             }
             else -> {
                 super.call(method, arg, extras)
@@ -72,17 +85,19 @@ class ExtensionContentProvider : ContentProvider() {
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
     companion object {
-        private const val PREFERENCE_AUTHORITY = "com.fulldive.extension.tordnscrypt.FulldiveContentProvider"
+        private const val PREFERENCE_AUTHORITY =
+            "com.fulldive.extension.tordnscrypt.FulldiveContentProvider"
         const val BASE_URL = "content://$PREFERENCE_AUTHORITY"
-        const val WORK_STATUS = "work_status"
-        const val GET_STATUS = "GET_STATUS"
+        const val KEY_WORK_STATUS = "work_status"
+        const val KEY_RESULT = "result"
+        const val PREPARE_VPN = "prepare_vpn"
     }
 }
 
 fun getContentUri(value: String): Uri {
     return Uri
         .parse(ExtensionContentProvider.BASE_URL)
-        .buildUpon().appendPath(ExtensionContentProvider.WORK_STATUS)
+        .buildUpon().appendPath(ExtensionContentProvider.KEY_WORK_STATUS)
         .appendPath(value)
         .build()
 }

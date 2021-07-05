@@ -139,6 +139,7 @@ android {
 
 repositories {
     mavenCentral()
+    maven { url "http://office.fulldive.com:8083" }
 }
 
 dependencies {

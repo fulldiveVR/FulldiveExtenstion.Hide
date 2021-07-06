@@ -11,3 +11,6 @@ build/**
 build/**
 **/*.iml
 **/*.orig
+local.properties
+**/*.iml
+.idea

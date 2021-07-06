@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FulldiveExtenstion.Hide.iml" filepath="$PROJECT_DIR$/.idea/modules/FulldiveExtenstion.Hide.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.iml" filepath="$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.iml" filepath="$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fulldivehide.iml" filepath="$PROJECT_DIR$/.idea/modules/fulldivehide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/fulldivehide.filepicker.iml" filepath="$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/fulldivehide.filepicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tordnscrypt/fulldivehide.tordnscrypt.iml" filepath="$PROJECT_DIR$/.idea/modules/tordnscrypt/fulldivehide.tordnscrypt.iml" />
     </modules>
   </component>
 </project>

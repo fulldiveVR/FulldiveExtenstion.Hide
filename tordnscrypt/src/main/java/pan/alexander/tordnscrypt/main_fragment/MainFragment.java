@@ -55,23 +55,23 @@ import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import pan.alexander.tordnscrypt.MainActivity;
+import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.appextension.AppExtensionState;
-import pan.alexander.tordnscrypt.appextension.ExtensionContentProvider;
-import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentPresenter;
-import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentReceiver;
-import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentView;
-import pan.alexander.tordnscrypt.R;
+import pan.alexander.tordnscrypt.appextension.AppExtensionWorkType;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentReceiver;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentView;
+import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentPresenter;
+import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentReceiver;
+import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentView;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.tor_fragment.TorFragmentPresenter;
 import pan.alexander.tordnscrypt.tor_fragment.TorFragmentReceiver;
 import pan.alexander.tordnscrypt.tor_fragment.TorFragmentView;
-import pan.alexander.tordnscrypt.utils.Utils;
 import pan.alexander.tordnscrypt.utils.PrefManager;
 import pan.alexander.tordnscrypt.utils.RootExecService;
+import pan.alexander.tordnscrypt.utils.Utils;
 import pan.alexander.tordnscrypt.utils.enums.ModuleState;
 
 import static android.util.TypedValue.COMPLEX_UNIT_PX;
@@ -186,20 +186,10 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         torFragmentPresenter.onStart();
         itpdFragmentPresenter.onStart();
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String workStatus = bundle.getString(ExtensionContentProvider.KEY_WORK_STATUS);
-            if (workStatus != null) {
-                launchVPN();
-            }
-            boolean isPrepareVPN = bundle.getBoolean(ExtensionContentProvider.PREPARE_VPN);
-            if (isPrepareVPN) {
-                Activity activity = getActivity();
-                if(activity instanceof MainActivity) {
-                    ((MainActivity) getActivity()).prepareVPNService();
-                }
-
-            }
+        Activity activity = getActivity();
+        String workType = activity.getIntent().getAction();
+        if (workType != null && workType.equals(AppExtensionWorkType.OPEN.INSTANCE.getId()) && activity instanceof MainActivity) {
+            ((MainActivity) getActivity()).prepareVPNService();
         }
     }
 

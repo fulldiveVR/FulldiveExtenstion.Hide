@@ -33,6 +33,7 @@ class ExtensionContentProvider : ContentProvider() {
                     val intent = Intent(context, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.putExtra(PREPARE_VPN, true)
+                    intent.action = AppExtensionWorkType.OPEN.id
                     context.startActivity(intent)
                 }
                 null

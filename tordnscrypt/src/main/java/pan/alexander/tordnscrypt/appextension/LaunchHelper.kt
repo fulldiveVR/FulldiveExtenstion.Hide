@@ -10,8 +10,8 @@ import pan.alexander.tordnscrypt.utils.enums.ModuleState
 
 object LaunchHelper {
 
-    val runningStates =
-        listOf(ModuleState.STARTING, ModuleState.RESTARTING, ModuleState.RUNNING)
+    val runningStates = listOf(ModuleState.STARTING, ModuleState.RESTARTING, ModuleState.RUNNING)
+    val progressStates = listOf(ModuleState.STARTING, ModuleState.STOPPING)
 
     fun startVPN(context: Context) {
         val modulesStatus = ModulesStatus.getInstance()
@@ -75,6 +75,16 @@ object LaunchHelper {
             }
             else -> AppExtensionState.STOP
         }.id
+    }
+
+    fun isChangingState(): Boolean {
+        val modulesStatus = ModulesStatus.getInstance()
+        val states = listOf(
+            modulesStatus.torState,
+            modulesStatus.dnsCryptState,
+            modulesStatus.itpdState
+        )
+        return states.any { progressStates.contains(it) }
     }
 
     private fun getNewExtensionState(modulesStatus: ModulesStatus): String {

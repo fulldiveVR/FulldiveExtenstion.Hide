@@ -9,6 +9,7 @@ import android.net.VpnService
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import pan.alexander.tordnscrypt.MainActivity
+import pan.alexander.tordnscrypt.appextension.LaunchHelper.isChangingState
 import pan.alexander.tordnscrypt.modules.ModulesStatus
 import java.util.*
 
@@ -17,14 +18,18 @@ class ExtensionContentProvider : ContentProvider() {
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle? {
         return when (method.lowercase(Locale.ENGLISH)) {
             AppExtensionWorkType.START.id -> {
-                context?.let { context ->
-                    LaunchHelper.startVPN(context)
+                if (!isChangingState()) {
+                    context?.let { context ->
+                        LaunchHelper.startVPN(context)
+                    }
                 }
                 null
             }
             AppExtensionWorkType.STOP.id -> {
-                context?.let { context ->
-                    LaunchHelper.stopVPN(context)
+                if (!isChangingState()) {
+                    context?.let { context ->
+                        LaunchHelper.stopVPN(context)
+                    }
                 }
                 null
             }

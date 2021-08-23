@@ -30,4 +30,8 @@
     <color name="mainStartButtonColorActive">#64B5F6</color>
     <color name="colorAlert">#FF5252</color>
     <color name="chipColorFocused">#2A3F43</color>
+
+    <color name="textColorPrimary">#0D1826</color>
+    <color name="textColorSecondary">#BABDC1</color>
+    <color name="textColorAccent">#FF9900</color>
 </resources>

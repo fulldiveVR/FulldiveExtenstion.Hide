@@ -59,6 +59,7 @@ import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.appextension.AppExtensionState;
 import pan.alexander.tordnscrypt.appextension.AppExtensionWorkType;
+import pan.alexander.tordnscrypt.appextension.PopupManager;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentReceiver;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentView;

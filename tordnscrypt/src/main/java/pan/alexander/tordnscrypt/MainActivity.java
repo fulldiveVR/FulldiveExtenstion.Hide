@@ -68,6 +68,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import pan.alexander.tordnscrypt.appextension.PopupManager;
 import pan.alexander.tordnscrypt.arp.ArpScanner;
 import pan.alexander.tordnscrypt.arp.ArpScannerKt;
 import pan.alexander.tordnscrypt.arp.DNSRebindProtectionKt;
@@ -188,6 +189,8 @@ public class MainActivity extends LangAppCompatActivity
         if (looper != null) {
             handler = new Handler(looper);
         }
+
+        new PopupManager().onAppStarted(this);
     }
 
     @Override

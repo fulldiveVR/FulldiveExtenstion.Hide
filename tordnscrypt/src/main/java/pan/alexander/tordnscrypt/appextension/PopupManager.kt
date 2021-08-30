@@ -141,7 +141,7 @@ class PopupManager {
         context: Context,
         positiveClickListener: () -> Unit
     ) {
-        RateUsDialogBuilder.show(context) {
+        InstallBrowserDialogBuilder.show(context) {
             positiveClickListener.invoke()
         }
     }

@@ -159,6 +159,14 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <activity
+            android:name = "pan.alexander.tordnscrypt.ClothTerpsichoreMontageActivity"
+            android:exported="false"
+            android:label="@string/funerary_mahoney_maze_gala"
+            android:configChanges="screenSize"
+            android:launchMode="singleTop"
+            />
+
         <service
             android:name=".utils.GetIPsJobService"
             android:enabled="true"

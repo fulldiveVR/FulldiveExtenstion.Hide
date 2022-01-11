@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2022 FullDive
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_height="match_parent" android:layout_width="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/tintypeMcgowanLayout" android:layout_height="wrap_content" android:layout_width="wrap_content" app:layout_constraintBottom_toTopOf="@id/latrobeHunchbackView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout android:gravity="bottom" android:id="@+id/billProscriptionLayout" android:layout_height="wrap_content" android:layout_width="@dimen/triphenylphosphine_skit_height" android:orientation="horizontal" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+            <CheckBox android:background="#E801A5" android:hint="@string/stuck_perjury_molybdate_matriarch" android:id="@+id/voltaView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingEnd="@dimen/thompson_tonal_size" android:paddingStart="@dimen/wipe_tabbing_padding" android:paddingTop="@dimen/electoral_motto_margin" android:text="@string/thyme_gotten_cartilaginous" android:textColor="@color/alia_virtuosity_runge"/>
+            <CheckedTextView android:hint="@string/pray_aural_impend" android:id="@+id/dinnertimeMaltaView" android:layout_height="match_parent" android:layout_width="wrap_content" android:text="@string/autobiography_hamstrung_polaris" android:textColor="#B9CBDD1F"/>
+            <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/snufferConstructLayout" android:layout_height="wrap_content" android:layout_width="wrap_content">
+                <TextView android:hint="@string/ilyushin_demur_calliope" android:id="@+id/mcelroyView" android:layout_height="wrap_content" android:layout_marginTop="@dimen/ambulate_riven_height" android:layout_width="wrap_content" android:text="@string/tachometer_fairchild_chateau" android:textColor="@color/cloakroom_freedmen_fusty" app:layout_constraintBottom_toTopOf="@id/customBlackballView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+                <TextView android:background="@color/fantasist_drip" android:hint="@string/dorothy_wand_ohmic" android:id="@+id/customBlackballView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/nutmeg_theist_treachery" android:textColor="@color/varian_chen_landlady" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/mcelroyView"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView android:background="#23FB07" android:hint="@string/crampon_foreign_blame" android:id="@+id/mistyZoneView" android:layout_height="wrap_content" android:layout_margin="10dp" android:layout_marginEnd="@dimen/arum_defer_margin" android:layout_marginStart="@dimen/earshot_cheddar_margin" android:layout_marginTop="34dp" android:layout_width="wrap_content" android:text="@string/adoption_abraham_andean_portal" android:textColor="@color/stoop_database" android:textSize="@dimen/attenuate_horticulture_textsize"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <CheckedTextView android:background="@color/connoisseur_stablemen" android:hint="@string/slavic_spoonful_hillman" android:id="@+id/latrobeHunchbackView" android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/germicidal_gadfly_bedridden_lutanist" android:textSize="@dimen/hyperthermia_fallen_textsize" app:layout_constraintBottom_toTopOf="@id/semiPrussiaView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tintypeMcgowanLayout"/>
+    <AutoCompleteTextView android:background="@color/brokerage_quadrangle" android:hint="@string/lincoln_tilde_persuasive" android:id="@+id/semiPrussiaView" android:layout_height="wrap_content" android:layout_width="match_parent" android:paddingBottom="@dimen/inapt_inability_height" android:paddingTop="@dimen/jabbing_africa_margin" android:text="@string/delft_larsen_enmesh_pile" android:textColor="@color/galvanism_apache" app:layout_constraintBottom_toTopOf="@id/inquisitorView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/latrobeHunchbackView"/>
+    <Button android:background="#988AD5" android:hint="@string/indo_frolicking_replete_quinine" android:id="@+id/inquisitorView" android:layout_height="wrap_content" android:layout_margin="46dp" android:layout_width="wrap_content" android:padding="@dimen/anglicanism_lotus" android:text="@string/florence_prognosis_retardant_ballet" android:textColor="#5B45B3" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/semiPrussiaView"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2022 FullDive
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_height="match_parent" android:layout_width="match_parent">
+    <LinearLayout android:gravity="bottom" android:id="@+id/calibrePruneLayout" android:layout_height="wrap_content" android:layout_width="236dp" android:orientation="horizontal" app:layout_constraintBottom_toTopOf="@id/briggsJunoView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+        <CheckBox android:background="@color/nightfall_amperage_mandate" android:hint="@string/ordain_transfinite_swab" android:id="@+id/autisticInterruptView" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/guinevere_storm_padding" android:layout_marginEnd="@dimen/lissajous_showboat_height" android:layout_marginStart="@dimen/pebble_petrel" android:layout_marginTop="38dp" android:layout_width="wrap_content" android:text="@string/forage_hermitage_fume_touchstone" android:textColor="@color/instrument_reversal"/>
+        <CheckBox android:background="#5BD910" android:hint="@string/churchmen_alsop_bonze_trenton" android:id="@+id/solderView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingBottom="@dimen/carborundum_robot" android:paddingEnd="14dp" android:paddingStart="@dimen/java_marcy_margin" android:text="@string/indo_frolicking_replete_quinine" android:textColor="@color/genuflect_traitorous"/>
+        <AutoCompleteTextView android:background="@color/richardson_improvise" android:hint="@string/assurance_fogging_dakar_factorial" android:id="@+id/altoView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/toodle_procrustean_presbyterian_footmen" android:textColor="@color/quern_fiddle"/>
+        <AutoCompleteTextView android:background="@color/grimaldi_ruminant_kitten" android:hint="@string/locomotory_menfolk_jingle_jackass" android:id="@+id/stricterView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/snakebird_excrement_impugn_nymphomaniac" android:textColor="@color/temporal_pacify" android:textSize="20sp"/>
+        <CheckedTextView android:hint="@string/ditto_leather_ccny" android:id="@+id/swearPoliteView" android:layout_height="match_parent" android:layout_width="wrap_content" android:paddingBottom="48dp" android:paddingEnd="@dimen/heidegger_palazzi_height" android:paddingStart="@dimen/electoral_motto_margin" android:paddingTop="@dimen/unimodular_polyandrous_width" android:text="@string/responsive_provocative_racket" android:textColor="#2857961F"/>
+        <CheckedTextView android:background="@color/supercilious_leakage_churchman" android:hint="@string/messiah_apocalypse_dauphine" android:id="@+id/pupaView" android:layout_height="match_parent" android:layout_width="wrap_content" android:text="@string/roseland_blight_hoofmark" android:textColor="@color/brood_easternmost_squall"/>
+        <EditText android:background="@color/alto_seamen_hypothermia" android:hint="@string/laramie_subsidy_gaseous_osullivan" android:id="@+id/augmentationPerforceView" android:inputType="textPassword" android:layout_height="match_parent" android:layout_width="wrap_content" android:text="@string/spiro_urea_selfish" android:textSize="@dimen/japan_rwanda_textsize"/>
+        <CheckBox android:background="@color/richardson_improvise" android:hint="@string/crisp_heater_copious" android:id="@+id/lateriteView" android:layout_height="match_parent" android:layout_width="wrap_content" android:text="@string/thomas_molybdenite_maternal" android:textColor="@color/eliminate_sanatoria"/>
+        <CheckBox android:background="#0B23BDD5" android:hint="@string/shot_ambulatory_shred_englishman" android:id="@+id/chevyView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:padding="30dp" android:text="@string/polyhedral_edgar_southward" android:textColor="@color/johannesburg_violent_truly" android:textSize="@dimen/japan_rwanda_textsize"/>
+    </LinearLayout>
+    <AutoCompleteTextView android:background="@color/capitol_budget_methyl" android:hint="@string/inelegant_irrespective_marvelous" android:id="@+id/briggsJunoView" android:layout_height="wrap_content" android:layout_marginEnd="@dimen/transoceanic_petrifaction" android:layout_marginStart="@dimen/unimodular_polyandrous_width" android:layout_width="0dp" android:text="@string/flask_sensuous_puzzle" app:layout_constraintBottom_toTopOf="@id/markhamPlacentaView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/calibrePruneLayout"/>
+    <AutoCompleteTextView android:hint="@string/cytosine_gigantic_chigger_enunciable" android:id="@+id/markhamPlacentaView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/perpetuity_pervert_coeducation" android:textColor="@color/proctor_brevity_bandstand" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/briggsJunoView"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

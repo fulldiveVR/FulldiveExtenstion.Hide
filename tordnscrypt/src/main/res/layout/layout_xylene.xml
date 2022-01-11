@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2022 FullDive
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_height="match_parent" android:layout_width="match_parent">
+    <LinearLayout android:gravity="center_vertical" android:id="@+id/encourageCompositeLayout" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal" app:layout_constraintBottom_toTopOf="@id/emphasesSubstantiveView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+        <CheckBox android:background="#724F141F" android:hint="@string/tedding_vibrato_zeal_forfeit" android:id="@+id/introjectView" android:layout_height="match_parent" android:layout_marginBottom="@dimen/palo_veer" android:layout_marginEnd="@dimen/lugubrious_kobayashi" android:layout_marginStart="@dimen/although_cribbage_margin" android:layout_width="wrap_content" android:text="@string/nutshell_wiggle_queensland" android:textSize="30sp"/>
+        <AutoCompleteTextView android:background="@color/hermit_descartes_plan" android:hint="@string/arapaho_melpomene_likeable_limpkin" android:id="@+id/protozoanLowboyView" android:layout_height="wrap_content" android:layout_margin="@dimen/bushwhack_matchmake_margin" android:layout_width="wrap_content" android:text="@string/locomotory_menfolk_jingle_jackass" android:textColor="#11DBAD"/>
+        <CheckBox android:background="@color/doge_osteopath_hays" android:hint="@string/transgressor_erotic_gabbro_creosote" android:id="@+id/twinkleView" android:layout_height="wrap_content" android:layout_margin="@dimen/wipe_tabbing_padding" android:layout_width="wrap_content" android:text="@string/paulette_delicate_offal_cordite"/>
+    </LinearLayout>
+    <CheckBox android:background="@color/bridesmaid_mouthpart_contraceptive" android:hint="@string/debut_fuss_guenther_mooney" android:id="@+id/emphasesSubstantiveView" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/ocular_rabbet_glow" android:textSize="@dimen/gigaherz_java_textsize" app:layout_constraintBottom_toTopOf="@id/macgregorDieresisLayout" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/encourageCompositeLayout"/>
+    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/macgregorDieresisLayout" android:layout_height="wrap_content" android:layout_width="match_parent" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/emphasesSubstantiveView">
+        <CheckBox android:background="@color/cabinet_vaccinate" android:hint="@string/soccer_list_iliad_habit" android:id="@+id/mickeyView" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/bench_dextrose_klaus_footbridge" android:textColor="@color/cafeteria_exposit_flood" app:layout_constraintBottom_toTopOf="@id/coolMilitateLayout" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/coolMilitateLayout" android:layout_height="wrap_content" android:layout_width="match_parent" app:layout_constraintBottom_toTopOf="@id/tendonView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/mickeyView">
+            <EditText android:background="@color/smallpox_respire_mcdaniel" android:hint="@string/toward_nazarene_auspicious" android:id="@+id/perspirationView" android:inputType="text" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/psychopathic_deploy_crude" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <CheckedTextView android:background="@color/instrument_reversal" android:hint="@string/pierce_confiscatory_aforethought" android:id="@+id/tendonView" android:layout_height="wrap_content" android:layout_width="410dp" android:text="@string/buckshot_ethane_veal_communicant" android:textColor="#9E5BAB43" app:layout_constraintBottom_toTopOf="@id/lethargyOzoneView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/coolMilitateLayout"/>
+        <CheckBox android:background="@color/deity_regiment" android:hint="@string/ammo_urinate_pawnbroker_pyramid" android:id="@+id/lethargyOzoneView" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/waterline_deter_disposable_lascar" android:textColor="#039BBB9B" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tendonView"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

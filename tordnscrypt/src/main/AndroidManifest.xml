@@ -58,7 +58,7 @@
 
     <permission
         android:name="com.fulldive.extension.tordnscrypt.access.read"
-        android:protectionLevel="signature" />
+        android:protectionLevel="normal" />
 
     <application
         android:name=".ApplicationBase"

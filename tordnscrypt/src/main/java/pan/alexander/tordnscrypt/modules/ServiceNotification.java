@@ -34,6 +34,9 @@ package pan.alexander.tordnscrypt.modules;
     Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
+import static pan.alexander.tordnscrypt.ApplicationBaseKt.ANDROID_CHANNEL_ID;
+import static pan.alexander.tordnscrypt.modules.ModulesService.DEFAULT_NOTIFICATION_ID;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -44,9 +47,6 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import pan.alexander.tordnscrypt.MainActivity;
-
-import static pan.alexander.tordnscrypt.ApplicationBaseKt.ANDROID_CHANNEL_ID;
-import static pan.alexander.tordnscrypt.modules.ModulesService.DEFAULT_NOTIFICATION_ID;
 
 public class ServiceNotification {
     private final Service service;
@@ -64,6 +64,12 @@ public class ServiceNotification {
         if (service == null || notificationManager == null) {
             return;
         }
+        int intentFlags = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            intentFlags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE;
+        } else {
+            intentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
 
         notificationManager.cancel(DEFAULT_NOTIFICATION_ID);
 
@@ -72,7 +78,10 @@ public class ServiceNotification {
         notificationIntent.setAction(Intent.ACTION_MAIN);
         notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(service.getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            contentIntent = PendingIntent.getActivity(service.getApplicationContext(), 0, notificationIntent, intentFlags);
+        }
 
         int iconResource = service.getResources().getIdentifier("ic_service_notification", "drawable", service.getPackageName());
         if (iconResource == 0) {
@@ -109,11 +118,18 @@ public class ServiceNotification {
             return;
         }
 
+        int intentFlags = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            intentFlags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE;
+        } else {
+            intentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
+
         Intent notificationIntent = new Intent(service, MainActivity.class);
         notificationIntent.setAction(Intent.ACTION_MAIN);
         notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(service.getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent = PendingIntent.getActivity(service.getApplicationContext(), 0, notificationIntent, intentFlags);
 
         int iconResource = service.getResources().getIdentifier("ic_service_notification", "drawable", service.getPackageName());
         if (iconResource == 0) {

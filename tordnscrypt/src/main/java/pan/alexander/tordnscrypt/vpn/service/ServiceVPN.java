@@ -485,9 +485,16 @@ public class ServiceVPN extends VpnService {
 
         }
 
+        int intentFlags = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            intentFlags = PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE;
+        } else {
+            intentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+        }
+
         // Build configure intent
         Intent configure = new Intent(this, MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, configure, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, configure, intentFlags);
         builder.setConfigureIntent(pi);
 
         return builder;

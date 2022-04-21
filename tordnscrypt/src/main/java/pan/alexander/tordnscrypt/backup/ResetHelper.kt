@@ -82,7 +82,7 @@ class ResetHelper(activity: Activity, backupFragment: BackupFragment) : Installe
                 correctAppDir()
 
                 val code = saveSomeOldInfo(activityWeakReference.get())
-                val defaultSharedPref = PreferenceManager.getDefaultSharedPreferences(activityWeakReference.get())
+                val defaultSharedPref = PreferenceManager.getDefaultSharedPreferences(activityWeakReference.get() as Context)
                 resetSharedPreferences(defaultSharedPref)
                 val sharedPreferences = activityWeakReference.get()?.getSharedPreferences(PrefManager.getPrefName(), Context.MODE_PRIVATE)
                 resetSharedPreferences(sharedPreferences)

@@ -52,7 +52,7 @@ class IptablesReceiver : BroadcastReceiver() {
     var lastIptablesCommandsReturnError = false
     var savedError = ""
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(context: Context, intent: Intent?) {
 
         if (intent == null) {
             return

@@ -33,6 +33,9 @@ package pan.alexander.tordnscrypt.utils;
     Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
+import static pan.alexander.tordnscrypt.TopFragment.appVersion;
+import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -61,9 +64,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.settings.PathVars;
-
-import static pan.alexander.tordnscrypt.TopFragment.appVersion;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
 
 
 public class Verifier {
@@ -141,6 +141,9 @@ public class Verifier {
     }
 
     public String decryptStr(String text, String key, String vector) throws Exception {
+//        if (key == null) {
+//            key = vector;
+//        }
         key = key.substring(key.length() - 16);
         // Create key and cipher
         Key aesKey = new SecretKeySpec(key.getBytes(), "AES");

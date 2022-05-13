@@ -40,9 +40,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +65,9 @@ import androidx.preference.SwitchPreference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import pan.alexander.tordnscrypt.BuildConfig;
 import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.dialogs.NotificationDialogFragment;
@@ -111,6 +117,34 @@ public class PreferencesFastFragment extends PreferenceFragmentCompat implements
         getActivity().setTitle(R.string.drawer_menu_fastSettings);
 
         setDnsCryptServersSumm(new PrefManager(requireActivity()).getStrPref("DNSCrypt Servers"));
+
+        boolean isMeizu = (Build.MANUFACTURER.toLowerCase(Locale.ROOT).equals("meizu"));
+
+        Preference prefOpenBattery = findPreference("swOpenBattery");
+        if (prefOpenBattery != null) {
+            prefOpenBattery.setVisible(!isMeizu);
+            prefOpenBattery.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    checkDoze(context);
+                    return true;
+                }
+            });
+        }
+
+        Preference prefOpenBackground = findPreference("swOpenBackground");
+        if (prefOpenBackground != null) {
+            prefOpenBackground.setVisible(isMeizu);
+            prefOpenBackground.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    openFlymeSecurityApp(context);
+                    return true;
+                }
+            });
+        }
 
         Preference swAutostartTor = findPreference("swAutostartTor");
         if (swAutostartTor != null) {
@@ -552,6 +586,35 @@ public class PreferencesFastFragment extends PreferenceFragmentCompat implements
         if (prefCheckUpdate != null) {
             prefCheckUpdate.setSummary(R.string.only_for_pro);
             prefCheckUpdate.setEnabled(false);
+        }
+    }
+
+    private static void checkDoze(Context context) {
+        Intent intent;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            PackageManager packageManager = context.getPackageManager();
+            if (packageManager != null) {
+                ResolveInfo info = packageManager.resolveActivity(intent, 0);
+                if (info != null) {
+                    try {
+                        context.startActivity(intent);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    private static void openFlymeSecurityApp(Context context) {
+        Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

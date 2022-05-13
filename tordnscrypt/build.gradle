@@ -18,7 +18,7 @@ apply plugin: 'kotlin-android'
 
 def versionMajor = 5
 def versionMinor = 3
-def versionPatch = 9
+def versionPatch = 10
 
 android {
     compileSdkVersion 32

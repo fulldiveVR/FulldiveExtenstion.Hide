@@ -62,6 +62,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.res.ResourcesCompat;
@@ -75,6 +76,8 @@ import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.appextension.AppExtensionState;
 import pan.alexander.tordnscrypt.appextension.AppExtensionWorkType;
 import pan.alexander.tordnscrypt.appextension.PopupManager;
+import pan.alexander.tordnscrypt.dialogs.AgreementDialog;
+import pan.alexander.tordnscrypt.dialogs.BackgroundSettingsDialog;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentReceiver;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentView;
@@ -354,6 +357,14 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         if (context == null) {
             return;
         }
+
+        if (!new PrefManager(context).getBoolPref("BatterySettings")) {
+            AlertDialog.Builder batterySettingsDialogBuilder = BackgroundSettingsDialog.getDialogBuilder(context);
+            if (batterySettingsDialogBuilder != null && !isStateSaved()) {
+                batterySettingsDialogBuilder.show();
+            }
+        }
+
         ModuleState state = modulesStatus.getTorState();
         String appExtensionState = AppExtensionState.START.INSTANCE.getId();
         if (state == ModuleState.STARTING || state == ModuleState.RESTARTING || state == ModuleState.RUNNING) {

@@ -17,6 +17,26 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="fast_preferences">
 
+    <PreferenceCategory android:title="@string/settings_category_system">
+
+        <Preference
+            android:id="@+id/swOpenBattery"
+            android:defaultValue="false"
+            android:key="swOpenBattery"
+            android:title="@string/settings_system_open_battery_settings" />
+<!--        <SwitchPreference-->
+<!--            android:id="@+id/swOpenData"-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="swOpenData"-->
+<!--            android:title="@string/settings_system_open_data_settings"/>-->
+        <Preference
+            android:id="@+id/swOpenBackground"
+            android:defaultValue="false"
+            android:key="swOpenBackground"
+            android:title="@string/settings_system_open_background_settings"/>
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_fast_categ_autostart">
 
         <SwitchPreference

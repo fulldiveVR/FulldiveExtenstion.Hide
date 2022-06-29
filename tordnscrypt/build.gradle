@@ -18,7 +18,7 @@ apply plugin: 'kotlin-android'
 
 def versionMajor = 5
 def versionMinor = 3
-def versionPatch = 10
+def versionPatch = 11
 
 android {
     compileSdkVersion 32
@@ -187,4 +187,5 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation 'com.android.billingclient:billing-ktx:5.0.0'
 }

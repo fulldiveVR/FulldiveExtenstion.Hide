@@ -17,8 +17,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 def versionMajor = 5
-def versionMinor = 3
-def versionPatch = 10
+def versionMinor = 4
+def versionPatch = 0
 
 android {
     compileSdkVersion 32
@@ -167,6 +167,7 @@ repositories {
 }
 
 dependencies {
+    implementation "com.fulldive:Google-IAP:1.0.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.preference:preference-ktx:1.2.0'
@@ -185,6 +186,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.github.angads25:filepicker:1.1.1'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2"
 
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation "com.airbnb.android:lottie:5.2.0"
+    implementation 'com.android.billingclient:billing-ktx:5.0.0'
 }

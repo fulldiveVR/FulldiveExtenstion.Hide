@@ -17,17 +17,19 @@
 package pan.alexander.tordnscrypt.appextension
 
 import android.content.Context
+import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
+import android.text.style.*
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import pan.alexander.tordnscrypt.R
+import java.util.regex.Pattern
 
 object StringUtils {
+
+    private const val CHECK_MARK_TAG = ":check_mark:"
 
     fun setTextColor(
         context: Context,
@@ -92,6 +94,57 @@ object StringUtils {
             )
         }
         return stringSpanned
+    }
+
+    fun getHexColor(context: Context, id: Int):String {
+        return context.getHexColor(id)
+    }
+
+    fun processCheckmarks(context: Context, spannable: Spannable): Boolean {
+        return process(
+            Pattern.compile(Pattern.quote(CHECK_MARK_TAG)),
+            R.drawable.ic_check_mark,
+            context,
+            spannable,
+            DynamicDrawableSpan.ALIGN_BASELINE
+        )
+    }
+
+    private fun process(
+        key: Pattern,
+        value: Int,
+        context: Context,
+        spannable: Spannable,
+        alignment: Int
+    ): Boolean {
+        var hasChanges = false
+        val matcher = key.matcher(spannable)
+        while (matcher.find()) {
+            var changed = true
+            for (span in spannable.getSpans(
+                matcher.start(),
+                matcher.end(),
+                ImageSpan::class.java
+            )) {
+                if (spannable.getSpanStart(span) >= matcher.start() &&
+                    spannable.getSpanEnd(span) <= matcher.end()
+                )
+                    spannable.removeSpan(span)
+                else {
+                    changed = false
+                    break
+                }
+            }
+            if (changed) {
+                hasChanges = true
+                spannable.setSpan(
+                    CustomImageSpan(context, value, alignment),
+                    matcher.start(), matcher.end(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+        return hasChanges
     }
 
     data class SubString(

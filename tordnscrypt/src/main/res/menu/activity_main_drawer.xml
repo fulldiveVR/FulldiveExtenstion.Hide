@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ This file is part of InviZible Pro.
-  ~     InviZible Pro is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU General Public License as published by
-  ~     the Free Software Foundation, either version 3 of the License, or
-  ~     (at your option) any later version.
-  ~     InviZible Pro is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU General Public License for more details.
-  ~     You should have received a copy of the GNU General Public License
-  ~     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
-  ~     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
+  ~ Copyright (c) 2022 FullDive
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,6 +21,16 @@
 
     <group android:checkableBehavior="none"
         android:id="@+id/nav_main_group">
+        <item
+            android:id="@+id/nav_pro"
+            android:icon="@drawable/ic_pro"
+            android:title="@string/str_pro_label_title" />
+        <item
+            android:id="@+id/nav_pro_activated"
+            android:visible="false"
+            tools:visible="true"
+            android:icon="@drawable/ic_pro_activated"
+            android:title="@string/str_pro_label_title" />
         <item
             android:id="@+id/nav_fast_Pref"
             android:icon="@drawable/ic_settings_fast"

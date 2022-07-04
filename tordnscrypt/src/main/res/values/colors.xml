@@ -49,4 +49,18 @@
     <color name="textColorPrimary">#0D1826</color>
     <color name="textColorSecondary">#BABDC1</color>
     <color name="textColorAccent">#FF9900</color>
+
+    <color name="backgroundTabsAndNavBars">#ffffff</color>
+    <color name="colorBar">#F2F3F4</color>
+    <color name="colorIconPrimary">#616972</color>
+    <color name="colorIconSecondary">#BABDC1</color>
+    <color name="colorIconTertiary">#616972</color>
+
+    <color name="textColorTertiary">#616972</color>
+
+    <color name="colorDivider">#C6C6C8B2</color>
+    <color name="backgroundColoredButton">#1A237E</color>
+    <color name="backgroundColoredButtonAlpha40">#661A237E</color>
+    <color name="backgroundPrimary">#ffffff</color>
+    <color name="backgroundPrimaryAlpha40">#66ffffff</color>
 </resources>

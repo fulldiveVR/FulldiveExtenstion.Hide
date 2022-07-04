@@ -34,9 +34,21 @@ package pan.alexander.tordnscrypt.main_fragment;
     Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
+import static android.util.TypedValue.COMPLEX_UNIT_PX;
+import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
+import static pan.alexander.tordnscrypt.TopFragment.ITPDVersion;
+import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
+import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
+import static pan.alexander.tordnscrypt.appextension.ExtensionContentProviderKt.getContentUri;
+import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.UNDEFINED;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -55,6 +67,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -71,12 +84,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import pan.alexander.tordnscrypt.MainActivity;
+import pan.alexander.tordnscrypt.ProPurchaseActivity;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.appextension.AppExtensionState;
 import pan.alexander.tordnscrypt.appextension.AppExtensionWorkType;
-import pan.alexander.tordnscrypt.appextension.PopupManager;
-import pan.alexander.tordnscrypt.dialogs.AgreementDialog;
+import pan.alexander.tordnscrypt.appextension.SubscriptionService;
 import pan.alexander.tordnscrypt.dialogs.BackgroundSettingsDialog;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentReceiver;
@@ -92,17 +105,6 @@ import pan.alexander.tordnscrypt.utils.PrefManager;
 import pan.alexander.tordnscrypt.utils.RootExecService;
 import pan.alexander.tordnscrypt.utils.Utils;
 import pan.alexander.tordnscrypt.utils.enums.ModuleState;
-
-import static android.util.TypedValue.COMPLEX_UNIT_PX;
-import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
-import static pan.alexander.tordnscrypt.TopFragment.ITPDVersion;
-import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
-import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
-import static pan.alexander.tordnscrypt.appextension.ExtensionContentProviderKt.getContentUri;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.UNDEFINED;
 
 public class MainFragment extends Fragment implements DNSCryptFragmentView, TorFragmentView, ITPDFragmentView,
         CompoundButton.OnCheckedChangeListener, ViewTreeObserver.OnScrollChangedListener,
@@ -137,6 +139,7 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
     private TextView tvITPDInfoLog;
     private ScrollView svITPDLog;
     private ConstraintLayout clITPDLog;
+    private FrameLayout limitedOfferLayout;
 
     private final ModulesStatus modulesStatus = ModulesStatus.getInstance();
 
@@ -161,6 +164,23 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         pbDNSMainFragment = view.findViewById(R.id.pbDNSMainFragment);
         pbTorMainFragment = view.findViewById(R.id.pbTorMainFragment);
         pbITPDMainFragment = view.findViewById(R.id.pbITPDMainFragment);
+        limitedOfferLayout = view.findViewById(R.id.limitedOfferLayout);
+
+        limitedOfferLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ProPurchaseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView closePopupButton = view.findViewById(R.id.closePopupButton);
+        closePopupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SubscriptionService.INSTANCE.setClosePopup(getContext(), true);
+            }
+        });
 
         Context context = getActivity();
         if (context == null) {
@@ -186,6 +206,9 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         chbHideIpMainFragment.setOnCheckedChangeListener(this);
         chbProtectDnsMainFragment.setOnCheckedChangeListener(this);
         chbAccessITPMainFragment.setOnCheckedChangeListener(this);
+
+        SubscriptionService.INSTANCE.observeIsPurchasedState(this);
+        SubscriptionService.INSTANCE.observeIsShowPopup(this);
         return view;
     }
 
@@ -883,6 +906,20 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
 
     public ITPDFragmentPresenter getITPDFragmentPresenter() {
         return itpdFragmentPresenter;
+    }
+
+    public void onPurchase() {
+        limitedOfferLayout.setVisibility(FrameLayout.INVISIBLE);
+    }
+
+    public void onLimitedOfferVisibilityChanged(boolean isVisible) {
+        int visibility;
+        if (isVisible) {
+            visibility = FrameLayout.VISIBLE;
+        } else {
+            visibility = FrameLayout.INVISIBLE;
+        }
+        limitedOfferLayout.setVisibility(visibility);
     }
 
     private boolean isDNSCryptInstalled(Context context) {

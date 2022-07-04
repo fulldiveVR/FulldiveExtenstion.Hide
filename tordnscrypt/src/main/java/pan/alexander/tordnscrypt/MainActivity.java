@@ -92,6 +92,9 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import pan.alexander.tordnscrypt.analytics.StatisticHelper;
+import pan.alexander.tordnscrypt.analytics.TrackerConstants;
+import pan.alexander.tordnscrypt.appextension.AppSettingsService;
 import pan.alexander.tordnscrypt.appextension.PopupManager;
 import pan.alexander.tordnscrypt.appextension.SubscriptionService;
 import pan.alexander.tordnscrypt.arp.ArpScanner;
@@ -156,6 +159,8 @@ public class MainActivity extends LangAppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        StatisticHelper.INSTANCE.init(getBaseContext());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -393,9 +398,10 @@ public class MainActivity extends LangAppCompatActivity
     public void onPurchase() {
         proActivated.setVisible(true);
         pro.setVisible(false);
-        // todo check if shown
-        Intent intent = new Intent(this, ProPurchaseSuccessActivity.class);
-        startActivity(intent);
+        if (AppSettingsService.INSTANCE.getIsCongratsShow(getBaseContext())) {
+            Intent intent = new Intent(this, ProPurchaseSuccessActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void switchIconsDependingOnMode(Menu menu, boolean rootIsAvailable) {
@@ -855,6 +861,7 @@ public class MainActivity extends LangAppCompatActivity
             Registration registration = new Registration(this);
             registration.showEnterCodeDialog();
         } else if (id == R.id.nav_pro) {
+            StatisticHelper.INSTANCE.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_OPENED_FROM_TOOLBAR);
             Intent intent = new Intent(this, ProPurchaseActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_pro_activated) {

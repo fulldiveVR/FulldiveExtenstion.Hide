@@ -15,3 +15,5 @@ local.properties
 **/*.iml
 .idea
 /.idea/modules/
+/flurrykey.txt
+/tordnscrypt/google-services.json

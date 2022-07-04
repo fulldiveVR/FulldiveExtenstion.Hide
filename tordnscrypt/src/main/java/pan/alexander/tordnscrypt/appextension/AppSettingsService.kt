@@ -22,6 +22,7 @@ import android.content.Context
 object AppSettingsService {
 
     private const val KEY_START_APP_COUNTER = "KEY_START_APP_COUNTER"
+    private const val KEY_IS_CONGRATS_SHOW = "KEY_IS_CONGRATS_SHOW"
     private const val KEY_IS_PROMO_POPUP_CLOSED = "KEY_IS_PROMO_POPUP_CLOSED"
     private const val KEY_IS_PROMO_POPUP_CLOSED_START_COUNTER =
         "KEY_IS_PROMO_POPUP_CLOSED_START_COUNTER"
@@ -48,5 +49,15 @@ object AppSettingsService {
     fun getPromoCloseStartCounter(context: Context): Int {
         val sharedPreferences = context.getPrivateSharedPreferences()
         return sharedPreferences.getProperty(KEY_IS_PROMO_POPUP_CLOSED_START_COUNTER, 0).or(0)
+    }
+
+    fun getIsCongratsShow(context: Context): Boolean {
+        val sharedPreferences = context.getPrivateSharedPreferences()
+        return sharedPreferences.getProperty(KEY_IS_CONGRATS_SHOW, false).or(false)
+    }
+
+    fun setIsCongratsShow(context: Context, isShow: Boolean) {
+        val sharedPreferences = context.getPrivateSharedPreferences()
+        sharedPreferences.setProperty(KEY_IS_CONGRATS_SHOW, isShow)
     }
 }

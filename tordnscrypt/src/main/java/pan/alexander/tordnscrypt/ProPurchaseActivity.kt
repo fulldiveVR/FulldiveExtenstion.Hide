@@ -24,6 +24,9 @@ import android.text.SpannableString
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import pan.alexander.tordnscrypt.analytics.StatisticHelper
+import pan.alexander.tordnscrypt.analytics.StatisticHelper.logAction
+import pan.alexander.tordnscrypt.analytics.TrackerConstants
 import pan.alexander.tordnscrypt.appextension.StringUtils.getHexColor
 import pan.alexander.tordnscrypt.appextension.StringUtils.processCheckmarks
 import pan.alexander.tordnscrypt.appextension.SubscriptionService
@@ -64,9 +67,11 @@ class ProPurchaseActivity : AppCompatActivity() {
         discountTextView.text = proSubscriptionInfo.salePrice
         fullPriceTextView.text = proSubscriptionInfo.price
         subscribeButton.setOnClickListener {
+            StatisticHelper.logAction(TrackerConstants.EVENT_BUY_PRO_CLICKED)
             SubscriptionService.purchase(this)
             onBackPressed()
         }
+        StatisticHelper.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_OPENED)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -15,10 +15,11 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 
 def versionMajor = 5
 def versionMinor = 4
-def versionPatch = 0
+def versionPatch = 1
 
 android {
     compileSdkVersion 32
@@ -78,10 +79,10 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode versionMajor*10000+versionMinor*100+versionPatch
+        versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
 
         resConfigs "en", "ru-rRU", "ru-rUA", "pl", "de", "fa", "fi", "in", "fr", "ja", "zh", "es", "pt-rBR"
-
+        buildConfigField 'String', 'FLURRY_API_KEY', new File('./flurrykey.txt').getText('UTF-8')
         externalNativeBuild {
             cmake {
                 cppFlags ""
@@ -194,4 +195,10 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation "com.airbnb.android:lottie:5.2.0"
     implementation 'com.android.billingclient:billing-ktx:5.0.0'
+
+    implementation 'com.flurry.android:analytics:13.3.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+    implementation 'com.google.android.gms:play-services-measurement-api:21.0.0'
+    implementation 'com.google.firebase:firebase-analytics:21.0.0'
+
 }

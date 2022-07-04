@@ -87,6 +87,8 @@ import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.ProPurchaseActivity;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
+import pan.alexander.tordnscrypt.analytics.StatisticHelper;
+import pan.alexander.tordnscrypt.analytics.TrackerConstants;
 import pan.alexander.tordnscrypt.appextension.AppExtensionState;
 import pan.alexander.tordnscrypt.appextension.AppExtensionWorkType;
 import pan.alexander.tordnscrypt.appextension.SubscriptionService;
@@ -169,6 +171,7 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         limitedOfferLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                StatisticHelper.INSTANCE.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_OPENED_FROM_PRO_POPUP);
                 Intent intent = new Intent(getContext(), ProPurchaseActivity.class);
                 startActivity(intent);
             }
@@ -178,6 +181,7 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         closePopupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                StatisticHelper.INSTANCE.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_CLOSE_PRO_POPUP);
                 SubscriptionService.INSTANCE.setClosePopup(getContext(), true);
             }
         });
@@ -909,6 +913,7 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
     }
 
     public void onPurchase() {
+        StatisticHelper.INSTANCE.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_PRO_POPUP_SHOWN);
         limitedOfferLayout.setVisibility(FrameLayout.INVISIBLE);
     }
 
@@ -916,6 +921,7 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         int visibility;
         if (isVisible) {
             visibility = FrameLayout.VISIBLE;
+            StatisticHelper.INSTANCE.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_PRO_POPUP_SHOWN);
         } else {
             visibility = FrameLayout.INVISIBLE;
         }

@@ -24,9 +24,9 @@ import android.text.SpannableString
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import pan.alexander.tordnscrypt.appextension.AppSettingsService
 import pan.alexander.tordnscrypt.appextension.StringUtils.getHexColor
 import pan.alexander.tordnscrypt.appextension.StringUtils.processCheckmarks
-import pan.alexander.tordnscrypt.appextension.SubscriptionService
 import pan.alexander.tordnscrypt.appextension.fromHtmlToSpanned
 
 class ProPurchaseSuccessActivity : AppCompatActivity() {
@@ -51,6 +51,8 @@ class ProPurchaseSuccessActivity : AppCompatActivity() {
         titleTextView.text = title
         val tutorialTextView = findViewById<TextView>(R.id.tutorialTextView)
         tutorialTextView.text = tutorial
+
+        AppSettingsService.setIsCongratsShow(baseContext, true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

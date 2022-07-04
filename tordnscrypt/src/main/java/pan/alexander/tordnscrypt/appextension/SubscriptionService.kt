@@ -32,6 +32,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import pan.alexander.tordnscrypt.MainActivity
+import pan.alexander.tordnscrypt.analytics.StatisticHelper
+import pan.alexander.tordnscrypt.analytics.TrackerConstants
 import pan.alexander.tordnscrypt.main_fragment.MainFragment
 
 object SubscriptionService {
@@ -71,6 +73,7 @@ object SubscriptionService {
                 when (purchaseInfo.sku) {
                     proSku, proSkuDiscount -> {
                         CoroutineScope(coroutineContext).launch {
+                            StatisticHelper.logAction(TrackerConstants.EVENT_BUY_PRO_SUCCESS)
                             isProStatusPurchasedState.value =
                                 purchaseInfo.purchaseState == STATE_PURCHASED
                         }
@@ -108,6 +111,7 @@ object SubscriptionService {
                 when (purchaseInfo.sku) {
                     proSku, proSkuDiscount -> {
                         CoroutineScope(coroutineContext).launch {
+                            StatisticHelper.logAction(TrackerConstants.EVENT_BUY_PRO_SUCCESS)
                             isProStatusPurchasedState.value =
                                 (purchaseInfo.purchaseState == STATE_PURCHASED)
                         }
@@ -215,10 +219,6 @@ object SubscriptionService {
                     !isPurchased && isShow
                 }.collect { isVisible ->
                     fragment.onLimitedOfferVisibilityChanged(isVisible)
-//                    limitedOfferLayout.isVisible = isVisible
-//                    if (limitedOfferLayout.isVisible) {
-//                        StatisticHelper.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_PRO_POPUP_SHOWN)
-//                    }
                 }
         }
     }

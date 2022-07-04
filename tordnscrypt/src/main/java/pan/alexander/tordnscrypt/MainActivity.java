@@ -33,6 +33,17 @@ package pan.alexander.tordnscrypt;
     Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
+import static pan.alexander.tordnscrypt.TopFragment.appVersion;
+import static pan.alexander.tordnscrypt.assistance.AccelerateDevelop.accelerated;
+import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.FAULT;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.PROXY_MODE;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.UNDEFINED;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -45,24 +56,6 @@ import android.net.VpnService;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.PreferenceManager;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Looper;
 import android.text.InputType;
 import android.util.Base64;
@@ -78,12 +71,29 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import pan.alexander.tordnscrypt.appextension.PopupManager;
+import pan.alexander.tordnscrypt.appextension.SubscriptionService;
 import pan.alexander.tordnscrypt.arp.ArpScanner;
 import pan.alexander.tordnscrypt.arp.ArpScannerKt;
 import pan.alexander.tordnscrypt.arp.DNSRebindProtectionKt;
@@ -93,6 +103,7 @@ import pan.alexander.tordnscrypt.dialogs.ChangeModeDialog;
 import pan.alexander.tordnscrypt.dialogs.NotificationDialogFragment;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptRunFragment;
 import pan.alexander.tordnscrypt.help.HelpActivity;
+import pan.alexander.tordnscrypt.itpd_fragment.ITPDRunFragment;
 import pan.alexander.tordnscrypt.main_fragment.MainFragment;
 import pan.alexander.tordnscrypt.main_fragment.ViewPagerAdapter;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
@@ -101,7 +112,6 @@ import pan.alexander.tordnscrypt.modules.ModulesRestarter;
 import pan.alexander.tordnscrypt.modules.ModulesService;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.itpd_fragment.ITPDRunFragment;
 import pan.alexander.tordnscrypt.tor_fragment.TorRunFragment;
 import pan.alexander.tordnscrypt.utils.ApManager;
 import pan.alexander.tordnscrypt.utils.ChangeModeInterface;
@@ -110,17 +120,6 @@ import pan.alexander.tordnscrypt.utils.Registration;
 import pan.alexander.tordnscrypt.utils.enums.ModuleState;
 import pan.alexander.tordnscrypt.utils.enums.OperationMode;
 import pan.alexander.tordnscrypt.vpn.service.ServiceVPNHelper;
-
-import static pan.alexander.tordnscrypt.TopFragment.appVersion;
-import static pan.alexander.tordnscrypt.assistance.AccelerateDevelop.accelerated;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.FAULT;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.PROXY_MODE;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.UNDEFINED;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
 
 public class MainActivity extends LangAppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChangeModeInterface {
@@ -146,6 +145,8 @@ public class MainActivity extends LangAppCompatActivity
     private ImageView animatingImage;
     private RotateAnimation rotateAnimation;
     private BroadcastReceiver mainActivityReceiver;
+    MenuItem proActivated;
+    MenuItem pro;
 
     @SuppressLint("NewApi")
     @Override
@@ -169,6 +170,11 @@ public class MainActivity extends LangAppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setBackgroundColor(getResources().getColor(R.color.colorBackground));
         navigationView.setNavigationItemSelectedListener(this);
+        Menu navMenu = navigationView.getMenu();
+        proActivated = navMenu.findItem(R.id.nav_pro_activated);
+        proActivated.setVisible(false);
+        pro = navMenu.findItem(R.id.nav_pro);
+        pro.setVisible(true);
 
         modulesStatus = ModulesStatus.getInstance();
 
@@ -206,6 +212,11 @@ public class MainActivity extends LangAppCompatActivity
         }
 
         new PopupManager().onAppStarted(this);
+
+        SubscriptionService.INSTANCE.init(this);
+
+        SubscriptionService.INSTANCE.observeIsPurchasedState(this);
+
     }
 
     @Override
@@ -377,6 +388,14 @@ public class MainActivity extends LangAppCompatActivity
         showNewTorIdentityIcon(menu);
 
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void onPurchase() {
+        proActivated.setVisible(true);
+        pro.setVisible(false);
+        // todo check if shown
+        Intent intent = new Intent(this, ProPurchaseSuccessActivity.class);
+        startActivity(intent);
     }
 
     private void switchIconsDependingOnMode(Menu menu, boolean rootIsAvailable) {
@@ -835,6 +854,12 @@ public class MainActivity extends LangAppCompatActivity
         } else if (id == R.id.nav_Code) {
             Registration registration = new Registration(this);
             registration.showEnterCodeDialog();
+        } else if (id == R.id.nav_pro) {
+            Intent intent = new Intent(this, ProPurchaseActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_pro_activated) {
+            Intent intent = new Intent(this, ProPurchaseSuccessActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -1013,6 +1038,7 @@ public class MainActivity extends LangAppCompatActivity
         newIdentityMenuItem = null;
         animatingImage = null;
         rotateAnimation = null;
+        SubscriptionService.INSTANCE.onDestroy();
     }
 
     @Override

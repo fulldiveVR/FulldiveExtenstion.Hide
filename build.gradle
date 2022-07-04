@@ -37,6 +37,10 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
+        maven {
+            url "http://office.fulldive.com:8083"
+            allowInsecureProtocol = true
+        }
     }
 }
 

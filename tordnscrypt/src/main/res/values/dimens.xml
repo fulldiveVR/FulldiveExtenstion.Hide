@@ -30,6 +30,37 @@
     <dimen name="fragment_file_log_text_size">15sp</dimen>
     <dimen name="fragment_counry_select_text_size">17sp</dimen>
 
+    <dimen name="text_size_xxxsmall">8sp</dimen>
+    <dimen name="text_size_xxsmall">10sp</dimen>
+    <dimen name="text_size_xsmall">12sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_normal">18sp</dimen>
+    <dimen name="textsize_xlarge">20sp</dimen>
+    <dimen name="textsize_xxlarge">24sp</dimen>
+    <dimen name="textsize_xxxlarge">28sp</dimen>
+
+    <dimen name="size_1dp">1dp</dimen>
+    <dimen name="size_2dp">2dp</dimen>
+    <dimen name="size_4dp">4dp</dimen>
+    <dimen name="size_8dp">8dp</dimen>
+    <dimen name="size_10dp">10dp</dimen>
+    <dimen name="size_12dp">12dp</dimen>
+    <dimen name="size_16dp">16dp</dimen>
+    <dimen name="size_24dp">24dp</dimen>
+    <dimen name="size_30dp">30dp</dimen>
+    <dimen name="size_36dp">36dp</dimen>
+    <dimen name="size_40dp">40dp</dimen>
+    <dimen name="size_45dp">45dp</dimen>
+    <dimen name="size_48dp">48dp</dimen>
+
+    <dimen name="actionBarSize">56dp</dimen>
+    <dimen name="keyboardMinHeight">240dp</dimen>
+
+    <dimen name="spacing_extra_dialog">3sp</dimen>
+    <dimen name="flat_subscription_tutorial_icon_size">200dp</dimen>
+    <dimen name="size_32dp">32dp</dimen>
+    <dimen name="shapeButtonRadius">32dp</dimen>
+
 
     <dimen name="unimodular_polyandrous_width">82dp</dimen>
     <dimen name="chummy_bloodstone_height">82dp</dimen>

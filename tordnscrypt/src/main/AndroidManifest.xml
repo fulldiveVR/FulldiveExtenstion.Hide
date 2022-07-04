@@ -150,6 +150,8 @@
             android:label="@string/empty_string"
             android:theme="@style/AppTheme" />
         <activity android:name=".AboutActivity" />
+        <activity android:name=".ProPurchaseActivity" />
+        <activity android:name=".ProPurchaseSuccessActivity" />
         <activity
             android:name=".appextension.StealthActivity"
             android:exported="true"

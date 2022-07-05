@@ -398,7 +398,7 @@ public class MainActivity extends LangAppCompatActivity
     public void onPurchase() {
         proActivated.setVisible(true);
         pro.setVisible(false);
-        if (AppSettingsService.INSTANCE.getIsCongratsShow(getBaseContext())) {
+        if (!AppSettingsService.INSTANCE.getIsCongratsShow(getBaseContext())) {
             Intent intent = new Intent(this, ProPurchaseSuccessActivity.class);
             startActivity(intent);
         }

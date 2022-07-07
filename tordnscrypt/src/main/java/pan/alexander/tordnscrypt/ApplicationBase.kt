@@ -42,6 +42,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat.getSystemService
+import com.flurry.android.FlurryAgent
 import pan.alexander.tordnscrypt.crash_handling.TopExceptionHandler
 import pan.alexander.tordnscrypt.language.Language
 import java.lang.ref.WeakReference
@@ -82,6 +83,9 @@ class ApplicationBase : Application() {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         }
 
+        FlurryAgent.Builder()
+            .withLogEnabled(true)
+            .build(this, BuildConfig.FLURRY_API_KEY)
     }
 
     @TargetApi(Build.VERSION_CODES.O)

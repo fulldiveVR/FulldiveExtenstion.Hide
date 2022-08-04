@@ -214,7 +214,7 @@ object SubscriptionService {
             repeatPopupCounts.any { it == diff }
         } else {
             true
-        }
+        } && !context.isBrowserInstalled()
     }
 
     fun setClosePopup(context: Context, isClose: Boolean) {

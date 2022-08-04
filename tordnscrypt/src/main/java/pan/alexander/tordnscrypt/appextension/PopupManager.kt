@@ -65,7 +65,7 @@ class PopupManager {
                     }
                 }
                 StartAppDialog.InstallBrowser -> {
-                    if ((!installBrowserDone) && !isBrowserInstalled(context)) {
+                    if ((!installBrowserDone) && !context.isBrowserInstalled()) {
                         showInstallBrowserDialog(context) {
                             onInstallAppPositiveClicked(context, sharedPreferences)
                         }
@@ -75,15 +75,6 @@ class PopupManager {
                 }
             }
         }
-    }
-
-    private fun isBrowserInstalled(context: Context): Boolean {
-        val app = try {
-            context.packageManager.getApplicationInfo(BROWSER_PACKAGE_NAME, 0)
-        } catch (e: Exception) {
-            null
-        }
-        return app?.enabled ?: false
     }
 
     private fun onRateUsPositiveClicked(

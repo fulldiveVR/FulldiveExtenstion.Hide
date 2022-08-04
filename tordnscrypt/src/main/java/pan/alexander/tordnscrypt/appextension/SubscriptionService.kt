@@ -19,7 +19,6 @@ package pan.alexander.tordnscrypt.appextension
 import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.fulldive.iap.DataWrappers
 import com.fulldive.iap.IapConnector
@@ -27,7 +26,6 @@ import com.fulldive.iap.PurchaseServiceListener
 import com.fulldive.iap.SubscriptionServiceListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope.coroutineContext
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -35,15 +33,23 @@ import pan.alexander.tordnscrypt.MainActivity
 import pan.alexander.tordnscrypt.analytics.StatisticHelper
 import pan.alexander.tordnscrypt.analytics.TrackerConstants
 import pan.alexander.tordnscrypt.main_fragment.MainFragment
+import java.util.*
 
 object SubscriptionService {
 
-    const val proSku = "full_tor_pro_purchase"
-    const val proSkuDiscount = "full_tor_pro_purchase_discount"
+    private const val proSku = "full_tor_pro_subscription"
+    private const val proSkuDiscount = "full_tor_pro_subscription_discount"
 
-    const val STATE_PURCHASED = 1
-    const val STATE_PENDING = 2
-    const val STATE_UNDEFINED = 0
+    private const val proSkuPurchase = "full_tor_pro_purchase"
+    private const val proSkuDiscountPurchase = "full_tor_pro_purchase_discount"
+
+    private const val STATE_PURCHASED = 1
+    private const val STATE_PENDING = 2
+    private const val STATE_UNDEFINED = 0
+
+    private const val DAYS_IN_YEAR = 365
+    private const val MILLES_IN_DAY = 24 * 60 * 60 * 1000
+
     private val repeatPopupCounts = listOf(2, 5)
 
     val isConnectedState = MutableStateFlow(false)
@@ -56,9 +62,12 @@ object SubscriptionService {
     suspend fun init(context: Context) {
         iapConnector = IapConnector(
             context = context, // activity / context
-            nonConsumableKeys = listOf(proSku, proSkuDiscount), // pass the list of non-consumables
+            nonConsumableKeys = listOf(
+                proSkuPurchase,
+                proSkuDiscountPurchase
+            ), // pass the list of non-consumables
             consumableKeys = emptyList(), // pass the list of consumables
-            subscriptionKeys = emptyList(), // pass the list of subscriptions
+            subscriptionKeys = listOf(proSku, proSkuDiscount), // pass the list of subscriptions
             enableLogging = true // to enable / disable logging
         )
         isConnectedState.emit(true)
@@ -71,7 +80,7 @@ object SubscriptionService {
 
             override fun onProductPurchased(purchaseInfo: DataWrappers.PurchaseInfo) {
                 when (purchaseInfo.sku) {
-                    proSku, proSkuDiscount -> {
+                    proSkuPurchase, proSkuDiscountPurchase -> {
                         CoroutineScope(coroutineContext).launch {
                             StatisticHelper.logAction(TrackerConstants.EVENT_BUY_PRO_SUCCESS)
                             isProStatusPurchasedState.value =
@@ -83,10 +92,14 @@ object SubscriptionService {
 
             override fun onProductRestored(purchaseInfo: DataWrappers.PurchaseInfo) {
                 when (purchaseInfo.sku) {
-                    proSku, proSkuDiscount -> {
-                        CoroutineScope(coroutineContext).launch {
-                            isProStatusPurchasedState.value =
-                                (purchaseInfo.purchaseState == STATE_PURCHASED)
+                    proSkuPurchase, proSkuDiscountPurchase -> {
+                        val daysAfterPurchase =
+                            (Calendar.getInstance().time.time - purchaseInfo.purchaseTime) / MILLES_IN_DAY
+                        if (daysAfterPurchase <= DAYS_IN_YEAR) {
+                            CoroutineScope(coroutineContext).launch {
+                                isProStatusPurchasedState.value =
+                                    (purchaseInfo.purchaseState == STATE_PURCHASED)
+                            }
                         }
                     }
                 }
@@ -143,11 +156,11 @@ object SubscriptionService {
 
     fun purchase(activity: Activity) {
         when {
-            subscriptionPrices[proSkuDiscount] != null -> {
-                iapConnector?.purchase(activity, proSkuDiscount)
+            subscriptionPrices[proSkuDiscountPurchase] != null -> {
+                iapConnector?.purchase(activity, proSkuDiscountPurchase)
             }
-            subscriptionPrices[proSku] != null -> {
-                iapConnector?.purchase(activity, proSku)
+            subscriptionPrices[proSkuPurchase] != null -> {
+                iapConnector?.purchase(activity, proSkuPurchase)
             }
         }
     }
@@ -207,7 +220,7 @@ object SubscriptionService {
     fun setClosePopup(context: Context, isClose: Boolean) {
         isPopupShowState.value = !isClose
         if (isClose && !AppSettingsService.getIsPromoPopupClosed(context)) {
-            AppSettingsService.setIsPromoPopupClosed(context,true)
+            AppSettingsService.setIsPromoPopupClosed(context, true)
         }
     }
 

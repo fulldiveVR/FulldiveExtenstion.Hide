@@ -68,7 +68,7 @@ class ProPurchaseActivity : AppCompatActivity() {
         fullPriceTextView.text = proSubscriptionInfo.price
         subscribeButton.setOnClickListener {
             StatisticHelper.logAction(TrackerConstants.EVENT_BUY_PRO_CLICKED)
-            SubscriptionService.purchase(this)
+            SubscriptionService.subscribe(this)
             onBackPressed()
         }
         StatisticHelper.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_OPENED)

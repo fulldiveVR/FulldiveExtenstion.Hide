@@ -36,6 +36,8 @@ object LaunchHelper {
         val protectDns = prefManager.getBoolPref("ProtectDns")
         val accessITP = prefManager.getBoolPref("AccessITP")
 
+//        context.contentResolver.insert(getContentUri(AppExtensionState.PROGRESS.id), null)
+
         if (modulesStatus.dnsCryptState == ModuleState.STOPPED && modulesStatus.torState == ModuleState.STOPPED && modulesStatus.itpdState == ModuleState.STOPPED) {
             if (protectDns) {
                 switchDNSCrypt(context, modulesStatus)
@@ -48,7 +50,7 @@ object LaunchHelper {
             }
         }
 
-        val uri = getContentUri(getNewExtensionState(modulesStatus))
+        val uri = getContentUri(AppExtensionState.PROGRESS.id)
         context.contentResolver.insert(uri, null)
     }
 
@@ -83,6 +85,7 @@ object LaunchHelper {
             modulesStatus.itpdState
         )
         return when {
+            isChangingState() -> AppExtensionState.PROGRESS
             states.any { runningStates.contains(it) } -> {
                 AppExtensionState.START
             }

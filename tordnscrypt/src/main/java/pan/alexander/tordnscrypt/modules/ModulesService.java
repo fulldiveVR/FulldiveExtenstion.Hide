@@ -33,10 +33,21 @@ package pan.alexander.tordnscrypt.modules;
     Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
+import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
+import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
+import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RESTARTING;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STARTING;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
+
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -62,6 +73,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import pan.alexander.tordnscrypt.R;
+import pan.alexander.tordnscrypt.appextension.ExtensionContentProviderKt;
+import pan.alexander.tordnscrypt.appextension.LaunchHelper;
 import pan.alexander.tordnscrypt.arp.ArpScanner;
 import pan.alexander.tordnscrypt.settings.PathVars;
 import pan.alexander.tordnscrypt.utils.CachedExecutor;
@@ -71,16 +84,6 @@ import pan.alexander.tordnscrypt.utils.WakeLocksManager;
 import pan.alexander.tordnscrypt.utils.enums.OperationMode;
 import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
 import pan.alexander.tordnscrypt.vpn.service.ServiceVPNHelper;
-
-import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
-import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RESTARTING;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STARTING;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
 
 public class ModulesService extends Service {
     public static final String actionDismissNotification = "pan.alexander.tordnscrypt.action.DISMISS_NOTIFICATION";
@@ -109,8 +112,8 @@ public class ModulesService extends Service {
     static final String speedupLoop = "pan.alexander.tordnscrypt.action.SPEEDUP_LOOP";
     static final String slowdownLoop = "pan.alexander.tordnscrypt.action.SLOWDOWN_LOOP";
     static final String extraLoop = "pan.alexander.tordnscrypt.action.MAKE_EXTRA_LOOP";
-    static final String startArpScanner= "pan.alexander.tordnscrypt.action.START_ARP_SCANNER";
-    static final String stopArpScanner= "pan.alexander.tordnscrypt.action.STOP_ARP_SCANNER";
+    static final String startArpScanner = "pan.alexander.tordnscrypt.action.START_ARP_SCANNER";
+    static final String stopArpScanner = "pan.alexander.tordnscrypt.action.STOP_ARP_SCANNER";
     static final String clearIptablesCommandsHash = "pan.alexander.tordnscrypt.action.CLEAR_IPTABLES_COMMANDS_HASH";
 
     static final String DNSCRYPT_KEYWORD = "checkDNSRunning";
@@ -384,6 +387,9 @@ public class ModulesService extends Service {
         } else {
             modulesStatus.setDnsCryptState(STOPPED);
         }
+
+        Uri uri = ExtensionContentProviderKt.getContentUri(LaunchHelper.INSTANCE.getCurrentExtensionState(modulesStatus));
+        getBaseContext().getContentResolver().insert(uri, null);
     }
 
     private boolean stopDNSCryptIfPortIsBusy() {
@@ -505,6 +511,9 @@ public class ModulesService extends Service {
         } else {
             modulesStatus.setTorState(STOPPED);
         }
+
+        Uri uri = ExtensionContentProviderKt.getContentUri(LaunchHelper.INSTANCE.getCurrentExtensionState(modulesStatus));
+        getBaseContext().getContentResolver().insert(uri, null);
     }
 
     private boolean stopTorIfPortsIsBusy() {
@@ -630,6 +639,8 @@ public class ModulesService extends Service {
         } else {
             modulesStatus.setItpdState(STOPPED);
         }
+        Uri uri = ExtensionContentProviderKt.getContentUri(LaunchHelper.INSTANCE.getCurrentExtensionState(modulesStatus));
+        getBaseContext().getContentResolver().insert(uri, null);
     }
 
     private boolean stopITPDIfPortsIsBusy() {

@@ -1,9 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.jrummyapps:android-shell:1.0.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/225453f9d86e7157ffc56b65f5b6a213/android-shell-1.0.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/225453f9d86e7157ffc56b65f5b6a213/android-shell-1.0.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/225453f9d86e7157ffc56b65f5b6a213/android-shell-1.0.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b6323cfb6bd41c2e6beed7b1925f8357/transformed/jetified-android-shell-1.0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b6323cfb6bd41c2e6beed7b1925f8357/transformed/jetified-android-shell-1.0.1/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jrummyapps/android-shell/1.0.1/253390b125f78e961a40c6db053445c219fd79ef/android-shell-1.0.1-javadoc.jar!/" />

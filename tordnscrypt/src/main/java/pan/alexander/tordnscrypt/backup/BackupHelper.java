@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.backup;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.backup;
 
 import android.app.Activity;
 import android.content.Context;
@@ -61,25 +46,37 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
+import pan.alexander.tordnscrypt.di.SharedPreferencesModule;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.settings.tor_apps.ApplicationData;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.InstalledApplications;
-import pan.alexander.tordnscrypt.utils.PrefManager;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.apps.InstalledApplicationsManager;
 import pan.alexander.tordnscrypt.utils.zipUtil.ZipFileManager;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 
 import static pan.alexander.tordnscrypt.backup.BackupFragment.CODE_WRITE;
 import static pan.alexander.tordnscrypt.backup.BackupFragment.TAGS_TO_CONVERT;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 
-class BackupHelper {
+import javax.inject.Inject;
+
+public class BackupHelper {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public CachedExecutor cachedExecutor;
+
     private Activity activity;
     private String pathBackup;
     private final String appDataDir;
     private final String cacheDir;
 
     BackupHelper(Activity activity, String appDataDir, String cacheDir, String pathBackup) {
+        App.getInstance().getDaggerComponent().inject(this);
         this.activity = activity;
         this.appDataDir = appDataDir;
         this.cacheDir = cacheDir;
@@ -88,17 +85,17 @@ class BackupHelper {
 
     void saveAll(boolean logsDirAccessible) {
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             try {
-                convertSharedPreferencesUIDsToPackageNames(activity);
+                convertSharedPreferencesUIDsToPackageNames();
 
                 SharedPreferences defaultSharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
                 saveSharedPreferencesToFile(defaultSharedPref, cacheDir + "/defaultSharedPref");
 
-                SharedPreferences sharedPreferences = activity.getSharedPreferences(PrefManager.getPrefName(), Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = activity.getSharedPreferences(SharedPreferencesModule.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
                 saveSharedPreferencesToFile(sharedPreferences, cacheDir + "/sharedPreferences");
 
-                clearSharesPreferencesBackupData(activity);
+                clearSharedPreferencesBackupData();
 
                 compressAllToZip(cacheDir + "/InvizibleBackup.zip",
                         appDataDir + "/app_bin", appDataDir + "/app_data",
@@ -115,14 +112,14 @@ class BackupHelper {
                     saveFileWithSAF();
                 }
 
-                FileOperations.deleteFile(activity, cacheDir, "/defaultSharedPref", "ignored");
-                FileOperations.deleteFile(activity, cacheDir, "/sharedPreferences", "ignored");
+                FileManager.deleteFile(activity, cacheDir, "/defaultSharedPref", "ignored");
+                FileManager.deleteFile(activity, cacheDir, "/sharedPreferences", "ignored");
             } catch (Exception e) {
                 Log.e(LOG_TAG, "BackupHelper saveAllToInternalDir fault " + e.getMessage() + " " + e.getCause());
 
                 showError();
 
-                FileOperations.deleteFile(activity, cacheDir, "/InvizibleBackup.zip", "ignored");
+                FileManager.deleteFile(activity, cacheDir, "/InvizibleBackup.zip", "ignored");
             }
         });
     }
@@ -141,7 +138,7 @@ class BackupHelper {
     }
 
     void saveFile() {
-        FileOperations.moveBinaryFile(activity, cacheDir, "InvizibleBackup.zip", pathBackup, "InvizibleBackup.zip");
+        FileManager.moveBinaryFile(activity, cacheDir, "InvizibleBackup.zip", pathBackup, "InvizibleBackup.zip");
     }
 
     void saveFileWithSAF() {
@@ -166,7 +163,7 @@ class BackupHelper {
 
     void copyData(OutputStream outputStream) {
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             try (FileInputStream fileInputStream = new FileInputStream(cacheDir + "/InvizibleBackup.zip")) {
                 byte[] buffer = new byte[8 * 1024];
 
@@ -179,7 +176,7 @@ class BackupHelper {
 
                 showError();
 
-                FileOperations.deleteFile(activity, cacheDir, "/InvizibleBackup.zip", "ignored");
+                FileManager.deleteFile(activity, cacheDir, "/InvizibleBackup.zip", "ignored");
             } finally {
                 try {
                     outputStream.close();
@@ -207,20 +204,21 @@ class BackupHelper {
         }
     }
 
-    private void convertSharedPreferencesUIDsToPackageNames(Context context) {
-        InstalledApplications installedApplications = new InstalledApplications(context, Collections.emptySet());
-        List<ApplicationData> applications = installedApplications.getInstalledApps(false);
+    private void convertSharedPreferencesUIDsToPackageNames() {
+        List<ApplicationData> applications = new InstalledApplicationsManager.Builder()
+                .build()
+                .getInstalledApps();
 
-        for (String tag: TAGS_TO_CONVERT) {
+        for (String tag : TAGS_TO_CONVERT) {
             convertUIDsToPackageNames(applications, tag);
         }
     }
 
     private void convertUIDsToPackageNames(List<ApplicationData> applications, String tag) {
-        Set<String> savedUIDs = new PrefManager(activity).getSetStrPref(tag);
+        Set<String> savedUIDs = preferenceRepository.get().getStringSetPreference(tag);
         Set<String> packagesToSave = new HashSet<>();
 
-        for (String savedUIDStr: savedUIDs) {
+        for (String savedUIDStr : savedUIDs) {
 
             int savedUID = 0;
             if (savedUIDStr.matches("^-?\\d+$")) {
@@ -232,12 +230,12 @@ class BackupHelper {
                 continue;
             }
 
-            for (ApplicationData applicationData: applications) {
+            for (ApplicationData applicationData : applications) {
                 if (applicationData.getUid() == savedUID) {
                     String pack = applicationData.getPack();
                     ConcurrentSkipListSet<String> names = applicationData.getNames();
                     if (!names.isEmpty() && names.first().contains("(M)")) {
-                        pack +="(M)";
+                        pack += "(M)";
                     }
                     packagesToSave.add(pack);
                     break;
@@ -245,12 +243,12 @@ class BackupHelper {
             }
         }
 
-        new PrefManager(activity).setSetStrPref(tag + "Backup", packagesToSave);
+        preferenceRepository.get().setStringSetPreference(tag + "Backup", packagesToSave);
     }
 
-    private void clearSharesPreferencesBackupData(Context context) {
-        for (String tag: TAGS_TO_CONVERT) {
-            new PrefManager(context).setSetStrPref(tag + "Backup", Collections.emptySet());
+    private void clearSharedPreferencesBackupData() {
+        for (String tag : TAGS_TO_CONVERT) {
+            preferenceRepository.get().setStringSetPreference(tag + "Backup", Collections.emptySet());
         }
     }
 

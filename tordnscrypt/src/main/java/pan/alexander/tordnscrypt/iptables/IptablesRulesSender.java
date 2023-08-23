@@ -1,41 +1,25 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.iptables;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.iptables;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -43,10 +27,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import java.util.List;
 
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.RootExecService;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.COMMAND_RESULT;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.IPTABLES_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.COMMAND_RESULT;
 
 abstract class IptablesRulesSender implements IptablesRules {
     private static boolean receiverIsRegistered;
@@ -61,14 +45,15 @@ abstract class IptablesRulesSender implements IptablesRules {
     IptablesReceiver receiver;
     boolean routeAllThroughTor;
     boolean blockHttp;
+    boolean ignoreSystemDNS;
     boolean apIsOn;
     boolean modemIsOn;
     boolean lan;
 
-    IptablesRulesSender(Context context) {
+    IptablesRulesSender(Context context, PathVars pathVars) {
         this.context = context;
 
-        pathVars = PathVars.getInstance(context);
+        this.pathVars = pathVars;
         appDataDir = pathVars.getAppDataDir();
         rejectAddress = pathVars.getRejectAddress();
 
@@ -113,11 +98,6 @@ abstract class IptablesRulesSender implements IptablesRules {
 
     @Override
     public void sendToRootExecService(List<String> commands) {
-        RootCommands rootCommands = new RootCommands(commands);
-        Intent intent = new Intent(context, RootExecService.class);
-        intent.setAction(RootExecService.RUN_COMMAND);
-        intent.putExtra("Commands", rootCommands);
-        intent.putExtra("Mark", RootExecService.IptablesMark);
-        RootExecService.performAction(context, intent);
+        RootCommands.execute(context, commands, IPTABLES_MARK);
     }
 }

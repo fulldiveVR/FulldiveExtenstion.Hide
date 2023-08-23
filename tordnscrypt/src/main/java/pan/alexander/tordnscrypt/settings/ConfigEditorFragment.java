@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.settings;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.settings;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,15 +36,23 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.util.List;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.dialogs.DialogSaveConfigChanges;
 import pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
-import pan.alexander.tordnscrypt.utils.file_operations.OnTextFileOperationsCompleteListener;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
+import pan.alexander.tordnscrypt.utils.filemanager.OnTextFileOperationsCompleteListener;
 
 import static pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants.readTextFile;
 
-public class ConfigEditorFragment extends Fragment implements OnTextFileOperationsCompleteListener {
+import javax.inject.Inject;
+
+public class ConfigEditorFragment extends Fragment implements OnTextFileOperationsCompleteListener,
+        OnBackPressListener {
+
+    @Inject
+    public Lazy<PathVars> pathVars;
 
     private String filePath;
     private String fileName;
@@ -69,6 +62,7 @@ public class ConfigEditorFragment extends Fragment implements OnTextFileOperatio
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         if (this.getArguments() != null) {
@@ -79,8 +73,7 @@ public class ConfigEditorFragment extends Fragment implements OnTextFileOperatio
             return;
         }
 
-        PathVars pathVars = PathVars.getInstance(getActivity());
-        String appDataDir = pathVars.getAppDataDir();
+        String appDataDir = pathVars.get().getAppDataDir();
 
         switch (fileName) {
             case "dnscrypt-proxy.toml":
@@ -101,7 +94,7 @@ public class ConfigEditorFragment extends Fragment implements OnTextFileOperatio
                 break;
         }
 
-        FileOperations.setOnFileOperationCompleteListener(this);
+        FileManager.setOnFileOperationCompleteListener(this);
     }
 
     @Nullable
@@ -117,42 +110,16 @@ public class ConfigEditorFragment extends Fragment implements OnTextFileOperatio
             getActivity().setTitle(fileName);
         }
 
-        FileOperations.readTextFile(getActivity(), filePath, fileName);
+        FileManager.readTextFile(getActivity(), filePath, fileName);
 
         return view;
-    }
-
-
-    @Override
-    public void onStop() {
-
-        super.onStop();
-
-        String input = etConfigEditor.getText().toString();
-
-        if (input.isEmpty()) {
-            return;
-        }
-
-        if (!input.equals(savedText) && getFragmentManager() != null) {
-            DialogFragment dialogFragment = DialogSaveConfigChanges.newInstance();
-
-            Bundle bundle = new Bundle();
-            bundle.putString("moduleName", moduleName);
-            bundle.putString("filePath", filePath);
-            bundle.putString("fileText", input);
-
-            dialogFragment.setArguments(bundle);
-
-            dialogFragment.show(getFragmentManager(), "DialogSaveConfigChanges");
-        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        FileOperations.deleteOnFileOperationCompleteListener(this);
+        FileManager.deleteOnFileOperationCompleteListener(this);
     }
 
     @Override
@@ -193,5 +160,35 @@ public class ConfigEditorFragment extends Fragment implements OnTextFileOperatio
             fragmentTransaction.addToBackStack("configEditorFragmentTag");
             fragmentTransaction.commit();
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return showSaveChangesDialog();
+    }
+
+    private boolean showSaveChangesDialog() {
+        String input = etConfigEditor.getText().toString();
+
+        if (input.isEmpty()) {
+            return false;
+        }
+
+        if (!input.equals(savedText)) {
+            DialogFragment dialogFragment = DialogSaveConfigChanges.newInstance();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("moduleName", moduleName);
+            bundle.putString("filePath", filePath);
+            bundle.putString("fileText", input);
+
+            dialogFragment.setArguments(bundle);
+
+            dialogFragment.show(getChildFragmentManager(), "DialogSaveConfigChanges");
+
+            return true;
+        }
+
+        return false;
     }
 }

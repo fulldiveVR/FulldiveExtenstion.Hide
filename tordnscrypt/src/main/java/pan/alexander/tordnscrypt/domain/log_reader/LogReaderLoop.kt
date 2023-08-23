@@ -1,28 +1,33 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
+    This file is part of InviZible Pro.
+
+    InviZible Pro is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    InviZible Pro is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
+
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
  */
 
 package pan.alexander.tordnscrypt.domain.log_reader
 
 import android.util.Log
-import pan.alexander.tordnscrypt.domain.LogReaderInteractors
+import pan.alexander.tordnscrypt.App
 import pan.alexander.tordnscrypt.domain.connection_records.ConnectionRecordsInteractor
 import pan.alexander.tordnscrypt.domain.log_reader.dnscrypt.DNSCryptInteractor
 import pan.alexander.tordnscrypt.domain.log_reader.itpd.ITPDHtmlInteractor
 import pan.alexander.tordnscrypt.domain.log_reader.itpd.ITPDInteractor
 import pan.alexander.tordnscrypt.domain.log_reader.tor.TorInteractor
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.utils.logger.Logger.loge
+import pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG
 import java.lang.Exception
 import java.util.concurrent.locks.ReentrantLock
 
@@ -66,7 +71,8 @@ class LogReaderLoop(
         } catch (e: Exception) {
             Log.e(
                 LOG_TAG, "LogReaderLoop startLogsParser exception " +
-                    "${e.message} ${e.cause} ${e.stackTrace.joinToString { "," }}")
+                        "${e.message} ${e.cause} ${e.stackTrace.joinToString { "," }}"
+            )
         } finally {
             if (reentrantLock.isHeldByCurrentThread) {
                 reentrantLock.unlock()
@@ -91,12 +97,18 @@ class LogReaderLoop(
     }
 
     private fun stopLogsParser() {
-        timer?.stopExecutor()
-        timer = null
-        connectionRecordsInteractor.stopConverter(true)
-        LogReaderInteractors.logReaderInteractors = null
-
-        Log.i(LOG_TAG, "LogReaderLoop stopLogsParser")
+        reentrantLock.lock()
+        try {
+            timer?.stopExecutor()
+            timer = null
+            connectionRecordsInteractor.stopConverter(true)
+            App.instance.subcomponentsManager.releaseLogReaderScope()
+            Log.i(LOG_TAG, "LogReaderLoop stopLogsParser")
+        } catch (e: Exception) {
+            loge("LogReaderLoop stopLogsParser", e)
+        } finally {
+            reentrantLock.unlock()
+        }
     }
 
     private fun parseLogs() {

@@ -1,49 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.main_fragment;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
 
-import static android.util.TypedValue.COMPLEX_UNIT_PX;
-import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
-import static pan.alexander.tordnscrypt.TopFragment.ITPDVersion;
-import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
-import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
-import static pan.alexander.tordnscrypt.appextension.ExtensionContentProviderKt.getContentUri;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.UNDEFINED;
+package pan.alexander.tordnscrypt.main_fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -52,7 +26,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spanned;
 import android.util.Log;
@@ -75,7 +48,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.res.ResourcesCompat;
@@ -83,34 +55,47 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.ProPurchaseActivity;
-import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.analytics.StatisticHelper;
 import pan.alexander.tordnscrypt.analytics.TrackerConstants;
-import pan.alexander.tordnscrypt.appextension.AppExtensionState;
-import pan.alexander.tordnscrypt.appextension.AppExtensionWorkType;
 import pan.alexander.tordnscrypt.appextension.SubscriptionService;
-import pan.alexander.tordnscrypt.dialogs.BackgroundSettingsDialog;
-import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter;
-import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentReceiver;
-import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentView;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentPresenter;
 import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentReceiver;
 import pan.alexander.tordnscrypt.itpd_fragment.ITPDFragmentView;
+import pan.alexander.tordnscrypt.R;
+import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentPresenter;
+import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentReceiver;
+import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptFragmentView;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.tor_fragment.TorFragmentPresenter;
 import pan.alexander.tordnscrypt.tor_fragment.TorFragmentReceiver;
 import pan.alexander.tordnscrypt.tor_fragment.TorFragmentView;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootExecService;
 import pan.alexander.tordnscrypt.utils.Utils;
-import pan.alexander.tordnscrypt.utils.enums.ModuleState;
+import pan.alexander.tordnscrypt.utils.root.RootExecService;
+
+import static android.util.TypedValue.COMPLEX_UNIT_PX;
+import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
+import static pan.alexander.tordnscrypt.TopFragment.ITPDVersion;
+import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
+import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.UNDEFINED;
+
+import javax.inject.Inject;
 
 public class MainFragment extends Fragment implements DNSCryptFragmentView, TorFragmentView, ITPDFragmentView,
-        CompoundButton.OnCheckedChangeListener, ViewTreeObserver.OnScrollChangedListener,
+        View.OnClickListener, CompoundButton.OnCheckedChangeListener, ViewTreeObserver.OnScrollChangedListener,
         View.OnTouchListener {
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+
     private Button btnStartMainFragment;
     private CheckBox chbHideIpMainFragment;
     private CheckBox chbProtectDnsMainFragment;
@@ -148,15 +133,24 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
     private boolean orientationLandscape;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
+
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
         btnStartMainFragment = view.findViewById(R.id.btnStartMainFragment);
-        btnStartMainFragment.setOnClickListener(btnView -> launchVPN());
+        btnStartMainFragment.setOnClickListener(this);
 
         chbHideIpMainFragment = view.findViewById(R.id.chbHideIpMainFragment);
+
         chbProtectDnsMainFragment = view.findViewById(R.id.chbProtectDnsMainFragment);
+
         chbAccessITPMainFragment = view.findViewById(R.id.chbAccessITPMainFragment);
 
         tvDNSMainFragment = view.findViewById(R.id.tvDNSMainFragment);
@@ -191,16 +185,18 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
             return view;
         }
 
+        PreferenceRepository preferences = preferenceRepository.get();
+
         orientationLandscape = Utils.INSTANCE.getScreenOrientation(getActivity()) == Configuration.ORIENTATION_LANDSCAPE;
 
-        boolean hideIp = new PrefManager(context).getBoolPref("HideIp");
-        boolean protectDns = new PrefManager(context).getBoolPref("ProtectDns");
-        boolean accessITP = new PrefManager(context).getBoolPref("AccessITP");
+        boolean hideIp = preferences.getBoolPreference("HideIp");
+        boolean protectDns = preferences.getBoolPreference("ProtectDns");
+        boolean accessITP = preferences.getBoolPreference("AccessITP");
 
         if (!hideIp && !protectDns && !accessITP) {
-            new PrefManager(context).setBoolPref("HideIp", true);
-            new PrefManager(context).setBoolPref("ProtectDns", true);
-            new PrefManager(context).setBoolPref("AccessITP", false);
+            preferences.setBoolPreference("HideIp", true);
+            preferences.setBoolPreference("ProtectDns", true);
+            preferences.setBoolPreference("AccessITP", false);
         } else {
             chbHideIpMainFragment.setChecked(hideIp);
             chbProtectDnsMainFragment.setChecked(protectDns);
@@ -219,6 +215,7 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
     @Override
     public void onStart() {
         super.onStart();
+
         Context context = getActivity();
         if (context == null || orientationLandscape) {
             return;
@@ -231,17 +228,12 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
         dnsCryptFragmentPresenter.onStart();
         torFragmentPresenter.onStart();
         itpdFragmentPresenter.onStart();
-
-        Activity activity = getActivity();
-        String workType = activity.getIntent().getAction();
-        if (workType != null && workType.equals(AppExtensionWorkType.OPEN.INSTANCE.getId()) && activity instanceof MainActivity) {
-            ((MainActivity) getActivity()).prepareVPNService();
-        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
+
         Context context = getActivity();
         if (context == null) {
             return;
@@ -325,7 +317,66 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
     }
 
     @Override
+    public void onClick(View v) {
+
+        Context context = getActivity();
+        if (context == null) {
+            return;
+        }
+
+        if (dnsCryptFragmentPresenter == null
+                || torFragmentPresenter == null
+                || itpdFragmentPresenter == null
+                || orientationLandscape) {
+            return;
+        }
+
+        if (!isDNSCryptInstalled(context)
+                || !isTorInstalled(context)
+                || !isITPDInstalled(context)) {
+            return;
+        }
+
+        if (isControlLocked(getActivity())) {
+            return;
+        }
+
+        if (v.getId() == R.id.btnStartMainFragment) {
+
+            if (modulesStatus.getDnsCryptState() == STOPPED
+                    && modulesStatus.getTorState() == STOPPED
+                    && modulesStatus.getItpdState() == STOPPED) {
+
+                if (chbProtectDnsMainFragment.isChecked()) {
+                    dnsCryptFragmentPresenter.startButtonOnClick();
+                }
+
+                if (chbHideIpMainFragment.isChecked()) {
+                    torFragmentPresenter.startButtonOnClick();
+                }
+
+                if (chbAccessITPMainFragment.isChecked()) {
+                    itpdFragmentPresenter.startButtonOnClick();
+                }
+            } else {
+                if (modulesStatus.getDnsCryptState() != STOPPED) {
+                    dnsCryptFragmentPresenter.startButtonOnClick();
+                }
+
+                if (modulesStatus.getTorState() != STOPPED) {
+                    torFragmentPresenter.startButtonOnClick();
+                }
+
+                if (modulesStatus.getItpdState() != STOPPED) {
+                    itpdFragmentPresenter.startButtonOnClick();
+                }
+            }
+        }
+    }
+
+    @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
         Context context = getActivity();
         if (context == null) {
             return;
@@ -369,84 +420,15 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
             }
         }
 
+        PreferenceRepository preferences = preferenceRepository.get();
+
         int id = buttonView.getId();
         if (id == R.id.chbProtectDnsMainFragment) {
-            new PrefManager(context).setBoolPref("ProtectDns", isChecked);
+            preferences.setBoolPreference("ProtectDns", isChecked);
         } else if (id == R.id.chbHideIpMainFragment) {
-            new PrefManager(context).setBoolPref("HideIp", isChecked);
+            preferences.setBoolPreference("HideIp", isChecked);
         } else if (id == R.id.chbAccessITPMainFragment) {
-            new PrefManager(context).setBoolPref("AccessITP", isChecked);
-        }
-    }
-
-    public void launchVPN() {
-        Context context = getActivity();
-        if (context == null) {
-            return;
-        }
-
-        if (!new PrefManager(context).getBoolPref("BatterySettings")) {
-            AlertDialog.Builder batterySettingsDialogBuilder = BackgroundSettingsDialog.getDialogBuilder(context);
-            if (batterySettingsDialogBuilder != null && !isStateSaved()) {
-                batterySettingsDialogBuilder.show();
-            }
-        }
-
-        ModuleState state = modulesStatus.getTorState();
-        String appExtensionState = AppExtensionState.START.INSTANCE.getId();
-        if (state == ModuleState.STARTING || state == ModuleState.RESTARTING || state == ModuleState.RUNNING) {
-            appExtensionState = AppExtensionState.STOP.INSTANCE.getId();
-        } else if (state == ModuleState.FAULT) {
-            appExtensionState = AppExtensionState.FAILURE.INSTANCE.getId();
-        }
-
-        Uri uri = getContentUri(appExtensionState);
-        context.getContentResolver().insert(uri, null);
-
-        if (dnsCryptFragmentPresenter == null
-                || torFragmentPresenter == null
-                || itpdFragmentPresenter == null
-                || orientationLandscape) {
-            return;
-        }
-
-        if (!isDNSCryptInstalled(context)
-                || !isTorInstalled(context)
-                || !isITPDInstalled(context)) {
-            return;
-        }
-
-        if (isControlLocked(getActivity())) {
-            return;
-        }
-
-        if (modulesStatus.getDnsCryptState() == STOPPED
-                && modulesStatus.getTorState() == STOPPED
-                && modulesStatus.getItpdState() == STOPPED) {
-
-            if (chbProtectDnsMainFragment.isChecked()) {
-                dnsCryptFragmentPresenter.startButtonOnClick();
-            }
-
-            if (chbHideIpMainFragment.isChecked()) {
-                torFragmentPresenter.startButtonOnClick();
-            }
-
-            if (chbAccessITPMainFragment.isChecked()) {
-                itpdFragmentPresenter.startButtonOnClick();
-            }
-        } else {
-            if (modulesStatus.getDnsCryptState() != STOPPED) {
-                dnsCryptFragmentPresenter.startButtonOnClick();
-            }
-
-            if (modulesStatus.getTorState() != STOPPED) {
-                torFragmentPresenter.startButtonOnClick();
-            }
-
-            if (modulesStatus.getItpdState() != STOPPED) {
-                itpdFragmentPresenter.startButtonOnClick();
-            }
+            preferences.setBoolPreference("AccessITP", isChecked);
         }
     }
 
@@ -930,21 +912,21 @@ public class MainFragment extends Fragment implements DNSCryptFragmentView, TorF
 
     private boolean isDNSCryptInstalled(Context context) {
         if (context != null) {
-            return new PrefManager(context).getBoolPref("DNSCrypt Installed");
+            return preferenceRepository.get().getBoolPreference("DNSCrypt Installed");
         }
         return false;
     }
 
     private boolean isTorInstalled(Context context) {
         if (context != null) {
-            return new PrefManager(context).getBoolPref("Tor Installed");
+            return preferenceRepository.get().getBoolPreference("Tor Installed");
         }
         return false;
     }
 
     private boolean isITPDInstalled(Context context) {
         if (context != null) {
-            return new PrefManager(context).getBoolPref("I2PD Installed");
+            return preferenceRepository.get().getBoolPreference("I2PD Installed");
         }
         return false;
     }

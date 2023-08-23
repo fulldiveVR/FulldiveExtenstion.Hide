@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.backup
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.backup
 
 import android.app.Activity
 import android.content.Context
@@ -40,23 +25,28 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
 import pan.alexander.tordnscrypt.R
+import pan.alexander.tordnscrypt.di.SharedPreferencesModule
 import pan.alexander.tordnscrypt.installer.Installer
 import pan.alexander.tordnscrypt.modules.ModulesStatus
-import pan.alexander.tordnscrypt.utils.CachedExecutor
-import pan.alexander.tordnscrypt.utils.PrefManager
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG
 import java.lang.ref.WeakReference
 
-class ResetHelper(activity: Activity, backupFragment: BackupFragment) : Installer(activity) {
-
+class ResetHelper(
+    activity: Activity,
+    backupFragment: BackupFragment,
+) : Installer(
+    activity
+) {
     private var activityWeakReference: WeakReference<Activity> = WeakReference(activity)
     private val backupFragmentWeakReference: WeakReference<BackupFragment> = WeakReference(backupFragment)
 
     fun resetSettings() {
-        CachedExecutor.getExecutorService().submit {
+        cachedExecutor.submit {
             try {
 
-                registerReceiver(activityWeakReference.get())
+                val activity = activityWeakReference.get() ?: return@submit
+
+                registerReceiver(activity)
 
                 if (ModulesStatus.getInstance().isUseModulesWithRoot) {
                     stopAllRunningModulesWithRootCommand()
@@ -68,7 +58,7 @@ class ResetHelper(activity: Activity, backupFragment: BackupFragment) : Installe
 
                 check(!interruptInstallation) { "Installation interrupted" }
 
-                unRegisterReceiver(activityWeakReference.get())
+                unRegisterReceiver(activity)
 
                 removeInstallationDirsIfExists()
                 createLogsDir()
@@ -79,18 +69,21 @@ class ResetHelper(activity: Activity, backupFragment: BackupFragment) : Installe
 
                 chmodExtractedDirs()
 
+                savePreferencesModulesInstalled(false)
+
                 correctAppDir()
 
-                val code = saveSomeOldInfo(activityWeakReference.get())
-                val defaultSharedPref = PreferenceManager.getDefaultSharedPreferences(activityWeakReference.get() as Context)
+                val code = saveSomeOldInfo(activity)
+                val defaultSharedPref = PreferenceManager.getDefaultSharedPreferences(activity)
                 resetSharedPreferences(defaultSharedPref)
-                val sharedPreferences = activityWeakReference.get()?.getSharedPreferences(PrefManager.getPrefName(), Context.MODE_PRIVATE)
+                val sharedPreferences = activity.getSharedPreferences(
+                    SharedPreferencesModule.APP_PREFERENCES_NAME, Context.MODE_PRIVATE)
                 resetSharedPreferences(sharedPreferences)
-                restoreOldInfo(activityWeakReference.get(), code)
+                restoreOldInfo(activity, code)
 
                 savePreferencesModulesInstalled(true)
 
-                refreshModulesStatus(activityWeakReference.get())
+                refreshModulesStatus(activity)
 
             } catch (e: Exception) {
                 backupFragmentWeakReference.get()?.showToast(activityWeakReference.get()?.getString(R.string.wrong))
@@ -107,14 +100,14 @@ class ResetHelper(activity: Activity, backupFragment: BackupFragment) : Installe
     private fun saveSomeOldInfo(context: Context?): String? {
         var code: String? = ""
         if (context?.getString(R.string.appVersion)?.endsWith("o") == true) {
-            code = PrefManager(context).getStrPref("registrationCode")
+            code = preferenceRepository.get().getStringPreference("registrationCode")
         }
         return code
     }
 
     private fun restoreOldInfo(context: Context?, code: String?) {
         if (code?.isNotEmpty() == true) {
-            context?.let { PrefManager(it).setStrPref("registrationCode", code) }
+            context?.let { preferenceRepository.get().setStringPreference("registrationCode", code) }
         }
     }
 

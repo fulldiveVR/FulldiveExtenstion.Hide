@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.modules;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.modules;
 
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
@@ -53,39 +38,67 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
+import java.io.Serializable;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.arp.ArpScanner;
-import pan.alexander.tordnscrypt.iptables.Tethering;
-import pan.alexander.tordnscrypt.utils.ApManager;
-import pan.alexander.tordnscrypt.utils.AuxNotificationSender;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.vpn.Util;
+import pan.alexander.tordnscrypt.domain.connection_checker.ConnectionCheckerInteractor;
+import pan.alexander.tordnscrypt.domain.connection_checker.OnInternetConnectionCheckedListener;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.ap.InternetSharingChecker;
+import pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys;
+import pan.alexander.tordnscrypt.utils.privatedns.PrivateDnsProxyManager;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.di.SharedPreferencesModule.DEFAULT_PREFERENCES_NAME;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.ARP_SPOOFING_DETECTION;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.REFRESH_RULES;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
 
-public class ModulesBroadcastReceiver extends BroadcastReceiver {
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+
+public class ModulesBroadcastReceiver extends BroadcastReceiver implements OnInternetConnectionCheckedListener {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    @Named(DEFAULT_PREFERENCES_NAME)
+    public Lazy<SharedPreferences> defaultSharedPreferences;
+    @Inject
+    public Lazy<ConnectionCheckerInteractor> connectionCheckerInteractor;
+    @Inject
+    public Provider<InternetSharingChecker> internetSharingChecker;
+    @Inject
+    public CachedExecutor cachedExecutor;
+
+    private final static int DELAY_BEFORE_CHECKING_INTERNET_SHARING_SEC = 5;
+    private final static int DELAY_BEFORE_UPDATING_IPTABLES_RULES_SEC = 5;
+    private final static String EXTRA_ACTIVE_TETHER = "tetherArray";
 
     private final Context context;
     private boolean receiverRegistered = false;
     private Object networkCallback;
     private final ModulesStatus modulesStatus = ModulesStatus.getInstance();
     private volatile boolean lock = false;
-    private static final String apStateFilterAction = "android.net.wifi.WIFI_AP_STATE_CHANGED";
-    private static final String tetherStateFilterAction = "android.net.conn.TETHER_STATE_CHANGED";
-    private static final String shutdownFilterAction = "android.intent.action.ACTION_SHUTDOWN";
-    private static final String powerOFFFilterAction = "android.intent.action.QUICKBOOT_POWEROFF";
-    private final ArpScanner arpScanner;
+    private static final String AP_STATE_FILTER_ACTION = "android.net.wifi.WIFI_AP_STATE_CHANGED";
+    private static final String TETHER_STATE_FILTER_ACTION = "android.net.conn.TETHER_STATE_CHANGED";
+    private static final String SHUTDOWN_FILTER_ACTION = "android.intent.action.ACTION_SHUTDOWN";
+    private static final String POWER_OFF_FILTER_ACTION = "android.intent.action.QUICKBOOT_POWEROFF";
+    private volatile Future<?> checkTetheringTask;
 
-    public ModulesBroadcastReceiver(Context context, ArpScanner arpScanner) {
+    public ModulesBroadcastReceiver(Context context) {
+        //App.getInstance().getDaggerComponent().inject(this);
         this.context = context;
-        this.arpScanner = arpScanner;
     }
 
     @Override
@@ -105,11 +118,11 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
 
         } else if (action.equalsIgnoreCase(ConnectivityManager.CONNECTIVITY_ACTION)) {
             connectivityStateChanged(intent);
-        } else if (action.equalsIgnoreCase(apStateFilterAction)) {
-            apStateChanged();
-        } else if (action.equalsIgnoreCase(tetherStateFilterAction)) {
-            tetherStateChanged();
-        } else if (action.equalsIgnoreCase(powerOFFFilterAction) || action.equalsIgnoreCase(shutdownFilterAction)) {
+        } else if (action.equalsIgnoreCase(AP_STATE_FILTER_ACTION)) {
+            checkInternetSharingState(intent);
+        } else if (action.equalsIgnoreCase(TETHER_STATE_FILTER_ACTION)) {
+            checkInternetSharingState(intent);
+        } else if (action.equalsIgnoreCase(POWER_OFF_FILTER_ACTION) || action.equalsIgnoreCase(SHUTDOWN_FILTER_ACTION)) {
             powerOFFDetected();
         } else if (action.equalsIgnoreCase(Intent.ACTION_PACKAGE_ADDED) || action.equalsIgnoreCase(Intent.ACTION_PACKAGE_REMOVED)) {
             packageChanged();
@@ -165,22 +178,22 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
 
     private void registerAPisOn() {
         IntentFilter apStateChanged = new IntentFilter();
-        apStateChanged.addAction(apStateFilterAction);
+        apStateChanged.addAction(AP_STATE_FILTER_ACTION);
         context.registerReceiver(this, apStateChanged);
         receiverRegistered = true;
     }
 
     private void registerUSBModemIsOn() {
         IntentFilter apStateChanged = new IntentFilter();
-        apStateChanged.addAction(tetherStateFilterAction);
+        apStateChanged.addAction(TETHER_STATE_FILTER_ACTION);
         context.registerReceiver(this, apStateChanged);
         receiverRegistered = true;
     }
 
     private void registerPowerOFF() {
         IntentFilter powerOFF = new IntentFilter();
-        powerOFF.addAction(shutdownFilterAction);
-        powerOFF.addAction(powerOFFFilterAction);
+        powerOFF.addAction(SHUTDOWN_FILTER_ACTION);
+        powerOFF.addAction(POWER_OFF_FILTER_ACTION);
         context.registerReceiver(this, powerOFF);
         receiverRegistered = true;
     }
@@ -215,9 +228,10 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
                 Log.i(LOG_TAG, "ModulesBroadcastReceiver Available network=" + network);
                 updateIptablesRules(false);
                 resetArpScanner(true);
+                setInternetAvailable(true);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && last_network != network.hashCode()) {
-                    AuxNotificationSender.INSTANCE.checkPrivateDNSAndProxy(
+                    PrivateDnsProxyManager.INSTANCE.checkPrivateDNSAndProxy(
                             context, null
                     );
                 }
@@ -243,9 +257,10 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
                 if (network.hashCode() != last_network) {
                     last_network = network.hashCode();
                     resetArpScanner();
+                    checkInternetConnection();
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        AuxNotificationSender.INSTANCE.checkPrivateDNSAndProxy(
+                        PrivateDnsProxyManager.INSTANCE.checkPrivateDNSAndProxy(
                                 context, linkProperties
                         );
                     }
@@ -258,7 +273,7 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
                     updateIptablesRules(false);
                     resetArpScanner();
                     last_network = network.hashCode();
-
+                    checkInternetConnection();
                     Log.i(LOG_TAG, "ModulesBroadcastReceiver Changed capabilities=" + network);
                 }
             }
@@ -269,6 +284,7 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
                 updateIptablesRules(false);
                 resetArpScanner(false);
                 last_network = 0;
+                setInternetAvailable(false);
             }
 
             boolean same(List<InetAddress> last, List<InetAddress> current) {
@@ -310,6 +326,7 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
         if (pm != null && !pm.isDeviceIdleMode()) {
             updateIptablesRules(false);
             resetArpScanner();
+            checkInternetConnection();
         }
     }
 
@@ -321,56 +338,82 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
         resetArpScanner();
     }
 
-    private void apStateChanged() {
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+    @SuppressWarnings("unchecked")
+    private synchronized void checkInternetSharingState(Intent intent) {
+
+        if (checkTetheringTask != null && !checkTetheringTask.isDone()) {
+            if (TETHER_STATE_FILTER_ACTION.equals(intent.getAction())) {
+                checkTetheringTask.cancel(true);
+            } else {
+                return;
+            }
+        }
+
+        checkTetheringTask = cachedExecutor.submit(() -> {
+            boolean wifiAccessPointOn = false;
+            boolean usbTetherOn = false;
+            String action = intent.getAction();
 
             try {
-                TimeUnit.SECONDS.sleep(3);
 
-                ApManager apManager = new ApManager(context);
-                int apState = apManager.isApOn();
-
-                //Try to check once again if reflection is not working
-                if (apState == ApManager.apStateUnknown) {
-                    apState = apManager.confirmApState();
+                List<String> tetherList = null;
+                Serializable serializable = intent.getSerializableExtra(EXTRA_ACTIVE_TETHER);
+                if (serializable instanceof List) {
+                    tetherList = (List<String>) intent.getSerializableExtra(EXTRA_ACTIVE_TETHER);
                 }
 
-                if (apState == ApManager.apStateON) {
+                TimeUnit.SECONDS.sleep(DELAY_BEFORE_CHECKING_INTERNET_SHARING_SEC);
 
-                    if (!new PrefManager(context).getBoolPref("APisON")) {
-
-                        new PrefManager(context).setBoolPref("APisON", true);
-
-                        modulesStatus.setIptablesRulesUpdateRequested(context, true);
-
-                        Log.i(LOG_TAG, "ModulesBroadcastReceiver AP is ON");
-
+                InternetSharingChecker checker = internetSharingChecker.get();
+                if (tetherList != null) {
+                    if (tetherList.isEmpty()) {
+                        checker.setTetherInterfaceName(Collections.emptyList());
+                    } else {
+                        checker.setTetherInterfaceName(tetherList);
                     }
-
-                } else if (apState == ApManager.apStateOFF) {
-                    if (new PrefManager(context).getBoolPref("APisON")) {
-                        new PrefManager(context).setBoolPref("APisON", false);
-
-                        modulesStatus.setIptablesRulesUpdateRequested(context, true);
-
-                        Log.i(LOG_TAG, "ModulesBroadcastReceiver AP is OFF");
-                    }
+                } else if (TETHER_STATE_FILTER_ACTION.equals(action)) {
+                    checker.setTetherInterfaceName(null);
                 }
+                checker.updateData();
+                wifiAccessPointOn = checker.isApOn();
+                usbTetherOn = checker.isUsbTetherOn();
+
+            } catch (InterruptedException ignored) {
+                Log.i(LOG_TAG,
+                        "ModulesBroadcastReceiver checkInternetSharingState action "
+                                + action + " interrupted");
             } catch (Exception e) {
-                Log.i(LOG_TAG, "ModulesBroadcastReceiver apStateChanged exception " + e.getMessage() + " " + e.getCause());
+                Log.e(LOG_TAG, "ModulesBroadcastReceiver checkInternetSharingState exception", e);
             }
 
+            PreferenceRepository preferences = preferenceRepository.get();
+
+            if (wifiAccessPointOn && !preferences.getBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON)) {
+                preferences.setBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON, true);
+                modulesStatus.setIptablesRulesUpdateRequested(context, true);
+            } else if (!wifiAccessPointOn && preferences.getBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON)) {
+                preferences.setBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON, false);
+                modulesStatus.setIptablesRulesUpdateRequested(context, true);
+            }
+
+            if (usbTetherOn && !preferences.getBoolPreference(PreferenceKeys.USB_MODEM_IS_ON)) {
+                preferences.setBoolPreference(PreferenceKeys.USB_MODEM_IS_ON, true);
+                ModulesStatus.getInstance().setIptablesRulesUpdateRequested(context, true);
+            } else if (!usbTetherOn && preferences.getBoolPreference(PreferenceKeys.USB_MODEM_IS_ON)) {
+                preferences.setBoolPreference(PreferenceKeys.USB_MODEM_IS_ON, false);
+                ModulesStatus.getInstance().setIptablesRulesUpdateRequested(context, true);
+            }
+
+            Log.i(LOG_TAG, "ModulesBroadcastReceiver " +
+                    "WiFi Access Point state is " + (wifiAccessPointOn ? "ON" : "OFF") + "\n"
+                    + " USB modem state is " + (usbTetherOn ? "ON" : "OFF"));
         });
     }
 
-    private void tetherStateChanged() {
-        checkUSBModemState();
-    }
-
     private void powerOFFDetected() {
-        ModulesAux.saveDNSCryptStateRunning(context, false);
-        ModulesAux.saveTorStateRunning(context, false);
-        ModulesAux.saveITPDStateRunning(context, false);
+        ModulesAux.saveDNSCryptStateRunning(false);
+        ModulesAux.saveTorStateRunning(false);
+        ModulesAux.saveITPDStateRunning(false);
 
         ModulesAux.stopModulesIfRunning(context);
     }
@@ -391,7 +434,7 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
     private void updateIptablesRules(boolean forceUpdate) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean refreshRules = sharedPreferences.getBoolean("swRefreshRules", false);
+        boolean refreshRules = sharedPreferences.getBoolean(REFRESH_RULES, false);
 
         if (!refreshRules && !forceUpdate) {
             return;
@@ -401,13 +444,13 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
                 && !modulesStatus.isUseModulesWithRoot()
                 && !lock) {
 
-            CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+            cachedExecutor.submit(() -> {
                 if (!lock) {
 
                     lock = true;
 
                     try {
-                        TimeUnit.SECONDS.sleep(5);
+                        TimeUnit.SECONDS.sleep(DELAY_BEFORE_UPDATING_IPTABLES_RULES_SEC);
                     } catch (InterruptedException e) {
                         Log.w(LOG_TAG, "ModulesBroadcastReceiver sleep interruptedException " + e.getMessage());
                     }
@@ -423,75 +466,43 @@ public class ModulesBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void checkUSBModemState() {
-        final String addressesRangeUSB = "192.168.42.";
-
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
-            Tethering.usbTetherOn = false;
-
-            try {
-                TimeUnit.SECONDS.sleep(3);
-
-                for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
-                     en.hasMoreElements(); ) {
-
-                    NetworkInterface intf = en.nextElement();
-                    if (intf.isLoopback()) {
-                        continue;
-                    }
-                    if (intf.isVirtual()) {
-                        continue;
-                    }
-                    if (!intf.isUp()) {
-                        continue;
-                    }
-
-                    if (intf.isPointToPoint()) {
-                        continue;
-                    }
-                    if (intf.getHardwareAddress() == null) {
-                        continue;
-                    }
-
-                    for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
-                         enumIpAddr.hasMoreElements(); ) {
-                        InetAddress inetAddress = enumIpAddr.nextElement();
-                        String hostAddress = inetAddress.getHostAddress();
-
-                        if (hostAddress.contains(addressesRangeUSB)) {
-                            Tethering.usbTetherOn = true;
-                            String usbModemInterfaceName = intf.getName();
-                            Log.i(LOG_TAG, "USB Modem interface name " + usbModemInterfaceName);
-                            break;
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Tethering Exception " + e.getMessage() + " " + e.getCause());
-            }
-
-            if (Tethering.usbTetherOn && !new PrefManager(context).getBoolPref("ModemIsON")) {
-                new PrefManager(context).setBoolPref("ModemIsON", true);
-                ModulesStatus.getInstance().setIptablesRulesUpdateRequested(context, true);
-            } else if (!Tethering.usbTetherOn && new PrefManager(context).getBoolPref("ModemIsON")) {
-                new PrefManager(context).setBoolPref("ModemIsON", false);
-                ModulesStatus.getInstance().setIptablesRulesUpdateRequested(context, true);
-            }
-
-            Log.i(LOG_TAG, "ModulesBroadcastReceiver USB modem state is " + (Tethering.usbTetherOn ? "ON" : "OFF"));
-        });
-
-    }
-
     private void resetArpScanner(boolean connectionAvailable) {
-        if (arpScanner != null) {
-            arpScanner.reset(context, connectionAvailable);
+        if (defaultSharedPreferences.get().getBoolean(ARP_SPOOFING_DETECTION, false)) {
+            ArpScanner.getArpComponent().get().reset(connectionAvailable);
         }
     }
 
     private void resetArpScanner() {
-        if (arpScanner != null && context != null) {
-            arpScanner.reset(context, Util.isConnected(context));
+        if (context != null && defaultSharedPreferences.get().getBoolean(ARP_SPOOFING_DETECTION, false)) {
+            ConnectionCheckerInteractor interactor = connectionCheckerInteractor.get();
+            interactor.checkNetworkConnection();
+            ArpScanner.getArpComponent().get().reset(interactor.getNetworkConnectionResult());
         }
+    }
+
+    private void setInternetAvailable(boolean available) {
+        ConnectionCheckerInteractor interactor = connectionCheckerInteractor.get();
+        interactor.setInternetConnectionResult(available);
+        interactor.checkNetworkConnection();
+    }
+
+    private void checkInternetConnection() {
+        ConnectionCheckerInteractor interactor = connectionCheckerInteractor.get();
+        interactor.setInternetConnectionResult(false);
+        interactor.checkInternetConnection();
+    }
+
+    @Override
+    public void onConnectionChecked(boolean available) {
+        if (available) {
+            Log.i(LOG_TAG, "Internet is available due to confirmation.");
+        } else {
+            Log.i(LOG_TAG, "Internet is not available due to confirmation.");
+        }
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
     }
 }

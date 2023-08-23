@@ -1,43 +1,25 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.tor_fragment;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.tor_fragment;
 
 import android.app.Activity;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.Html;
@@ -53,34 +35,34 @@ import androidx.preference.PreferenceManager;
 
 import java.util.Arrays;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.dialogs.NotificationDialogFragment;
 import pan.alexander.tordnscrypt.dialogs.NotificationHelper;
-import pan.alexander.tordnscrypt.domain.CheckConnectionInteractor;
-import pan.alexander.tordnscrypt.domain.TorInteractorInterface;
-import pan.alexander.tordnscrypt.domain.check_connection.OnInternetConnectionCheckedListener;
-import pan.alexander.tordnscrypt.domain.entities.LogDataModel;
-import pan.alexander.tordnscrypt.domain.LogReaderInteractors;
+import pan.alexander.tordnscrypt.domain.connection_checker.ConnectionCheckerInteractorImpl;
+import pan.alexander.tordnscrypt.domain.log_reader.TorInteractorInterface;
+import pan.alexander.tordnscrypt.domain.connection_checker.OnInternetConnectionCheckedListener;
+import pan.alexander.tordnscrypt.domain.log_reader.LogDataModel;
 import pan.alexander.tordnscrypt.domain.log_reader.tor.OnTorLogUpdatedListener;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesKiller;
 import pan.alexander.tordnscrypt.modules.ModulesRunner;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
-import pan.alexander.tordnscrypt.settings.PreferencesFastFragment;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.GetIPsJobService;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.TorRefreshIPsWork;
-import pan.alexander.tordnscrypt.utils.Verifier;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.integrity.Verifier;
 import pan.alexander.tordnscrypt.utils.enums.ModuleState;
 import pan.alexander.tordnscrypt.vpn.service.ServiceVPNHelper;
 
 import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
 import static pan.alexander.tordnscrypt.TopFragment.appVersion;
 import static pan.alexander.tordnscrypt.TopFragment.wrongSign;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.jobscheduler.JobSchedulerManager.stopRefreshTorUnlockIPs;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.IGNORE_SYSTEM_DNS;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.FAULT;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RESTARTING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
@@ -90,13 +72,21 @@ import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.UNDEFINED;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
 
+import javax.inject.Inject;
+
 public class TorFragmentPresenter implements TorFragmentPresenterInterface,
         OnTorLogUpdatedListener, OnInternetConnectionCheckedListener {
 
-    public TorFragmentView view;
+    @Inject
+    public Lazy<ConnectionCheckerInteractorImpl> checkConnectionInteractor;
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Lazy<TorInteractorInterface> torInteractor;
+    @Inject
+    public CachedExecutor cachedExecutor;
 
-    private final int mJobId = PreferencesFastFragment.mJobId;
-    private int refreshPeriodHours = 12;
+    public TorFragmentView view;
 
     private final ModulesStatus modulesStatus = ModulesStatus.getInstance();
     private ModuleState fixedModuleState = STOPPED;
@@ -106,15 +96,18 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
 
     private ScaleGestureDetector scaleGestureDetector;
 
-    private TorInteractorInterface torInteractor;
     private volatile LogDataModel savedLogData = null;
     private volatile int savedLinesLength;
     private boolean fixedTorReady;
     private boolean fixedTorError;
 
-    private CheckConnectionInteractor checkConnectionInteractor;
+
 
     public TorFragmentPresenter(TorFragmentView view) {
+        App.getInstance()
+                .getSubcomponentsManager()
+                .initLogReaderDaggerSubcomponent()
+                .inject(this);
         this.view = view;
     }
 
@@ -125,18 +118,12 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
 
         context = view.getFragmentActivity();
 
-        SharedPreferences shPref = PreferenceManager.getDefaultSharedPreferences(context);
-        String refreshPeriod = shPref.getString("pref_fast_site_refresh_interval", "12");
-        if (refreshPeriod != null) {
-            refreshPeriodHours = Integer.parseInt(refreshPeriod);
-        }
-
         if (isTorInstalled()) {
             setTorInstalled(true);
 
             ModuleState currentModuleState = modulesStatus.getTorState();
 
-            if (currentModuleState == RUNNING || ModulesAux.isTorSavedStateRunning(context)) {
+            if (currentModuleState == RUNNING || ModulesAux.isTorSavedStateRunning()) {
 
                 if (isTorReady()) {
                     setTorRunning();
@@ -186,12 +173,10 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
             fixedModuleState = STOPPED;
             torLogAutoScroll = true;
             scaleGestureDetector = null;
-            torInteractor = null;
             savedLogData = null;
             savedLinesLength = 0;
             fixedTorReady = false;
             fixedTorError = false;
-            checkConnectionInteractor = null;
         }
 
         view = null;
@@ -199,7 +184,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
 
     @Override
     public boolean isTorInstalled() {
-        return new PrefManager(context).getBoolPref("Tor Installed");
+        return preferenceRepository.get().getBoolPreference("Tor Installed");
     }
 
     private void setTorInstalled(boolean installed) {
@@ -245,7 +230,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
             return;
         }
 
-        stopRefreshTorUnlockIPs();
+        stopRefreshTorUnlockIPs(context);
 
         view.setTorStatus(R.string.tvTorStop, R.color.textModuleStatusColorStopped);
         view.setStartButtonText(R.string.btnTorStart);
@@ -292,7 +277,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
 
             setTorStartButtonEnabled(true);
 
-            ModulesAux.saveTorStateRunning(context, true);
+            ModulesAux.saveTorStateRunning(true);
 
             view.setStartButtonText(R.string.btnTorStop);
         } else if (currentModuleState == RESTARTING) {
@@ -305,7 +290,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
         } else if (currentModuleState == STOPPED) {
             stopDisplayLog();
 
-            if (ModulesAux.isTorSavedStateRunning(context)) {
+            if (ModulesAux.isTorSavedStateRunning()) {
                 setTorStoppedBySystem();
             } else {
                 setTorStopped();
@@ -313,7 +298,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
 
             setTorProgressBarIndeterminate(false);
 
-            ModulesAux.saveTorStateRunning(context, false);
+            ModulesAux.saveTorStateRunning(false);
 
             setTorStartButtonEnabled(true);
         }
@@ -345,36 +330,26 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
     @Override
     public synchronized void displayLog() {
 
-        if (torInteractor == null) {
-            torInteractor = LogReaderInteractors.Companion.getInteractor();
-        }
-
-        torInteractor.addOnTorLogUpdatedListener(this);
+        torInteractor.get().addOnTorLogUpdatedListener(this);
 
         savedLogData = null;
 
         savedLinesLength = 0;
 
-        if (checkConnectionInteractor == null) {
-            checkConnectionInteractor = new CheckConnectionInteractor();
-            checkConnectionInteractor.setListener(this);
-        }
+        checkConnectionInteractor.get().addListener(this);
     }
 
     @Override
     public void stopDisplayLog() {
         if (torInteractor != null) {
-            torInteractor.removeOnTorLogUpdatedListener(this);
+            torInteractor.get().removeOnTorLogUpdatedListener(this);
         }
 
         savedLogData = null;
 
         savedLinesLength = 0;
 
-        if (checkConnectionInteractor != null) {
-            checkConnectionInteractor.removeListener();
-            checkConnectionInteractor = null;
-        }
+        checkConnectionInteractor.get().removeListener(this);
     }
 
     @Override
@@ -464,6 +439,9 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
             showNewTorIdentityIcon(true);
 
             checkInternetAvailable();
+
+            setFixedReadyState(true);
+            setFixedErrorState(false);
         }
     }
 
@@ -479,16 +457,9 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
 
         Log.e(LOG_TAG, "Problem bootstrapping Tor: " + logData.getLines());
 
-        int percents = logData.getPercents();
-
         NotificationHelper notificationHelper;
-        if (percents <= 5) {
-            notificationHelper = NotificationHelper.setHelperMessage(
-                    context, context.getString(R.string.helper_dnscrypt_no_internet), "helper_dnscrypt_no_internet");
-        } else {
-            notificationHelper = NotificationHelper.setHelperMessage(
-                    context, context.getString(R.string.helper_tor_use_bridges), "helper_tor_use_bridges");
-        }
+        notificationHelper = NotificationHelper.setHelperMessage(
+                context, context.getString(R.string.helper_tor_use_bridges), "helper_tor_use_bridges");
         if (notificationHelper != null) {
             notificationHelper.show(fragmentManager, NotificationHelper.TAG_HELPER);
         }
@@ -497,8 +468,9 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
     }
 
     private void checkInternetAvailable() {
-        if (isActive() && checkConnectionInteractor != null && !checkConnectionInteractor.isChecking()) {
-            checkConnectionInteractor.checkConnection("https://www.torproject.org/", true);
+        if (isActive()) {
+            checkConnectionInteractor.get().setInternetConnectionResult(false);
+            checkConnectionInteractor.get().checkInternetConnection();
         }
     }
 
@@ -510,15 +482,12 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
             return;
         }
 
-        setFixedReadyState(true);
-        setFixedErrorState(false);
-
-        startRefreshTorUnlockIPs();
-
         /////////////////Check Updates///////////////////////////////////////////////
         if (isActive() && view.getFragmentActivity() instanceof MainActivity) {
             checkInvizibleUpdates((MainActivity) view.getFragmentActivity());
         }
+
+        checkConnectionInteractor.get().removeListener(this);
     }
 
     private void checkInvizibleUpdates(MainActivity activity) {
@@ -527,7 +496,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
         boolean autoUpdate = sharedPreferences.getBoolean("pref_fast_auto_update", true)
                 && !appVersion.startsWith("l") && !appVersion.endsWith("p") && !appVersion.startsWith("f");
 
-        String lastUpdateResult = new PrefManager(context).getStrPref("LastUpdateResult");
+        String lastUpdateResult = preferenceRepository.get().getStringPreference("LastUpdateResult");
 
         if (autoUpdate &&
                 (throughTorUpdate || lastUpdateResult.isEmpty()
@@ -537,41 +506,6 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
             if (topFragment != null) {
                 topFragment.checkUpdates(activity);
             }
-        }
-    }
-
-    private void startRefreshTorUnlockIPs() {
-        if (!isActive()) {
-            return;
-        }
-
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP || refreshPeriodHours == 0) {
-            TorRefreshIPsWork torRefreshIPsWork = new TorRefreshIPsWork(context, null);
-            torRefreshIPsWork.refreshIPs();
-        } else {
-            ComponentName jobService = new ComponentName(context, GetIPsJobService.class);
-            JobInfo.Builder getIPsJobBuilder;
-            getIPsJobBuilder = new JobInfo.Builder(mJobId, jobService);
-            getIPsJobBuilder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
-            getIPsJobBuilder.setPeriodic(refreshPeriodHours * 60 * 60 * 1000);
-
-            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-
-            if (jobScheduler != null) {
-                jobScheduler.schedule(getIPsJobBuilder.build());
-            }
-        }
-    }
-
-    private void stopRefreshTorUnlockIPs() {
-
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP || refreshPeriodHours == 0) {
-            return;
-        }
-
-        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        if (jobScheduler != null) {
-            jobScheduler.cancel(mJobId);
         }
     }
 
@@ -638,7 +572,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
             return;
         }
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
 
             if (!isActive() || activity == null) {
                 return;
@@ -654,9 +588,19 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
                 String appSign = verifier.getApkSignatureZip();
                 String appSignAlt = verifier.getApkSignature();
                 if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
+                    NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
+                            activity, context.getString(R.string.verifier_error), "15");
+                    if (notificationHelper != null) {
+                        activity.runOnUiThread(() -> notificationHelper.show(fragmentManager, NotificationHelper.TAG_HELPER));
+                    }
                 }
 
             } catch (Exception e) {
+                NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
+                        activity, context.getString(R.string.verifier_error), "18");
+                if (notificationHelper != null) {
+                    activity.runOnUiThread(() -> notificationHelper.show(fragmentManager, NotificationHelper.TAG_HELPER));
+                }
                 Log.e(LOG_TAG, "TorRunFragment fault " + e.getMessage() + " " + e.getCause() + System.lineSeparator() +
                         Arrays.toString(e.getStackTrace()));
             }
@@ -678,7 +622,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
             displayLog();
         } else if (modulesStatus.getTorState() == RUNNING) {
 
-            stopRefreshTorUnlockIPs();
+            stopRefreshTorUnlockIPs(context);
 
             setTorStopping();
             stopTor();
@@ -765,7 +709,7 @@ public class TorFragmentPresenter implements TorFragmentPresenterInterface,
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         if ((!modulesStatus.isRootAvailable() || !modulesStatus.isUseModulesWithRoot())
-                && !sharedPreferences.getBoolean("ignore_system_dns", false)) {
+                && !sharedPreferences.getBoolean(IGNORE_SYSTEM_DNS, false)) {
             modulesStatus.setSystemDNSAllowed(true);
         }
     }

@@ -2,22 +2,22 @@
 #pragma ide diagnostic ignored "readability-magic-numbers"
 #pragma ide diagnostic ignored "cppcoreguidelines-avoid-magic-numbers"
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
 #include "invizible.h"
@@ -31,6 +31,7 @@ char tor_socks5_addr[INET6_ADDRSTRLEN + 1];
 int tor_socks5_port = 0;
 char tor_socks5_username[127 + 1];
 char tor_socks5_password[127 + 1];
+int tor_dns_port = 0;
 
 char proxy_socks5_addr[INET6_ADDRSTRLEN + 1];
 int proxy_socks5_port = 0;
@@ -126,6 +127,7 @@ Java_pan_alexander_tordnscrypt_vpn_service_ServiceVPN_jni_1init(
     tor_socks5_port = 0;
     *tor_socks5_username = 0;
     *tor_socks5_password = 0;
+    tor_dns_port = 0;
 
     *proxy_socks5_addr = 0;
     proxy_socks5_port = 0;
@@ -221,7 +223,8 @@ Java_pan_alexander_tordnscrypt_vpn_service_ServiceVPN_jni_1socks5_1for_1tor(JNIE
                                                                             jstring addr_,
                                                                             jint port,
                                                                             jstring username_,
-                                                                            jstring password_) {
+                                                                            jstring password_,
+                                                                            jint dnsport) {
     const char *addr = (*env)->GetStringUTFChars(env, addr_, 0);
     const char *username = (*env)->GetStringUTFChars(env, username_, 0);
     const char *password = (*env)->GetStringUTFChars(env, password_, 0);
@@ -233,6 +236,7 @@ Java_pan_alexander_tordnscrypt_vpn_service_ServiceVPN_jni_1socks5_1for_1tor(JNIE
     tor_socks5_port = port;
     strcpy(tor_socks5_username, username);
     strcpy(tor_socks5_password, password);
+    tor_dns_port = dnsport;
 
     log_android(ANDROID_LOG_WARN, "TOR SOCKS5 %s:%d user=%s",
                 tor_socks5_addr, tor_socks5_port, tor_socks5_username);
@@ -301,7 +305,7 @@ Java_pan_alexander_tordnscrypt_vpn_service_ServiceVPN_jni_1done(
 // JNI Util
 
 JNIEXPORT jstring JNICALL
-Java_pan_alexander_tordnscrypt_vpn_Util_jni_1getprop(JNIEnv *env, jclass type, jstring name_) {
+Java_pan_alexander_tordnscrypt_vpn_VpnUtils_jni_1getprop(JNIEnv *env, jclass type, jstring name_) {
     const char *name = (*env)->GetStringUTFChars(env, name_, 0);
     ng_add_alloc(name, "name");
 
@@ -315,8 +319,8 @@ Java_pan_alexander_tordnscrypt_vpn_Util_jni_1getprop(JNIEnv *env, jclass type, j
 }
 
 JNIEXPORT jboolean JNICALL
-Java_pan_alexander_tordnscrypt_vpn_Util_is_1numeric_1address(JNIEnv *env, jclass type,
-                                                             jstring ip_) {
+Java_pan_alexander_tordnscrypt_vpn_VpnUtils_is_1numeric_1address(JNIEnv *env, jclass type,
+                                                                 jstring ip_) {
     jboolean numeric = 0;
     const char *ip = (*env)->GetStringUTFChars(env, ip_, 0);
     ng_add_alloc(ip, "ip");

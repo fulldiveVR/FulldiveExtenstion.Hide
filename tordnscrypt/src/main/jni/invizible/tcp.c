@@ -3,22 +3,22 @@
 #pragma ide diagnostic ignored "cppcoreguidelines-avoid-magic-numbers"
 #pragma ide diagnostic ignored "readability-magic-numbers"
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
 #include "invizible.h"
@@ -284,31 +284,8 @@ void check_tcp_socket(const struct arguments *args,
 
         write_rst(args, &s->tcp);
 
-        //TODO check this code
-        // Connection refused
         if (err >= 0 && (serr == ECONNREFUSED || serr == EHOSTUNREACH)) {
-            struct icmp icmp;
-            memset(&icmp, 0, sizeof(struct icmp));
-            icmp.icmp_type = ICMP_UNREACH;
-            if (serr == ECONNREFUSED)
-                icmp.icmp_code = ICMP_UNREACH_PORT;
-            else
-                icmp.icmp_code = ICMP_UNREACH_HOST;
-            icmp.icmp_cksum = 0;
-            icmp.icmp_cksum = ~calc_checksum(0, (const uint8_t *) &icmp, 4);
-
-            struct icmp_session sicmp;
-            memset(&sicmp, 0, sizeof(struct icmp_session));
-            sicmp.version = s->tcp.version;
-            if (s->tcp.version == 4) {
-                sicmp.saddr.ip4 = (__be32) s->tcp.saddr.ip4;
-                sicmp.daddr.ip4 = (__be32) s->tcp.daddr.ip4;
-            } else {
-                memcpy(&sicmp.saddr.ip6, &s->tcp.saddr.ip6, 16);
-                memcpy(&sicmp.daddr.ip6, &s->tcp.daddr.ip6, 16);
-            }
-
-            write_icmp(args, &sicmp, (uint8_t *) &icmp, 8);
+            write_connection_unreach(args, s, serr);
         }
     } else {
         // Assume socket okay
@@ -808,6 +785,16 @@ jboolean handle_tcp(const struct arguments *args,
                 s->tcp.forward->next = NULL;
             }
 
+            if (!allowed) {
+                log_android(ANDROID_LOG_WARN, "%s resetting blocked session", packet);
+
+                write_rst(args, &s->tcp);
+                write_connection_unreach(args, s, EHOSTDOWN);
+
+                ng_free(s, __FILE__, __LINE__);
+                return 0;
+            }
+
             // Open socket
             s->socket = open_tcp_socket(args, &s->tcp, redirect);
             if (s->socket < 0) {
@@ -831,11 +818,6 @@ jboolean handle_tcp(const struct arguments *args,
 
             s->next = args->ctx->ng_session;
             args->ctx->ng_session = s;
-
-            if (!allowed) {
-                log_android(ANDROID_LOG_WARN, "%s resetting blocked session", packet);
-                write_rst(args, &s->tcp);
-            }
         } else {
             log_android(ANDROID_LOG_WARN, "%s unknown session", packet);
 
@@ -1074,17 +1056,17 @@ void queue_tcp(const struct arguments *args,
 }
 
 int open_tcp_socket(const struct arguments *args,
-                    const struct tcp_session *cur, const struct allowed *redirect) {
+                    const struct tcp_session *cur, struct allowed *redirect) {
     int sock;
     int version;
     if (redirect == NULL) {
-        //bypass dns addresses and own uid from socks proxy
-        if (*tor_socks5_addr && tor_socks5_port && cur->uid != own_uid)
-            version = (strstr(tor_socks5_addr, ":") == NULL ? 4 : 6);
-        else
-            version = cur->version;
-    } else
+        version = cur->version;
+    } else if (cur->version == 6 && strcmp(redirect->raddr, LOOPBACK_ADDRESS) == 0) {
+        strcpy(redirect->raddr, LOOPBACK_ADDRESS_IPv6);
+        version = 6;
+    } else {
         version = (strstr(redirect->raddr, ":") == NULL ? 4 : 6);
+    }
 
     // Get TCP socket
     if ((sock = socket(version == 4 ? PF_INET : PF_INET6, SOCK_STREAM | SOCK_CLOEXEC, 0)) < 0) {
@@ -1140,6 +1122,10 @@ int open_tcp_socket(const struct arguments *args,
                 addr4.sin_family = AF_INET;
                 inet_pton(AF_INET, tor_socks5_addr, &addr4.sin_addr);
                 addr4.sin_port = htons(tor_socks5_port);
+            } else if (strcmp(tor_socks5_addr, LOOPBACK_ADDRESS) == 0) {
+                addr6.sin6_family = AF_INET6;
+                inet_pton(AF_INET6, LOOPBACK_ADDRESS_IPv6, &addr6.sin6_addr);
+                addr6.sin6_port = htons(tor_socks5_port);
             } else {
                 addr6.sin6_family = AF_INET6;
                 inet_pton(AF_INET6, tor_socks5_addr, &addr6.sin6_addr);

@@ -1,37 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.settings.dnscrypt_servers;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.settings.dnscrypt_servers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -63,29 +49,40 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
-import pan.alexander.tordnscrypt.SettingsActivity;
+import pan.alexander.tordnscrypt.settings.SettingsActivity;
 import pan.alexander.tordnscrypt.dialogs.AddDNSCryptServerDialogFragment;
 import pan.alexander.tordnscrypt.dialogs.NotificationHelper;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesRestarter;
 import pan.alexander.tordnscrypt.settings.PathVars;
 import pan.alexander.tordnscrypt.settings.dnscrypt_relays.DNSServerRelays;
 import pan.alexander.tordnscrypt.settings.dnscrypt_relays.PreferencesDNSCryptRelays;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.Verifier;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.integrity.Verifier;
 import pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
-import pan.alexander.tordnscrypt.utils.file_operations.OnTextFileOperationsCompleteListener;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
+import pan.alexander.tordnscrypt.utils.filemanager.OnTextFileOperationsCompleteListener;
 
 import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
 import static pan.alexander.tordnscrypt.TopFragment.wrongSign;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
+
+import javax.inject.Inject;
 
 public class PreferencesDNSCryptServers extends Fragment implements View.OnClickListener,
         PreferencesDNSCryptRelays.OnRoutesChangeListener, OnTextFileOperationsCompleteListener,
         AddDNSCryptServerDialogFragment.OnServerAddedListener, SearchView.OnQueryTextListener {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Lazy<PathVars> pathVars;
+    @Inject
+    public CachedExecutor cachedExecutor;
 
     private RecyclerView.Adapter<DNSServersAdapter.DNSServersViewHolder> dNSServersAdapter;
     private ArrayList<String> dnsServerNames;
@@ -112,26 +109,38 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
+
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
 
-        Context context = getActivity();
-        if (context == null) {
+        Activity activity = getActivity();
+        if (activity == null) {
             return;
         }
 
         takeArguments();
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             try {
-                Verifier verifier = new Verifier(context);
+                Verifier verifier = new Verifier(activity);
                 String appSign = verifier.getApkSignatureZip();
                 String appSignAlt = verifier.getApkSignature();
                 if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
+                    NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
+                            activity, getText(R.string.verifier_error).toString(), "6787");
+                    if (notificationHelper != null && isAdded()) {
+                        activity.runOnUiThread(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
+                    }
                 }
 
             } catch (Exception e) {
+                NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
+                        activity, getText(R.string.verifier_error).toString(), "8990");
+                if (isAdded() && notificationHelper != null) {
+                    activity.runOnUiThread(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
+                }
                 Log.e(LOG_TAG, "PreferencesDNSCryptServers fault " + e.getMessage() + " " + e.getCause() + System.lineSeparator() +
                         Arrays.toString(e.getStackTrace()));
             }
@@ -169,10 +178,9 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
 
         activity.setTitle(R.string.pref_fast_dns_server);
 
-        PathVars pathVars = PathVars.getInstance(activity);
-        appDataDir = pathVars.getAppDataDir();
+        appDataDir = pathVars.get().getAppDataDir();
 
-        FileOperations.setOnFileOperationCompleteListener(this);
+        FileManager.setOnFileOperationCompleteListener(this);
 
         fillDNSServersList(activity);
 
@@ -215,7 +223,7 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
             rvViewState = rvDNSServers.getLayoutManager().onSaveInstanceState();
         }
 
-        FileOperations.deleteOnFileOperationCompleteListener(this);
+        FileManager.deleteOnFileOperationCompleteListener(this);
 
         Context context = getActivity();
         if (context == null) {
@@ -236,7 +244,7 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
             return;
         }
 
-        saveDNSServersToPrefs(context, dnscrypt_servers);
+        saveDNSServersToPrefs(dnscrypt_servers);
 
         boolean isChanges = saveDNSServersToTomlList(dnscrypt_servers);
 
@@ -318,7 +326,7 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
         ownServersFilePath = appDataDir + "/app_data/dnscrypt-proxy/own-resolvers.md";
 
         if (new File(ownServersFilePath).isFile()) {
-            FileOperations.readTextFile(context, ownServersFilePath, "own-resolvers.md");
+            FileManager.readTextFile(context, ownServersFilePath, "own-resolvers.md");
         }
     }
 
@@ -400,8 +408,9 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
         return line;
     }
 
-    private void saveDNSServersToPrefs(Context context, String dnscrypt_servers) {
-        new PrefManager(context).setStrPref("DNSCrypt Servers", dnscrypt_servers);
+    private void saveDNSServersToPrefs(String dnscrypt_servers) {
+        preferenceRepository.get()
+                .setStringPreference("DNSCrypt Servers", dnscrypt_servers);
     }
 
     private boolean saveDNSServersToTomlList(String dnscrypt_servers) {
@@ -539,14 +548,14 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
     }
 
     private void saveLinesToTomlFile(Context context) {
-        FileOperations.writeToTextFile(context, appDataDir
+        FileManager.writeToTextFile(context, appDataDir
                         + "/app_data/dnscrypt-proxy/dnscrypt-proxy.toml", dnscrypt_proxy_toml,
                 SettingsActivity.public_resolvers_md_tag);
     }
 
     private void restartDNSCryptIfRunning(Context context) {
 
-        boolean dnsCryptRunning = ModulesAux.isDnsCryptSavedStateRunning(context);
+        boolean dnsCryptRunning = ModulesAux.isDnsCryptSavedStateRunning();
 
         if (dnsCryptRunning) {
             ModulesRestarter.restartDNSCrypt(context);
@@ -665,7 +674,7 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
             return;
         }
 
-        FileOperations.writeToTextFile(context, ownServersFilePath, linesReadyToSave, "ignored");
+        FileManager.writeToTextFile(context, ownServersFilePath, linesReadyToSave, "ignored");
 
     }
 
@@ -714,7 +723,7 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
                     || (dnsServerItem.isNofilter() && searchText.toLowerCase().contains("non-filtering"))
                     || (dnsServerItem.isNolog() && searchText.toLowerCase().contains("non-logging"))
                     || (!dnsServerItem.isNolog() && searchText.toLowerCase().contains("keep logs"))
-                    || (!dnsServerItem.isNofilter() && searchText.toLowerCase().contains("ad-filtering"))) {
+                    || (!dnsServerItem.isNofilter() && searchText.toLowerCase().contains("filtering"))) {
                 list_dns_servers.add(dnsServerItem);
             }
         }

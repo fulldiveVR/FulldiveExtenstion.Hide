@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.itpd_fragment;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.itpd_fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,21 +28,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.TopFragment;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.RootExecService;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
+import pan.alexander.tordnscrypt.utils.root.RootExecService;
 
 import static pan.alexander.tordnscrypt.TopFragment.ITPDVersion;
 import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.modules.ModulesService.ITPD_KEYWORD;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.I2PD_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
 
+import javax.inject.Inject;
+
 public class ITPDFragmentReceiver extends BroadcastReceiver {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Lazy<PathVars> pathVars;
+
     private final ITPDFragmentView view;
     private final ITPDFragmentPresenterInterface presenter;
 
@@ -65,6 +62,7 @@ public class ITPDFragmentReceiver extends BroadcastReceiver {
     private String busyboxPath;
 
     public ITPDFragmentReceiver(ITPDFragmentView view, ITPDFragmentPresenterInterface presenter) {
+        App.getInstance().getDaggerComponent().inject(this);
         this.view = view;
         this.presenter = presenter;
     }
@@ -81,14 +79,14 @@ public class ITPDFragmentReceiver extends BroadcastReceiver {
 
         ModulesStatus modulesStatus = ModulesStatus.getInstance();
 
-        PathVars pathVars = PathVars.getInstance(context);
-        itpdPath = pathVars.getITPDPath();
-        busyboxPath = pathVars.getBusyboxPath();
+        itpdPath = pathVars.get().getITPDPath();
+        busyboxPath = pathVars.get().getBusyboxPath();
 
         if (intent != null) {
             final String action = intent.getAction();
-            if (action == null || action.equals("") || ((intent.getIntExtra("Mark", 0) !=
-                    RootExecService.I2PDRunFragmentMark) &&
+            if (action == null
+                    || action.equals("")
+                    || ((intent.getIntExtra("Mark", 0) != I2PD_RUN_FRAGMENT_MARK) &&
                     !action.equals(TOP_BROADCAST))) return;
             Log.i(LOG_TAG, "I2PDFragment onReceive");
 
@@ -120,11 +118,12 @@ public class ITPDFragmentReceiver extends BroadcastReceiver {
                         String[] verArr = strArr[1].trim().split(" ");
                         if (verArr.length > 2 && verArr[1].contains("version")) {
                             ITPDVersion = verArr[2].trim();
-                            new PrefManager(context).setStrPref("ITPDVersion", ITPDVersion);
+                            preferenceRepository.get()
+                                    .setStringPreference("ITPDVersion", ITPDVersion);
 
                             if (!modulesStatus.isUseModulesWithRoot()) {
 
-                                if (!ModulesAux.isITPDSavedStateRunning(context)) {
+                                if (!ModulesAux.isITPDSavedStateRunning()) {
                                     view.setITPDLogViewText();
                                 }
 
@@ -135,13 +134,13 @@ public class ITPDFragmentReceiver extends BroadcastReceiver {
                 }
 
                 if (sb.toString().toLowerCase().contains(itpdPath.toLowerCase())
-                        && sb.toString().contains("checkITPDRunning")) {
+                        && sb.toString().contains(ITPD_KEYWORD)) {
                     modulesStatus.setItpdState(RUNNING);
                     presenter.displayLog();
                 } else if (!sb.toString().toLowerCase().contains(itpdPath.toLowerCase())
-                        && sb.toString().contains("checkITPDRunning")) {
+                        && sb.toString().contains(ITPD_KEYWORD)) {
                     if (modulesStatus.getItpdState() == STOPPED) {
-                        ModulesAux.saveITPDStateRunning(context, false);
+                        ModulesAux.saveITPDStateRunning(false);
                     }
                     presenter.stopDisplayLog();
                     presenter.setITPDStopped();
@@ -171,12 +170,8 @@ public class ITPDFragmentReceiver extends BroadcastReceiver {
                     busyboxPath + "echo 'ITPD_version' 2> /dev/null",
                     itpdPath + " --version 2> /dev/null"
             ));
-            RootCommands rootCommands = new RootCommands(commandsCheck);
-            Intent intent = new Intent(context, RootExecService.class);
-            intent.setAction(RootExecService.RUN_COMMAND);
-            intent.putExtra("Commands", rootCommands);
-            intent.putExtra("Mark", RootExecService.I2PDRunFragmentMark);
-            RootExecService.performAction(context, intent);
+
+            RootCommands.execute(context, commandsCheck, I2PD_RUN_FRAGMENT_MARK);
 
             view.setITPDProgressBarIndeterminate(true);
         }

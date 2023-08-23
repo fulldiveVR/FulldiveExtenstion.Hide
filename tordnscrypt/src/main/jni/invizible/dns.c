@@ -2,22 +2,22 @@
 #pragma ide diagnostic ignored "hicpp-signed-bitwise"
 #pragma ide diagnostic ignored "cppcoreguidelines-avoid-magic-numbers"
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
 #include "invizible.h"
@@ -133,6 +133,7 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
             return;
         }
 
+        short svcb = 0;
         int32_t aoff = off;
         for (int a = 0; a < acount; a++) {
             off = get_qname(data, *datalen, (uint16_t) off, name);
@@ -186,6 +187,12 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
                         }
                         ng_free(hinfo, __FILE__, __LINE__);
 
+                    } else if (qclass == DNS_QCLASS_IN &&
+                               (qtype == DNS_QTYPE_SVCB || qtype == DNS_QTYPE_HTTPS)) {
+                        // https://tools.ietf.org/id/draft-ietf-dnsop-svcb-https-01.html
+                        svcb = 1;
+                        log_android(ANDROID_LOG_WARN,
+                                    "SVCB answer %d qname %s qtype %d", a, name, qtype);
                     } else
                         log_android(ANDROID_LOG_DEBUG,
                                     "DNS answer %d qname %s qclass %d qtype %d rcode %d length %d",
@@ -205,7 +212,7 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
             }
         }
 
-        if (qcount > 0 && is_domain_blocked(args, qname)) {
+        if (qcount > 0 && (svcb || is_domain_blocked(args, qname))) {
             dns->qr = 1;
             dns->aa = 0;
             dns->tc = 0;

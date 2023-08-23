@@ -15,4 +15,6 @@
   -->
 
 <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@layout/agreement_layout, @layout/icon_image_new_tor_identity" />
+    tools:shrinkMode="safe"
+    tools:keep="@layout/agreement_layout, @layout/icon_image_new_tor_identity,
+    @drawable/ic_service_notification" />

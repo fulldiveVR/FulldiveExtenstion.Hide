@@ -1,38 +1,25 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.update;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
 
+package pan.alexander.tordnscrypt.update;
+
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -40,6 +27,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ServiceInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
@@ -54,10 +42,14 @@ import android.util.SparseArray;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.inject.Inject;
+
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.R;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.WakeLocksManager;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
+import pan.alexander.tordnscrypt.utils.wakelock.WakeLocksManager;
 
 public class UpdateService extends Service {
 
@@ -73,6 +65,8 @@ public class UpdateService extends Service {
     NotificationManager notificationManager;
     volatile SparseArray<DownloadTask> sparseArray;
     private WakeLocksManager wakeLocksManager = WakeLocksManager.getInstance();
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
 
     public UpdateService() {
     }
@@ -84,6 +78,8 @@ public class UpdateService extends Service {
 
     @Override
     public void onCreate() {
+        App.getInstance().getDaggerComponent().inject(this);
+
         super.onCreate();
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -174,11 +170,11 @@ public class UpdateService extends Service {
     private void installationRequestAction() {
         sendNotification(0, currentNotificationId.get(), System.currentTimeMillis(), getString(R.string.app_name), getString(R.string.app_name), "");
 
-        String path = new PrefManager(this).getStrPref("RequiredAppUpdateForQ");
+        String path = preferenceRepository.get().getStringPreference("RequiredAppUpdateForQ");
 
         if (!path.isEmpty()) {
 
-            new PrefManager(this).setStrPref("RequiredAppUpdateForQ", "");
+            preferenceRepository.get().setStringPreference("RequiredAppUpdateForQ", "");
 
             File file = new File(path);
 
@@ -210,6 +206,7 @@ public class UpdateService extends Service {
         notificationManager.createNotificationChannel(notificationChannel);
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     void sendNotification(int serviceStartId, int notificationId, long startTime, String Ticker, String Title, String Text) {
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -219,11 +216,39 @@ public class UpdateService extends Service {
         Intent stopDownloadIntent = new Intent(this, UpdateService.class);
         stopDownloadIntent.setAction(STOP_DOWNLOAD_ACTION);
         stopDownloadIntent.putExtra("ServiceStartId", serviceStartId);
-        PendingIntent stopDownloadPendingIntent = PendingIntent.getService(this,
-                notificationId, stopDownloadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent stopDownloadPendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            stopDownloadPendingIntent = PendingIntent.getService(
+                    this,
+                    notificationId,
+                    stopDownloadIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
+        } else {
+            stopDownloadPendingIntent = PendingIntent.getService(
+                    this,
+                    notificationId,
+                    stopDownloadIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            );
+        }
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            contentIntent = PendingIntent.getActivity(
+                    this,
+                    0,
+                    notificationIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
+        } else {
+            contentIntent = PendingIntent.getActivity(
+                    this,
+                    0,
+                    notificationIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            );
+        }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, UPDATE_CHANNEL_ID);
         builder.setContentIntent(contentIntent)
@@ -249,6 +274,10 @@ public class UpdateService extends Service {
 
         Notification notification = builder.build();
 
-        startForeground(notificationId, notification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MANIFEST);
+        } else {
+            startForeground(notificationId, notification);
+        }
     }
 }

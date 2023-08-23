@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.backup;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.backup;
 
 import android.app.Activity;
 import android.content.Context;
@@ -62,21 +47,20 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import pan.alexander.tordnscrypt.R;
+import pan.alexander.tordnscrypt.di.SharedPreferencesModule;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.patches.Patch;
 import pan.alexander.tordnscrypt.settings.tor_apps.ApplicationData;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.InstalledApplications;
-import pan.alexander.tordnscrypt.utils.PrefManager;
+import pan.alexander.tordnscrypt.utils.apps.InstalledApplicationsManager;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.utils.zipUtil.ZipFileManager;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 import pan.alexander.tordnscrypt.installer.Installer;
 
 import static pan.alexander.tordnscrypt.backup.BackupFragment.CODE_READ;
 import static pan.alexander.tordnscrypt.backup.BackupFragment.TAGS_TO_CONVERT;
-import static pan.alexander.tordnscrypt.settings.firewall.FirewallFragmentKt.APPS_NEWLY_INSTALLED;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.APPS_NEWLY_INSTALLED;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 
 class RestoreHelper extends Installer {
     private final List<String> requiredFiles = Arrays.asList(
@@ -99,9 +83,13 @@ class RestoreHelper extends Installer {
     private final String cacheDir;
     private String pathBackup;
 
-    RestoreHelper(Activity activity, String appDataDir, String cacheDir, String pathBackup) {
+    RestoreHelper(
+            Activity activity,
+            String appDataDir,
+            String cacheDir,
+            String pathBackup
+    ) {
         super(activity);
-
         this.activity = activity;
         this.appDataDir = appDataDir;
         this.cacheDir = cacheDir;
@@ -110,7 +98,7 @@ class RestoreHelper extends Installer {
 
     void restoreAll(InputStream inputStream, boolean logsDirAccessible) {
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             try {
 
                 if (!logsDirAccessible) {
@@ -151,13 +139,13 @@ class RestoreHelper extends Installer {
                 String code = saveSomeOldInfo();
                 restoreSharedPreferencesFromFile(defaultSharedPref, appDataDir + "/defaultSharedPref");
 
-                SharedPreferences sharedPreferences = activity.getSharedPreferences(PrefManager.getPrefName(), Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = activity.getSharedPreferences(SharedPreferencesModule.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
                 restoreSharedPreferencesFromFile(sharedPreferences, appDataDir + "/sharedPreferences");
 
-                convertSharedPreferencesPackageNamesToUIDs(activity);
+                convertSharedPreferencesPackageNamesToUIDs();
 
-                FileOperations.deleteFile(activity, appDataDir, "defaultSharedPref", "defaultSharedPref");
-                FileOperations.deleteFile(activity, appDataDir, "sharedPreferences", "sharedPreferences");
+                FileManager.deleteFile(activity, appDataDir, "defaultSharedPref", "defaultSharedPref");
+                FileManager.deleteFile(activity, appDataDir, "sharedPreferences", "sharedPreferences");
 
                 refreshInstallationParameters();
 
@@ -166,7 +154,7 @@ class RestoreHelper extends Installer {
                 refreshModulesStatus(activity);
 
                 Patch patch = new Patch(activity);
-                patch.checkPatches();
+                patch.checkPatches(true);
 
             } catch (Exception e) {
                 Log.e(LOG_TAG, "Restore fault " + e.getMessage() + " " + e.getCause());
@@ -218,7 +206,7 @@ class RestoreHelper extends Installer {
         } else {
             ArrayList<String> copy = new ArrayList<>(requiredFiles);
             copy.removeAll(zipEntries);
-            Log.e(LOG_TAG, "RestoreHelper isBackupExist backup file corrupted " + copy.toString());
+            Log.e(LOG_TAG, "RestoreHelper isBackupExist backup file corrupted " + copy);
         }
 
         return zipEntries.containsAll(requiredFiles);
@@ -261,23 +249,23 @@ class RestoreHelper extends Installer {
     private String saveSomeOldInfo() {
         String code = "";
         if (activity.getString(R.string.appVersion).endsWith("o")) {
-            code = new PrefManager(activity).getStrPref("registrationCode");
+            code = preferenceRepository.get().getStringPreference("registrationCode");
         }
         return code;
     }
 
     private void restoreOldInfo(String code) {
         if (!code.isEmpty()) {
-            new PrefManager(activity).setStrPref("registrationCode", code);
+            preferenceRepository.get().setStringPreference("registrationCode", code);
         }
     }
 
     private void refreshInstallationParameters() {
-        ModulesAux.saveDNSCryptStateRunning(activity, false);
-        ModulesAux.saveTorStateRunning(activity, false);
-        ModulesAux.saveITPDStateRunning(activity, false);
+        ModulesAux.saveDNSCryptStateRunning(false);
+        ModulesAux.saveTorStateRunning(false);
+        ModulesAux.saveITPDStateRunning(false);
 
-        new PrefManager(activity).setSetStrPref(APPS_NEWLY_INSTALLED, Collections.emptySet());
+        preferenceRepository.get().setStringSetPreference(APPS_NEWLY_INSTALLED, Collections.emptySet());
     }
 
     private void extractBackup() throws Exception {
@@ -323,31 +311,32 @@ class RestoreHelper extends Installer {
         }
     }
 
-    private void convertSharedPreferencesPackageNamesToUIDs(Context context) {
-        InstalledApplications installedApplications = new InstalledApplications(context, Collections.emptySet());
-        List<ApplicationData> applications = installedApplications.getInstalledApps(false);
+    private void convertSharedPreferencesPackageNamesToUIDs() {
+        List<ApplicationData> applications = new InstalledApplicationsManager.Builder()
+                .build()
+                .getInstalledApps();
 
-        for (String tag: TAGS_TO_CONVERT) {
+        for (String tag : TAGS_TO_CONVERT) {
             convertPackageNamesToUIDs(applications, tag);
         }
     }
 
     private void convertPackageNamesToUIDs(List<ApplicationData> applications, String tag) {
-        Set<String> savedPackageNames = new PrefManager(activity).getSetStrPref(tag + "Backup");
+        Set<String> savedPackageNames = preferenceRepository.get().getStringSetPreference(tag + "Backup");
         Set<String> uIDsToSave = new HashSet<>();
 
-        for (String savedPackage: savedPackageNames) {
+        for (String savedPackage : savedPackageNames) {
 
             if (savedPackage.matches("^-?\\d+$")) {
                 uIDsToSave.add(savedPackage);
                 continue;
             }
 
-            for (ApplicationData applicationData: applications) {
+            for (ApplicationData applicationData : applications) {
                 String pack = applicationData.getPack();
                 ConcurrentSkipListSet<String> names = applicationData.getNames();
                 if (!names.isEmpty() && names.first().contains("(M)")) {
-                    pack +="(M)";
+                    pack += "(M)";
                 }
 
                 if (pack.equals(savedPackage)) {
@@ -356,8 +345,8 @@ class RestoreHelper extends Installer {
             }
         }
 
-        new PrefManager(activity).setSetStrPref(tag, uIDsToSave);
-        new PrefManager(activity).setSetStrPref(tag + "Backup", Collections.emptySet());
+        preferenceRepository.get().setStringSetPreference(tag, uIDsToSave);
+        preferenceRepository.get().setStringSetPreference(tag + "Backup", Collections.emptySet());
     }
 
     void setPathBackup(String pathBackup) {

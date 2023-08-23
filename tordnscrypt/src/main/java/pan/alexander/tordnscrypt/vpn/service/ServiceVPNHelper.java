@@ -1,37 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.vpn.service;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.vpn.service;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,7 +25,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -50,7 +35,8 @@ import pan.alexander.tordnscrypt.utils.enums.ModuleState;
 import pan.alexander.tordnscrypt.utils.enums.OperationMode;
 import pan.alexander.tordnscrypt.utils.enums.VPNCommand;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.loge;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.VPN_SERVICE_ENABLED;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
@@ -74,7 +60,7 @@ public class ServiceVPNHelper {
         ModuleState dnsCryptState = modulesStatus.getDnsCryptState();
         ModuleState torState = modulesStatus.getTorState();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean vpnServiceEnabled = prefs.getBoolean("VPNServiceEnabled", false);
+        boolean vpnServiceEnabled = prefs.getBoolean(VPN_SERVICE_ENABLED, false);
 
         boolean fixTTL = modulesStatus.isFixTTL() && (modulesStatus.getMode() == ROOT_MODE)
                 && !modulesStatus.isUseModulesWithRoot();
@@ -91,7 +77,7 @@ public class ServiceVPNHelper {
 
     public static void stop(String reason, Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean vpnServiceEnabled = prefs.getBoolean("VPNServiceEnabled", false);
+        boolean vpnServiceEnabled = prefs.getBoolean(VPN_SERVICE_ENABLED, false);
 
         if (vpnServiceEnabled) {
             Intent intent = new Intent(context, ServiceVPN.class);
@@ -114,19 +100,17 @@ public class ServiceVPNHelper {
             SharedPreferences prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(activity);
             if (((operationMode == VPN_MODE) || fixTTL)
                     && activity instanceof MainActivity
-                    && !prefs.getBoolean("VPNServiceEnabled", false)) {
+                    && !prefs.getBoolean(VPN_SERVICE_ENABLED, false)) {
                 ((MainActivity) activity).prepareVPNService();
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "ServiceVPNHelper prepareVPNServiceIfRequired exception " + e.getMessage() + e.getCause());
+            loge("ServiceVPNHelper prepareVPNServiceIfRequired", e);
         } finally {
             reentrantLock.unlock();
         }
     }
 
     private static void sendIntent(Context context, Intent intent) {
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             intent.putExtra("showNotification", true);
             context.startForegroundService(intent);

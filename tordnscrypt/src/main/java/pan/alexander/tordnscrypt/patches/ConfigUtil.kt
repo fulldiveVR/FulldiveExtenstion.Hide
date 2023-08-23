@@ -1,51 +1,36 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.patches
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
 
-import android.app.Activity
+package pan.alexander.tordnscrypt.patches
+
+import android.content.Context
 import android.util.Log
-import pan.alexander.tordnscrypt.settings.PathVars
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.App
+import pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.zip.ZipInputStream
 
-class ConfigUtil(private val activity: Activity) {
-    private val pathVars = PathVars.getInstance(activity)
+class ConfigUtil(private val context: Context) {
+    private val pathVars = App.instance.daggerComponent.getPathVars().get()
 
     fun patchDNSCryptConfig(dnsCryptConfigPatches: List<PatchLine>) {
         readFromFile(pathVars.dnscryptConfPath).replaceLinesInFile(dnsCryptConfigPatches).writeToFile(pathVars.dnscryptConfPath)
@@ -72,7 +57,7 @@ class ConfigUtil(private val activity: Activity) {
 
     private fun List<String>.writeToFile(filePath: String) {
 
-        if (this.isEmpty() || activity.isFinishing) {
+        if (this.isEmpty()) {
             return
         }
 
@@ -127,7 +112,7 @@ class ConfigUtil(private val activity: Activity) {
         val installedGeoipSize = geoip.length()
         val installedGeoip6Size = geoip6.length()
         try {
-            ZipInputStream(activity.assets.open("tor.mp3")).use { zipInputStream ->
+            ZipInputStream(context.assets.open("tor.mp3")).use { zipInputStream ->
                 var zipEntry = zipInputStream.nextEntry
                 while (zipEntry != null) {
                     val fileName = zipEntry.name

@@ -1,37 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt;
 
 import android.content.res.Configuration;
 import android.os.Build;
@@ -43,16 +29,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.lang.ref.WeakReference;
-import java.util.Objects;
-
 import pan.alexander.tordnscrypt.language.Language;
 
 
 public abstract class LangAppCompatActivity extends AppCompatActivity {
 
     private final boolean DEVELOPER_MODE = false;
-    private ApplicationBase applicationContext;
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
@@ -78,18 +60,6 @@ public abstract class LangAppCompatActivity extends AppCompatActivity {
 
         Language.setFromPreference(this, "pref_fast_language");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && getApplicationContext() instanceof ApplicationBase) {
-            applicationContext = (ApplicationBase) getApplicationContext();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (applicationContext != null) {
-            applicationContext.setCurrentActivity(new WeakReference<>(this));
-        }
     }
 
     @Override
@@ -109,26 +79,4 @@ public abstract class LangAppCompatActivity extends AppCompatActivity {
         super.applyOverrideConfiguration(overrideConfiguration);
     }
 
-    @Override
-    protected void onStop() {
-
-        clearCurrentActivity();
-
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        clearCurrentActivity();
-
-        super.onDestroy();
-    }
-
-    private void clearCurrentActivity() {
-        if (applicationContext != null && applicationContext.getCurrentActivity() != null
-                && Objects.equals(applicationContext.getCurrentActivity().get(), this)) {
-            applicationContext.setCurrentActivity(null);
-        }
-    }
 }

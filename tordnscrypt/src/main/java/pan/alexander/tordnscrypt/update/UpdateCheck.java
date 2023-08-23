@@ -1,44 +1,30 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.update;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.update;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
@@ -52,29 +38,44 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.RSAKeyGenParameterSpec;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.Future;
 
 import javax.crypto.Cipher;
+import javax.inject.Inject;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.BuildConfig;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.HttpsRequest;
-import pan.alexander.tordnscrypt.utils.PrefManager;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
+import pan.alexander.tordnscrypt.utils.web.HttpsConnectionManager;
 
 import static pan.alexander.tordnscrypt.TopFragment.appProcVersion;
 import static pan.alexander.tordnscrypt.TopFragment.appVersion;
-import static pan.alexander.tordnscrypt.utils.Registration.wrongRegistrationCode;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.dialogs.Registration.wrongRegistrationCode;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.loge;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.logw;
 
 public class UpdateCheck {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Lazy<HttpsConnectionManager> httpsConnectionManager;
+
+    private static final int CONNECT_TIMEOUT = 30;
+    private static final int READ_TIMEOUT = 30;
+
     private final TopFragment topFragment;
     private final Context context;
     private static PublicKey publicKey;
     private static PrivateKey privateKey;
 
     public UpdateCheck(TopFragment topFragment) {
+        App.getInstance().getDaggerComponent().inject(this);
         this.topFragment = topFragment;
         this.context = topFragment.getContext();
     }
@@ -102,7 +103,7 @@ public class UpdateCheck {
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.e(LOG_TAG, "RSADecrypt function fault " + e.getMessage());
+            loge("RSADecrypt function fault", e);
         }
         return "";
     }
@@ -142,7 +143,7 @@ public class UpdateCheck {
             return Base64.encodeToString(encryptedBytes, Base64.DEFAULT);
         } catch (Exception e) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.e(LOG_TAG, "RSASign function fault " + e.getMessage());
+            loge("RSASign function fault", e);
         }
         return null;
     }
@@ -155,7 +156,7 @@ public class UpdateCheck {
     private void compareVersions(String serverAnswer) {
         if (!serverAnswer.toLowerCase().contains(appProcVersion.toLowerCase())) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.e(LOG_TAG, "compareVersions function fault " + serverAnswer);
+            loge("compareVersions function fault " + serverAnswer);
             return;
         }
 
@@ -163,7 +164,7 @@ public class UpdateCheck {
         String[] modulesArr = serverAnswer.split(";");
         if (modulesArr.length < 1) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.w(LOG_TAG, "compareVersions function fault modulesArr length < 1");
+            logw("compareVersions function fault modulesArr length < 1");
             return;
         }
 
@@ -171,25 +172,25 @@ public class UpdateCheck {
 
         if (iproArr.length < 4) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.w(LOG_TAG, "compareVersions function fault iproArr length < 4");
+            logw("compareVersions function fault iproArr length < 4");
             return;
         }
 
         if (!iproArr[1].matches("\\d+\\.+\\d+\\.\\d+")) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.w(LOG_TAG, "compareVersions function fault iproArr version regexp mismatch");
+            logw("compareVersions function fault iproArr version regexp mismatch");
             return;
         }
 
         if (!iproArr[2].matches("\\d{3}")) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.w(LOG_TAG, "compareVersions function fault iproArr pass regexp mismatch");
+            logw("compareVersions function fault iproArr pass regexp mismatch");
             return;
         }
 
         if (!iproArr[3].matches("\\w{8}")) {
             showUpdateMessageAndSaveResult(R.string.update_fault);
-            Log.w(LOG_TAG, "compareVersions function fault iproArr hash regexp mismatch");
+            logw("compareVersions function fault iproArr hash regexp mismatch");
             return;
         }
 
@@ -238,7 +239,7 @@ public class UpdateCheck {
             return null;
         }
 
-        return CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        return App.getInstance().getDaggerComponent().getCachedExecutor().submit(() -> {
             String serverAnswerEncoded = "";
             String serverAnswer = "";
 
@@ -247,11 +248,11 @@ public class UpdateCheck {
 
                 if (rsaSign == null) {
                     showUpdateMessageAndSaveResult(R.string.update_fault);
-                    Log.e(LOG_TAG, "RSASign(appSign) returns null");
+                    loge("RSASign(appSign) returns null");
                     return;
                 }
 
-                String registrationCode = new PrefManager(context).getStrPref("registrationCode");
+                String registrationCode = preferenceRepository.get().getStringPreference("registrationCode");
 
                 HashMap<String, String> request = new HashMap<>();
                 request.put("sign", rsaSign);
@@ -263,25 +264,30 @@ public class UpdateCheck {
 
 
                 String url = domainName + "/ru/update/";
-                serverAnswerEncoded = HttpsRequest.post(context, url, HttpsRequest.hashMapToUrl(request));
+
+                HttpsConnectionManager connectionManager = httpsConnectionManager.get();
+                connectionManager.setConnectTimeoutSec(CONNECT_TIMEOUT);
+                connectionManager.setReadTimeoutSec(READ_TIMEOUT);
+                List<String> answer = connectionManager.post(url, request);
+                serverAnswerEncoded = TextUtils.join("\n", answer);
 
                 if (serverAnswerEncoded.isEmpty()) {
                     throw new IllegalStateException("requestUpdateData function fault - server answer is empty");
                 } else if (serverAnswerEncoded.contains("fault")) {
                     if (serverAnswerEncoded.contains("wrong code")) {
                         showUpdateMessageAndSaveResult(R.string.update_wrong_code, R.string.update_fault);
-                        new PrefManager(context).setStrPref("updateTimeLast", "");
+                        preferenceRepository.get().setStringPreference("updateTimeLast", "");
                         wrongRegistrationCode = true;
-                        Log.e(LOG_TAG, "requestUpdateData function fault - server returns wrong code");
+                        loge("requestUpdateData function fault - server returns wrong code");
                         return;
                     } else if (serverAnswerEncoded.contains("over 3 activations")) {
                         showUpdateMessageAndSaveResult(R.string.update_over_three_activations, R.string.update_fault);
                         wrongRegistrationCode = true;
-                        Log.e(LOG_TAG, "requestUpdateData function fault - server returns over 3 activations");
+                        loge("requestUpdateData function fault - server returns over 3 activations");
                         return;
                     } else if (serverAnswerEncoded.contains("over 5 times")) {
                         showUpdateMessageAndSaveResult(R.string.update_over_five_times, R.string.update_fault);
-                        Log.e(LOG_TAG, "requestUpdateData function fault - server returns over 5 times");
+                        loge("requestUpdateData function fault - server returns over 5 times");
                         return;
                     } else {
                         throw new IllegalStateException("requestUpdateData function fault - server returns fault");
@@ -295,9 +301,11 @@ public class UpdateCheck {
                     compareVersions(serverAnswer);
                 }
 
+            } catch (CancellationException e) {
+                logw("UpdateCheck requestUpdateData", e);
             } catch (Exception e) {
                 showUpdateMessageAndSaveResult(R.string.update_check_warning, R.string.update_check_warning_menu);
-                Log.e(LOG_TAG, "UpdateCheck requestUpdateData fault " + e.getMessage()
+                loge("UpdateCheck requestUpdateData fault " + e.getMessage()
                         + "; serverAnswerEncoded " + serverAnswerEncoded
                         + "; serverAnswer " + serverAnswer);
             }
@@ -306,7 +314,7 @@ public class UpdateCheck {
 
     private void showUpdateMessageAndSaveResult(int messageRes) {
         String message = context.getString(messageRes);
-        new PrefManager(context).setStrPref("LastUpdateResult", message);
+        preferenceRepository.get().setStringPreference("LastUpdateResult", message);
 
         showUpdateMessage(message);
     }
@@ -314,7 +322,7 @@ public class UpdateCheck {
     private void showUpdateMessageAndSaveResult(int messageRes, int toSaveRes) {
         String message = context.getString(messageRes);
         String toSave = context.getString(toSaveRes);
-        new PrefManager(context).setStrPref("LastUpdateResult", toSave);
+        preferenceRepository.get().setStringPreference("LastUpdateResult", toSave);
 
         showUpdateMessage(message);
     }

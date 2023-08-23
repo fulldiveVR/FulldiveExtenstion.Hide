@@ -1,37 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.settings;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,27 +33,37 @@ import java.util.Arrays;
 import java.util.List;
 
 import pan.alexander.tordnscrypt.R;
-import pan.alexander.tordnscrypt.SettingsActivity;
 import pan.alexander.tordnscrypt.settings.dnscrypt_relays.DNSServerRelays;
 import pan.alexander.tordnscrypt.settings.dnscrypt_servers.PreferencesDNSCryptServers;
 import pan.alexander.tordnscrypt.settings.dnscrypt_settings.PreferencesDNSFragment;
 import pan.alexander.tordnscrypt.settings.show_rules.ShowRulesRecycleFrag;
 import pan.alexander.tordnscrypt.settings.tor_preferences.PreferencesTorFragment;
 import pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
-import pan.alexander.tordnscrypt.utils.file_operations.OnTextFileOperationsCompleteListener;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
+import pan.alexander.tordnscrypt.utils.filemanager.OnTextFileOperationsCompleteListener;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.Constants.IPv4_REGEX;
+import static pan.alexander.tordnscrypt.utils.Constants.IPv6_REGEX;
+import static pan.alexander.tordnscrypt.utils.Constants.IPv6_REGEX_WITH_MASK;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.DNSCRYPT_BOOTSTRAP_RESOLVERS;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.DNSCRYPT_DNS64_PREFIX;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.DNSCRYPT_LISTEN_PORT;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.DNSCRYPT_OUTBOUND_PROXY;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.I2PD_OUTBOUND_PROXY;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.TOR_OUTBOUND_PROXY;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.TOR_OUTBOUND_PROXY_ADDRESS;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants.readTextFile;
 import static pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants.writeToTextFile;
 
 public class SettingsParser implements OnTextFileOperationsCompleteListener {
     private final SettingsActivity settingsActivity;
-    private String appDataDir;
+    private final String appDataDir;
     private Bundle bundleForReadPublicResolversMdFunction;
 
-    public SettingsParser(SettingsActivity settingsActivity) {
+    public SettingsParser(SettingsActivity settingsActivity, String appDataDir) {
         this.settingsActivity = settingsActivity;
+        this.appDataDir = appDataDir;
     }
 
     private void readDnscryptProxyToml(List<String> lines) {
@@ -97,18 +93,29 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
                 }
 
                 if (key.equals("listen_addresses")) {
-                    key = "listen_port";
+                    key = DNSCRYPT_LISTEN_PORT;
                     if (val.contains("\"") && val.contains(":")) {
-                        val = val.substring(val.indexOf(":") + 1, val.indexOf("\"", 3)).trim();
+                        val = val.substring(val.lastIndexOf(":") + 1, val.lastIndexOf("\"")).trim();
                     } else if (val.contains("'") && val.contains(":")) {
-                        val = val.substring(val.indexOf(":") + 1, val.indexOf("'", 3)).trim();
+                        val = val.substring(val.lastIndexOf(":") + 1, val.lastIndexOf("'")).trim();
                     }
-                } else if (key.equals("fallback_resolver")) {
-                    if (val.contains("\"") && val.contains(":")) {
-                        val = val.substring(val.indexOf("\"") + 1, val.indexOf(":")).trim();
-                    } else if (val.contains("'") && val.contains(":")) {
-                        val = val.substring(val.indexOf("'") + 1, val.indexOf(":")).trim();
+                } else if (key.equals(DNSCRYPT_BOOTSTRAP_RESOLVERS)) {
+                    StringBuilder fallbackResolvers = new StringBuilder();
+                    for (String resolver: val.split(", ?")) {
+                        resolver = resolver
+                                .replace("[", "").replace("]", "")
+                                .replace("'", "").replace("\"", "");
+                        if (resolver.endsWith(":53")) {
+                            resolver = resolver.substring(0, resolver.lastIndexOf(":53"));
+                        }
+                        if (resolver.matches(IPv4_REGEX) || resolver.matches(IPv6_REGEX)) {
+                            if (fallbackResolvers.length() != 0) {
+                                fallbackResolvers.append(", ");
+                            }
+                            fallbackResolvers.append(resolver);
+                        }
                     }
+                    val = fallbackResolvers.toString();
                 } else if (key.equals("proxy")) {
                     key = "proxy_port";
                     if (val.contains("\"") && val.contains(":")) {
@@ -116,13 +123,29 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
                     } else if (val.contains("'") && val.contains(":")) {
                         val = val.substring(val.indexOf(":", 10) + 1, val.indexOf("'", 10)).trim();
                     }
-                } else if (header.equals("[sources.public-resolvers]") && key.equals("urls")) {
+                } else if (header.matches("\\[sources\\.'?public-resolvers'?]") && key.equals("urls")) {
                     key = "Sources";
+                } else if (header.matches("\\[sources\\.'?relays'?]") && key.equals("urls")) {
+                    key = "Relays";
+                } else if (header.matches("\\[sources\\.'?relays'?]") && key.equals("refresh_delay")) {
+                    key = "refresh_delay_relays";
+                } else if (header.equals("[dns64]") && key.equals("prefix")) {
+                    key = DNSCRYPT_DNS64_PREFIX;
+                    StringBuilder dns64Prefixes = new StringBuilder();
+                    for (String dns64Prefix: val.split(", ?")) {
+                        dns64Prefix = dns64Prefix
+                                .replace("[", "").replace("]", "")
+                                .replace("'", "").replace("\"", "");
+                        if (dns64Prefix.matches(IPv6_REGEX_WITH_MASK)) {
+                            if (dns64Prefixes.length() != 0) {
+                                dns64Prefixes.append(", ");
+                            }
+                            dns64Prefixes.append(dns64Prefix);
+                        }
+                    }
+                    val = dns64Prefixes.toString();
                 }
 
-                if (header.matches("\\[sources\\.'?relays'?]") && key.equals("urls")) key = "Relays";
-                if (header.matches("\\[sources\\.'?relays'?]") && key.equals("refresh_delay"))
-                    key = "refresh_delay_relays";
 
 
                 String val_saved_str = "";
@@ -147,11 +170,11 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
                     editor.putBoolean(key, Boolean.parseBoolean(val));
                 }
 
-                if (key.equals("#proxy") && sp.getBoolean("Enable proxy", false)) {
-                    editor.putBoolean("Enable proxy", false);
+                if (key.equals("#proxy") && sp.getBoolean(DNSCRYPT_OUTBOUND_PROXY, false)) {
+                    editor.putBoolean(DNSCRYPT_OUTBOUND_PROXY, false);
                 }
-                if (key.equals("proxy_port") && !sp.getBoolean("Enable proxy", false)) {
-                    editor.putBoolean("Enable proxy", true);
+                if (key.equals("proxy_port") && !sp.getBoolean(DNSCRYPT_OUTBOUND_PROXY, false)) {
+                    editor.putBoolean(DNSCRYPT_OUTBOUND_PROXY, true);
                 }
                 if (val.contains(appDataDir + "/cache/query.log") && !key.contains("#") && !sp.getBoolean("Enable Query logging", false)) {
                     editor.putBoolean("Enable Query logging", true);
@@ -204,8 +227,15 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
                     val_tor.add(val);
                 }
 
-                if (key.equals("SOCKSPort") || key.equals("HTTPTunnelPort") || key.equals("TransPort")) {
-                    val = val.split(" ")[0].replaceAll(".+:", "").replaceAll("\\D+", "");
+                if (key.equals("SOCKSPort")
+                        || key.equals("HTTPTunnelPort")
+                        || key.equals("TransPort")
+                        || key.equals("DNSPort")) {
+                    val = val.split(" ")[0]
+                            .replaceAll(".+:", "")
+                            .replaceAll("\\D+", "");
+                } else if (key.equals("VirtualAddrNetworkIPv4")) {
+                    key = "VirtualAddrNetwork";
                 }
 
                 String val_saved_str = "";
@@ -279,11 +309,11 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
                     case "#HTTPTunnelPort":
                         editor.putBoolean("Enable HTTPTunnel", false);
                         break;
-                    case "Socks5Proxy":
-                        editor.putBoolean("Enable output Socks5Proxy", true);
+                    case TOR_OUTBOUND_PROXY_ADDRESS:
+                        editor.putBoolean(TOR_OUTBOUND_PROXY, true);
                         break;
                     case "#Socks5Proxy":
-                        editor.putBoolean("Enable output Socks5Proxy", false);
+                        editor.putBoolean(TOR_OUTBOUND_PROXY, false);
                         break;
                 }
             }
@@ -333,6 +363,8 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
                     key = "incoming port";
                 } else if (header.equals("[ntcp2]") && key.equals("enabled")) {
                     key = "ntcp2 enabled";
+                } else if (header.equals("[ssu2]") && key.equals("enabled")) {
+                    key = "ssu2 enabled";
                 } else if (header.equals("[http]") && key.equals("enabled")) {
                     key = "http enabled";
                 } else if (header.equals("[httpproxy]") && key.equals("enabled")) {
@@ -399,10 +431,10 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
                         editor.putBoolean("Allow incoming connections", false);
                         break;
                     case "ntcpproxy":
-                        editor.putBoolean("Enable ntcpproxy", true);
+                        editor.putBoolean(I2PD_OUTBOUND_PROXY, true);
                         break;
                     case "#ntcpproxy":
-                        editor.putBoolean("Enable ntcpproxy", false);
+                        editor.putBoolean(I2PD_OUTBOUND_PROXY, false);
                         break;
                 }
             }
@@ -589,10 +621,7 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
     }
 
     public void activateSettingsParser() {
-        PathVars pathVars = PathVars.getInstance(settingsActivity);
-        appDataDir = pathVars.getAppDataDir();
-
-        FileOperations.setOnFileOperationCompleteListener(this);
+        FileManager.setOnFileOperationCompleteListener(this);
     }
 
     public void deactivateSettingsParser() {
@@ -600,7 +629,7 @@ public class SettingsParser implements OnTextFileOperationsCompleteListener {
             bundleForReadPublicResolversMdFunction.clear();
         }
 
-        FileOperations.deleteOnFileOperationCompleteListener(this);
+        FileManager.deleteOnFileOperationCompleteListener(this);
     }
 
     @Override

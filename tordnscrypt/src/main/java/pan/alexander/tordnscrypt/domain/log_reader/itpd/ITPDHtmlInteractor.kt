@@ -1,42 +1,43 @@
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
  */
 
 package pan.alexander.tordnscrypt.domain.log_reader.itpd
 
 import android.util.Log
-import pan.alexander.tordnscrypt.domain.ModulesLogRepository
+import pan.alexander.tordnscrypt.domain.log_reader.ModulesLogRepository
 import pan.alexander.tordnscrypt.modules.ModulesStatus
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG
 import pan.alexander.tordnscrypt.utils.enums.ModuleState
 import java.lang.Exception
+import java.lang.ref.WeakReference
 
 class ITPDHtmlInteractor(private val modulesLogRepository: ModulesLogRepository) {
-    private val listeners: HashSet<OnITPDHtmlUpdatedListener?> = HashSet()
+    private val listeners: HashMap<Class<*>, WeakReference<OnITPDHtmlUpdatedListener>> = hashMapOf()
     private var parser: ITPDHtmlParser? = null
     private val modulesStatus = ModulesStatus.getInstance()
 
-    fun addListener (listener: OnITPDHtmlUpdatedListener?) {
-        listeners.add(listener)
+    fun <T: OnITPDHtmlUpdatedListener> addListener (listener: T?) {
+        listener?.let { listeners[it.javaClass] = WeakReference(it) }
     }
 
-    fun removeListener (listener: OnITPDHtmlUpdatedListener?) {
-        listeners.remove(listener)
+    fun <T: OnITPDHtmlUpdatedListener> removeListener (listener: T?) {
+        listener?.let { listeners.remove(it.javaClass) }
 
         if (listeners.isEmpty()) {
             resetParserState()
@@ -75,13 +76,11 @@ class ITPDHtmlInteractor(private val modulesLogRepository: ModulesLogRepository)
 
         val itpdHtmlData = parser?.parseHtmlLines()
 
-        val listeners = listeners.toHashSet()
-
         listeners.forEach { listener ->
-            if (listener?.isActive() == true) {
-                itpdHtmlData?.let { listener.onITPDHtmlUpdated(it) }
+            if (listener.value.get()?.isActive() == true) {
+                itpdHtmlData?.let { listener.value.get()?.onITPDHtmlUpdated(it) }
             } else {
-                listener?.let { removeListener(it) }
+                removeListener(listener.value.get())
             }
         }
     }

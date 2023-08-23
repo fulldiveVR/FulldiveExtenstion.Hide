@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.modules;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.modules;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,18 +33,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.RootCommands;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.COMMAND_RESULT;
-import static pan.alexander.tordnscrypt.utils.RootExecService.DNSCryptRunFragmentMark;
-import static pan.alexander.tordnscrypt.utils.RootExecService.I2PDRunFragmentMark;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
-import static pan.alexander.tordnscrypt.utils.RootExecService.TorRunFragmentMark;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.DNSCRYPT_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.I2PD_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.TOR_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.COMMAND_RESULT;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class ModulesVersions {
-    private static volatile ModulesVersions holder;
+    private final CachedExecutor cachedExecutor;
 
     private String dnsCryptVersion = "";
     private String torVersion = "";
@@ -67,48 +57,35 @@ public class ModulesVersions {
 
     private Shell.Console console;
 
-    private ModulesVersions() {
-    }
-
-    public static ModulesVersions getInstance() {
-        if (holder == null) {
-            synchronized (ModulesVersions.class) {
-                if (holder == null) {
-                    holder = new ModulesVersions();
-                }
-            }
-        }
-        return holder;
+    @Inject
+    ModulesVersions(CachedExecutor cachedExecutor) {
+        this.cachedExecutor = cachedExecutor;
     }
 
     public void refreshVersions(final Context context) {
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             //openCommandShell();
 
-            PathVars pathVars = getPathVars(context);
+            PathVars pathVars = App.getInstance().getDaggerComponent().getPathVars().get();
 
             //checkModulesVersions(pathVars);
-            checkModulesVersionsModern(pathVars);
+            checkModulesVersionsModern(context, pathVars);
 
             if (isBinaryFileAccessible(pathVars.getDNSCryptPath()) && !dnsCryptVersion.isEmpty()) {
-                sendResult(context, dnsCryptVersion, DNSCryptRunFragmentMark);
+                sendResult(context, dnsCryptVersion, DNSCRYPT_RUN_FRAGMENT_MARK);
             }
 
             if (isBinaryFileAccessible(pathVars.getTorPath()) && !torVersion.isEmpty()) {
-                sendResult(context, torVersion, TorRunFragmentMark);
+                sendResult(context, torVersion, TOR_RUN_FRAGMENT_MARK);
             }
 
             if (isBinaryFileAccessible(pathVars.getITPDPath()) && !itpdVersion.isEmpty()) {
-                sendResult(context, itpdVersion, I2PDRunFragmentMark);
+                sendResult(context, itpdVersion, I2PD_RUN_FRAGMENT_MARK);
             }
 
             //closeCommandShell();
         });
-    }
-
-    private PathVars getPathVars(Context context) {
-        return PathVars.getInstance(context);
     }
 
     private boolean isBinaryFileAccessible(String path) {
@@ -150,19 +127,22 @@ public class ModulesVersions {
                 .getStdout();
     }
 
-    private void checkModulesVersionsModern(PathVars pathVars) {
+    private void checkModulesVersionsModern(Context context, PathVars pathVars) {
 
-        List<String> dnsCryptOutput = new ProcessStarter().startProcess(pathVars.getDNSCryptPath() + " --version").stdout;
+        List<String> dnsCryptOutput = new ProcessStarter(context.getApplicationInfo().nativeLibraryDir)
+                .startProcess(pathVars.getDNSCryptPath() + " --version").stdout;
         if (!dnsCryptOutput.isEmpty()) {
             dnsCryptVersion = "DNSCrypt_version " + dnsCryptOutput.get(0);
         }
 
-        List<String> torOutput = new ProcessStarter().startProcess(pathVars.getTorPath() + " --version").stdout;
+        List<String> torOutput = new ProcessStarter(context.getApplicationInfo().nativeLibraryDir)
+                .startProcess(pathVars.getTorPath() + " --version").stdout;
         if (!torOutput.isEmpty()) {
             torVersion = "Tor_version " + torOutput.get(0);
         }
 
-        List<String> itpdOutput = new ProcessStarter().startProcess(pathVars.getITPDPath() + " --version").stdout;
+        List<String> itpdOutput = new ProcessStarter(context.getApplicationInfo().nativeLibraryDir)
+                .startProcess(pathVars.getITPDPath() + " --version").stdout;
         if (!itpdOutput.isEmpty()) {
             itpdVersion = "ITPD_version " + itpdOutput.get(0);
         }

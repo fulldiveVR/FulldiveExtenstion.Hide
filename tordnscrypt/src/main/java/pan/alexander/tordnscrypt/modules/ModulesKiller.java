@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.modules;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.modules;
 
 import android.app.Service;
 import android.content.Context;
@@ -48,26 +33,34 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
+import dagger.Lazy;
 import eu.chainfire.libsuperuser.Shell;
+import pan.alexander.tordnscrypt.App;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 
 import static pan.alexander.tordnscrypt.modules.ModulesService.DNSCRYPT_KEYWORD;
 import static pan.alexander.tordnscrypt.modules.ModulesService.ITPD_KEYWORD;
 import static pan.alexander.tordnscrypt.modules.ModulesService.TOR_KEYWORD;
-import static pan.alexander.tordnscrypt.utils.RootExecService.COMMAND_RESULT;
-import static pan.alexander.tordnscrypt.utils.RootExecService.DNSCryptRunFragmentMark;
-import static pan.alexander.tordnscrypt.utils.RootExecService.I2PDRunFragmentMark;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
-import static pan.alexander.tordnscrypt.utils.RootExecService.TorRunFragmentMark;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.DNSCRYPT_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.I2PD_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.TOR_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.COMMAND_RESULT;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RESTARTING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
 
+import javax.inject.Inject;
+
 public class ModulesKiller {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+
     private final Service service;
     private final String appDataDir;
     private final String busyboxPath;
@@ -84,6 +77,7 @@ public class ModulesKiller {
     private static Thread itpdThread;
 
     ModulesKiller(Service service, PathVars pathVars) {
+        App.getInstance().getDaggerComponent().inject(this);
         this.service = service;
         appDataDir = pathVars.getAppDataDir();
         busyboxPath = pathVars.getBusyboxPath();
@@ -95,15 +89,15 @@ public class ModulesKiller {
     }
 
     public static void stopDNSCrypt(Context context) {
-        sendStopIntent(context, ModulesService.actionStopDnsCrypt);
+        sendStopIntent(context, ModulesServiceActions.ACTION_STOP_DNSCRYPT);
     }
 
     public static void stopTor(Context context) {
-        sendStopIntent(context, ModulesService.actionStopTor);
+        sendStopIntent(context, ModulesServiceActions.ACTION_STOP_TOR);
     }
 
     public static void stopITPD(Context context) {
-        sendStopIntent(context, ModulesService.actionStopITPD);
+        sendStopIntent(context, ModulesServiceActions.ACTION_STOP_ITPD);
     }
 
     private static void sendStopIntent(Context context, String action) {
@@ -162,7 +156,8 @@ public class ModulesKiller {
             try {
                 String dnsCryptPid = readPidFile(appDataDir + "/dnscrypt-proxy.pid");
 
-                boolean moduleStartedWithRoot = new PrefManager(service).getBoolPref("DNSCryptStartedWithRoot");
+                boolean moduleStartedWithRoot = preferenceRepository.get()
+                        .getBoolPreference("DNSCryptStartedWithRoot");
                 boolean rootIsAvailable = modulesStatus.isRootAvailable();
 
                 boolean result = doThreeAttemptsToStopModule(dnscryptPath, dnsCryptPid, dnsCryptThread, moduleStartedWithRoot);
@@ -186,8 +181,9 @@ public class ModulesKiller {
                 if (moduleStartedWithRoot) {
                     if (!result) {
                         if (modulesStatus.getDnsCryptState() != RESTARTING) {
-                            ModulesAux.saveDNSCryptStateRunning(service, true);
-                            sendResultIntent(DNSCryptRunFragmentMark, DNSCRYPT_KEYWORD, dnscryptPath);
+                            ModulesAux.saveDNSCryptStateRunning(true);
+                            makeDelay(1);
+                            sendResultIntent(DNSCRYPT_RUN_FRAGMENT_MARK, DNSCRYPT_KEYWORD, dnscryptPath);
                         }
 
                         modulesStatus.setDnsCryptState(RUNNING);
@@ -196,17 +192,19 @@ public class ModulesKiller {
 
                     } else {
                         if (modulesStatus.getDnsCryptState() != RESTARTING) {
-                            ModulesAux.saveDNSCryptStateRunning(service, false);
+                            ModulesAux.saveDNSCryptStateRunning(false);
                             modulesStatus.setDnsCryptState(STOPPED);
-                            sendResultIntent(DNSCryptRunFragmentMark, DNSCRYPT_KEYWORD, "");
+                            makeDelay(1);
+                            sendResultIntent(DNSCRYPT_RUN_FRAGMENT_MARK, DNSCRYPT_KEYWORD, "");
                         }
                     }
                 } else {
                     if (dnsCryptThread != null && dnsCryptThread.isAlive()) {
 
                         if (modulesStatus.getDnsCryptState() != RESTARTING) {
-                            ModulesAux.saveDNSCryptStateRunning(service, true);
-                            sendResultIntent(DNSCryptRunFragmentMark, DNSCRYPT_KEYWORD, dnscryptPath);
+                            ModulesAux.saveDNSCryptStateRunning(true);
+                            makeDelay(1);
+                            sendResultIntent(DNSCRYPT_RUN_FRAGMENT_MARK, DNSCRYPT_KEYWORD, dnscryptPath);
                         }
 
                         modulesStatus.setDnsCryptState(RUNNING);
@@ -215,9 +213,10 @@ public class ModulesKiller {
                     } else {
 
                         if (modulesStatus.getDnsCryptState() != RESTARTING) {
-                            ModulesAux.saveDNSCryptStateRunning(service, false);
+                            ModulesAux.saveDNSCryptStateRunning(false);
                             modulesStatus.setDnsCryptState(STOPPED);
-                            sendResultIntent(DNSCryptRunFragmentMark, DNSCRYPT_KEYWORD, "");
+                            makeDelay(1);
+                            sendResultIntent(DNSCRYPT_RUN_FRAGMENT_MARK, DNSCRYPT_KEYWORD, "");
                         }
                     }
                 }
@@ -243,7 +242,8 @@ public class ModulesKiller {
             try {
                 String torPid = readPidFile(appDataDir + "/tor.pid");
 
-                boolean moduleStartedWithRoot = new PrefManager(service).getBoolPref("TorStartedWithRoot");
+                boolean moduleStartedWithRoot = preferenceRepository.get()
+                        .getBoolPreference("TorStartedWithRoot");
                 boolean rootIsAvailable = modulesStatus.isRootAvailable();
 
                 boolean result = doThreeAttemptsToStopModule(torPath, torPid, torThread, moduleStartedWithRoot);
@@ -268,8 +268,9 @@ public class ModulesKiller {
                 if (moduleStartedWithRoot) {
                     if (!result) {
                         if (modulesStatus.getTorState() != RESTARTING) {
-                            sendResultIntent(TorRunFragmentMark, TOR_KEYWORD, torPath);
-                            ModulesAux.saveTorStateRunning(service, true);
+                            ModulesAux.saveTorStateRunning(true);
+                            makeDelay(1);
+                            sendResultIntent(TOR_RUN_FRAGMENT_MARK, TOR_KEYWORD, torPath);
                         }
 
                         modulesStatus.setTorState(RUNNING);
@@ -278,17 +279,19 @@ public class ModulesKiller {
 
                     } else {
                         if (modulesStatus.getTorState() != RESTARTING) {
-                            ModulesAux.saveTorStateRunning(service, false);
+                            ModulesAux.saveTorStateRunning(false);
                             modulesStatus.setTorState(STOPPED);
-                            sendResultIntent(TorRunFragmentMark, TOR_KEYWORD, "");
+                            makeDelay(1);
+                            sendResultIntent(TOR_RUN_FRAGMENT_MARK, TOR_KEYWORD, "");
                         }
                     }
                 } else {
                     if (torThread != null && torThread.isAlive()) {
 
                         if (modulesStatus.getTorState() != RESTARTING) {
-                            ModulesAux.saveTorStateRunning(service, true);
-                            sendResultIntent(TorRunFragmentMark, TOR_KEYWORD, torPath);
+                            ModulesAux.saveTorStateRunning(true);
+                            makeDelay(1);
+                            sendResultIntent(TOR_RUN_FRAGMENT_MARK, TOR_KEYWORD, torPath);
                         }
 
                         modulesStatus.setTorState(RUNNING);
@@ -297,9 +300,10 @@ public class ModulesKiller {
                     } else {
 
                         if (modulesStatus.getTorState() != RESTARTING) {
-                            ModulesAux.saveTorStateRunning(service, false);
+                            ModulesAux.saveTorStateRunning(false);
                             modulesStatus.setTorState(STOPPED);
-                            sendResultIntent(TorRunFragmentMark, TOR_KEYWORD, "");
+                            makeDelay(1);
+                            sendResultIntent(TOR_RUN_FRAGMENT_MARK, TOR_KEYWORD, "");
                         }
                     }
                 }
@@ -324,7 +328,8 @@ public class ModulesKiller {
             try {
                 String itpdPid = readPidFile(appDataDir + "/i2pd.pid");
 
-                boolean moduleStartedWithRoot = new PrefManager(service).getBoolPref("ITPDStartedWithRoot");
+                boolean moduleStartedWithRoot = preferenceRepository.get()
+                        .getBoolPreference("ITPDStartedWithRoot");
                 boolean rootIsAvailable = modulesStatus.isRootAvailable();
 
                 boolean result = doThreeAttemptsToStopModule(itpdPath, itpdPid, itpdThread, moduleStartedWithRoot);
@@ -348,8 +353,9 @@ public class ModulesKiller {
                 if (moduleStartedWithRoot) {
                     if (!result) {
                         if (modulesStatus.getItpdState() != RESTARTING) {
-                            ModulesAux.saveITPDStateRunning(service, true);
-                            sendResultIntent(I2PDRunFragmentMark, ITPD_KEYWORD, itpdPath);
+                            ModulesAux.saveITPDStateRunning(true);
+                            makeDelay(1);
+                            sendResultIntent(I2PD_RUN_FRAGMENT_MARK, ITPD_KEYWORD, itpdPath);
                         }
 
                         modulesStatus.setItpdState(RUNNING);
@@ -358,9 +364,10 @@ public class ModulesKiller {
 
                     } else {
                         if (modulesStatus.getItpdState() != RESTARTING) {
-                            ModulesAux.saveITPDStateRunning(service, false);
+                            ModulesAux.saveITPDStateRunning(false);
                             modulesStatus.setItpdState(STOPPED);
-                            sendResultIntent(I2PDRunFragmentMark, ITPD_KEYWORD, "");
+                            makeDelay(1);
+                            sendResultIntent(I2PD_RUN_FRAGMENT_MARK, ITPD_KEYWORD, "");
                         }
 
                     }
@@ -369,8 +376,9 @@ public class ModulesKiller {
                 if (itpdThread != null && itpdThread.isAlive()) {
 
                     if (modulesStatus.getItpdState() != RESTARTING) {
-                        ModulesAux.saveITPDStateRunning(service, true);
-                        sendResultIntent(I2PDRunFragmentMark, ITPD_KEYWORD, itpdPath);
+                        ModulesAux.saveITPDStateRunning(true);
+                        makeDelay(1);
+                        sendResultIntent(I2PD_RUN_FRAGMENT_MARK, ITPD_KEYWORD, itpdPath);
                     }
 
                     modulesStatus.setItpdState(RUNNING);
@@ -379,9 +387,10 @@ public class ModulesKiller {
                 } else {
 
                     if (modulesStatus.getItpdState() != RESTARTING) {
-                        ModulesAux.saveITPDStateRunning(service, false);
+                        ModulesAux.saveITPDStateRunning(false);
                         modulesStatus.setItpdState(STOPPED);
-                        sendResultIntent(I2PDRunFragmentMark, ITPD_KEYWORD, "");
+                        makeDelay(1);
+                        sendResultIntent(I2PD_RUN_FRAGMENT_MARK, ITPD_KEYWORD, "");
                     }
                 }
             } catch (Exception e){
@@ -419,7 +428,7 @@ public class ModulesKiller {
             }
 
             if (shellResult != null) {
-                Log.i(LOG_TAG, "Kill " + module + " with root: result " + result + "\n" + shellResult.toString());
+                Log.i(LOG_TAG, "Kill " + module + " with root: result " + result + "\n" + shellResult);
             } else {
                 Log.i(LOG_TAG, "Kill " + module + " with root: result false");
             }
@@ -443,7 +452,7 @@ public class ModulesKiller {
             }
 
             if (shellResult != null) {
-                Log.i(LOG_TAG, "Kill " + module + " without root: result " + result + "\n" + shellResult.toString());
+                Log.i(LOG_TAG, "Kill " + module + " without root: result " + result + "\n" + shellResult);
             } else {
                 Log.i(LOG_TAG, "Kill " + module + " without root: result " + result);
             }
@@ -493,15 +502,15 @@ public class ModulesKiller {
         List<String> result;
 
         if (pid.isEmpty() || killWithRoot) {
-            String killStringToyBox = "toybox pkill " + module;
-            String killString = "pkill " + module;
-            String killStringBusybox = busyboxPath + "pkill " + module;
-            String killAllStringBusybox = busyboxPath + "kill $(pgrep " + module + ")";
+            String killStringToyBox = "toybox pkill " + module + " || true";
+            String killString = "pkill " + module + " || true";
+            String killStringBusybox = busyboxPath + "pkill " + module + " || true";
+            String killAllStringBusybox = busyboxPath + "kill $(pgrep " + module + ") || true";
             if (!signal.isEmpty()) {
-                killStringToyBox = "toybox pkill -" + signal + " " + module;
-                killString = "pkill -" + signal + " " + module;
-                killStringBusybox = busyboxPath + "pkill -" + signal + " " + module;
-                killAllStringBusybox = busyboxPath + "kill -s " + signal + " $(pgrep " + module + ")";
+                killStringToyBox = "toybox pkill -" + signal + " " + module + " || true";
+                killString = "pkill -" + signal + " " + module + " || true";
+                killStringBusybox = busyboxPath + "pkill -" + signal + " " + module + " || true";
+                killAllStringBusybox = busyboxPath + "kill -s " + signal + " $(pgrep " + module + ") || true";
             }
 
             result = new ArrayList<>(Arrays.asList(
@@ -511,15 +520,15 @@ public class ModulesKiller {
                     killString
             ));
         } else {
-            String killAllStringToolBox = "toolbox kill " + pid;
-            String killStringToyBox = "toybox kill " + pid;
-            String killString = "kill " + pid;
-            String killStringBusyBox = busyboxPath + "kill " + pid;
+            String killAllStringToolBox = "toolbox kill " + pid + " || true";
+            String killStringToyBox = "toybox kill " + pid + " || true";
+            String killString = "kill " + pid + " || true";
+            String killStringBusyBox = busyboxPath + "kill " + pid + " || true";
             if (!signal.isEmpty()) {
-                killAllStringToolBox = "toolbox kill -s " + signal + " " + pid;
-                killStringToyBox = "toybox kill -s " + signal + " " + pid;
-                killString = "kill -s " + signal + " " + pid;
-                killStringBusyBox = busyboxPath + "kill -s " + signal + " " + pid;
+                killAllStringToolBox = "toolbox kill -s " + signal + " " + pid + " || true";
+                killStringToyBox = "toybox kill -s " + signal + " " + pid + " || true";
+                killString = "kill -s " + signal + " " + pid + " || true";
+                killStringBusyBox = busyboxPath + "kill -s " + signal + " " + pid + " || true";
             }
 
             result = new ArrayList<>(Arrays.asList(
@@ -577,7 +586,7 @@ public class ModulesKiller {
 
         File file = new File(path);
         if (file.isFile()) {
-            List<String> lines = FileOperations.readTextFileSynchronous(service, path);
+            List<String> lines = FileManager.readTextFileSynchronous(service, path);
 
             for (String line : lines) {
                 if (!line.trim().isEmpty()) {
@@ -614,9 +623,9 @@ public class ModulesKiller {
                     iptablesPath + "-F tordnscrypt_forward 2> /dev/null",
                     iptablesPath + "-t nat -D PREROUTING -j tordnscrypt_prerouting 2> /dev/null || true",
                     iptablesPath + "-D FORWARD -j tordnscrypt_forward 2> /dev/null || true",
-                    busyboxPath + "killall -s SIGKILL libdnscrypt-proxy.so",
-                    busyboxPath + "killall -s SIGKILL libtor.so",
-                    busyboxPath + "killall -s SIGKILL libi2pd.so"
+                    busyboxPath + "killall -s SIGKILL libdnscrypt-proxy.so || true",
+                    busyboxPath + "killall -s SIGKILL libtor.so || true",
+                    busyboxPath + "killall -s SIGKILL libi2pd.so || true"
             };
 
             new Thread(() -> Shell.SU.run(commands)).start();

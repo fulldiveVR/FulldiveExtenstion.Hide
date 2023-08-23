@@ -1,43 +1,29 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.installer;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.installer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.fragment.app.FragmentManager;
@@ -51,47 +37,63 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.modules.ModulesVersions;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.RootExecService;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 
 import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
-import static pan.alexander.tordnscrypt.utils.RootExecService.COMMAND_RESULT;
-import static pan.alexander.tordnscrypt.utils.RootExecService.InstallerMark;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.di.SharedPreferencesModule.DEFAULT_PREFERENCES_NAME;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.MAIN_ACTIVITY_RECREATE;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.INSTALLER_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.COMMAND_RESULT;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 public class Installer implements TopFragment.OnActivityChangeListener {
+
+    @Inject
+    public Lazy<PathVars> pathVars;
+    @Inject @Named(DEFAULT_PREFERENCES_NAME)
+    public Lazy<SharedPreferences> defaultPreferences;
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public CachedExecutor cachedExecutor;
+    @Inject
+    public Lazy<ModulesVersions> modulesVersions;
+
     private Activity activity;
     private MainActivity mainActivity;
     private InstallerReceiver br;
-    private static CountDownLatch countDownLatch;
+    private static volatile CountDownLatch countDownLatch;
     private final String appDataDir;
-    private final PathVars pathVars;
+
     protected static boolean interruptInstallation = false;
 
     private InstallerUIChanger installerUIChanger;
 
     public Installer(Activity activity) {
-        this.activity = activity;
+        App.getInstance().getDaggerComponent().inject(this);
 
-        pathVars = PathVars.getInstance(activity);
-        appDataDir = pathVars.getAppDataDir();
+        this.activity = activity;
+        appDataDir = pathVars.get().getAppDataDir();
 
         if (activity instanceof MainActivity) {
             mainActivity = (MainActivity) activity;
             installerUIChanger = new InstallerUIChanger(mainActivity);
         }
-
-
     }
 
     public void installModules() {
@@ -269,14 +271,16 @@ public class Installer implements TopFragment.OnActivityChangeListener {
             return;
         }
 
+        PreferenceRepository preferences = preferenceRepository.get();
+
         if (installed) {
-            new PrefManager(activity).setBoolPref("DNSCrypt Installed", true);
-            new PrefManager(activity).setBoolPref("Tor Installed", true);
-            new PrefManager(activity).setBoolPref("I2PD Installed", true);
+            preferences.setBoolPreference("DNSCrypt Installed", true);
+            preferences.setBoolPreference("Tor Installed", true);
+            preferences.setBoolPreference("I2PD Installed", true);
         } else {
-            new PrefManager(activity).setBoolPref("DNSCrypt Installed", false);
-            new PrefManager(activity).setBoolPref("Tor Installed", false);
-            new PrefManager(activity).setBoolPref("I2PD Installed", false);
+            preferences.setBoolPreference("DNSCrypt Installed", false);
+            preferences.setBoolPreference("Tor Installed", false);
+            preferences.setBoolPreference("I2PD Installed", false);
         }
 
     }
@@ -287,7 +291,8 @@ public class Installer implements TopFragment.OnActivityChangeListener {
 
         boolean result = true;
         try {
-            countDownLatch.await();
+            //noinspection ResultOfMethodCallIgnored
+            countDownLatch.await(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             Log.e(LOG_TAG, "Installer CountDownLatch interrupted");
             result = false;
@@ -310,21 +315,21 @@ public class Installer implements TopFragment.OnActivityChangeListener {
 
 
         if (app_bin.isDirectory()) {
-            if (!FileOperations.deleteDirSynchronous(activity, app_bin.getAbsolutePath())) {
+            if (!FileManager.deleteDirSynchronous(activity, app_bin.getAbsolutePath())) {
                 throw new IllegalStateException(app_bin.getAbsolutePath() + " delete failed");
             }
         } else if (app_bin.isFile()) {
-            if (FileOperations.deleteFileSynchronous(activity, app_bin.getParent(), app_bin.getName())) {
+            if (FileManager.deleteFileSynchronous(activity, app_bin.getParent(), app_bin.getName())) {
                 throw new IllegalStateException(app_bin.getAbsolutePath() + " delete failed");
             }
         }
 
         if (app_data.isDirectory()) {
-            if (!FileOperations.deleteDirSynchronous(activity, app_data.getAbsolutePath())) {
+            if (!FileManager.deleteDirSynchronous(activity, app_data.getAbsolutePath())) {
                 throw new IllegalStateException(app_data.getAbsolutePath() + " delete failed");
             }
         } else if (app_data.isFile()) {
-            if (FileOperations.deleteFileSynchronous(activity, app_data.getParent(), app_data.getName())) {
+            if (FileManager.deleteFileSynchronous(activity, app_data.getParent(), app_data.getName())) {
                 throw new IllegalStateException(app_data.getAbsolutePath() + " delete failed");
             }
         }
@@ -343,9 +348,9 @@ public class Installer implements TopFragment.OnActivityChangeListener {
         String dnsTomlPath = appDataDir + "/app_data/dnscrypt-proxy/dnscrypt-proxy.toml";
         String torConfPath = appDataDir + "/app_data/tor/tor.conf";
         String itpdConfPath = appDataDir + "/app_data/i2pd/i2pd.conf";
-        fixAppDirLinesList(dnsTomlPath, FileOperations.readTextFileSynchronous(activity, dnsTomlPath));
-        fixAppDirLinesList(torConfPath, FileOperations.readTextFileSynchronous(activity, torConfPath));
-        fixAppDirLinesList(itpdConfPath, FileOperations.readTextFileSynchronous(activity, itpdConfPath));
+        fixAppDirLinesList(dnsTomlPath, FileManager.readTextFileSynchronous(activity, dnsTomlPath));
+        fixAppDirLinesList(torConfPath, FileManager.readTextFileSynchronous(activity, torConfPath));
+        fixAppDirLinesList(itpdConfPath, FileManager.readTextFileSynchronous(activity, itpdConfPath));
 
         Log.i(LOG_TAG, "Installer: correctAppDir OK");
     }
@@ -365,11 +370,11 @@ public class Installer implements TopFragment.OnActivityChangeListener {
             if (activity != null
                     && activity.getText(R.string.package_name).toString().contains(".gp")
                     && path.contains("dnscrypt-proxy.toml")
-                    && !PathVars.isModulesInstalled(activity)) {
+                    && !PathVars.isModulesInstalled(preferenceRepository.get())) {
                 lines = prepareDNSCryptForGP(lines);
             }
 
-            FileOperations.writeTextFileSynchronous(activity, path, lines);
+            FileManager.writeTextFileSynchronous(activity, path, lines);
         } else {
             throw new IllegalStateException("correctAppDir readTextFile return null " + path);
         }
@@ -377,32 +382,36 @@ public class Installer implements TopFragment.OnActivityChangeListener {
 
     @SuppressLint("SdCardPath")
     private List<String> prepareDNSCryptForGP(List<String> lines) {
+
+        defaultPreferences.get().edit().putBoolean("require_nofilter", true).apply();
+
         ArrayList<String> prepared = new ArrayList<>();
 
         for (String line : lines) {
-            /*if (line.contains("block_unqualified")) {
-                line = "block_unqualified = false";
-            } else if (line.contains("block_undelegated")) {
-                line = "block_undelegated = false";
-            } else */
 
             if (line.contains("blacklist_file")) {
                 line = "";
             } else if (line.contains("whitelist_file")) {
                 line = "";
+            } else if (line.contains("blocked_names_file")) {
+                line = "";
+            } else if (line.contains("blocked_ips_file")) {
+                line = "";
             } else if (line.matches("(^| )\\{ ?server_name([ =]).+")) {
                 line = "";
             } else if (line.matches("(^| )server_names([ =]).+")) {
-                line = "server_names = ['ams-dnscrypt-nl', " +
-                        "'ams-doh-nl', " +
-                        "'cs-swe', " +
+                line = "server_names = ['uncensoreddns-dk-ipv4', " +
+                        "'njalla-doh', " +
+                        "'faelix-ch-ipv4', " +
                         "'dns.digitale-gesellschaft.ch', " +
-                        "'doh-fi-snopyta', " +
-                        "'doh-ibksturm', " +
+                        "'dnscrypt.ca-1', " +
+                        "'sth-doh-se', " +
                         "'libredns', " +
-                        "'opennic-R4SAS', " +
-                        "'publicarray-au', " +
+                        "'dnswarden-uncensor-dc-swiss', " +
+                        "'publicarray-au-doh', " +
                         "'scaleway-fr']";
+            } else if (line.contains("require_nofilter")) {
+                line = "require_nofilter = true";
             }
 
             if (!line.isEmpty()) {
@@ -416,12 +425,13 @@ public class Installer implements TopFragment.OnActivityChangeListener {
     protected void stopAllRunningModulesWithRootCommand() {
         Log.i(LOG_TAG, "Installer: stopAllRunningModulesWithRootCommand");
 
-        ModulesAux.saveDNSCryptStateRunning(activity, false);
-        ModulesAux.saveTorStateRunning(activity, false);
-        ModulesAux.saveITPDStateRunning(activity, false);
+        ModulesAux.saveDNSCryptStateRunning(false);
+        ModulesAux.saveTorStateRunning(false);
+        ModulesAux.saveITPDStateRunning(false);
 
         String busyboxNative = "";
-        if (new PrefManager(activity).getBoolPref("bbOK") && pathVars.getBusyboxPath().equals("busybox ")) {
+        if (preferenceRepository.get().getBoolPreference("bbOK")
+                && pathVars.get().getBusyboxPath().equals("busybox ")) {
             busyboxNative = "busybox ";
         }
 
@@ -436,9 +446,9 @@ public class Installer implements TopFragment.OnActivityChangeListener {
                 "iptables -F tordnscrypt_forward 2> /dev/null",
                 "iptables -t nat -D PREROUTING -j tordnscrypt_prerouting 2> /dev/null || true",
                 "iptables -D FORWARD -j tordnscrypt_forward 2> /dev/null || true",
-                busyboxNative + "pkill -SIGTERM /libdnscrypt-proxy.so 2> /dev/null",
-                busyboxNative + "pkill -SIGTERM /libtor.so 2> /dev/null",
-                busyboxNative + "pkill -SIGTERM /libi2pd.so 2> /dev/null",
+                busyboxNative + "pkill -SIGTERM /libdnscrypt-proxy.so 2> /dev/null || true",
+                busyboxNative + "pkill -SIGTERM /libtor.so 2> /dev/null || true",
+                busyboxNative + "pkill -SIGTERM /libi2pd.so 2> /dev/null || true",
                 busyboxNative + "sleep 7 2> /dev/null",
                 busyboxNative + "pgrep -l /libdnscrypt-proxy.so 2> /dev/null",
                 busyboxNative + "pgrep -l /libtor.so 2> /dev/null",
@@ -446,26 +456,21 @@ public class Installer implements TopFragment.OnActivityChangeListener {
                 busyboxNative + "echo 'checkModulesRunning' 2> /dev/null"
         ));
 
-        RootCommands rootCommands = new RootCommands(commandsInstall);
-        Intent intent = new Intent(activity, RootExecService.class);
-        intent.setAction(RootExecService.RUN_COMMAND);
-        intent.putExtra("Commands", rootCommands);
-        intent.putExtra("Mark", InstallerMark);
-        RootExecService.performAction(activity, intent);
+        RootCommands.execute(activity, commandsInstall, INSTALLER_MARK);
     }
 
     protected void stopAllRunningModulesWithNoRootCommand() {
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             ModulesAux.stopModulesIfRunning(activity);
 
             int counter = 15;
 
             while (counter > 0) {
                 if (activity != null
-                        && !ModulesAux.isDnsCryptSavedStateRunning(activity)
-                        && !ModulesAux.isTorSavedStateRunning(activity)
-                        && !ModulesAux.isITPDSavedStateRunning(activity)) {
+                        && !ModulesAux.isDnsCryptSavedStateRunning()
+                        && !ModulesAux.isTorSavedStateRunning()
+                        && !ModulesAux.isITPDSavedStateRunning()) {
                     sendModulesStopResult("checkModulesRunning");
                     break;
                 } else {
@@ -492,7 +497,7 @@ public class Installer implements TopFragment.OnActivityChangeListener {
         RootCommands comResult = new RootCommands(new ArrayList<>(Collections.singletonList(result)));
         Intent intent = new Intent(COMMAND_RESULT);
         intent.putExtra("CommandsResult", comResult);
-        intent.putExtra("Mark", InstallerMark);
+        intent.putExtra("Mark", INSTALLER_MARK);
         LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
     }
 
@@ -515,10 +520,10 @@ public class Installer implements TopFragment.OnActivityChangeListener {
             Intent intent = new Intent(TOP_BROADCAST);
             LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
         } else {
-            ModulesVersions.getInstance().refreshVersions(activity);
+            modulesVersions.get().refreshVersions(activity);
         }
 
-        new PrefManager(activity).setBoolPref("refresh_main_activity", true);
+        preferenceRepository.get().setBoolPreference(MAIN_ACTIVITY_RECREATE, true);
     }
 
     protected void registerReceiver(Activity activity) {

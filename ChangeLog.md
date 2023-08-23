@@ -572,3 +572,387 @@
 
 **VPN beta 1.3.3**
 * Revert back to Tor 4.5.x versions so that v2 onion services can be used.
+
+**InviZible Pro beta 1.3.4**
+* Updated Tor to version 4.5.9.
+* Updated Tor Snowflake bridge to version 1.0.0.
+* Updated Purple I2P.
+* Block DNS over TLS and google DNS when DNSCrypt ignore_system_dns is enabled.
+* Restart InviZible when Tor fails in the background.
+* Attempt to fix wifi access point on android 11.
+* Updated firewall view.
+* Updated Spanish translation.
+* Updated Portuguese-BR translation.
+* Minor bug fixes and optimizations.
+
+**InviZible Pro beta 1.3.5**
+* Updated DNSCrypt to version 2.1.0.
+* Updated Tor to version 4.5.10.
+* Updated Tor Snowflake bridge to version 1.1.0.
+* Updated Purple I2P.
+* Updated firewall view.
+* Updated Polish translation.
+
+**InviZible Pro beta 1.3.6**
+* Updated Purple I2P to version 2.39.0.
+* Changed implementation of saving app settings.
+* Added HardwareAccel option to Tor settings.
+* Updated Tor default bridges.
+* Fixed showing recently installed apps at the top of the firewall apps list.
+* Minor bug fixes and optimizations.
+
+**InviZible Pro beta 1.3.7**
+* Fixed updating of the main screen toolbar depending on the mode.
+* Fixed firewall view.
+* Fixed delayed saving of settings in some cases.
+* Fixed display of warning about arp spoofing attack if app is launched.
+* Minor bug fixes and optimizations.
+
+**InviZible Pro beta 1.3.8**
+* Updated DNSCrypt to version 2.1.1.
+* Added tiles to Android Quick Settings for starting/stopping modules.
+* Preparing the app for Android 12.
+
+**InviZible Pro beta 1.3.9**
+* Fixed crash when opening some settings.
+
+**InviZible Pro beta 1.4.0**
+* Added current connection status to the notification.
+* Optimized application behavior on unstable networks.
+* Improved websites handling for the Tor Exclude/Select websites feature.
+* Improved Android Quick Settings tiles for starting/stopping modules.
+* Improved ARP Spoofing detection.
+* Lots of internal code optimizations.
+
+**InviZible Pro beta 1.4.1**
+* Improved current connection status in the notification.
+* Improved Tor Exclude/Select websites feature.
+* Fixed internet sharing in Root mode on android 11.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.4.2**
+* Fixed Restore Settings feature.
+* Minor bug fixes and optimizations.
+
+**InviZible Pro beta 1.4.3**
+* Optimized battery usage when network connection is unavailable.
+* Added tile to Android Quick Settings for changing Tor identity.
+* Fixed using Bypass LAN Addresses with socks5 proxy.
+
+**InviZible Pro beta 1.4.4**
+* Fixed internet sharing in Root mode on android 11.
+* Improved firewall.
+* Minor fixes.
+
+**InviZible Pro beta 1.4.5**
+* Updated Tor to version 4.6.8 (onion v2 services are no longer supported).
+* Updated Tor snowflake bridge to version 2.0.1.
+* Updated Purple I2P to version 2.40.0.
+* Optimized battery usage.
+* Improved firewall.
+* Fixed using onion websites with DNSCrypt force_tcp enabled.
+* Improved the Arp Spoofing attack detector.
+
+**InviZible Pro beta 1.4.6**
+* Updated Tor to version 4.6.9.
+* Updated Tor Snowflake bridge.
+* Updated Tor geoip and default bridges.
+* Added the option to firewall settings to display all applications regardless of app internet permission.
+* Added the option to select Snowflake communication via AMP or Fastly.
+* Improved firewall.
+* Improved traffic and speed statistics in notification.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.4.7**
+* Pausing InviZible instead of completely shutting down when using another VPN.
+* Improved internet connection checking when only DNSCrypt is running and Use socks5 proxy enabled.
+* Added Greek translation.
+* Updated French translation.
+* A lot of fixes and optimizations.
+
+**InviZible Pro beta 1.4.8**
+* Optimized modules logs parser.
+* Fixed and improved Fix TTL feature.
+* Updated German translation.
+* Minor fixes.
+
+**InviZible Pro beta 1.4.9**
+* Fixed crash when device comes out of idle mode.
+
+**InviZible Pro beta 1.5.0**
+* Implemented a kill switch for Root mode.
+* Improved internet connection checking when only DNSCrypt is running and Use socks5 proxy enabled.
+* Updated Greek translation.
+
+**InviZible Pro beta 1.5.1**
+* Internet is disconnected before the device is turned off if the Kill switch is enabled in Root mode.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.5.2**
+* Fixed infinite connecting status in notification.
+* Fixed display of notifications on Android 4.4.2
+* Fixed display of a kill switch notification when an ARP spoofing attack is detected.
+* Updated German translation.
+* Minor fixes and optimizations.
+
+**InviZible Pro beta 1.5.3**
+* Updated Tor to version 4.6.10.
+* Fixed infinite connecting status in notification.
+* Minor fixes and optimizations.
+
+**InviZible Pro beta 1.5.4**
+* Fixed Purple I2P not starting on some devices.
+* Fixed internet sharing on some Samsung devices.
+* Fixed displaying a firewall notification to control app connection after it is installed.
+
+**InviZible Pro beta 1.5.5**
+* Updated Tor.
+* Updated Tor obfs4proxy to version 0.0.12.
+* Updated Tor snowflake to version 2.1.0.
+* Updated Purple I2P to version 2.41.0.
+* Preventing frequent updating of iptables rules on unstable networks.
+* Fixed crashes on some MIUI phones.
+* Updated Persian translation.
+
+**InviZible Pro beta 1.5.6**
+* Implemented bridges ping check if Tor is stopped.
+* Revert back to Tor obfs4proxy version 0.0.11.
+* Minor fixes.
+
+**InviZible Pro beta 1.5.7**
+* Updated Tor.
+* Implemented Tor bridges sorting and swipe to refresh bridges ping.
+* Implemented the use of Tor relays as default vanilla bridges.
+* DNSCrypt force_tcp is enabled by default.
+* Updated default DNSCrypt servers.
+* Disable ntcp2 published option of Purple I2P if notransit is enabled.
+* Minor fixes.
+
+**InviZible Pro beta 1.5.8**
+* Improved root commands execution.
+* Fixed active bridges sorting.
+* Added Turkish translation.
+* Updated Spanish translation.
+* Updated Indonesian translation.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.5.9**
+* Implemented firewall for Root mode.
+* Optimized memory usage in VPN mode.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.6.0**
+* Root firewall fixes and optimizations.
+* Fixed using Multi-user support on some devices.
+* Tor restarts if an internet connection cannot be established within one minute.
+
+**InviZible Pro beta 1.6.1**
+* Updated Tor to version 4.7.6.
+* Updated Tor snowflake bridge.
+* Updated Indonesian translation.
+
+**InviZible Pro beta 1.6.2**
+* Fixed using Root firewall when Refresh rules option is disabled.
+* Fixed the ARP spoofing detector false positives on some devices.
+* Minor fixes.
+
+**InviZible Pro beta 1.6.3**
+* Added option to wait for an xtables lock to prevent concurrent modification of the iptables rules.
+* Fixed internet blocking when using root firewall on some roms.
+* Improved app restart after a crash or after the app was killed due to low device memory.
+* Improved root commands execution.
+* Updated Portuguese-BR translation.
+
+**InviZible Pro beta 1.6.4**
+* Updated Tor to version 4.7.7.
+* Updated Tor snowflake bridge.
+* Improved requesting new Tor bridges.
+* Improved checking and downloading app updates.
+* Fixed compatibility with android 4.4.2.
+* Lots of internal optimizations.
+* Minor fixes.
+
+**InviZible Pro beta 1.6.5**
+* Implemented real-time connection logs for Root mode.
+* Improved real-time connection logs for VPN mode.
+* Fixed saving changes when using direct editing of module configuration files.
+* Lots of internal optimizations.
+* Minor fixes.
+
+**InviZible Pro beta 1.6.6**
+* Updated Purple I2P to version 2.42.0.
+* Added "Internet connectivity check" option to the firewall to allow connection checks for system applications.
+* Added a switch to enable/disable real-time connection logs.
+* Improved real-time connection logs for Root mode.
+* Improved real-time connection logs for VPN mode.
+
+**InviZible Pro beta 1.6.7**
+* Updated Tor.
+* Updated Tor snowflake bridge to version 2.2.0.
+* Updated Tor obfs4proxy to version 0.0.13.
+* Improved real-time connection logs for Root mode.
+* The "Run modules with Root" option is no longer supported and will be hidden in the Common Settings.
+* Minor fixes and optimizations.
+
+**InviZible Pro beta 1.6.8**
+* Updated Purple I2P to version 2.42.1.
+* Updated Tor snowflake bridge.
+* Bridge ping color changes based on ping value.
+* Fixed DNSCrypt version detection.
+* Minor optimizations.
+
+**InviZible Pro beta 1.6.9**
+* DNSCrypt fork is used, which minimizes plaintext DNS queries for bootstrap.
+* Check Tor bridges ping through proxy if enabled.
+* Fixed crash on anroid 4.4.2 when opening some screens.
+* Minor fixes and optimizations.
+
+**InviZible Pro beta 1.7.0**
+* Updated Tor to version 4.7.8.
+* Updated Tor snowflake bridge.
+* Updated DNSCrypt.
+
+**InviZible Pro beta 1.7.1**
+* Updated DNSCrypt to version 2.1.2.
+* Updated Tor.
+* Updated Tor snowflake bridge to version 2.3.0.
+* Optimized armv7a build.
+* Minor fixes and optimizations.
+
+**InviZible Pro beta 1.7.2**
+* Updated DNSCrypt.
+* Added http3 option to DNSCrypt settings (DoH3, HTTP over QUIC).
+* Updated Tor to version 4.7.10.
+* Updated Tor geoip.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.7.3**
+* Updated Purple I2P to version 2.43.0.
+* Added SSU2 option to Purple I2P settings.
+* Tor restarts if the internet connection is lost.
+
+**InviZible Pro beta 1.7.4**
+* Fixed requesting Tor bridges via the app interface.
+* Removed bridge types that are no longer available on the torproject website.
+* Added Italian translation.
+
+**InviZible Pro beta 1.7.5**
+* Fixed display of notifications on Android 13.
+* Fixed requesting Tor bridges on Android 4.4.2.
+* Minor fixes and optimizations.
+
+**InviZible Pro beta 1.7.6**
+* Updated Tor.
+* Updated Tor snowflake bridge.
+* Updated Tor obfs4proxy to version 0.0.14.
+* Use default network DNS to test connectivity if only DNSCrypt is running.
+* Fixed Tor bridges requesting dialog when font size is too large.
+
+**InviZible Pro beta 1.7.7**
+* Updated Tor to version 4.7.11.
+* The app will not block port 80 on the LAN if the corresponding option is enabled.
+* Fixed compatibility with Android 4.4.2.
+
+**InviZible Pro beta 1.7.8**
+* Updated Tor to version 4.7.12.
+* Updated Tor snowflake bridge to version 2.4.1.
+* Updated Tor geoip.
+* Updated Purple I2P to version 2.45.0.
+* Removed no longer supported I2P SSU option.
+* Do not block related, established connections while updating iptables rules in Root mode.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.7.9**
+* Updated Tor to version 4.7.13.
+* Updated Tor snowflake bridge to version 2.5.1.
+* Updated Purple I2P to version 2.45.1.
+* Added display of Tor bridges country.
+
+**InviZible Pro beta 1.8.0**
+* Updated DNSCrypt to version 2.1.3.
+* Fixed starting app modules using tiles.
+* Fixed restoring a backup on Android 13.
+
+**InviZible Pro beta 1.8.1**
+* Updated DNSCrypt to version 2.1.4.
+* Updated default DNSCrypt servers.
+* Updated default Tor bridges.
+
+**InviZible Pro beta 1.8.2**
+* Updated Purple I2P to version 2.47.0.
+* Fixed using of IPv6 protocol with DNSCrypt.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.8.3**
+* Added full ipv6 support for DNSCrypt in VPN mode.
+* Added full ipv6 support for Tor in VPN mode.
+* Fixed a crash on Android 4.4.2 when installing a new app.
+
+**InviZible Pro beta 1.8.4**
+* Fixed requesting for new Tor bridges.
+* Allowed requesting for ipv6 bridges in addition to ipv4 for default vanilla bridges.
+* Allowed requesting ipv6 bridges from torproject database.
+* Added IPv6 support for auxiliary app's features.
+* Added Portuguese translation.
+* Updated German translation.
+* Updated French translation.
+
+**InviZible Pro beta 1.8.5**
+* Fixed requesting for new Tor bridges.
+* Updated Tor.
+* Updated DNSCrypt.
+
+**InviZible Pro beta 1.8.6**
+* Updated built-in snowflake and meek_lite Tor bridges.
+* IPv6 is enabled by default for app modules.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.8.7**
+* Updated Purple I2P to version 2.48.0.
+* Added support for the Tor Conjure bridge.
+* Fixed using Fastly server with Snowflake on Android versions below 8.
+* DNSCrypt shows that it is running if at least one server is ready.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.8.8**
+* Updated Tor Snowflake bridge to version 2.6.0.
+* Improved Tor Conjure bridge connection stability.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.8.9**
+* Updated Tor Conjure bridge.
+* Added option to separately activate and configure socks5 proxy.
+* Fixed adding Tor bridges without fingerprint.
+* Fixed using X bandwidth with Purple I2P.
+
+**InviZible Pro beta 1.9.0**
+* Fixed Tor Snowflake bridge failure on Android 11 and above.
+
+**InviZible Pro beta 1.9.1**
+* Improved Tor Conjure bridge connection stability.
+* Fixed adding meek_lite bridges with a domain that contains a hyphen.
+
+**InviZible Pro beta 1.9.2**
+* Improved Tor Conjure bridge censorship resistance.
+* Improved meek_lite bridge censorship resistance.
+* Fixed modules not installed on initial app startup.
+* Updated German translation.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.9.3**
+* Fixed Tor not starting after enabling Allow Tor Tethering.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.9.4**
+* Updated Tor to version 4.8.3.
+* Updated Tor geoip file.
+* Updated Tor lyrebird obfuscating proxy.
+* Updated Tor Conjure bridge.
+* Updated Tor Snowflake bridge.
+* Updated DNSCrypt.
+* Fixed app can't start modules when ports are busy.
+* Fixes and optimizations.
+
+**InviZible Pro beta 1.9.5**
+* Updated DNSCrypt to version 2.1.5.
+* Added support for the Tor WebTunnel bridge.

@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id=":tordnscrypt:unitTest" external.linked.project.path="$MODULE_DIR$/../../../tordnscrypt" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.type="sourceSet" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="android" name="Android">
-      <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="fdroidArm64Debug" />
-        <option name="ALLOW_USER_CONFIGURATION" value="false" />
-        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
-        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="" />
-        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
-        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
-      </configuration>
-    </facet>
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="5" platform="JVM 17" allPlatforms="JVM [17]" useProjectSettings="false">
         <additionalVisibleModuleNames>:tordnscrypt:main</additionalVisibleModuleNames>
@@ -27,6 +16,7 @@
             <stringArg name="classpath">
               <args>
                 <arg>$MODULE_DIR$/../../../tordnscrypt/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/fdroidArm64Debug/R.jar</arg>
+                <arg>$MODULE_DIR$/../../../tordnscrypt/build/intermediates/compile_app_classes_jar/fdroidArm64Debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/048a3123416434319419723f0812f2e3/transformed/jetified-viewbinding-8.1.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5e6b2e251bda8e2d5e55776eb64a54a9/transformed/jetified-Google-IAP-1.0.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/e95d0c01070d559f3bc57b30f937a714/transformed/material-1.9.0-api.jar</arg>
@@ -168,6 +158,17 @@
         </compilerArguments>
       </configuration>
     </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="fdroidArm64Debug" />
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_17">
     <output-test url="file://$MODULE_DIR$/../../../tordnscrypt/build/intermediates/javac/fdroidArm64DebugUnitTest/classes" />
@@ -250,13 +251,13 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.lifecycle:lifecycle-livedata-ktx:2.6.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: eu.chainfire:libsuperuser:1.1.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.jrummyapps:android-shell:1.0.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.airbnb.android:lottie:5.2.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.billingclient:billing-ktx:6.0.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.billingclient:billing:6.0.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.datatransport:transport-api:3.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.datatransport:transport-backend-cct:3.1.8@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.datatransport:transport-runtime:3.1.8@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.firebase:firebase-encoders-json:18.0.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.airbnb.android:lottie:5.2.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.flurry.android:analytics:14.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-ads-identifier:18.0.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-basement:18.1.0@aar" level="project" />

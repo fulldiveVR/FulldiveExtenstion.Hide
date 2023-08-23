@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id=":tordnscrypt:main" external.linked.project.path="$MODULE_DIR$/../../../tordnscrypt" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.type="sourceSet" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="android" name="Android">
-      <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="fdroidArm64Debug" />
-        <option name="ALLOW_USER_CONFIGURATION" value="false" />
-        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
-        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../tordnscrypt/src/main/res;file://$MODULE_DIR$/../../../tordnscrypt/src/fdroid/res;file://$MODULE_DIR$/../../../tordnscrypt/src/arm64/res;file://$MODULE_DIR$/../../../tordnscrypt/src/fdroidArm64/res;file://$MODULE_DIR$/../../../tordnscrypt/src/debug/res;file://$MODULE_DIR$/../../../tordnscrypt/src/fdroidArm64Debug/res;file://$MODULE_DIR$/../../../tordnscrypt/build/generated/res/google-services/fdroidArm64/debug;file://$MODULE_DIR$/../../../tordnscrypt/build/generated/res/resValues/fdroidArm64/debug" />
-        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
-        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
-      </configuration>
-    </facet>
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="5" platform="JVM 17" allPlatforms="JVM [17]" useProjectSettings="false">
         <compilerSettings>
@@ -89,6 +78,11 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/225578535b62fc2b20c122235cb22372/transformed/jetified-savedstate-1.2.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/7a43e7eda0f0f62224b6c6922fa310f7/transformed/cardview-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/9444618adaf2a005dc4a0f2c3314b825/transformed/jetified-firebase-components-17.0.1-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/b30f98add5e429c9210e729035e6a0c2/transformed/jetified-billing-ktx-6.0.1-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/3dd72c7462630bf42b2d281b772adaf4/transformed/jetified-billing-6.0.1-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/2723c0debc5da49a9d6403c7df578886/transformed/jetified-transport-backend-cct-3.1.8-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/1f8df6a442e47aa668dc837e8a38f93d/transformed/jetified-transport-runtime-3.1.8-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/47957734739464569b71921af505458e/transformed/jetified-transport-api-3.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/db9244f04bebf9457514d4c1c61da758/transformed/versionedparcelable-1.1.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/601388713a8990a4d1ddc15dd15263ff/transformed/jetified-collection-ktx-1.1.0.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.collection/collection/1.1.0/1f27220b47669781457de0d600849a5de0e89909/collection-1.1.0.jar</arg>
@@ -98,11 +92,6 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/082429cc39f376de267542321bb75dcf/transformed/interpolator-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5f87584f49423b458cd2d77390e65cc9/transformed/core-runtime-2.2.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.2.0/5e1b8b81dfd5f52c56a8d53b18ca759c19a301f3/core-common-2.2.0.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/b30f98add5e429c9210e729035e6a0c2/transformed/jetified-billing-ktx-6.0.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/3dd72c7462630bf42b2d281b772adaf4/transformed/jetified-billing-6.0.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/2723c0debc5da49a9d6403c7df578886/transformed/jetified-transport-backend-cct-3.1.8-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/1f8df6a442e47aa668dc837e8a38f93d/transformed/jetified-transport-runtime-3.1.8-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/47957734739464569b71921af505458e/transformed/jetified-transport-api-3.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/877b0a7f17a5f53836a25eacaaa328bb/transformed/jetified-firebase-encoders-json-18.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/2008652c4a8fa5e21247e2bf51bc37df/transformed/jetified-firebase-encoders-proto-16.0.0.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/d4d987c6bde9e726784b5a62695f9e81/transformed/jetified-firebase-encoders-17.0.0.jar</arg>
@@ -159,6 +148,17 @@
         </compilerArguments>
       </configuration>
     </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="fdroidArm64Debug" />
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../tordnscrypt/src/main/res;file://$MODULE_DIR$/../../../tordnscrypt/src/fdroid/res;file://$MODULE_DIR$/../../../tordnscrypt/src/arm64/res;file://$MODULE_DIR$/../../../tordnscrypt/src/fdroidArm64/res;file://$MODULE_DIR$/../../../tordnscrypt/src/debug/res;file://$MODULE_DIR$/../../../tordnscrypt/src/fdroidArm64Debug/res;file://$MODULE_DIR$/../../../tordnscrypt/build/generated/res/google-services/fdroidArm64/debug;file://$MODULE_DIR$/../../../tordnscrypt/build/generated/res/resValues/fdroidArm64/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_17">
     <output url="file://$MODULE_DIR$/../../../tordnscrypt/build/intermediates/javac/fdroidArm64Debug/classes" />
@@ -196,8 +196,8 @@
     <content url="file://$MODULE_DIR$/../../../tordnscrypt/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/src/main/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/src/main/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/src/main/jni/invizible" type="native-Source-root" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../tordnscrypt/src/main/res" type="java-resource" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 33 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -268,13 +268,13 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-ktx:2.6.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: eu.chainfire:libsuperuser:1.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.jrummyapps:android-shell:1.0.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.airbnb.android:lottie:5.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.billingclient:billing-ktx:6.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.billingclient:billing:6.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-api:3.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-backend-cct:3.1.8@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-runtime:3.1.8@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-encoders-json:18.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.airbnb.android:lottie:5.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.flurry.android:analytics:14.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-ads-identifier:18.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement:18.1.0@aar" level="project" />

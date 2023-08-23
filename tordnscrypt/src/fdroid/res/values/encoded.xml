@@ -17,5 +17,5 @@
 <resources>
     <string name="encoded" translatable="false">cGFuLmFsZXhhbmRlci50b3JkbnNjcnlwdC5hY3Rpb24uVE9QX0JST0FEQ0FTVA==</string>
     <string name="appVersion" translatable="false">fd</string>
-    <string name="main_activity_label" translatable="false">Full TOR</string>
+    <string name="main_activity_label" translatable="false">Wize TOR</string>
 </resources>

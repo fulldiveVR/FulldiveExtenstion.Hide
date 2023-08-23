@@ -196,9 +196,9 @@ dependencies {
     implementation "com.airbnb.android:lottie:5.2.0"
     implementation 'com.android.billingclient:billing-ktx:5.0.0'
 
-    implementation 'com.flurry.android:analytics:13.3.0'
+    implementation 'com.flurry.android:analytics:14.0.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
-    implementation 'com.google.android.gms:play-services-measurement-api:21.0.0'
-    implementation 'com.google.firebase:firebase-analytics:21.0.0'
+    implementation 'com.google.android.gms:play-services-measurement-api:21.3.0'
+    implementation 'com.google.firebase:firebase-analytics:21.3.0'
 
 }

@@ -348,7 +348,6 @@ Should it be named instead "Βασικές Ρυθμίσεις" (originating from
     <string name="update_over_three_activations">"Φαίνεται οτι ήδη ενεργοποιήσατε 3 αντίγραφα του InviZible με αυτό τον κωδικό. Εαν αυτό είναι λάθος, παρακαλώ επικοινωνήστε με τον προγραμματιστή."</string>
     <string name="update_wrong_code">"Φαίνεται ότι ο κωδικός PRO είναι λάθος. Επικοινωνήστε με τον προγραμματιστή."</string>
     <string name="update_over_five_times">"Ελέγξατε για ενημερώσεις του InviZible Pro περισσότερες από 5 φορές την ημέρα. Παρακαλώ προσπάθησε ξανά αργότερα."</string>
-    <string name="verifier_error">"Μοιάζει με αυτήν την ανεπίσημη έκδοση του InviZible. Παρακαλώ να το προσέχετε!"</string>
     <string name="only_for_pro">"Μόνο για έκδοση PRO"</string>
     <string name="donate">"Δωρεά"</string>
     <string name="donate_project">"Το InviZible Project χρειάζεται τη βοήθειά σας. Επισκεφτείτε τη σελίδα δωρεών ή εισαγάγετε τον κωδικό premium που λάβατε."</string>

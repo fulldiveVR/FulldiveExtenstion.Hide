@@ -311,19 +311,9 @@ public class PreferencesCommonFragment extends PreferenceFragmentCompat
                 String appSign = verifier.getApkSignatureZip();
                 String appSignAlt = verifier.getApkSignature();
                 if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
-                    NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                            context, getString(R.string.verifier_error), "5889");
-                    if (notificationHelper != null && isAdded()) {
-                        handler.get().post(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
-                    }
                 }
 
             } catch (Exception e) {
-                NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                        context, getString(R.string.verifier_error), "5804");
-                if (notificationHelper != null && isAdded()) {
-                    handler.get().post(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
-                }
                 Log.e(LOG_TAG, "PreferencesCommonFragment fault " + e.getMessage() + " " + e.getCause() + System.lineSeparator() +
                         Arrays.toString(e.getStackTrace()));
             }

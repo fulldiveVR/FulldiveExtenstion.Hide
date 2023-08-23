@@ -137,19 +137,10 @@ public class UnlockTorIpsFragment extends Fragment {
                 Verifier verifier = new Verifier(activity);
                 String appSignAlt = verifier.getApkSignature();
                 if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
-                    NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                            activity, getString(R.string.verifier_error), "123");
-                    if (notificationHelper != null && isAdded()) {
-                        activity.runOnUiThread(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
-                    }
+
                 }
 
             } catch (Exception e) {
-                NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                        activity, getString(R.string.verifier_error), "168");
-                if (notificationHelper != null && isAdded()) {
-                    activity.runOnUiThread(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
-                }
                 Log.e(LOG_TAG, "UnlockTorIpsFrag fault " + e.getMessage() + " " + e.getCause() + System.lineSeparator() +
                         Arrays.toString(e.getStackTrace()));
             }

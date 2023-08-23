@@ -183,21 +183,11 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
                         if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
 
                             if (fragmentManager != null) {
-                                NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                                        activity, context.getString(R.string.verifier_error), "15");
-                                if (notificationHelper != null) {
-                                    notificationHelper.show(fragmentManager, NotificationHelper.TAG_HELPER);
-                                }
                             }
                         }
 
                     } catch (Exception e) {
                         if (fragmentManager != null) {
-                            NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                                    context, context.getString(R.string.verifier_error), "18");
-                            if (notificationHelper != null) {
-                                notificationHelper.show(fragmentManager, NotificationHelper.TAG_HELPER);
-                            }
                         }
                         Log.e(LOG_TAG, "DNSCryptRunFragment fault " + e.getMessage() + " " + e.getCause() + System.lineSeparator() +
                                 Arrays.toString(e.getStackTrace()));

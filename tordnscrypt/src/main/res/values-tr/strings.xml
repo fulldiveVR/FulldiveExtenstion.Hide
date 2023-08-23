@@ -400,7 +400,6 @@
     <string name="update_over_three_activations">Görünüşe göre bu kodla InviZible\'ın 3 kopyasını zaten etkinleştirdiniz. Yanlışsa lütfen geliştiriciyle iletişime geçin.</string>
     <string name="update_wrong_code">PRO kodunuz yanlış gibi görünüyor. Lütfen geliştiriciyle iletişime geçin.</string>
     <string name="update_over_five_times">InviZible Pro güncellemelerini günde 5 defadan fazla denetlediniz. Lütfen daha sonra tekrar deneyin.</string>
-    <string name="verifier_error">Bu InviZible\'ın resmi olmayan bir sürümü gibi görünüyor. Lütfen dikkatli olun!</string>
     <string name="only_for_pro">Yalnızca PRO sürümü için</string>
     <string name="donate">Bağış Yap</string>
     <string name="donate_project">InviZible Pro projesinin yardımınıza ihtiyacı var. Lütfen bağış sayfasını ziyaret edin veya alınan ücret kodunu girin.</string>

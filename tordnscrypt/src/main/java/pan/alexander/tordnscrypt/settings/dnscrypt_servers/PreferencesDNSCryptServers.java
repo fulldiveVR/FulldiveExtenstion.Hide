@@ -128,19 +128,9 @@ public class PreferencesDNSCryptServers extends Fragment implements View.OnClick
                 String appSign = verifier.getApkSignatureZip();
                 String appSignAlt = verifier.getApkSignature();
                 if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
-                    NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                            activity, getText(R.string.verifier_error).toString(), "6787");
-                    if (notificationHelper != null && isAdded()) {
-                        activity.runOnUiThread(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
-                    }
                 }
 
             } catch (Exception e) {
-                NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                        activity, getText(R.string.verifier_error).toString(), "8990");
-                if (isAdded() && notificationHelper != null) {
-                    activity.runOnUiThread(() -> notificationHelper.show(getParentFragmentManager(), NotificationHelper.TAG_HELPER));
-                }
                 Log.e(LOG_TAG, "PreferencesDNSCryptServers fault " + e.getMessage() + " " + e.getCause() + System.lineSeparator() +
                         Arrays.toString(e.getStackTrace()));
             }

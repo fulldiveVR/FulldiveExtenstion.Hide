@@ -404,21 +404,11 @@ public class TopFragment extends Fragment {
             wrongSign = getString(R.string.encoded).trim();
             if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
                 if (isAdded() && !isStateSaved()) {
-                    NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                            activity, getString(R.string.verifier_error), "1112");
-                    if (notificationHelper != null && handler != null) {
-                        handler.post(() -> notificationHelper.show(getChildFragmentManager(), NotificationHelper.TAG_HELPER));
-                    }
                 }
             }
 
         } catch (Exception e) {
             if (isAdded()) {
-                NotificationHelper notificationHelper = NotificationHelper.setHelperMessage(
-                        activity, getString(R.string.verifier_error), "2235");
-                if (notificationHelper != null && !isStateSaved() && handler != null) {
-                    handler.post(() -> notificationHelper.show(getChildFragmentManager(), NotificationHelper.TAG_HELPER));
-                }
             }
             loge("Top Fragment comparator fault ", e, true);
         }

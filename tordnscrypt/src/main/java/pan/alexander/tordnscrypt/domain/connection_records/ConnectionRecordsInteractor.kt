@@ -1,45 +1,55 @@
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
  */
 
 package pan.alexander.tordnscrypt.domain.connection_records
 
+import android.content.SharedPreferences
 import android.util.Log
-import pan.alexander.tordnscrypt.ApplicationBase
-import pan.alexander.tordnscrypt.domain.ConnectionRecordsRepository
-import pan.alexander.tordnscrypt.domain.entities.ConnectionRecord
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.App
+import pan.alexander.tordnscrypt.di.SharedPreferencesModule
+import pan.alexander.tordnscrypt.di.logreader.LogReaderScope
+import pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.CONNECTION_LOGS
+import pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG
 import java.lang.Exception
-import kotlin.collections.HashSet
+import java.lang.ref.WeakReference
+import javax.inject.Inject
+import javax.inject.Named
 
-class ConnectionRecordsInteractor(private val connectionRecordsRepository: ConnectionRecordsRepository) {
-    private val applicationContext = ApplicationBase.instance?.applicationContext
-    private val listeners: HashSet<OnConnectionRecordsUpdatedListener?> = HashSet()
-    private var converter: ConnectionRecordsConverter? = null
-    private var parser: ConnectionRecordsParser? = null
+@LogReaderScope
+class ConnectionRecordsInteractor @Inject constructor(
+    private val connectionRecordsRepository: ConnectionRecordsRepository,
+    private val converter: dagger.Lazy<ConnectionRecordsConverter>,
+    private var parser: ConnectionRecordsParser,
+    @Named(SharedPreferencesModule.DEFAULT_PREFERENCES_NAME)
+    private val defaultPreferences: dagger.Lazy<SharedPreferences>
+) {
+    private val applicationContext = App.instance.applicationContext
+    private val listeners: HashMap<Class<*>, WeakReference<OnConnectionRecordsUpdatedListener>> =
+        hashMapOf()
 
-    fun addListener(listener: OnConnectionRecordsUpdatedListener) {
-        listeners.add(listener)
+    fun <T : OnConnectionRecordsUpdatedListener> addListener(listener: T?) {
+        listener?.let { listeners[it.javaClass] = WeakReference(it) }
     }
 
-    fun removeListener(listener: OnConnectionRecordsUpdatedListener) {
-        listeners.remove(listener)
-        stopConverter()
+    fun <T : OnConnectionRecordsUpdatedListener> removeListener(listener: T?) {
+        listener?.let { listeners.remove(it.javaClass) }
+        //stopConverter()
     }
 
     fun hasAnyListener(): Boolean {
@@ -64,28 +74,26 @@ class ConnectionRecordsInteractor(private val connectionRecordsRepository: Conne
     fun stopConverter(forceStop: Boolean = false) {
         if (listeners.isEmpty() || forceStop) {
             connectionRecordsRepository.connectionRawRecordsNoMoreRequired()
-            converter?.onStop()
-            converter = null
-            parser = null
+            converter.get().onStop()
         }
     }
 
     private fun convert() {
         val context = applicationContext
 
-        if (context == null || listeners.isEmpty()) {
+        if (context == null || listeners.isEmpty() || isRealTimeLogsDisabled()) {
             return
         }
-
-        converter = converter ?: ConnectionRecordsConverter(context)
-        parser = parser ?: ConnectionRecordsParser(context)
 
         var rawConnections: List<ConnectionRecord?> = emptyList()
 
         try {
             rawConnections = connectionRecordsRepository.getRawConnectionRecords()
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "ConnectionRecordsInteractor getRawConnectionRecords exception ${e.message} ${e.cause}")
+            Log.e(
+                LOG_TAG,
+                "ConnectionRecordsInteractor getRawConnectionRecords exception ${e.message} ${e.cause}"
+            )
         }
 
         if (rawConnections.isEmpty()) {
@@ -95,9 +103,12 @@ class ConnectionRecordsInteractor(private val connectionRecordsRepository: Conne
         var connectionRecords: List<ConnectionRecord>? = emptyList()
 
         try {
-            connectionRecords = converter?.convertRecords(rawConnections)
+            connectionRecords = converter.get().convertRecords(rawConnections)
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "ConnectionRecordsInteractor convertRecords exception ${e.message} ${e.cause}")
+            Log.e(
+                LOG_TAG,
+                "ConnectionRecordsInteractor convertRecords exception ${e.message} ${e.cause}"
+            )
         }
 
         if (connectionRecords?.isEmpty() == true) {
@@ -106,24 +117,28 @@ class ConnectionRecordsInteractor(private val connectionRecordsRepository: Conne
 
         var records: String? = ""
         try {
-            records = parser?.formatLines(connectionRecords ?: emptyList())
+            records = parser.formatLines(connectionRecords ?: emptyList())
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "ConnectionRecordsInteractor formatLines exception ${e.message} ${e.cause}")
+            Log.e(
+                LOG_TAG,
+                "ConnectionRecordsInteractor formatLines exception ${e.message} ${e.cause}"
+            )
         }
 
         if (records.isNullOrBlank()) {
             return
         }
 
-        val listeners = listeners.toHashSet()
-
         listeners.forEach { listener ->
-            if (listener?.isActive() == true) {
-                listener.onConnectionRecordsUpdated(records)
+            if (listener.value.get()?.isActive() == true) {
+                listener.value.get()?.onConnectionRecordsUpdated(records)
             } else {
-                listener?.let { removeListener(it) }
+                removeListener(listener.value.get())
 
             }
         }
     }
+
+    private fun isRealTimeLogsDisabled() =
+        !defaultPreferences.get().getBoolean(CONNECTION_LOGS, true)
 }

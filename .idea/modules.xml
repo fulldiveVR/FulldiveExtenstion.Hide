@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FulldiveExtenstion.Hide.iml" filepath="$PROJECT_DIR$/.idea/modules/FulldiveExtenstion.Hide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.iml" filepath="$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.main.iml" filepath="$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/android-filepicker/filepicker/FulldiveExtenstion.Hide.filepicker.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.iml" filepath="$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/tordnscrypt/FulldiveExtenstion.Hide.tordnscrypt.unitTest.iml" />
+    </modules>
+  </component>
+</project>

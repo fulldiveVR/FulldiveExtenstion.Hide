@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.tor_fragment;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.tor_fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,20 +28,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.TopFragment;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.RootExecService;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
+import pan.alexander.tordnscrypt.utils.root.RootExecService;
 
 import static pan.alexander.tordnscrypt.TopFragment.TorVersion;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.modules.ModulesService.TOR_KEYWORD;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.TOR_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
 
+import javax.inject.Inject;
+
 public class TorFragmentReceiver extends BroadcastReceiver {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Lazy<PathVars> pathVars;
+
     private final TorFragmentView view;
     private final TorFragmentPresenterInterface presenter;
 
@@ -64,10 +61,10 @@ public class TorFragmentReceiver extends BroadcastReceiver {
     private String busyboxPath;
 
     public TorFragmentReceiver(TorFragmentView view, TorFragmentPresenterInterface presenter) {
+        App.getInstance().getDaggerComponent().inject(this);
         this.view = view;
         this.presenter = presenter;
     }
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -81,14 +78,14 @@ public class TorFragmentReceiver extends BroadcastReceiver {
 
         ModulesStatus modulesStatus = ModulesStatus.getInstance();
 
-        PathVars pathVars = PathVars.getInstance(context);
-        torPath = pathVars.getTorPath();
-        busyboxPath = pathVars.getBusyboxPath();
+        torPath = pathVars.get().getTorPath();
+        busyboxPath = pathVars.get().getBusyboxPath();
 
         if (intent != null) {
             final String action = intent.getAction();
-            if (action == null || action.equals("") || ((intent.getIntExtra("Mark", 0) !=
-                    RootExecService.TorRunFragmentMark) &&
+            if (action == null
+                    || action.equals("")
+                    || ((intent.getIntExtra("Mark", 0) != TOR_RUN_FRAGMENT_MARK) &&
                     !action.equals(TopFragment.TOP_BROADCAST))) return;
             Log.i(LOG_TAG, "TorRunFragment onReceive");
             if (action.equals(RootExecService.COMMAND_RESULT)) {
@@ -118,10 +115,10 @@ public class TorFragmentReceiver extends BroadcastReceiver {
                         String[] verArr = strArr[1].trim().split(" ");
                         if (verArr.length > 2 && verArr[1].contains("version")) {
                             TorVersion = verArr[2].trim();
-                            new PrefManager(context).setStrPref("TorVersion", TorVersion);
+                            preferenceRepository.get().setStringPreference("TorVersion", TorVersion);
 
                             if (!modulesStatus.isUseModulesWithRoot()) {
-                                if (!ModulesAux.isTorSavedStateRunning(context)) {
+                                if (!ModulesAux.isTorSavedStateRunning()) {
                                     view.setTorLogViewText();
                                 }
 
@@ -132,16 +129,16 @@ public class TorFragmentReceiver extends BroadcastReceiver {
                 }
 
                 if (sb.toString().toLowerCase().contains(torPath.toLowerCase())
-                        && sb.toString().contains("checkTrRunning")) {
+                        && sb.toString().contains(TOR_KEYWORD)) {
 
-                    ModulesAux.saveTorStateRunning(context, true);
+                    ModulesAux.saveTorStateRunning(true);
                     modulesStatus.setTorState(RUNNING);
                     presenter.displayLog();
 
                 } else if (!sb.toString().toLowerCase().contains(torPath.toLowerCase())
-                        && sb.toString().contains("checkTrRunning")) {
+                        && sb.toString().contains(TOR_KEYWORD)) {
                     if (modulesStatus.getTorState() == STOPPED) {
-                        ModulesAux.saveTorStateRunning(context, false);
+                        ModulesAux.saveTorStateRunning(false);
                     }
                     presenter.stopDisplayLog();
                     presenter.setTorStopped();
@@ -175,12 +172,8 @@ public class TorFragmentReceiver extends BroadcastReceiver {
                     busyboxPath + "echo 'Tor_version' 2> /dev/null",
                     torPath + " --version 2> /dev/null"
             ));
-            RootCommands rootCommands = new RootCommands(commandsCheck);
-            Intent intent = new Intent(context, RootExecService.class);
-            intent.setAction(RootExecService.RUN_COMMAND);
-            intent.putExtra("Commands", rootCommands);
-            intent.putExtra("Mark", RootExecService.TorRunFragmentMark);
-            RootExecService.performAction(context, intent);
+
+            RootCommands.execute(context, commandsCheck, TOR_RUN_FRAGMENT_MARK);
 
             view.setTorProgressBarIndeterminate(true);
         }

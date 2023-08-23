@@ -1,43 +1,28 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.settings.tor_apps;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.settings.tor_apps;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +31,7 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -58,8 +44,10 @@ import com.google.android.material.chip.ChipGroup;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -67,24 +55,32 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
+import pan.alexander.tordnscrypt.di.SharedPreferencesModule;
 import pan.alexander.tordnscrypt.dialogs.NotificationHelper;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.InstalledApplications;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.Verifier;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.apps.InstalledApplicationsManager;
+import pan.alexander.tordnscrypt.utils.integrity.Verifier;
 
 import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
 import static pan.alexander.tordnscrypt.TopFragment.appSign;
 import static pan.alexander.tordnscrypt.TopFragment.wrongSign;
 import static pan.alexander.tordnscrypt.proxy.ProxyFragmentKt.CLEARNET_APPS_FOR_PROXY;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.ALL_THROUGH_TOR;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.FIREWALL_SHOWS_ALL_APPS;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 
-public class UnlockTorAppsFragment extends Fragment implements InstalledApplications.OnAppAddListener,
+
+public class UnlockTorAppsFragment extends Fragment implements InstalledApplicationsManager.OnAppAddListener,
         CompoundButton.OnCheckedChangeListener, ChipGroup.OnCheckedChangeListener, SearchView.OnQueryTextListener {
 
     public static final String UNLOCK_APPS = "unlockApps";
@@ -104,10 +100,18 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
 
     private String unlockAppsStr;
     private FutureTask<?> futureTask;
-    private Handler handler;
     private final ReentrantLock reentrantLock = new ReentrantLock();
     private volatile boolean appsListComplete = false;
     private String searchText;
+    @Inject
+    @Named(SharedPreferencesModule.DEFAULT_PREFERENCES_NAME)
+    public Lazy<SharedPreferences> defaultPreferences;
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public CachedExecutor cachedExecutor;
+    @Inject
+    public Lazy<Handler> handler;
 
 
     public UnlockTorAppsFragment() {
@@ -115,6 +119,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         Context context = getActivity();
@@ -125,17 +130,11 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
 
         setRetainInstance(true);
 
-        Looper looper = Looper.getMainLooper();
-        if (looper != null) {
-            handler = new Handler(looper);
-        }
-
         ////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////Reverse logic when route all through Tor!///////////////////
         //////////////////////////////////////////////////////////////////////////////////
 
-        SharedPreferences shPref = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean routeAllThroughTorDevice = shPref.getBoolean("pref_fast_all_through_tor", true);
+        boolean routeAllThroughTorDevice = defaultPreferences.get().getBoolean(ALL_THROUGH_TOR, true);
         boolean bypassAppsProxy = getArguments() != null && getArguments().getBoolean("proxy");
 
         if (bypassAppsProxy) {
@@ -146,7 +145,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
             unlockAppsStr = CLEARNET_APPS;
         }
 
-        setUnlockApps = new PrefManager(context).getSetStrPref(unlockAppsStr);
+        setUnlockApps = preferenceRepository.get().getStringSetPreference(unlockAppsStr);
     }
 
     @Override
@@ -200,9 +199,9 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
         mAdapter.setHasStableIds(true);
         rvListTorApps.setAdapter(mAdapter);
 
-        getDeviceApps(context, setUnlockApps);
+        getDeviceApps(setUnlockApps);
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             try {
                 Verifier verifier = new Verifier(context);
                 String appSignAlt = verifier.getApkSignature();
@@ -242,20 +241,11 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
             return;
         }
 
-        new PrefManager(context).setSetStrPref(unlockAppsStr, setAppUIDtoSave);
+        preferenceRepository.get().setStringSetPreference(unlockAppsStr, setAppUIDtoSave);
 
         setUnlockApps.clear();
         setUnlockApps.addAll(setAppUIDtoSave);
 
-        /*List<String> listAppUIDtoSave = new LinkedList<>();
-
-        for (String appUID : setAppUIDtoSave) {
-            if (Integer.parseInt(appUID) >= 0) {
-                listAppUIDtoSave.add(appUID);
-            }
-        }
-
-        FileOperations.writeToTextFile(context, appDataDir + "/app_data/tor/" + unlockAppsStr, listAppUIDtoSave, "ignored");*/
         Toast.makeText(context, getString(R.string.toastSettings_saved), Toast.LENGTH_SHORT).show();
 
         ModulesStatus modulesStatus = ModulesStatus.getInstance();
@@ -285,9 +275,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
             return;
         }
 
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-        }
+        handler.get().removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -312,7 +300,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
     }
 
     @Override
-    public void onCheckedChanged(ChipGroup group, int checkedId) {
+    public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
         if (rvListTorApps.isComputingLayout() || !appsListComplete) {
             return;
         }
@@ -513,7 +501,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
 
         appsUnlock.add(0, application);
 
-        handler.post(() -> {
+        handler.get().post(() -> {
             if (rvListTorApps == null || mAdapter == null
                     || rvListTorApps.isComputingLayout() || appsListComplete) {
                 return;
@@ -523,7 +511,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
         });
     }
 
-    private void getDeviceApps(final Context context, final Set<String> unlockAppsArrListSaved) {
+    private void getDeviceApps(final Set<String> unlockAppsArrListSaved) {
 
         if (!appsUnlock.isEmpty()) {
             return;
@@ -538,7 +526,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
                 if (appsUnlock.isEmpty()) {
 
                     if (handler != null && pbTorApp != null) {
-                        handler.post(() -> {
+                        handler.get().post(() -> {
                             if (pbTorApp != null) {
                                 pbTorApp.setIndeterminate(true);
                                 pbTorApp.setVisibility(View.VISIBLE);
@@ -548,9 +536,17 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
 
                     appsListComplete = false;
 
-                    InstalledApplications installedApplications = new InstalledApplications(context, unlockAppsArrListSaved);
-                    installedApplications.setOnAppAddListener(UnlockTorAppsFragment.this);
-                    List<ApplicationData> installedApps = installedApplications.getInstalledApps(false);
+                    List<ApplicationData> installedApps = new InstalledApplicationsManager.Builder()
+                            .setOnAppAddListener(this)
+                            .activeApps(unlockAppsArrListSaved)
+                            .setIconRequired()
+                            .build()
+                            .getInstalledApps();
+
+                    boolean showAllApps = defaultPreferences.get().getBoolean(FIREWALL_SHOWS_ALL_APPS, false);
+                    if (!showAllApps) {
+                        installedApps = filterUserAppsWithoutInternetPermission(installedApps);
+                    }
 
                     while (rvListTorApps != null && rvListTorApps.isComputingLayout()) {
                         TimeUnit.MILLISECONDS.sleep(100);
@@ -562,7 +558,7 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
                     appsUnlock.addAll(installedApps);
 
                     if (handler != null && pbTorApp != null) {
-                        handler.post(() -> {
+                        handler.get().post(() -> {
                             if (pbTorApp != null && mAdapter != null) {
                                 pbTorApp.setIndeterminate(false);
                                 pbTorApp.setVisibility(View.GONE);
@@ -598,7 +594,17 @@ public class UnlockTorAppsFragment extends Fragment implements InstalledApplicat
             return null;
         });
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(futureTask);
+        cachedExecutor.submit(futureTask);
 
+    }
+
+    private List<ApplicationData> filterUserAppsWithoutInternetPermission(List<ApplicationData> installedApps) {
+        List<ApplicationData> filteredApps = new ArrayList<>(installedApps.size());
+        for (ApplicationData app: installedApps) {
+            if (app.getSystem() || app.getHasInternetPermission()) {
+                filteredApps.add(app);
+            }
+        }
+        return filteredApps;
     }
 }

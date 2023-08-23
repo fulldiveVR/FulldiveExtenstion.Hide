@@ -1,67 +1,59 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.iptables
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.iptables
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.preference.PreferenceManager
+import pan.alexander.tordnscrypt.App
 import pan.alexander.tordnscrypt.modules.ModulesStatus
-import pan.alexander.tordnscrypt.utils.RootCommands
-import pan.alexander.tordnscrypt.utils.RootExecService.*
+import pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.*
+import pan.alexander.tordnscrypt.utils.root.RootCommands
+import pan.alexander.tordnscrypt.utils.root.RootCommandsMark.IPTABLES_MARK
+import pan.alexander.tordnscrypt.utils.root.RootExecService.*
 import java.util.*
+import javax.inject.Inject
 
 class IptablesReceiver : BroadcastReceiver() {
 
+    @Inject
+    lateinit var handler: dagger.Lazy<Handler>
+
     var lastIptablesCommandsReturnError = false
-    var savedError = ""
+    private var savedError = ""
 
-    override fun onReceive(context: Context, intent: Intent?) {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        App.instance.daggerComponent.inject(this)
 
-        if (intent == null) {
+        if (context == null || intent == null) {
             return
         }
 
         val action = intent.action
 
         if (action == null || action.isBlank() || action != COMMAND_RESULT
-                || intent.getIntExtra("Mark", 0) != IptablesMark) {
+                || intent.getIntExtra("Mark", 0) != IPTABLES_MARK) {
             return
         }
 
@@ -72,7 +64,7 @@ class IptablesReceiver : BroadcastReceiver() {
         val result = StringBuilder()
         if (comResult != null) {
             for (com in comResult.commands) {
-                Log.i(LOG_TAG, com!!)
+                Log.i(LOG_TAG, com)
                 result.append(com).append("\n")
             }
         }
@@ -82,7 +74,7 @@ class IptablesReceiver : BroadcastReceiver() {
             return
         }
 
-        val resultStr = result.toString().toLowerCase(Locale.ROOT)
+        val resultStr = result.toString().lowercase(Locale.ROOT)
 
         lastIptablesCommandsReturnError = true
 
@@ -94,22 +86,20 @@ class IptablesReceiver : BroadcastReceiver() {
 
         savedError = removedDigits
 
-        var handler: Handler? = null
-        Looper.getMainLooper()?.let { handler = Handler(it) }
-
-        handler?.let {
+        handler.get().let {
 
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val showToastWithCommandsResultError = sharedPreferences.getBoolean("pref_common_show_help", false)
-            val refreshRules = sharedPreferences.getBoolean("swRefreshRules", false)
+            val showToastWithCommandsResultError = sharedPreferences.getBoolean(ALWAYS_SHOW_HELP_MESSAGES, false)
+            val refreshRules = sharedPreferences.getBoolean(REFRESH_RULES, false)
 
             if (resultStr.contains("unknown option \"-w\"")) {
-                sharedPreferences.edit().putString("pref_common_use_iptables", "2").apply()
+                sharedPreferences.edit().putBoolean(WAIT_IPTABLES, false).apply()
                 it.postDelayed({ ModulesStatus.getInstance().setIptablesRulesUpdateRequested(context, true) }, 1000)
             } else if (refreshRules
                 && (resultStr.contains(" -w ")
                 || resultStr.contains("Exit code=4")
-                || resultStr.contains("try again"))) {
+                || resultStr.contains("try again")) ||
+                resultStr.matches(Regex(".*tun\\d+.*"))) {
                 it.postDelayed({ ModulesStatus.getInstance().setIptablesRulesUpdateRequested(context, true) }, 5000)
             }
             if (showToastWithCommandsResultError) {

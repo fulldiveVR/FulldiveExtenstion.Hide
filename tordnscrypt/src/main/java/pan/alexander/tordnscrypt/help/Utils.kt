@@ -1,52 +1,34 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.help
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.help
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.util.Log
 import pan.alexander.tordnscrypt.BuildConfig
 import pan.alexander.tordnscrypt.TopFragment
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
-import pan.alexander.tordnscrypt.vpn.Util
-import java.io.File
-import java.io.PrintWriter
+import pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.vpn.VpnUtils
 import java.util.*
 
 object Utils {
@@ -57,7 +39,7 @@ object Utils {
             // The intent does not have a URI, so declare the "text/plain" MIME type
             type = "message/rfc822"
             putExtra(Intent.EXTRA_EMAIL, arrayOf("invizible.soft@gmail.com")) // recipients
-            putExtra(Intent.EXTRA_SUBJECT, "VPN ${BuildConfig.VERSION_NAME} logcat")
+            putExtra(Intent.EXTRA_SUBJECT, "InviZible Pro ${BuildConfig.VERSION_NAME} logcat")
             putExtra(Intent.EXTRA_TEXT, text)
             putExtra(Intent.EXTRA_STREAM, attachmentUri)
         }
@@ -113,7 +95,7 @@ object Utils {
                     "APP_VERSION_CODE " + BuildConfig.VERSION_CODE + 10.toChar() +
                     "APP_VERSION_NAME " + BuildConfig.VERSION_NAME + 10.toChar() +
                     "APP_PROC_VERSION " + TopFragment.appProcVersion + 10.toChar() +
-                    "CAN_FILTER " + Util.canFilter() + 10.toChar() +
+                    "CAN_FILTER " + VpnUtils.canFilter() + 10.toChar() +
                     "APP_VERSION " + TopFragment.appVersion + 10.toChar() +
                     "DNSCRYPT_INTERNAL_VERSION " + TopFragment.DNSCryptVersion + 10.toChar() +
                     "TOR_INTERNAL_VERSION " + TopFragment.TorVersion + 10.toChar() +
@@ -131,7 +113,7 @@ object Utils {
                     "APP_VERSION_CODE " + BuildConfig.VERSION_CODE + 10.toChar() +
                     "APP_VERSION_NAME " + BuildConfig.VERSION_NAME + 10.toChar() +
                     "APP_PROC_VERSION " + TopFragment.appProcVersion + 10.toChar() +
-                    "CAN_FILTER " + Util.canFilter() + 10.toChar() +
+                    "CAN_FILTER " + VpnUtils.canFilter() + 10.toChar() +
                     "APP_VERSION " + TopFragment.appVersion + 10.toChar() +
                     "DNSCRYPT_INTERNAL_VERSION " + TopFragment.DNSCryptVersion + 10.toChar() +
                     "TOR_INTERNAL_VERSION " + TopFragment.TorVersion + 10.toChar() +

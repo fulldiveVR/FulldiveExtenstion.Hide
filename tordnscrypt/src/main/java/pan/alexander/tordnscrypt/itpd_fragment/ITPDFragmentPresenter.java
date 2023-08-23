@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.itpd_fragment;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.itpd_fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -52,28 +37,30 @@ import androidx.preference.PreferenceManager;
 import java.io.File;
 import java.util.Objects;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.MainActivity;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.TopFragment;
 import pan.alexander.tordnscrypt.dialogs.NotificationDialogFragment;
-import pan.alexander.tordnscrypt.domain.ITPDInteractorInterface;
-import pan.alexander.tordnscrypt.domain.entities.LogDataModel;
-import pan.alexander.tordnscrypt.domain.LogReaderInteractors;
+import pan.alexander.tordnscrypt.domain.log_reader.ITPDInteractorInterface;
+import pan.alexander.tordnscrypt.domain.log_reader.LogDataModel;
 import pan.alexander.tordnscrypt.domain.log_reader.itpd.OnITPDHtmlUpdatedListener;
 import pan.alexander.tordnscrypt.domain.log_reader.itpd.OnITPDLogUpdatedListener;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesKiller;
 import pan.alexander.tordnscrypt.modules.ModulesRunner;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.FileShortener;
-import pan.alexander.tordnscrypt.utils.PrefManager;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.filemanager.FileShortener;
 import pan.alexander.tordnscrypt.utils.enums.ModuleState;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 
 import static pan.alexander.tordnscrypt.TopFragment.ITPDVersion;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.RUN_MODULES_WITH_ROOT;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.FAULT;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RESTARTING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
@@ -83,8 +70,19 @@ import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.UNDEFINED;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
 
+import javax.inject.Inject;
+
 public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
         OnITPDLogUpdatedListener, OnITPDHtmlUpdatedListener {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Lazy<PathVars> pathVars;
+    @Inject
+    public Lazy<ITPDInteractorInterface> itpdInteractor;
+    @Inject
+    public CachedExecutor cachedExecutor;
 
     private boolean runI2PDWithRoot = false;
 
@@ -96,12 +94,15 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
     private volatile boolean itpdLogAutoScroll = true;
     private ScaleGestureDetector scaleGestureDetector;
 
-    private ITPDInteractorInterface itpdInteractor;
     private volatile int previousLastLinesLength;
     private boolean fixedITPDReady;
 
 
     public ITPDFragmentPresenter(ITPDFragmentView view) {
+        App.getInstance()
+                .getSubcomponentsManager()
+                .initLogReaderDaggerSubcomponent()
+                .inject(this);
         this.view = view;
     }
 
@@ -113,19 +114,18 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
         context = view.getFragmentActivity();
 
         if (appDataDir == null) {
-            PathVars pathVars = PathVars.getInstance(context);
-            appDataDir = pathVars.getAppDataDir();
+            appDataDir = pathVars.get().getAppDataDir();
         }
 
         SharedPreferences shPref = PreferenceManager.getDefaultSharedPreferences(context);
-        runI2PDWithRoot = shPref.getBoolean("swUseModulesRoot", false);
+        runI2PDWithRoot = shPref.getBoolean(RUN_MODULES_WITH_ROOT, false);
 
         if (isITPDInstalled()) {
             setITPDInstalled(true);
 
             ModuleState currentModuleState = modulesStatus.getItpdState();
 
-            if (currentModuleState == RUNNING || ModulesAux.isITPDSavedStateRunning(context)) {
+            if (currentModuleState == RUNNING || ModulesAux.isITPDSavedStateRunning()) {
 
                 if (isITPDReady()) {
                     setITPDRunning();
@@ -175,7 +175,6 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
             fixedModuleState = STOPPED;
             itpdLogAutoScroll = true;
             scaleGestureDetector = null;
-            itpdInteractor = null;
             previousLastLinesLength = 0;
             fixedITPDReady = false;
         }
@@ -267,7 +266,8 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
 
     @Override
     public boolean isITPDInstalled() {
-        return new PrefManager(context).getBoolPref("I2PD Installed");
+        return preferenceRepository.get()
+                .getBoolPreference("I2PD Installed");
     }
 
     @Override
@@ -295,7 +295,7 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
 
             setITPDStartButtonEnabled(true);
 
-            ModulesAux.saveITPDStateRunning(context, true);
+            ModulesAux.saveITPDStateRunning(true);
 
             view.setStartButtonText(R.string.btnITPDStop);
         } else if (currentModuleState == RESTARTING) {
@@ -308,7 +308,7 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
         } else if (currentModuleState == STOPPED) {
             stopDisplayLog();
 
-            if (ModulesAux.isITPDSavedStateRunning(context)) {
+            if (ModulesAux.isITPDSavedStateRunning()) {
                 setITPDStoppedBySystem();
             } else {
                 setITPDStopped();
@@ -316,7 +316,7 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
 
             setITPDProgressBarIndeterminate(false);
 
-            ModulesAux.saveITPDStateRunning(context, false);
+            ModulesAux.saveITPDStateRunning(false);
 
             setITPDStartButtonEnabled(true);
         }
@@ -349,12 +349,8 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
     @Override
     public synchronized void displayLog() {
 
-        if (itpdInteractor == null) {
-            itpdInteractor = LogReaderInteractors.Companion.getInteractor();
-        }
-
-        itpdInteractor.addOnITPDLogUpdatedListener(this);
-        itpdInteractor.addOnITPDHtmlUpdatedListener(this);
+        itpdInteractor.get().addOnITPDLogUpdatedListener(this);
+        itpdInteractor.get().addOnITPDHtmlUpdatedListener(this);
 
         previousLastLinesLength = 0;
     }
@@ -362,8 +358,8 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
     @Override
     public void stopDisplayLog() {
         if (itpdInteractor != null) {
-            itpdInteractor.removeOnITPDLogUpdatedListener(this);
-            itpdInteractor.removeOnITPDHtmlUpdatedListener(this);
+            itpdInteractor.get().removeOnITPDLogUpdatedListener(this);
+            itpdInteractor.get().removeOnITPDHtmlUpdatedListener(this);
         }
     }
 
@@ -435,7 +431,7 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
         final String certificateFolder = appDataDir + "/i2pd_data/certificates";
         final String certificateDestination = appDataDir + "/i2pd_data";
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
 
             File certificateFolderDir = new File(certificateFolder);
 
@@ -445,7 +441,7 @@ public class ITPDFragmentPresenter implements ITPDFragmentPresenterInterface,
                 return;
             }
 
-            FileOperations.copyFolderSynchronous(context, certificateSource, certificateDestination);
+            FileManager.copyFolderSynchronous(context, certificateSource, certificateDestination);
             Log.i(LOG_TAG, "Copy i2p certificates");
         });
     }

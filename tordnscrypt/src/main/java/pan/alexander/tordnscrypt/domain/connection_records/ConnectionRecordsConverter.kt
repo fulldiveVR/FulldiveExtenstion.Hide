@@ -1,20 +1,20 @@
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
  */
 
 package pan.alexander.tordnscrypt.domain.connection_records
@@ -22,67 +22,76 @@ package pan.alexander.tordnscrypt.domain.connection_records
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import android.util.Log
 import androidx.preference.PreferenceManager
-import pan.alexander.tordnscrypt.domain.entities.ConnectionRecord
+import pan.alexander.tordnscrypt.domain.dns_resolver.DnsInteractor
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository
 import pan.alexander.tordnscrypt.modules.ModulesStatus
-import pan.alexander.tordnscrypt.settings.firewall.APPS_ALLOW_GSM_PREF
-import pan.alexander.tordnscrypt.settings.firewall.APPS_ALLOW_LAN_PREF
-import pan.alexander.tordnscrypt.settings.firewall.APPS_ALLOW_ROAMING
-import pan.alexander.tordnscrypt.settings.firewall.APPS_ALLOW_WIFI_PREF
-import pan.alexander.tordnscrypt.settings.tor_apps.ApplicationData
-import pan.alexander.tordnscrypt.utils.CachedExecutor
-import pan.alexander.tordnscrypt.utils.PrefManager
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
-import pan.alexander.tordnscrypt.utils.Utils.getHostByIP
+import pan.alexander.tordnscrypt.settings.tor_apps.ApplicationData.Companion.SPECIAL_UID_CONNECTIVITY_CHECK
+import pan.alexander.tordnscrypt.settings.tor_apps.ApplicationData.Companion.SPECIAL_UID_KERNEL
+import pan.alexander.tordnscrypt.utils.Constants.LOOPBACK_ADDRESS
+import pan.alexander.tordnscrypt.utils.Constants.META_ADDRESS
+import pan.alexander.tordnscrypt.utils.connectionchecker.NetworkChecker
+import pan.alexander.tordnscrypt.utils.connectivitycheck.ConnectivityCheckManager
 import pan.alexander.tordnscrypt.utils.enums.OperationMode
-import pan.alexander.tordnscrypt.vpn.Util
-import pan.alexander.tordnscrypt.vpn.service.ServiceVPN
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor
+import pan.alexander.tordnscrypt.utils.logger.Logger.loge
+import pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.*
+import pan.alexander.tordnscrypt.vpn.VpnUtils
+import pan.alexander.tordnscrypt.vpn.service.ServiceVPN.LINES_IN_DNS_QUERY_RAW_RECORDS
+import pan.alexander.tordnscrypt.vpn.service.VpnBuilder
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.Future
+import javax.inject.Inject
 
-private const val REVERSE_LOOKUP_QUEUE_CAPACITY = 100
-private const val IP_TO_HOST_ADDRESS_MAP_SIZE = 500
+private const val REVERSE_LOOKUP_QUEUE_CAPACITY = 32
+private const val IP_TO_HOST_ADDRESS_MAP_SIZE = LINES_IN_DNS_QUERY_RAW_RECORDS
+private const val DNS_REVERSE_LOOKUP_SUFFIX = ".in-addr.arpa"
 
-class ConnectionRecordsConverter(context: Context) {
+class ConnectionRecordsConverter @Inject constructor(
+    context: Context,
+    preferenceRepository: PreferenceRepository,
+    private val dnsInteractor: dagger.Lazy<DnsInteractor>,
+    private val cachedExecutor: CachedExecutor,
+    private val connectivityCheckManager: ConnectivityCheckManager
+) {
 
-    private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    private val blockIPv6: Boolean = sharedPreferences.getBoolean("block_ipv6", true)
-    private var compatibilityMode = sharedPreferences.getBoolean("swCompatibilityMode", false)
-    private val meteredNetwork = Util.isMeteredNetwork(context)
-    private val vpnDNS = ServiceVPN.vpnDnsSet
+    private val sharedPreferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
+    private val blockIPv6: Boolean = sharedPreferences.getBoolean(DNSCRYPT_BLOCK_IPv6, false)
+    private val meteredNetwork = NetworkChecker.isMeteredNetwork(context)
+    private val vpnDNS = VpnBuilder.vpnDnsSet
     private val modulesStatus = ModulesStatus.getInstance()
     private val fixTTL = (modulesStatus.isFixTTL && modulesStatus.mode == OperationMode.ROOT_MODE
             && !modulesStatus.isUseModulesWithRoot)
+    private var compatibilityMode = (sharedPreferences.getBoolean(COMPATIBILITY_MODE, false)
+            || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            && modulesStatus.mode == OperationMode.VPN_MODE
 
     private val dnsQueryLogRecords = ArrayList<ConnectionRecord>()
     private val dnsQueryLogRecordsSublist = ArrayList<ConnectionRecord>()
     private val reverseLookupQueue = ArrayBlockingQueue<String>(REVERSE_LOOKUP_QUEUE_CAPACITY, true)
-    private val ipToHostAddressMap = mutableMapOf<String, String>()
+    private val ipToHostAddressMap = mutableMapOf<IpToTime, String>()
     private var futureTask: Future<*>? = null
 
-    private val firewallEnabled = PrefManager(context).getBoolPref("FirewallEnabled")
+    private val firewallEnabled = preferenceRepository.getBoolPreference(FIREWALL_ENABLED)
     private var appsAllowed = mutableSetOf<Int>()
     private val appsLanAllowed = mutableListOf<Int>()
 
     init {
         if (firewallEnabled) {
-            PrefManager(context).getSetStrPref(APPS_ALLOW_LAN_PREF).forEach { appsLanAllowed.add(it.toInt()) }
+            preferenceRepository.getStringSetPreference(APPS_ALLOW_LAN_PREF)
+                .forEach { appsLanAllowed.add(it.toInt()) }
 
             var tempSet: MutableSet<String>? = null
-            if (Util.isWifiActive(context) || Util.isEthernetActive(context)) {
-                tempSet = PrefManager(context).getSetStrPref(APPS_ALLOW_WIFI_PREF)
-            } else if (Util.isCellularActive(context)) {
-                tempSet = PrefManager(context).getSetStrPref(APPS_ALLOW_GSM_PREF)
-            } else if (Util.isRoaming(context)) {
-                tempSet = PrefManager(context).getSetStrPref(APPS_ALLOW_ROAMING)
+            if (NetworkChecker.isWifiActive(context) || NetworkChecker.isEthernetActive(context)) {
+                tempSet = preferenceRepository.getStringSetPreference(APPS_ALLOW_WIFI_PREF)
+            } else if (NetworkChecker.isCellularActive(context)) {
+                tempSet = preferenceRepository.getStringSetPreference(APPS_ALLOW_GSM_PREF)
+            } else if (NetworkChecker.isRoaming(context)) {
+                tempSet = preferenceRepository.getStringSetPreference(APPS_ALLOW_ROAMING)
             }
 
             tempSet?.forEach { appsAllowed.add(it.toInt()) }
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            compatibilityMode = true
         }
     }
 
@@ -107,7 +116,9 @@ class ConnectionRecordsConverter(context: Context) {
             if (dnsQueryRawRecord.uid != -1000) {
                 addUID(dnsQueryRawRecord)
                 return
-            } else if (isIdenticalRecord(dnsQueryRawRecord)) {
+            } else if (isIdenticalRecord(dnsQueryRawRecord)
+                || isRootMode() && isPointerRecord(dnsQueryRawRecord)
+            ) {
                 return
             }
         }
@@ -127,14 +138,16 @@ class ConnectionRecordsConverter(context: Context) {
             val record = dnsQueryLogRecords[i]
 
             if (dnsQueryRawRecord.aName == record.aName
-                    && dnsQueryRawRecord.qName == record.qName
-                    && dnsQueryRawRecord.hInfo == record.hInfo
-                    && dnsQueryRawRecord.rCode == record.rCode
-                    && dnsQueryRawRecord.saddr == record.saddr) {
+                && dnsQueryRawRecord.qName == record.qName
+                && dnsQueryRawRecord.hInfo == record.hInfo
+                && dnsQueryRawRecord.rCode == record.rCode
+                && dnsQueryRawRecord.saddr == record.saddr
+            ) {
 
                 if (dnsQueryRawRecord.daddr.isNotEmpty() && record.daddr.isNotEmpty()) {
                     if (!record.daddr.contains(dnsQueryRawRecord.daddr.trim())) {
-                        dnsQueryLogRecords[i] = record.apply { daddr = daddr + ", " + dnsQueryRawRecord.daddr.trim() }
+                        dnsQueryLogRecords[i] =
+                            record.apply { daddr = daddr + ", " + dnsQueryRawRecord.daddr.trim() }
                     }
                     return true
                 }
@@ -144,15 +157,25 @@ class ConnectionRecordsConverter(context: Context) {
         return false
     }
 
+    private fun isRootMode() =
+        modulesStatus.mode == OperationMode.ROOT_MODE && !modulesStatus.isFixTTL
+
+    private fun isPointerRecord(dnsQueryRawRecord: ConnectionRecord) =
+        dnsQueryRawRecord.aName.endsWith(DNS_REVERSE_LOOKUP_SUFFIX)
+
     private fun addUID(dnsQueryRawRecord: ConnectionRecord) {
         var savedRecord: ConnectionRecord? = null
         dnsQueryLogRecordsSublist.clear()
 
         val uidBlocked = if (firewallEnabled) {
-            if (compatibilityMode && dnsQueryRawRecord.uid == ApplicationData.SPECIAL_UID_KERNEL
-                    || fixTTL && dnsQueryRawRecord.uid == ApplicationData.SPECIAL_UID_KERNEL) {
+            if (compatibilityMode && dnsQueryRawRecord.uid == SPECIAL_UID_KERNEL
+                || fixTTL && dnsQueryRawRecord.uid == SPECIAL_UID_KERNEL
+                || appsAllowed.contains(SPECIAL_UID_CONNECTIVITY_CHECK)
+                && connectivityCheckManager.getConnectivityCheckIps()
+                    .contains(dnsQueryRawRecord.daddr)
+            ) {
                 false
-            }  else if (isIpInLanRange(dnsQueryRawRecord.daddr)) {
+            } else if (isIpInLanRange(dnsQueryRawRecord.daddr)) {
                 !appsLanAllowed.contains(dnsQueryRawRecord.uid)
             } else {
                 !appsAllowed.contains(dnsQueryRawRecord.uid)
@@ -180,17 +203,19 @@ class ConnectionRecordsConverter(context: Context) {
 
         if (savedRecord != null) {
 
-            val dnsQueryNewRecord = ConnectionRecord(savedRecord.qName, savedRecord.aName, savedRecord.cName,
-                    savedRecord.hInfo, -1, dnsQueryRawRecord.saddr, "", dnsQueryRawRecord.uid)
+            val dnsQueryNewRecord = ConnectionRecord(
+                savedRecord.qName, savedRecord.aName, savedRecord.cName,
+                savedRecord.hInfo, -1, dnsQueryRawRecord.saddr, "", dnsQueryRawRecord.uid
+            )
             dnsQueryNewRecord.blocked = uidBlocked
             dnsQueryNewRecord.unused = false
 
             dnsQueryLogRecordsSublist.add(dnsQueryNewRecord)
 
-        } else if (vpnDNS != null && !vpnDNS.contains(dnsQueryRawRecord.daddr)) {
+        } else if (vpnDNS == null || !vpnDNS.contains(dnsQueryRawRecord.daddr)) {
 
             if (!meteredNetwork && dnsQueryRawRecord.daddr.isNotEmpty()) {
-                val host = ipToHostAddressMap[dnsQueryRawRecord.daddr]
+                val host = ipToHostAddressMap[IpToTime(dnsQueryRawRecord.daddr)]
 
                 if (host == null) {
                     makeReverseLookup(dnsQueryRawRecord.daddr)
@@ -208,7 +233,7 @@ class ConnectionRecordsConverter(context: Context) {
         }
 
         if (dnsQueryLogRecordsSublist.isNotEmpty()) {
-            dnsQueryLogRecords.removeAll(dnsQueryLogRecordsSublist)
+            dnsQueryLogRecords.removeAll(dnsQueryLogRecordsSublist.toSet())
             dnsQueryLogRecords.addAll(dnsQueryLogRecordsSublist.reversed())
         }
     }
@@ -221,44 +246,50 @@ class ConnectionRecordsConverter(context: Context) {
 
     private fun startReverseLookupQueue() {
 
-        if(futureTask?.isDone == false) {
+        if (futureTask?.isDone == false) {
             return
         }
 
-        futureTask = CachedExecutor.getExecutorService().submit {
+        futureTask = cachedExecutor.submit {
             try {
 
                 while (!Thread.currentThread().isInterrupted) {
                     val ip = reverseLookupQueue.take()
 
-                    val host = getHostByIP(ip)
+                    val host = dnsInteractor.get().reverseResolve(ip)
 
-                    if (ipToHostAddressMap.size > IP_TO_HOST_ADDRESS_MAP_SIZE) {
-                        val pairs = ipToHostAddressMap.toList()
-                        ipToHostAddressMap.clear()
-                        ipToHostAddressMap.plus(pairs.subList(pairs.size/2, pairs.size))
+                    if (ipToHostAddressMap.size >= IP_TO_HOST_ADDRESS_MAP_SIZE) {
+
+                        ipToHostAddressMap.keys.sortedBy { it.time }.let {
+                            for (i in 0..it.size / 3) {
+                                ipToHostAddressMap.remove(it[i])
+                            }
+                        }
                     }
 
-                    ipToHostAddressMap[ip] = host
+                    if (host.isNotBlank()) {
+                        ipToHostAddressMap[IpToTime(ip, System.currentTimeMillis())] = host
+                    }
                 }
 
             } catch (ignored: InterruptedException) {
-            } catch (exception: Exception) {
-                Log.e(LOG_TAG, "DNSQueryLogRecordsConverter reverse lookup exception " + exception.message + " " + exception.cause)
+            } catch (e: Exception) {
+                loge("DNSQueryLogRecordsConverter reverse lookup exception", e)
             }
         }
     }
 
     private fun setQueryBlocked(dnsQueryRawRecord: ConnectionRecord): Boolean {
 
-        if (dnsQueryRawRecord.daddr == "0.0.0.0"
-                || dnsQueryRawRecord.daddr == "127.0.0.1"
-                || dnsQueryRawRecord.daddr == "::"
-                || dnsQueryRawRecord.daddr.contains(":") && blockIPv6
-                || dnsQueryRawRecord.hInfo.contains("dnscrypt")
-                || dnsQueryRawRecord.rCode != 0) {
+        if (dnsQueryRawRecord.daddr == META_ADDRESS
+            || dnsQueryRawRecord.daddr == LOOPBACK_ADDRESS
+            || dnsQueryRawRecord.daddr == "::"
+            || dnsQueryRawRecord.daddr.contains(":") && blockIPv6
+            || dnsQueryRawRecord.hInfo.contains("dnscrypt")
+            || dnsQueryRawRecord.rCode != 0
+        ) {
 
-            dnsQueryRawRecord.blockedByIpv6 = (dnsQueryRawRecord.hInfo.contains("block_ipv6")
+            dnsQueryRawRecord.blockedByIpv6 = (dnsQueryRawRecord.hInfo.contains(DNSCRYPT_BLOCK_IPv6)
                     || dnsQueryRawRecord.daddr == "::"
                     || dnsQueryRawRecord.daddr.contains(":") && blockIPv6)
 
@@ -266,8 +297,9 @@ class ConnectionRecordsConverter(context: Context) {
             dnsQueryRawRecord.unused = false
 
         } else if (dnsQueryRawRecord.daddr.isBlank()
-                && dnsQueryRawRecord.cName.isBlank()
-                && !dnsQueryRawRecord.aName.contains(".in-addr.arpa")) {
+            && dnsQueryRawRecord.cName.isBlank()
+            && !dnsQueryRawRecord.aName.contains(DNS_REVERSE_LOOKUP_SUFFIX)
+        ) {
             dnsQueryRawRecord.blocked = true
             dnsQueryRawRecord.unused = false
         } else {
@@ -291,11 +323,31 @@ class ConnectionRecordsConverter(context: Context) {
             return false
         }
 
-        for (address in Util.nonTorList) {
-            if (Util.isIpInSubnet(destAddress, address)) {
+        for (address in VpnUtils.nonTorList) {
+            if (VpnUtils.isIpInSubnet(destAddress, address)) {
                 return true
             }
         }
         return false
+    }
+
+    private class IpToTime(
+        val ip: String,
+        val time: Long = 0
+    ) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as IpToTime
+
+            if (ip != other.ip) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return ip.hashCode()
+        }
     }
 }

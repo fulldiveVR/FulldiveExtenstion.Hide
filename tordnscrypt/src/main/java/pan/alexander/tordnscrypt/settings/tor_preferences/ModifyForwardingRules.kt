@@ -1,45 +1,30 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.settings.tor_preferences
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.settings.tor_preferences
 
 import android.content.Context
 import android.util.Log
+import pan.alexander.tordnscrypt.App
 import pan.alexander.tordnscrypt.modules.ModulesRestarter
 import pan.alexander.tordnscrypt.modules.ModulesStatus
-import pan.alexander.tordnscrypt.settings.PathVars
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG
 import pan.alexander.tordnscrypt.utils.enums.ModuleState
 import java.io.File
 import java.io.PrintWriter
@@ -47,9 +32,10 @@ import java.io.PrintWriter
 class ModifyForwardingRules(private val context: Context,
                             private val lineToReplaceTo: String) {
 
-    private val forwardingRulesFile: String = PathVars.getInstance(context).dnsCryptForwardingRulesPath
-    private val localForwardingRulesFile: String = PathVars.getInstance(context).dnsCryptLocalForwardingRulesPath
-    private val cacheDir: String = PathVars.getInstance(context).appDataDir + "/cache/"
+    private val pathVars = App.instance.daggerComponent.getPathVars().get()
+    private val forwardingRulesFile: String = pathVars.dnsCryptForwardingRulesPath
+    private val localForwardingRulesFile: String = pathVars.dnsCryptLocalForwardingRulesPath
+    private val cacheDir: String = pathVars.appDataDir + "/cache/"
     private val tempFile: String = "$cacheDir/tmpForwardingRules.txt"
     private val lineToFindRegExp = Regex("^onion +127.0.0.1:\\d+$")
 

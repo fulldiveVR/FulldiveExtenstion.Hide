@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.settings.dnscrypt_relays;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.settings.dnscrypt_relays;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -41,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -51,25 +37,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.dialogs.progressDialogs.PleaseWaitProgressDialog;
 import pan.alexander.tordnscrypt.settings.PathVars;
 import pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
-import pan.alexander.tordnscrypt.utils.file_operations.OnTextFileOperationsCompleteListener;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
+import pan.alexander.tordnscrypt.utils.filemanager.OnTextFileOperationsCompleteListener;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PreferencesDNSCryptRelays extends Fragment implements OnTextFileOperationsCompleteListener {
+
+    @Inject
+    public Lazy<PathVars> pathVars;
+
     private String dnsServerName;
     private final ArrayList<DNSRelayItem> dnsRelayItems = new ArrayList<>();
     private CopyOnWriteArrayList<DNSServerRelays> routesCurrent;
     private RecyclerView.Adapter<DNSRelaysAdapter.DNSRelaysViewHolder> adapter;
     private OnRoutesChangeListener onRoutesChangeListener;
-    private static DialogFragment pleaseWaitDialog;
+    private DialogFragment pleaseWaitDialog;
     private boolean serverIPv6;
 
 
@@ -87,6 +81,7 @@ public class PreferencesDNSCryptRelays extends Fragment implements OnTextFileOpe
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
@@ -97,37 +92,41 @@ public class PreferencesDNSCryptRelays extends Fragment implements OnTextFileOpe
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
         Activity activity = getActivity();
         if (activity == null) {
-            return;
-        }
-
-        FileOperations.setOnFileOperationCompleteListener(this);
-
-        PathVars pathVars = PathVars.getInstance(activity);
-
-        if (dnsRelayItems.isEmpty()) {
-            FileOperations.readTextFile(activity, pathVars.getAppDataDir() + "/app_data/dnscrypt-proxy/relays.md", "relays.md");
+            return null;
         }
 
         activity.setTitle(R.string.pref_dnscrypt_relays_title);
 
-        RecyclerView rvDNSRelay = activity.findViewById(R.id.rvDNSRelays);
+        View view = inflater.inflate(R.layout.fragment_preferences_dnscrypt_relays, container, false);
+
+        RecyclerView rvDNSRelay = view.findViewById(R.id.rvDNSRelays);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(activity);
         rvDNSRelay.setLayoutManager(manager);
 
         adapter = new DNSRelaysAdapter(activity, dnsRelayItems);
         rvDNSRelay.setAdapter(adapter);
+
+        return view;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_preferences_dnscrypt_relays, container, false);
+    public void onResume() {
+        super.onResume();
+
+        FileManager.setOnFileOperationCompleteListener(this);
+
+        if (dnsRelayItems.isEmpty()) {
+            FileManager.readTextFile(
+                    requireContext(),
+                    pathVars.get().getAppDataDir() + "/app_data/dnscrypt-proxy/relays.md", "relays.md"
+            );
+        }
     }
 
     @Override
@@ -142,7 +141,7 @@ public class PreferencesDNSCryptRelays extends Fragment implements OnTextFileOpe
     public void onPause() {
         super.onPause();
 
-        FileOperations.deleteOnFileOperationCompleteListener(this);
+        FileManager.deleteOnFileOperationCompleteListener(this);
     }
 
     @Override
@@ -162,6 +161,14 @@ public class PreferencesDNSCryptRelays extends Fragment implements OnTextFileOpe
         CopyOnWriteArrayList<DNSServerRelays> routesNew = updateRelaysListForAllServers(dnsServerRelaysNew);
 
         callbackToPreferencesDNSCryptServers(routesNew);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        adapter = null;
+        pleaseWaitDialog = null;
     }
 
     @SuppressWarnings("unchecked")
@@ -309,6 +316,7 @@ public class PreferencesDNSCryptRelays extends Fragment implements OnTextFileOpe
         if (pleaseWaitDialog != null) {
             try {
                 pleaseWaitDialog.dismiss();
+                pleaseWaitDialog = null;
             } catch (Exception e) {
                 Log.w(LOG_TAG, "PreferencesDNSCryptRelays closePleaseWaitDialog Exception: " + e.getMessage() + " " + e.getCause());
             }

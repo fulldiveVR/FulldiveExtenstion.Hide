@@ -1,20 +1,20 @@
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 #include <jni.h>
 #include <stdio.h>
@@ -92,6 +92,9 @@
 #define SOCKS5_AUTH 3
 #define SOCKS5_CONNECT 4
 #define SOCKS5_CONNECTED 5
+
+#define LOOPBACK_ADDRESS "127.0.0.1"
+#define LOOPBACK_ADDRESS_IPv6 "::1"
 
 struct context {
     pthread_mutex_t lock;
@@ -261,6 +264,8 @@ typedef int32_t gint32_t;
 #define DNS_QTYPE_AAAA 28 // IPv6
 #define DNS_QTYPE_CNAME 5 //CNAME
 #define DNS_QTYPE_HINFO 13//HINFO
+#define DNS_QTYPE_SVCB 64
+#define DNS_QTYPE_HTTPS 65
 
 #define DNS_QNAME_MAX 255
 #define DNS_TTL (10 * 60) // seconds
@@ -445,7 +450,7 @@ int open_udp_socket(const struct arguments *args,
                     const struct udp_session *cur, const struct allowed *redirect);
 
 int open_tcp_socket(const struct arguments *args,
-                    const struct tcp_session *cur, const struct allowed *redirect);
+                    const struct tcp_session *cur, struct allowed *redirect);
 
 int32_t get_local_port(const int sock);
 
@@ -472,6 +477,10 @@ ssize_t write_tcp(const struct arguments *args, const struct tcp_session *cur,
                   const uint8_t *data, size_t datalen,
                   int syn, int ack, int fin, int rst);
 
+void write_connection_unreach(const struct arguments *args,
+                              const struct ng_session *s,
+                              const int serr);
+
 uint8_t char2nible(const char c);
 
 void hex2bytes(const char *hex, uint8_t *buffer);
@@ -485,6 +494,18 @@ jint get_uid_sub(const int version, const int protocol,
                  const void *daddr, const uint16_t dport,
                  const char *source, const char *dest,
                  long now);
+
+jint restore_uid(const struct arguments *args,
+                 const int version,
+                 const int protocol,
+                 const void *saddr,
+                 const uint16_t sport,
+                 const void *daddr,
+                 const uint16_t dport,
+                 const char *source,
+                 const char *dest,
+                 const char *flags,
+                 const uint8_t *payload);
 
 int protect_socket(const struct arguments *args, int socket);
 

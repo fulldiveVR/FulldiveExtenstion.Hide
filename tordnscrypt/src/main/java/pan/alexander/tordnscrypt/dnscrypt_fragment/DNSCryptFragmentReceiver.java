@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.dnscrypt_fragment;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.dnscrypt_fragment;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -46,27 +31,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.dialogs.NotificationHelper;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.RootExecService;
-import pan.alexander.tordnscrypt.utils.Verifier;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
+import pan.alexander.tordnscrypt.utils.root.RootExecService;
+import pan.alexander.tordnscrypt.utils.integrity.Verifier;
 
 import static pan.alexander.tordnscrypt.TopFragment.DNSCryptVersion;
 import static pan.alexander.tordnscrypt.TopFragment.TOP_BROADCAST;
 import static pan.alexander.tordnscrypt.TopFragment.appSign;
 import static pan.alexander.tordnscrypt.TopFragment.wrongSign;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.modules.ModulesService.DNSCRYPT_KEYWORD;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.DNSCRYPT_RUN_FRAGMENT_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.FAULT;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
 
+import javax.inject.Inject;
+
 public class DNSCryptFragmentReceiver extends BroadcastReceiver {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Lazy<PathVars> pathVars;
+    @Inject
+    public CachedExecutor cachedExecutor;
 
     private final DNSCryptFragmentView view;
     private final DNSCryptFragmentPresenterInterface presenter;
@@ -74,7 +72,10 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
     private String dnscryptPath;
     private String busyboxPath;
 
+
+
     public DNSCryptFragmentReceiver(DNSCryptFragmentView view, DNSCryptFragmentPresenter presenter) {
+        App.getInstance().getDaggerComponent().inject(this);
         this.view = view;
         this.presenter = presenter;
     }
@@ -90,16 +91,17 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
 
         ModulesStatus modulesStatus = ModulesStatus.getInstance();
 
-        PathVars pathVars = PathVars.getInstance(context);
-        dnscryptPath = pathVars.getDNSCryptPath();
-        busyboxPath = pathVars.getBusyboxPath();
+        dnscryptPath = pathVars.get().getDNSCryptPath();
+        busyboxPath = pathVars.get().getBusyboxPath();
 
 
         if (intent != null) {
             final String action = intent.getAction();
-            if (action == null || action.equals("") || ((intent.getIntExtra("Mark", 0) !=
-                    RootExecService.DNSCryptRunFragmentMark) &&
+            if (action == null
+                    || action.equals("")
+                    || ((intent.getIntExtra("Mark", 0) != DNSCRYPT_RUN_FRAGMENT_MARK) &&
                     !action.equals(TOP_BROADCAST))) return;
+
             Log.i(LOG_TAG, "DNSCryptRunFragment onReceive");
 
             if (action.equals(RootExecService.COMMAND_RESULT)) {
@@ -126,13 +128,14 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
 
                 if (sb.toString().contains("DNSCrypt_version")) {
                     String[] strArr = sb.toString().split("DNSCrypt_version");
-                    if (strArr.length > 1 && strArr[1].trim().matches("\\d+\\.\\d+\\.\\d+")) {
-                        DNSCryptVersion = strArr[1].trim();
-                        new PrefManager(context).setStrPref("DNSCryptVersion", DNSCryptVersion);
+                    if (strArr.length > 1 && strArr[1].trim().matches("(STDOUT=)?\\d+\\.\\d+\\.\\d+")) {
+                        DNSCryptVersion = strArr[1].replace("STDOUT=", "").trim();
+                        preferenceRepository.get()
+                                .setStringPreference("DNSCryptVersion", DNSCryptVersion);
 
                         if (!modulesStatus.isUseModulesWithRoot()) {
 
-                            if (!ModulesAux.isDnsCryptSavedStateRunning(context)) {
+                            if (!ModulesAux.isDnsCryptSavedStateRunning()) {
                                 view.setDNSCryptLogViewText();
                             }
 
@@ -142,13 +145,13 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
                 }
 
                 if (sb.toString().toLowerCase().contains(dnscryptPath.toLowerCase())
-                        && sb.toString().contains("checkDNSRunning")) {
+                        && sb.toString().contains(DNSCRYPT_KEYWORD)) {
                     modulesStatus.setDnsCryptState(RUNNING);
                     presenter.displayLog();
                 } else if (!sb.toString().toLowerCase().contains(dnscryptPath.toLowerCase())
-                        && sb.toString().contains("checkDNSRunning")) {
+                        && sb.toString().contains(DNSCRYPT_KEYWORD)) {
                     if (modulesStatus.getDnsCryptState() == STOPPED) {
-                        ModulesAux.saveDNSCryptStateRunning(context, false);
+                        ModulesAux.saveDNSCryptStateRunning(false);
                     }
                     presenter.stopDisplayLog();
                     presenter.setDnsCryptStopped();
@@ -169,7 +172,7 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
                 FragmentManager fragmentManager = view.getFragmentFragmentManager();
                 Activity activity = view.getFragmentActivity();
 
-                CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+                cachedExecutor.submit(() -> {
                     try {
                         if (activity == null || activity.isFinishing()) {
                             return;
@@ -178,9 +181,14 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
                         Verifier verifier = new Verifier(context);
                         String appSignAlt = verifier.getApkSignature();
                         if (!verifier.decryptStr(wrongSign, appSign, appSignAlt).equals(TOP_BROADCAST)) {
+
+                            if (fragmentManager != null) {
+                            }
                         }
 
                     } catch (Exception e) {
+                        if (fragmentManager != null) {
+                        }
                         Log.e(LOG_TAG, "DNSCryptRunFragment fault " + e.getMessage() + " " + e.getCause() + System.lineSeparator() +
                                 Arrays.toString(e.getStackTrace()));
                     }
@@ -200,12 +208,8 @@ public class DNSCryptFragmentReceiver extends BroadcastReceiver {
                     busyboxPath + "echo 'DNSCrypt_version' 2> /dev/null",
                     dnscryptPath + " --version 2> /dev/null"
             ));
-            RootCommands rootCommands = new RootCommands(commandsCheck);
-            Intent intent = new Intent(context, RootExecService.class);
-            intent.setAction(RootExecService.RUN_COMMAND);
-            intent.putExtra("Commands", rootCommands);
-            intent.putExtra("Mark", RootExecService.DNSCryptRunFragmentMark);
-            RootExecService.performAction(context, intent);
+
+            RootCommands.execute(context, commandsCheck, DNSCRYPT_RUN_FRAGMENT_MARK);
 
             view.setDNSCryptProgressBarIndeterminate(true);
         }

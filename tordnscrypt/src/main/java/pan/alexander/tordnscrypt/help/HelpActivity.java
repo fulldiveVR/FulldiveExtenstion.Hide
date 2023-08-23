@@ -1,40 +1,25 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.help;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.help;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
@@ -48,7 +33,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.os.Looper;
-import android.os.Process;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,27 +50,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.LangAppCompatActivity;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.dialogs.progressDialogs.PleaseWaitProgressDialog;
 import pan.alexander.tordnscrypt.dialogs.NotificationDialogFragment;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
 import pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants;
-import pan.alexander.tordnscrypt.utils.file_operations.ExternalStoragePermissions;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
-import pan.alexander.tordnscrypt.utils.file_operations.OnBinaryFileOperationsCompleteListener;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.RootExecService;
+import pan.alexander.tordnscrypt.utils.filemanager.ExternalStoragePermissions;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
+import pan.alexander.tordnscrypt.utils.filemanager.OnBinaryFileOperationsCompleteListener;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
+import pan.alexander.tordnscrypt.utils.root.RootExecService;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 
 import static pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants.deleteFile;
 import static pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants.moveBinaryFile;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.SAVE_ROOT_LOGS;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.HELP_ACTIVITY_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
+
+import javax.inject.Inject;
 
 public class HelpActivity extends LangAppCompatActivity implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener, OnBinaryFileOperationsCompleteListener {
+
+    @Inject
+    public Lazy<PathVars> pathVarsLazy;
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public CachedExecutor cachedExecutor;
 
     private TextView tvLogsPath;
     private EditText etLogsPath;
@@ -105,6 +102,7 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
@@ -127,7 +125,7 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
         SwitchCompat swRootCommandsLog = findViewById(R.id.swRootCommandsLog);
 
         if (ModulesStatus.getInstance().isRootAvailable()) {
-            swRootCommandsLog.setChecked(new PrefManager(this).getBoolPref("swRootCommandsLog"));
+            swRootCommandsLog.setChecked(preferenceRepository.get().getBoolPreference(SAVE_ROOT_LOGS));
             swRootCommandsLog.setOnCheckedChangeListener(this);
         } else {
             swRootCommandsLog.setVisibility(View.GONE);
@@ -140,12 +138,12 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
             mHandler = new Handler(looper);
         }
 
-        PathVars pathVars = PathVars.getInstance(this);
+        PathVars pathVars = pathVarsLazy.get();
         appDataDir = pathVars.getAppDataDir();
         busyboxPath = pathVars.getBusyboxPath();
         pathToSaveLogs = pathVars.getDefaultBackupPath();
         iptables = pathVars.getIptablesPath();
-        appUID = String.valueOf(Process.myUid());
+        appUID = pathVars.getAppUidStr();
 
         cacheDir = pathVars.getCacheDirPath(this);
 
@@ -170,9 +168,9 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
 
         etLogsPath.setText(pathToSaveLogs);
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> new File(cacheDir + "/logs").mkdirs());
+        cachedExecutor.submit(() -> new File(cacheDir + "/logs").mkdirs());
 
-        FileOperations.setOnFileOperationCompleteListener(this);
+        FileManager.setOnFileOperationCompleteListener(this);
     }
 
     @Override
@@ -195,7 +193,7 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
             if (modulesStatus.isRootAvailable()) {
                 collectLogsMethodOne(info);
             } else {
-                CachedExecutor.INSTANCE.getExecutorService().submit(br.saveLogs(getApplicationContext(), null));
+                cachedExecutor.submit(br.saveLogs(getApplicationContext(), null));
             }
         } else if (id == R.id.etLogsPath) {
             chooseOutputFolder();
@@ -207,7 +205,7 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
         properties.selection_mode = DialogConfigs.SINGLE_MODE;
         properties.selection_type = DialogConfigs.DIR_SELECT;
         properties.root = new File(Environment.getExternalStorageDirectory().getPath());
-        properties.error_dir = new File(PathVars.getInstance(this).getCacheDirPath(this));
+        properties.error_dir = new File(pathVarsLazy.get().getCacheDirPath(this));
         properties.offset = new File(Environment.getExternalStorageDirectory().getPath());
         properties.extensions = null;
 
@@ -236,28 +234,25 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
 
         List<String> logcatCommands = new ArrayList<>(Arrays.asList(
                 "cd " + cacheDir,
-                busyboxPath + "rm -rf logs_dir 2> /dev/null",
-                busyboxPath + "mkdir -m 655 -p logs_dir 2> /dev/null",
-                busyboxPath + "cp -R " + appDataDir + "/logs" + " logs_dir 2> /dev/null",
-                "logcat -d | grep " + pid + " > logs_dir/logcat.log 2> /dev/null",
-                iptables + "-L -v > logs_dir/filter.log 2> /dev/null",
-                iptables + "-t nat -L -v > logs_dir/nat.log 2> /dev/null",
-                iptables + "-t mangle -L -v > logs_dir/mangle.log 2> /dev/null",
-                iptables + "-t raw -L -v > logs_dir/raw.log 2> /dev/null",
-                busyboxPath + "cp -R "+ appDataDir + "/shared_prefs"+" logs_dir 2> /dev/null",
-                busyboxPath + "sleep 1 2> /dev/null",
-                busyboxPath + "echo \"" + info + "\" > logs_dir/device_info.log 2> /dev/null",
-                "restorecon -R logs_dir 2> /dev/null",
-                busyboxPath + "chown -R " + appUID + "." + appUID + " logs_dir 2> /dev/null",
-                busyboxPath + "chmod -R 755 logs_dir 2> /dev/null",
-                busyboxPath + "echo 'Logs Saved' 2> /dev/null"
+                busyboxPath + "rm -rf logs_dir 2> /dev/null || true",
+                busyboxPath + "mkdir -m 655 -p logs_dir 2> /dev/null || true",
+                busyboxPath + "cp -R " + appDataDir + "/logs" + " logs_dir 2> /dev/null || true",
+                "logcat -d | grep " + pid + " > logs_dir/logcat.log 2> /dev/null || true",
+                "ifconfig > logs_dir/ifconfig.log 2> /dev/null || true",
+                busyboxPath + "cp -R "+ appDataDir + "/shared_prefs"+" logs_dir 2> /dev/null || true",
+                busyboxPath + "sleep 1 2> /dev/null || true",
+                busyboxPath + "echo \"" + info + "\" > logs_dir/device_info.log 2> /dev/null || true",
+                iptables + "-L -v > logs_dir/filter.log 2> /dev/null || true",
+                iptables + "-t nat -L -v > logs_dir/nat.log 2> /dev/null || true",
+                iptables + "-t mangle -L -v > logs_dir/mangle.log 2> /dev/null || true",
+                iptables + "-t raw -L -v > logs_dir/raw.log 2> /dev/null || true",
+                "restorecon -R logs_dir 2> /dev/null || true",
+                busyboxPath + "chown -R " + appUID + "." + appUID + " logs_dir 2> /dev/null || true",
+                busyboxPath + "chmod -R 755 logs_dir 2> /dev/null || true",
+                busyboxPath + "echo 'Logs Saved' 2> /dev/null || true"
         ));
-        RootCommands rootCommands = new RootCommands(logcatCommands);
-        Intent intent = new Intent(this, RootExecService.class);
-        intent.setAction(RootExecService.RUN_COMMAND);
-        intent.putExtra("Commands", rootCommands);
-        intent.putExtra("Mark", RootExecService.HelpActivityMark);
-        RootExecService.performAction(this, intent);
+
+        RootCommands.execute(this, logcatCommands, HELP_ACTIVITY_MARK);
     }
 
 
@@ -265,7 +260,7 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
     public void onPause() {
         super.onPause();
 
-        FileOperations.deleteOnFileOperationCompleteListener(this);
+        FileManager.deleteOnFileOperationCompleteListener(this);
     }
 
     @Override
@@ -294,11 +289,13 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean newValue) {
         if (compoundButton.getId() == R.id.swRootCommandsLog) {
-            new PrefManager(this).setBoolPref("swRootCommandsLog", newValue);
+            preferenceRepository.get().setBoolPreference(SAVE_ROOT_LOGS, newValue);
 
             if (!newValue) {
-                FileOperations.deleteFile(getApplicationContext(), appDataDir + "/logs", "RootExec.log", "RootExec.log");
-                FileOperations.deleteFile(getApplicationContext(), appDataDir + "/logs", "Snowflake.log", "Snowflake.log");
+                FileManager.deleteFile(getApplicationContext(), appDataDir + "/logs", "RootExec.log", "RootExec.log");
+                FileManager.deleteFile(getApplicationContext(), appDataDir + "/logs", "Snowflake.log", "Snowflake.log");
+                FileManager.deleteFile(getApplicationContext(), appDataDir + "/logs", "Conjure.log", "Conjure.log");
+                FileManager.deleteFile(getApplicationContext(), appDataDir + "/logs", "WebTunnel.log", "WebTunnel.log");
             }
         }
     }
@@ -331,7 +328,7 @@ public class HelpActivity extends LangAppCompatActivity implements View.OnClickL
     }
 
     private void hideSelectionEditTextIfRequired() {
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 logsDirAccessible = pan.alexander.tordnscrypt.utils.Utils.INSTANCE.isLogsDirAccessible();

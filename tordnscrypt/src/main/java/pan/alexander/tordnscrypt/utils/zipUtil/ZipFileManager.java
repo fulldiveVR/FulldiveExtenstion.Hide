@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.utils.zipUtil;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.utils.zipUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -51,9 +36,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 
 public class ZipFileManager {
     private String zipFile;
@@ -197,8 +182,8 @@ public class ZipFileManager {
             f = new File(path);
         } catch (Exception e) {
             Log.w(LOG_TAG, "ZipFileManager File is no accessible " + e.getMessage() + " " + e.getCause() + " .Try to restore access.");
-            FileOperations fileOperations = new FileOperations();
-            fileOperations.restoreAccess(context, path);
+            FileManager fileManager = new FileManager();
+            fileManager.restoreAccess(context, path);
         }
 
         if (f == null) {
@@ -210,8 +195,8 @@ public class ZipFileManager {
                 Log.i(LOG_TAG, "ZipFileManager take " + path + " success");
             } else {
                 Log.w(LOG_TAG, "ZipFileManager take " + path + " warning");
-                FileOperations fileOperations = new FileOperations();
-                fileOperations.restoreAccess(context, path);
+                FileManager fileManager = new FileManager();
+                fileManager.restoreAccess(context, path);
                 if (f.setReadable(true, false)) {
                     Log.i(LOG_TAG, "ZipFileManager take " + path + " success");
                 } else {

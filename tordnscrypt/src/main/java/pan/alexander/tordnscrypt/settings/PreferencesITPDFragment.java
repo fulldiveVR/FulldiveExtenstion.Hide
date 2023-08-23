@@ -1,69 +1,65 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.settings;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.settings;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
-import pan.alexander.tordnscrypt.SettingsActivity;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 import pan.alexander.tordnscrypt.modules.ModulesRestarter;
 
 import static pan.alexander.tordnscrypt.TopFragment.appVersion;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.loge;
 import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
 import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.I2PD_OUTBOUND_PROXY;
+
+import javax.inject.Inject;
 
 public class PreferencesITPDFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+
+    @Inject
+    public Lazy<PathVars> pathVars;
+    @Inject
+    public CachedExecutor cachedExecutor;
 
     private ArrayList<String> key_itpd;
     private ArrayList<String> val_itpd;
@@ -74,6 +70,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
@@ -95,8 +92,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
         preferences.add(findPreference("floodfill"));
         preferences.add(findPreference("bandwidth"));
         preferences.add(findPreference("share"));
-        preferences.add(findPreference("ssu"));
-        preferences.add(findPreference("Enable ntcpproxy"));
+        preferences.add(findPreference(I2PD_OUTBOUND_PROXY));
         preferences.add(findPreference("ntcpproxy"));
         preferences.add(findPreference("HTTP proxy"));
         preferences.add(findPreference("HTTP proxy port"));
@@ -112,6 +108,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
         preferences.add(findPreference("elgamal"));
         preferences.add(findPreference("UPNP"));
         preferences.add(findPreference("ntcp2 enabled"));
+        preferences.add(findPreference("ssu2 enabled"));
         preferences.add(findPreference("verify"));
         preferences.add(findPreference("transittunnels"));
         preferences.add(findPreference("openfiles"));
@@ -122,7 +119,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
             if (preference != null) {
                 preference.setOnPreferenceChangeListener(this);
             } else if (!appVersion.startsWith("g")){
-                Log.e(LOG_TAG, "PreferencesITPDFragment preference is null exception");
+                loge("PreferencesITPDFragment preference is null exception");
             }
         }
 
@@ -159,8 +156,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
 
         activity.setTitle(R.string.drawer_menu_I2PDSettings);
 
-        PathVars pathVars = PathVars.getInstance(getActivity());
-        appDataDir = pathVars.getAppDataDir();
+        appDataDir = pathVars.get().getAppDataDir();
 
         isChanged = false;
 
@@ -226,6 +222,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
                     key_itpd_to_save.set(i, "outproxy");
                     break;
                 case "ntcp2 enabled":
+                case "ssu2 enabled":
                 case "SAM interface":
                 case "Socks proxy":
                 case "http enabled":
@@ -245,9 +242,9 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
 
         if (!isChanged) return;
 
-        FileOperations.writeToTextFile(context, appDataDir + "/app_data/i2pd/i2pd.conf", itpd_conf, SettingsActivity.itpd_conf_tag);
+        FileManager.writeToTextFile(context, appDataDir + "/app_data/i2pd/i2pd.conf", itpd_conf, SettingsActivity.itpd_conf_tag);
 
-        boolean itpdRunning = ModulesAux.isITPDSavedStateRunning(context);
+        boolean itpdRunning = ModulesAux.isITPDSavedStateRunning();
 
         if (itpdRunning) {
             ModulesRestarter.restartITPD(context);
@@ -258,7 +255,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
 
         Context context = getActivity();
 
@@ -276,7 +273,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
                     key_itpd.set(key_itpd.indexOf("incoming port"), "#port");
                 }
                 return true;
-            } else if (Objects.equals(preference.getKey(), "Enable ntcpproxy")) {
+            } else if (Objects.equals(preference.getKey(), I2PD_OUTBOUND_PROXY)) {
                 enableProxy(Boolean.parseBoolean(newValue.toString()));
                 return true;
             } else if (Objects.equals(preference.getKey(), "ntcpproxy")) {
@@ -312,6 +309,29 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
                     || Objects.equals(preference.getKey(), "defaulturl"))
                     && newValue.toString().trim().isEmpty()) {
                 return false;
+            } else if (Objects.equals(preference.getKey(), "notransit")) {
+                for (int i = 0; i < key_itpd.size(); i++) {
+                    String key = key_itpd.get(i);
+                    if (key.equals("published")) {
+                        val_itpd.set(i, String.valueOf(!Boolean.parseBoolean(newValue.toString())));
+                    }
+                }
+            } else if (Objects.equals(preference.getKey(), "ssu2 enabled")) {
+                if (!key_itpd.contains("[ssu2]") && key_itpd.contains("[ntcp2]")) {
+                    int positionNtcp2 = key_itpd.indexOf("[ntcp2]");
+                    key_itpd.add(positionNtcp2, "[ssu2]");
+                    val_itpd.add(positionNtcp2, "");
+                    key_itpd.add(positionNtcp2 + 1, "ssu2 enabled");
+                    val_itpd.add(positionNtcp2 + 1, "true");
+                    key_itpd.add(positionNtcp2 + 2, "published");
+
+                    int positionNoTransit = key_itpd.indexOf("notransit");
+                    if (positionNoTransit >= 0 && "false".equals(val_itpd.get(positionNoTransit))) {
+                        val_itpd.add(positionNtcp2 + 2, "true");
+                    } else {
+                        val_itpd.add(positionNtcp2 + 2, "false");
+                    }
+                }
             }
 
             if (key_itpd.contains(preference.getKey().trim())) {
@@ -321,7 +341,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
                 Toast.makeText(context, R.string.pref_itpd_not_exist, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "PreferencesITPDFragment onPreferenceChange exception " + e.getMessage() + " " + e.getCause());
+            loge("PreferencesITPDFragment onPreferenceChange", e);
             Toast.makeText(context, R.string.wrong, Toast.LENGTH_LONG).show();
         }
 
@@ -394,7 +414,7 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
     }
 
     @Override
-    public boolean onPreferenceClick(Preference preference) {
+    public boolean onPreferenceClick(@NonNull Preference preference) {
         if (getActivity() == null) {
             return false;
         }
@@ -406,10 +426,10 @@ public class PreferencesITPDFragment extends PreferenceFragmentCompat implements
                 return true;
             }
 
-            CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+            cachedExecutor.submit(() -> {
                 boolean successfully = false;
                 if (getActivity() != null) {
-                    successfully = FileOperations.deleteDirSynchronous(getActivity(), appDataDir + "/i2pd_data");
+                    successfully = FileManager.deleteDirSynchronous(getActivity(), appDataDir + "/i2pd_data");
                 }
 
                 if (getActivity() != null && !getActivity().isFinishing()) {

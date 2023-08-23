@@ -1,60 +1,65 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.utils
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.utils
 
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Point
+import android.os.Build
 import android.os.Environment
-import android.util.Log
+import android.os.Process
+import android.util.Base64
 import android.view.Display
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import pan.alexander.tordnscrypt.TopFragment.appVersion
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository
 import pan.alexander.tordnscrypt.modules.ModulesService
-import pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG
+import pan.alexander.tordnscrypt.modules.ModulesStatus
+import pan.alexander.tordnscrypt.settings.PathVars
+import pan.alexander.tordnscrypt.settings.tor_apps.ApplicationData.Companion.SPECIAL_UID_CONNECTIVITY_CHECK
+import pan.alexander.tordnscrypt.settings.tor_bridges.PreferencesTorBridges
+import pan.alexander.tordnscrypt.utils.Constants.DNS_DEFAULT_UID
+import pan.alexander.tordnscrypt.utils.Constants.NETWORK_STACK_DEFAULT_UID
+import pan.alexander.tordnscrypt.utils.appexit.AppExitDetectService
+import pan.alexander.tordnscrypt.utils.filemanager.FileShortener
+import pan.alexander.tordnscrypt.utils.logger.Logger.loge
+import pan.alexander.tordnscrypt.utils.logger.Logger.logi
+import pan.alexander.tordnscrypt.utils.logger.Logger.logw
+import pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.*
+import pan.alexander.tordnscrypt.utils.root.RootCommands
+import pan.alexander.tordnscrypt.utils.root.RootCommandsMark.NULL_MARK
 import java.io.File
 import java.io.PrintWriter
 import java.net.Inet4Address
-import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.SocketException
 import kotlin.math.roundToInt
 
 object Utils {
-    fun getScreenOrientation(activity: Activity): Int {
+    fun getScreenOrientationOld(activity: Activity): Int {
         val getOrient: Display = activity.windowManager.defaultDisplay
         val point = Point()
         getOrient.getSize(point)
@@ -69,6 +74,16 @@ object Utils {
         }
     }
 
+    fun getScreenOrientation(activity: Activity): Int {
+        val displayMetrics = activity.resources.displayMetrics
+        return when {
+            displayMetrics.widthPixels < displayMetrics.heightPixels -> Configuration.ORIENTATION_PORTRAIT
+            displayMetrics.widthPixels > displayMetrics.heightPixels -> Configuration.ORIENTATION_LANDSCAPE
+            else -> Configuration.ORIENTATION_UNDEFINED
+        }
+    }
+
+
     fun dips2pixels(dips: Int, context: Context): Int {
         return (dips * context.resources.displayMetrics.density + 0.5f).roundToInt()
     }
@@ -82,12 +97,12 @@ object Utils {
                 while (enumIpAddr.hasMoreElements()) {
                     val inetAddress = enumIpAddr.nextElement()
                     if (!inetAddress.isLoopbackAddress && inetAddress is Inet4Address) {
-                        return inetAddress.getHostAddress()
+                        return inetAddress.getHostAddress() ?: ""
                     }
                 }
             }
         } catch (e: SocketException) {
-            Log.e(LOG_TAG, "Utils SocketException " + e.message + " " + e.cause)
+            loge("Utils SocketException", e)
         }
 
         return ""
@@ -113,15 +128,10 @@ object Utils {
 
             }
         } catch (e: SocketException) {
-            Log.e(LOG_TAG, "Util SocketException " + e.message + " " + e.cause)
+            loge("Util SocketException", e)
         }
 
         return result
-    }
-
-    fun getHostByIP(IP: String): String {
-        val addr = InetAddress.getByName(IP)
-        return addr.hostName
     }
 
     //For backwards compatibility, it will still return the caller's own services.
@@ -137,7 +147,7 @@ object Utils {
                 }
             }
         } catch (exception: Exception) {
-            Log.e(LOG_TAG, "Utils isServiceRunning exception " + exception.message + " " + exception.cause)
+            loge("Utils isServiceRunning exception", exception)
         }
 
         return result
@@ -155,7 +165,7 @@ object Utils {
             if (dir != null && dir.isDirectory) {
                 result = dir.list()?.isNotEmpty() ?: false
             } else {
-                Log.w(LOG_TAG, "Root Dir is not read accessible!")
+                logw("Root Dir is not read accessible!")
             }
 
             var rootDirPath = "/storage/emulated/0"
@@ -166,7 +176,7 @@ object Utils {
             val saveDir = File(saveDirPath)
             if (result && !saveDir.isDirectory && !saveDir.mkdir()) {
                 result = false
-                Log.w(LOG_TAG, "Root Dir is not write accessible!")
+                logw("Root Dir is not write accessible!")
             }
 
             if (result) {
@@ -175,14 +185,167 @@ object Utils {
                 PrintWriter(testFile).print("")
                 if (!testFile.isFile || !testFile.delete()) {
                     result = false
-                    Log.w(LOG_TAG, "Root Dir is not write accessible!")
+                    logw("Root Dir is not write accessible!")
                 }
             }
 
         } catch (e: Exception) {
             result = false
-            Log.w(LOG_TAG, "Download Dir is not accessible " + e.message + e.cause)
+            logw("Download Dir is not accessible", e)
         }
         return result
     }
+
+    @JvmStatic
+    fun isInterfaceLocked(preferenceRepository: PreferenceRepository): Boolean {
+        var locked = false
+        try {
+            locked = String(
+                Base64.decode(preferenceRepository.getStringPreference(CHILD_LOCK_PASSWORD), 16)
+            ).contains("-l-o-c-k-e-d")
+        } catch (e: IllegalArgumentException) {
+            loge("Decode child password exception ${e.message}")
+        }
+        return locked
+    }
+
+    @JvmStatic
+    fun startAppExitDetectService(context: Context) {
+        try {
+            Intent(context, AppExitDetectService::class.java).apply {
+                context.startService(this)
+                logi("Start app exit detect service")
+            }
+        } catch (e: java.lang.Exception) {
+            loge("Start app exit detect service exception", e)
+        }
+    }
+
+    @JvmStatic
+    fun shortenTooLongSnowflakeLog(
+        context: Context,
+        preferences: PreferenceRepository,
+        pathVars: PathVars
+    ) {
+        try {
+            val bridgesSnowflakeDefault =
+                preferences.getStringPreference(DEFAULT_BRIDGES_OBFS) == PreferencesTorBridges.SNOWFLAKE_BRIDGES_DEFAULT
+            val bridgesSnowflakeOwn =
+                preferences.getStringPreference(OWN_BRIDGES_OBFS) == PreferencesTorBridges.SNOWFLAKE_BRIDGES_OWN
+            val shPref = PreferenceManager.getDefaultSharedPreferences(context)
+            val showHelperMessages =
+                shPref.getBoolean(ALWAYS_SHOW_HELP_MESSAGES, false)
+            if (showHelperMessages && (bridgesSnowflakeDefault || bridgesSnowflakeOwn)) {
+                FileShortener.shortenTooTooLongFile(pathVars.appDataDir + "/logs/Snowflake.log")
+            }
+        } catch (e: Exception) {
+            loge("ShortenTooLongSnowflakeLog exception", e)
+        }
+    }
+
+    @JvmStatic
+    fun shortenTooLongConjureLog(
+        context: Context,
+        preferences: PreferenceRepository,
+        pathVars: PathVars
+    ) {
+        try {
+            val bridgesConjureDefault =
+                preferences.getStringPreference(DEFAULT_BRIDGES_OBFS) == PreferencesTorBridges.CONJURE_BRIDGES_DEFAULT
+            val bridgesConjureOwn =
+                preferences.getStringPreference(OWN_BRIDGES_OBFS) == PreferencesTorBridges.CONJURE_BRIDGES_OWN
+            val shPref = PreferenceManager.getDefaultSharedPreferences(context)
+            val showHelperMessages =
+                shPref.getBoolean(ALWAYS_SHOW_HELP_MESSAGES, false)
+            val betaVersion = appVersion.equals("beta")
+            if ((showHelperMessages || betaVersion) && (bridgesConjureDefault || bridgesConjureOwn)) {
+                FileShortener.shortenTooTooLongFile(pathVars.appDataDir + "/logs/Conjure.log")
+            }
+        } catch (e: Exception) {
+            loge("ShortenTooLongConjureLog exception", e)
+        }
+    }
+
+    @JvmStatic
+    fun shortenTooLongWebTunnelLog(
+        context: Context,
+        preferences: PreferenceRepository,
+        pathVars: PathVars
+    ) {
+        try {
+            val bridgesWebTunnelDefault =
+                preferences.getStringPreference(DEFAULT_BRIDGES_OBFS) == PreferencesTorBridges.WEB_TUNNEL_BRIDGES_DEFAULT
+            val bridgesWebTunnelOwn =
+                preferences.getStringPreference(OWN_BRIDGES_OBFS) == PreferencesTorBridges.WEB_TUNNEL_BRIDGES_OWN
+            val shPref = PreferenceManager.getDefaultSharedPreferences(context)
+            val showHelperMessages =
+                shPref.getBoolean(ALWAYS_SHOW_HELP_MESSAGES, false)
+            val betaVersion = appVersion.equals("beta")
+            if ((showHelperMessages || betaVersion) && (bridgesWebTunnelDefault || bridgesWebTunnelOwn)) {
+                FileShortener.shortenTooTooLongFile(pathVars.appDataDir + "/logs/WebTunnel.log")
+            }
+        } catch (e: Exception) {
+            loge("ShortenTooLongWebTunnelLog exception", e)
+        }
+    }
+
+    fun getUidForName(name: String, defaultValue: Int): Int {
+        var uid = defaultValue
+        try {
+            val result = Process.getUidForName(name)
+            if (result > 0) {
+                uid = result
+            } else {
+                logw("No uid for $name, using default value $defaultValue")
+            }
+        } catch (e: Exception) {
+            logw("No uid for $name, using default value $defaultValue")
+        }
+        return uid
+    }
+
+    fun getCriticalSystemUids(ownUid: Int): List<Int> =
+        arrayListOf(
+            getUidForName("dns", DNS_DEFAULT_UID + ownUid / 100_000 * 100_000),
+            getUidForName("network_stack", NETWORK_STACK_DEFAULT_UID + ownUid / 100_000 * 100_000),
+            SPECIAL_UID_CONNECTIVITY_CHECK
+        )
+
+    fun getDnsTetherUid(ownUid: Int) =
+        getUidForName("dns_tether", 1052 + ownUid / 100_000 * 100_000)
+
+    @JvmStatic
+    fun allowInteractAcrossUsersPermissionIfRequired(
+        context: Context
+    ) {
+        if (!appVersion.endsWith("p")
+            && ModulesStatus.getInstance().isRootAvailable
+            && !isInteractAcrossUsersPermissionGranted(context)
+        ) {
+            val allowAccessToWorkProfileApps = listOf(
+                "pm grant ${context.packageName} android.permission.INTERACT_ACROSS_USERS"
+            )
+            RootCommands.execute(context, allowAccessToWorkProfileApps, NULL_MARK)
+            logi("Grant INTERACT_ACROSS_USERS permission to access applications in work profile")
+        }
+    }
+
+    private fun isInteractAcrossUsersPermissionGranted(context: Context) =
+        ContextCompat.checkSelfPermission(
+            context,
+            "android.permission.INTERACT_ACROSS_USERS"
+        ) == PackageManager.PERMISSION_GRANTED
+
+    @JvmStatic
+    fun areNotificationsAllowed(notificationManager: NotificationManager) =
+        if (Build.VERSION.SDK_INT >= 24) {
+            notificationManager.areNotificationsEnabled()
+        } else {
+            true
+        }
+
+    @JvmStatic
+    fun areNotificationsNotAllowed(notificationManager: NotificationManager) =
+        !areNotificationsAllowed(notificationManager)
+
 }

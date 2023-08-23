@@ -1,48 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
 
-import static pan.alexander.tordnscrypt.TopFragment.appVersion;
-import static pan.alexander.tordnscrypt.assistance.AccelerateDevelop.accelerated;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.FAULT;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
-import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.PROXY_MODE;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.UNDEFINED;
-import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
+package pan.alexander.tordnscrypt;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -56,10 +31,26 @@ import android.net.VpnService;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+
 import android.os.Looper;
 import android.text.InputType;
 import android.util.Base64;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -71,29 +62,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import dagger.Lazy;
 import pan.alexander.tordnscrypt.analytics.StatisticHelper;
-import pan.alexander.tordnscrypt.analytics.TrackerConstants;
 import pan.alexander.tordnscrypt.appextension.AppSettingsService;
 import pan.alexander.tordnscrypt.appextension.PopupManager;
 import pan.alexander.tordnscrypt.appextension.SubscriptionService;
@@ -105,8 +80,8 @@ import pan.alexander.tordnscrypt.backup.BackupActivity;
 import pan.alexander.tordnscrypt.dialogs.ChangeModeDialog;
 import pan.alexander.tordnscrypt.dialogs.NotificationDialogFragment;
 import pan.alexander.tordnscrypt.dnscrypt_fragment.DNSCryptRunFragment;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.help.HelpActivity;
-import pan.alexander.tordnscrypt.itpd_fragment.ITPDRunFragment;
 import pan.alexander.tordnscrypt.main_fragment.MainFragment;
 import pan.alexander.tordnscrypt.main_fragment.ViewPagerAdapter;
 import pan.alexander.tordnscrypt.modules.ModulesAux;
@@ -115,26 +90,67 @@ import pan.alexander.tordnscrypt.modules.ModulesRestarter;
 import pan.alexander.tordnscrypt.modules.ModulesService;
 import pan.alexander.tordnscrypt.modules.ModulesStatus;
 import pan.alexander.tordnscrypt.settings.PathVars;
+import pan.alexander.tordnscrypt.itpd_fragment.ITPDRunFragment;
+import pan.alexander.tordnscrypt.settings.SettingsActivity;
 import pan.alexander.tordnscrypt.tor_fragment.TorRunFragment;
-import pan.alexander.tordnscrypt.utils.ApManager;
-import pan.alexander.tordnscrypt.utils.ChangeModeInterface;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.Registration;
+import pan.alexander.tordnscrypt.utils.ThemeUtils;
+import pan.alexander.tordnscrypt.utils.ap.ApManager;
+import pan.alexander.tordnscrypt.utils.ap.InternetSharingChecker;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.mode.AppModeManagerCallback;
+import pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys;
+import pan.alexander.tordnscrypt.dialogs.Registration;
+import pan.alexander.tordnscrypt.utils.enums.AccessPointState;
 import pan.alexander.tordnscrypt.utils.enums.ModuleState;
 import pan.alexander.tordnscrypt.utils.enums.OperationMode;
 import pan.alexander.tordnscrypt.vpn.service.ServiceVPNHelper;
 
+import static pan.alexander.tordnscrypt.TopFragment.appVersion;
+import static pan.alexander.tordnscrypt.assistance.AccelerateDevelop.accelerated;
+import static pan.alexander.tordnscrypt.utils.Utils.isInterfaceLocked;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.loge;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.logi;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.FIX_TTL;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.MAIN_ACTIVITY_RECREATE;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.OPERATION_MODE;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.ROOT_IS_AVAILABLE;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.RUN_MODULES_WITH_ROOT;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.VPN_SERVICE_ENABLED;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.FAULT;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.RUNNING;
+import static pan.alexander.tordnscrypt.utils.enums.ModuleState.STOPPED;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.PROXY_MODE;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.ROOT_MODE;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.UNDEFINED;
+import static pan.alexander.tordnscrypt.utils.enums.OperationMode.VPN_MODE;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 public class MainActivity extends LangAppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ChangeModeInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, AppModeManagerCallback {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public Handler handler;
+    @Inject
+    public Lazy<PathVars> pathVars;
+    @Inject
+    public Provider<InternetSharingChecker> internetSharingChecker;
+    @Inject
+    public Lazy<ApManager> apManager;
+    @Inject
+    public Lazy<CachedExecutor> executor;
+
+    public boolean childLockActive = false;
+    public AccelerateDevelop accelerateDevelop;
 
     private static final int CODE_IS_AP_ON = 100;
     private static final int CODE_IS_VPN_ALLOWED = 110;
 
-    public boolean childLockActive = false;
-    public AccelerateDevelop accelerateDevelop;
     private volatile boolean vpnRequested;
     private Timer checkHotspotStateTimer;
-    private Handler handler;
     private TopFragment topFragment;
     private DNSCryptRunFragment dNSCryptRunFragment;
     private TorRunFragment torRunFragment;
@@ -154,8 +170,13 @@ public class MainActivity extends LangAppCompatActivity
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        App.getInstance().getDaggerComponent().inject(this);
+
         setDayNightTheme();
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -227,10 +248,15 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+
         vpnRequested = false;
-        childLockActive = isInterfaceLocked();
+
+        childLockActive = isInterfaceLocked(preferenceRepository.get());
+
         checkUpdates();
+
         handleMitmAttackWarning();
+
         registerBroadcastReceiver();
 
         if (appVersion.equals("gp")) {
@@ -242,15 +268,21 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (new PrefManager(this).getBoolPref("refresh_main_activity")) {
-            new PrefManager(this).setBoolPref("refresh_main_activity", false);
-            recreate();
+
+        if (preferenceRepository.get().getBoolPreference(MAIN_ACTIVITY_RECREATE)) {
+            preferenceRepository.get().setBoolPreference(MAIN_ACTIVITY_RECREATE, false);
+            try {
+                recreate();
+            } catch (Exception e) {
+                loge("MainActivity onRestart", e);
+            }
         }
     }
 
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
         super.onAttachFragment(fragment);
+
         if (fragment instanceof DNSCryptRunFragment) {
             dNSCryptRunFragment = (DNSCryptRunFragment) fragment;
         } else if (fragment instanceof TorRunFragment) {
@@ -261,42 +293,19 @@ public class MainActivity extends LangAppCompatActivity
             topFragment = (TopFragment) fragment;
         } else if (fragment instanceof MainFragment) {
             mainFragment = (MainFragment) fragment;
-            mainFragment.setArguments(getIntent().getExtras());
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void setDayNightTheme() {
         try {
-
-            String theme;
-            if (appVersion.startsWith("g") && !accelerated) {
-                theme = "1";
-            } else {
-                SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                theme = defaultSharedPreferences.getString("pref_fast_theme", "4");
-            }
-
-            switch (Objects.requireNonNull(theme)) {
-                case "1":
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    break;
-                case "2":
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    break;
-                case "3":
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_TIME);
-                    break;
-                case "4":
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    break;
-            }
+            ThemeUtils.setDayNightTheme(this);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "MainActivity setDayNightTheme exception " + e.getMessage() + " " + e.getCause());
+            loge("MainActivity setDayNightTheme", e);
         }
     }
 
     private void checkUpdates() {
+
         if (appVersion.equals("gp") || appVersion.equals("fd")) {
             return;
         }
@@ -313,9 +322,14 @@ public class MainActivity extends LangAppCompatActivity
     }
 
     private void handleMitmAttackWarning() {
+
+        if (handler == null) {
+            return;
+        }
+
         Intent intent = getIntent();
-        if (intent.getBooleanExtra(ArpScannerKt.mitmAttackWarning, false)
-                && (ArpScanner.INSTANCE.getArpAttackDetected() || ArpScanner.INSTANCE.getDhcpGatewayAttackDetected())) {
+        if (intent.getBooleanExtra(ArpScannerKt.MITM_ATTACK_WARNING, false)
+                && (ArpScanner.getArpAttackDetected() || ArpScanner.getDhcpGatewayAttackDetected())) {
 
             handler.postDelayed(() -> {
                 DialogFragment commandResult = NotificationDialogFragment.newInstance(getString(R.string.notification_mitm));
@@ -331,17 +345,6 @@ public class MainActivity extends LangAppCompatActivity
                 commandResult.show(getSupportFragmentManager(), "NotificationDialogFragment");
             }, 1200);
         }
-    }
-
-    private boolean isInterfaceLocked() {
-        boolean locked = false;
-        try {
-            String saved_pass = new String(Base64.decode(new PrefManager(this).getStrPref("passwd"), 16));
-            locked = saved_pass.contains("-l-o-c-k-e-d");
-        } catch (IllegalArgumentException e) {
-            Log.e(LOG_TAG, "MainActivity Child Lock Exception " + e.getMessage());
-        }
-        return locked;
     }
 
     public DNSCryptRunFragment getDNSCryptRunFragment() {
@@ -380,7 +383,7 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        boolean rootIsAvailable = new PrefManager(this).getBoolPref("rootIsAvailable");
+        boolean rootIsAvailable = preferenceRepository.get().getBoolPreference(ROOT_IS_AVAILABLE);
 
         switchIconsDependingOnMode(menu, rootIsAvailable);
 
@@ -407,19 +410,20 @@ public class MainActivity extends LangAppCompatActivity
     private void switchIconsDependingOnMode(Menu menu, boolean rootIsAvailable) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean fixTTL = sharedPreferences.getBoolean("pref_common_fix_ttl", false);
-        boolean useModulesWithRoot = sharedPreferences.getBoolean("swUseModulesRoot", false);
+        boolean fixTTL = sharedPreferences.getBoolean(FIX_TTL, false);
+        boolean useModulesWithRoot = sharedPreferences.getBoolean(RUN_MODULES_WITH_ROOT, false);
 
-        boolean busyBoxIsAvailable = new PrefManager(this).getBoolPref("bbOK");
+        PreferenceRepository preferences = preferenceRepository.get();
+        boolean busyBoxIsAvailable = preferences.getBoolPreference("bbOK");
 
-        boolean mitmDetected = ArpScanner.INSTANCE.getArpAttackDetected()
-                || ArpScanner.INSTANCE.getDhcpGatewayAttackDetected();
+        boolean mitmDetected = ArpScanner.getArpAttackDetected()
+                || ArpScanner.getDhcpGatewayAttackDetected();
 
         fixTTL = fixTTL && !useModulesWithRoot;
 
         OperationMode mode = UNDEFINED;
 
-        String operationMode = new PrefManager(this).getStrPref("OPERATION_MODE");
+        String operationMode = preferences.getStringPreference(OPERATION_MODE);
         if (!operationMode.isEmpty()) {
             mode = OperationMode.valueOf(operationMode);
         }
@@ -449,7 +453,7 @@ public class MainActivity extends LangAppCompatActivity
                 menuRootMode.setChecked(true);
                 modulesStatus.setMode(ROOT_MODE);
                 mode = ROOT_MODE;
-                new PrefManager(this).setStrPref("OPERATION_MODE", mode.toString());
+                preferences.setStringPreference(OPERATION_MODE, mode.toString());
             }
 
             if (mitmDetected) {
@@ -487,12 +491,12 @@ public class MainActivity extends LangAppCompatActivity
                 menuVPNMode.setChecked(true);
                 modulesStatus.setMode(VPN_MODE);
                 mode = VPN_MODE;
-                new PrefManager(this).setStrPref("OPERATION_MODE", mode.toString());
+                preferences.setStringPreference(OPERATION_MODE, mode.toString());
             } else {
                 menuProxiesMode.setChecked(true);
                 modulesStatus.setMode(PROXY_MODE);
                 mode = PROXY_MODE;
-                new PrefManager(this).setStrPref("OPERATION_MODE", mode.toString());
+                preferences.setStringPreference(OPERATION_MODE, mode.toString());
             }
 
             if (mitmDetected) {
@@ -510,7 +514,8 @@ public class MainActivity extends LangAppCompatActivity
             menuRootMode.setEnabled(false);
         }
 
-        if ((mode == PROXY_MODE || mode == ROOT_MODE) && firewallNavigationItem != null) {
+        if ((mode == PROXY_MODE || mode == ROOT_MODE && useModulesWithRoot)
+                && firewallNavigationItem != null) {
             firewallNavigationItem.setVisible(false);
         } else if (firewallNavigationItem != null) {
             firewallNavigationItem.setVisible(true);
@@ -518,26 +523,28 @@ public class MainActivity extends LangAppCompatActivity
     }
 
     private void switchApIcon(Menu menu) {
-        ApManager apManager = new ApManager(this);
-        int apState = apManager.isApOn();
 
-        if (apState == ApManager.apStateON) {
+        int apState = internetSharingChecker.get().checkApOn();
+
+        PreferenceRepository preferences = preferenceRepository.get();
+
+        if (apState == AccessPointState.STATE_ON) {
 
             menu.findItem(R.id.item_hotspot).setIcon(R.drawable.ic_wifi_tethering_green_24dp);
 
-            if (!new PrefManager(this).getBoolPref("APisON")) {
+            if (!preferences.getBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON)) {
 
-                new PrefManager(this).setBoolPref("APisON", true);
+                preferences.setBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON, true);
 
                 modulesStatus.setIptablesRulesUpdateRequested(true);
                 ModulesAux.requestModulesStatusUpdate(this);
 
             }
 
-        } else if (apState == ApManager.apStateOFF) {
+        } else if (apState == AccessPointState.STATE_OFF) {
             menu.findItem(R.id.item_hotspot).setIcon(R.drawable.ic_portable_wifi_off_white_24dp);
-            if (new PrefManager(this).getBoolPref("APisON")) {
-                new PrefManager(this).setBoolPref("APisON", false);
+            if (preferences.getBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON)) {
+                preferences.setBoolPreference(PreferenceKeys.WIFI_ACCESS_POINT_IS_ON, false);
 
                 modulesStatus.setIptablesRulesUpdateRequested(true);
                 ModulesAux.requestModulesStatusUpdate(this);
@@ -558,38 +565,43 @@ public class MainActivity extends LangAppCompatActivity
                 childLock.setIcon(R.drawable.ic_lock_open_white_24dp);
             }
         } catch (IllegalArgumentException e) {
-            Log.e(LOG_TAG, "MainActivity Child Lock Exeption " + e.getMessage());
+            loge("MainActivity switchChildLockIcon", e);
         }
     }
 
     private void showNewTorIdentityIcon(Menu menu) {
         newIdentityMenuItem = menu.findItem(R.id.item_new_identity);
+
         if (newIdentityMenuItem == null || modulesStatus == null) {
             return;
         }
+
         newIdentityMenuItem.setVisible(modulesStatus.getTorState() != STOPPED
                 && modulesStatus.getTorState() != ModuleState.UNDEFINED);
     }
 
     public void showNewTorIdentityIcon(boolean show) {
+
         if (newIdentityMenuItem == null || modulesStatus == null) {
             return;
         }
+
         newIdentityMenuItem.setVisible(show);
-        invalidateOptionsMenu();
+
+        invalidateMenu();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (isInterfaceLocked() && id != R.id.item_unlock) {
+        if (childLockActive && id != R.id.item_unlock) {
             Toast.makeText(this, getText(R.string.action_mode_dialog_locked), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (id == R.id.item_unlock) {
-            if (isInterfaceLocked()) {
+            if (childLockActive) {
                 childUnlock(item);
             } else {
                 childLock(item);
@@ -599,7 +611,7 @@ public class MainActivity extends LangAppCompatActivity
         } else if (id == R.id.item_root) {
             showInfoAboutRoot();
         } else if (id == R.id.item_new_identity) {
-            newTorIdentity();
+            newTorIdentity(item);
         } else if (id == R.id.menu_root_mode) {
             switchToRootMode(item);
         } else if (id == R.id.menu_vpn_mode) {
@@ -612,8 +624,7 @@ public class MainActivity extends LangAppCompatActivity
 
     private void switchHotspot() {
         try {
-            ApManager apManager = new ApManager(this);
-            if (apManager.configApState()) {
+            if (apManager.get().configApState()) {
                 checkHotspotState();
             } else if (!isFinishing()) {
                 Intent intent = new Intent(Intent.ACTION_MAIN, null);
@@ -624,16 +635,16 @@ public class MainActivity extends LangAppCompatActivity
                 try {
                     startActivityForResult(intent, CODE_IS_AP_ON);
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, "MainActivity switchHotspot exception " + e.getMessage() + " " + e.getCause());
+                    loge("MainActivity switchHotspot", e);
                 }
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "MainActivity onOptionsItemSelected exception " + e.getMessage() + " " + e.getCause());
+            loge("MainActivity onOptionsItemSelected", e);
         }
     }
 
     @SuppressLint("InflateParams")
-    private void newTorIdentity() {
+    private void newTorIdentity(MenuItem newIdentityMenuItem) {
         if (modulesStatus != null && newIdentityMenuItem != null && modulesStatus.getTorState() == RUNNING) {
 
             if (rotateAnimation == null || animatingImage == null) {
@@ -657,7 +668,7 @@ public class MainActivity extends LangAppCompatActivity
             }
 
             handler.postDelayed(() -> {
-                if (!isFinishing() && newIdentityMenuItem != null && newIdentityMenuItem.getActionView() != null) {
+                if (!isFinishing() && newIdentityMenuItem.getActionView() != null) {
                     Toast.makeText(this, this.getText(R.string.toast_new_tor_identity), Toast.LENGTH_SHORT).show();
                     newIdentityMenuItem.getActionView().clearAnimation();
                     newIdentityMenuItem.setActionView(null);
@@ -666,29 +677,46 @@ public class MainActivity extends LangAppCompatActivity
         }
     }
 
+    @SuppressLint("UnsafeOptInUsageWarning")
     private void switchToRootMode(MenuItem item) {
-        ChangeModeDialog dialog = ChangeModeDialog.INSTANCE.getInstance(this, item, ROOT_MODE);
-        if (dialog != null) {
-            dialog.show(getSupportFragmentManager(), "ChangeModeDialog");
+
+        if (modulesStatus.getMode() == ROOT_MODE) {
+            return;
         }
+
+        ChangeModeDialog dialog = ChangeModeDialog.getInstance(ROOT_MODE);
+        dialog.show(getSupportFragmentManager(), "ChangeModeDialog");
+        item.setChecked(true);
     }
 
+    @SuppressLint("UnsafeOptInUsageWarning")
     private void switchToProxyMode(MenuItem item) {
-        ChangeModeDialog dialog = ChangeModeDialog.INSTANCE.getInstance(this, item, PROXY_MODE);
-        if (dialog != null) {
-            dialog.show(getSupportFragmentManager(), "ChangeModeDialog");
+
+        if (modulesStatus.getMode() == PROXY_MODE) {
+            return;
         }
+
+        ChangeModeDialog dialog = ChangeModeDialog.getInstance(PROXY_MODE);
+        dialog.show(getSupportFragmentManager(), "ChangeModeDialog");
+        item.setChecked(true);
     }
 
+    @SuppressLint("UnsafeOptInUsageWarning")
     private void switchToVPNMode(MenuItem item) {
-        ChangeModeDialog dialog = ChangeModeDialog.INSTANCE.getInstance(this, item, VPN_MODE);
-        if (dialog != null) {
-            dialog.show(getSupportFragmentManager(), "ChangeModeDialog");
+
+        if (modulesStatus.getMode() == VPN_MODE) {
+            return;
         }
+
+        ChangeModeDialog dialog = ChangeModeDialog.getInstance(VPN_MODE);
+        dialog.show(getSupportFragmentManager(), "ChangeModeDialog");
+        item.setChecked(true);
     }
 
     private void checkHotspotState() {
+
         checkHotspotStateTimer = new Timer();
+
         checkHotspotStateTimer.scheduleAtFixedRate(new TimerTask() {
             int loop = 0;
 
@@ -700,7 +728,7 @@ public class MainActivity extends LangAppCompatActivity
                     checkHotspotStateTimer = null;
                 }
 
-                runOnUiThread(() -> invalidateOptionsMenu());
+                invalidateMenu();
             }
         }, 3000, 5000);
     }
@@ -718,11 +746,13 @@ public class MainActivity extends LangAppCompatActivity
         }
     }
 
+
     private void childLock(final MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialogTheme);
         builder.setTitle(R.string.action_mode_child_lock);
         builder.setMessage(R.string.action_mode_dialog_message_lock);
         builder.setIcon(R.drawable.ic_lock_outline_blue_24dp);
+
 
         LayoutInflater inflater = getLayoutInflater();
         @SuppressLint("InflateParams") final View inputView = inflater.inflate(R.layout.edit_text_for_dialog, null, false);
@@ -731,7 +761,7 @@ public class MainActivity extends LangAppCompatActivity
 
         final MainActivity mainActivity = this;
 
-        String saved_pass = new PrefManager(getApplicationContext()).getStrPref("passwd");
+        String saved_pass = preferenceRepository.get().getStringPreference("passwd");
         if (!saved_pass.isEmpty()) {
             saved_pass = new String(Base64.decode(saved_pass, 16));
             input.setText(saved_pass);
@@ -745,7 +775,7 @@ public class MainActivity extends LangAppCompatActivity
                 Toast.makeText(getApplicationContext(), "Debug mode " + TopFragment.debug, Toast.LENGTH_LONG).show();
             } else if (!input.getText().toString().trim().isEmpty()) {
                 String pass = Base64.encodeToString((input.getText().toString() + "-l-o-c-k-e-d").getBytes(), 16);
-                new PrefManager(getApplicationContext()).setStrPref("passwd", pass);
+                preferenceRepository.get().setStringPreference("passwd", pass);
                 Toast.makeText(getApplicationContext(), getText(R.string.action_mode_dialog_locked), Toast.LENGTH_SHORT).show();
                 item.setIcon(R.drawable.ic_lock_white_24dp);
                 childLockActive = true;
@@ -775,10 +805,10 @@ public class MainActivity extends LangAppCompatActivity
         final MainActivity mainActivity = this;
 
         builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-            String saved_pass = new String(Base64.decode(new PrefManager(getApplicationContext()).getStrPref("passwd"), 16));
+            String saved_pass = new String(Base64.decode(preferenceRepository.get().getStringPreference("passwd"), 16));
             if (saved_pass.replace("-l-o-c-k-e-d", "").equals(input.getText().toString())) {
                 String pass = Base64.encodeToString((input.getText().toString()).getBytes(), 16);
-                new PrefManager(getApplicationContext()).setStrPref("passwd", pass);
+                preferenceRepository.get().setStringPreference("passwd", pass);
                 Toast.makeText(getApplicationContext(), getText(R.string.action_mode_dialog_unlocked), Toast.LENGTH_SHORT).show();
                 item.setIcon(R.drawable.ic_lock_open_white_24dp);
                 childLockActive = false;
@@ -790,20 +820,26 @@ public class MainActivity extends LangAppCompatActivity
                 Toast.makeText(getApplicationContext(), getText(R.string.action_mode_dialog_wrong_pass), Toast.LENGTH_LONG).show();
             }
         });
+
         builder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.cancel());
+
         builder.show();
+
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         int id = item.getItemId();
-        if (isInterfaceLocked()) {
+
+        if (childLockActive) {
             Toast.makeText(this, getText(R.string.action_mode_dialog_locked), Toast.LENGTH_LONG).show();
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return false;
         }
+
         if (id == R.id.nav_backup) {
             Intent intent = new Intent(this, BackupActivity.class);
             startActivity(intent);
@@ -824,7 +860,7 @@ public class MainActivity extends LangAppCompatActivity
             intent.setAction("fast_Pref");
             startActivity(intent);
         } else if (id == R.id.nav_about) {
-            Intent intent = new Intent(this, AboutActivity.class);
+            Intent intent = new Intent(this, pan.alexander.tordnscrypt.AboutActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_common_Pref) {
             Intent intent = new Intent(this, SettingsActivity.class);
@@ -853,20 +889,13 @@ public class MainActivity extends LangAppCompatActivity
                 try {
                     startActivity(intent);
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, "MainActivity ACTION_VIEW exception " + e.getMessage() + " " + e.getCause());
+                    loge("MainActivity ACTION_VIEW", e);
                 }
 
             }
         } else if (id == R.id.nav_Code) {
             Registration registration = new Registration(this);
             registration.showEnterCodeDialog();
-        } else if (id == R.id.nav_pro) {
-            StatisticHelper.INSTANCE.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_OPENED_FROM_TOOLBAR);
-            Intent intent = new Intent(this, ProPurchaseActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_pro_activated) {
-            Intent intent = new Intent(this, ProPurchaseSuccessActivity.class);
-            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -875,10 +904,10 @@ public class MainActivity extends LangAppCompatActivity
     }
 
     private void showInfoAboutRoot() {
-        boolean rootIsAvailable = new PrefManager(this).getBoolPref("rootIsAvailable");
-        boolean busyBoxIsAvailable = new PrefManager(this).getBoolPref("bbOK");
-        boolean mitmDetected = ArpScanner.INSTANCE.getArpAttackDetected()
-                || ArpScanner.INSTANCE.getDhcpGatewayAttackDetected();
+        boolean rootIsAvailable = preferenceRepository.get().getBoolPreference(ROOT_IS_AVAILABLE);
+        boolean busyBoxIsAvailable = preferenceRepository.get().getBoolPreference("bbOK");
+        boolean mitmDetected = ArpScanner.getArpAttackDetected()
+                || ArpScanner.getDhcpGatewayAttackDetected();
 
         if (mitmDetected) {
             DialogFragment commandResult = NotificationDialogFragment.newInstance(getString(R.string.notification_mitm));
@@ -905,8 +934,10 @@ public class MainActivity extends LangAppCompatActivity
 
     @Override
     public void prepareVPNService() {
-        Log.i(LOG_TAG, "MainActivity prepare VPN Service");
+        logi("MainActivity prepare VPN Service");
+
         final Intent prepareIntent = VpnService.prepare(this);
+
         if (prepareIntent == null) {
             startVPNService(RESULT_OK);
         } else if (!vpnRequested && !isFinishing()) {
@@ -917,14 +948,16 @@ public class MainActivity extends LangAppCompatActivity
                 if (!isFinishing()) {
                     Toast.makeText(this, getString(R.string.wrong), Toast.LENGTH_SHORT).show();
                 }
-                Log.e(LOG_TAG, "Main Activity prepareVPNService exception " + e.getMessage() + " " + e.getCause());
+                loge("MainActivity prepareVPNService", e);
             }
+
         }
+
     }
 
     private void startVPNService(int resultCode) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putBoolean("VPNServiceEnabled", resultCode == RESULT_OK).apply();
+        prefs.edit().putBoolean(VPN_SERVICE_ENABLED, resultCode == RESULT_OK).apply();
         if (resultCode == RESULT_OK) {
             ServiceVPNHelper.start("VPN Service is Prepared", this);
             Toast.makeText(this, getText(R.string.vpn_mode_active), Toast.LENGTH_SHORT).show();
@@ -972,13 +1005,13 @@ public class MainActivity extends LangAppCompatActivity
         mainActivityReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (ArpScannerKt.mitmAttackWarning.equals(intent.getAction())) {
-                    handler.post(() -> invalidateOptionsMenu());
+                if (ArpScannerKt.MITM_ATTACK_WARNING.equals(intent.getAction())) {
+                    invalidateMenu();
                 }
             }
         };
 
-        IntentFilter mitmDetected = new IntentFilter(ArpScannerKt.mitmAttackWarning);
+        IntentFilter mitmDetected = new IntentFilter(ArpScannerKt.MITM_ATTACK_WARNING);
         LocalBroadcastManager.getInstance(this).registerReceiver(mainActivityReceiver, mitmDetected);
     }
 
@@ -996,44 +1029,45 @@ public class MainActivity extends LangAppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+
         unregisterBroadcastReceiver();
+
         if (accelerateDevelop != null) {
             accelerateDevelop.removeActivity();
             accelerateDevelop = null;
         }
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
         if (ModulesService.serviceIsRunning && modulesStatus.getMode() == VPN_MODE
                 && (modulesStatus.getDnsCryptState() == STOPPED || modulesStatus.getDnsCryptState() == FAULT || modulesStatus.getDnsCryptState() == ModuleState.UNDEFINED)
                 && (modulesStatus.getTorState() == STOPPED || modulesStatus.getTorState() == FAULT || modulesStatus.getTorState() == ModuleState.UNDEFINED)
                 && (modulesStatus.getItpdState() == STOPPED || modulesStatus.getItpdState() == FAULT || modulesStatus.getItpdState() == ModuleState.UNDEFINED)) {
-            Intent intent = new Intent(this, ModulesService.class);
-            intent.setAction(ModulesService.actionStopService);
-            startService(intent);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        if (checkHotspotStateTimer != null) {
-            checkHotspotStateTimer.cancel();
-            checkHotspotStateTimer.purge();
-            checkHotspotStateTimer = null;
+            ModulesAux.stopModulesService(this);
         }
 
         if (viewPager != null) {
             viewPagerPosition = viewPager.getCurrentItem();
+        }
+
+        if (isChangingConfigurations()) {
+            clearViews();
+        }
+    }
+
+    private void clearViews() {
+
+        if (viewPager != null) {
+            viewPager.setAdapter(null);
             viewPager = null;
         }
 
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
-            handler = null;
         }
 
         topFragment = null;
@@ -1049,22 +1083,45 @@ public class MainActivity extends LangAppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        if (checkHotspotStateTimer != null) {
+            checkHotspotStateTimer.cancel();
+            checkHotspotStateTimer.purge();
+            checkHotspotStateTimer = null;
+        }
+
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+
         if (keyCode == KeyEvent.KEYCODE_BACK && handler != null) {
-            Log.e(LOG_TAG, "FORCE CLOSE ALL");
+            loge("FORCE CLOSE ALL");
 
             Toast.makeText(this, "Force Close ...", Toast.LENGTH_LONG).show();
 
-            ModulesKiller.forceCloseApp(PathVars.getInstance(this));
+            ModulesKiller.forceCloseApp(pathVars.get());
 
-            handler.postDelayed(() -> {
-                Intent intent = new Intent(MainActivity.this, ModulesService.class);
-                intent.setAction(ModulesService.actionStopService);
-                startService(intent);
-            }, 3000);
+            handler.postDelayed(() -> ModulesAux.stopModulesService(this), 3000);
+
             handler.postDelayed(() -> System.exit(0), 5000);
+
+
             return true;
         }
         return super.onKeyLongPress(keyCode, event);
+    }
+
+    @Override
+    public void invalidateMenu() {
+        if (handler != null) {
+            handler.post(this::invalidateOptionsMenu);
+        }
     }
 }

@@ -64,6 +64,12 @@
     <color name="backgroundPrimary">#ffffff</color>
     <color name="backgroundPrimaryAlpha40">#66ffffff</color>
 
+    <color name="torBridgePingGood">#009688</color>
+    <color name="torBridgePingAverage">#E7AD42</color>
+    <color name="torBridgePingBad">#F08080</color>
+    <color name="systemAppWithoutInternetPermission">#D45E5E</color>
+    <color name="userAppWithoutInternetPermission">#64A39D</color>
+
 
     <color name="glitch_elicit_depository">#BCC2DFC3</color>
     <color name="fantasist_drip">#11AD61</color>

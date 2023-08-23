@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.modules;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.modules;
 
 import android.content.Context;
 import android.os.Build;
@@ -42,30 +27,31 @@ import java.io.File;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
 
 public class ModulesRestarter {
     public static void restartDNSCrypt(Context context) {
-        ModulesActionSender.INSTANCE.sendIntent(context, ModulesService.actionRestartDnsCrypt);
+        ModulesActionSender.INSTANCE.sendIntent(context, ModulesServiceActions.ACTION_RESTART_DNSCRYPT);
         ModulesAux.speedupModulesStateLoopTimer(context);
     }
 
     public static void restartTor(Context context) {
-        ModulesActionSender.INSTANCE.sendIntent(context, ModulesService.actionRestartTorFull);
+        ModulesActionSender.INSTANCE.sendIntent(context, ModulesServiceActions.ACTION_RESTART_TOR_FULL);
         ModulesAux.speedupModulesStateLoopTimer(context);
     }
 
     public static void restartITPD(Context context) {
-        ModulesActionSender.INSTANCE.sendIntent(context, ModulesService.actionRestartITPD);
+        ModulesActionSender.INSTANCE.sendIntent(context, ModulesServiceActions.ACTION_RESTART_ITPD);
         ModulesAux.speedupModulesStateLoopTimer(context);
     }
 
     Runnable getTorRestarterRunnable(Context context) {
         boolean useModulesWithRoot = ModulesStatus.getInstance().isUseModulesWithRoot();
-        PathVars pathVars = PathVars.getInstance(context);
+        PathVars pathVars = App.getInstance().getDaggerComponent().getPathVars().get();
         String torPid = readPidFile(context, pathVars.getAppDataDir() + "/tor.pid");
 
         return () -> restartModule(pathVars, pathVars.getTorPath(), torPid, useModulesWithRoot);
@@ -77,7 +63,7 @@ public class ModulesRestarter {
 
         File file = new File(path);
         if (file.isFile()) {
-            List<String> lines = FileOperations.readTextFileSynchronous(context, path);
+            List<String> lines = FileManager.readTextFileSynchronous(context, path);
 
             for (String line : lines) {
                 if (!line.trim().isEmpty()) {
@@ -135,9 +121,9 @@ public class ModulesRestarter {
         String[] result;
 
         if (pid.isEmpty() || killWithRoot) {
-            String killStringBusybox = pathVars.getBusyboxPath() + "pkill -SIGHUP" + " " + module;
+            String killStringBusybox = pathVars.getBusyboxPath() + "pkill -SIGHUP " + module + " || true";
             //String killAllStringBusybox = pathVars.busyboxPath + "kill -s SIGHUP" + " $(pgrep " + module + ")";
-            String killStringToyBox = "toybox pkill -SIGHUP" + " " + module;
+            String killStringToyBox = "toybox pkill -SIGHUP " + module + " || true";
             //String killString = "pkill -" + "SIGHUP" + " " + module;
 
             String killString = killStringBusybox;
@@ -152,7 +138,7 @@ public class ModulesRestarter {
             //String killStringBusyBox = pathVars.busyboxPath + "kill -s SIGHUP" + " " + pid;
             //String killAllStringToolBox = "toolbox kill -s SIGHUP" + " " + pid;
             //String killStringToyBox = "toybox kill -s SIGHUP" + " " + pid;
-            String killString = "kill -s SIGHUP" + " " + pid;
+            String killString = "kill -s SIGHUP " + pid + " || true";
 
             result = new String[]{
                     //killStringBusyBox,

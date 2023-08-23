@@ -1,57 +1,59 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.dialogs;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.dialogs;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
-import pan.alexander.tordnscrypt.utils.PrefManager;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.ALWAYS_SHOW_HELP_MESSAGES;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
+
+import javax.inject.Inject;
 
 public class NotificationHelper extends ExtendedDialogFragment {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
 
     private String tag = "";
     private static String message = "";
     public static final String TAG_HELPER = "pan.alexander.tordnscrypt.HELPER_NOTIFICATION";
     private static NotificationHelper notificationHelper = null;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public AlertDialog.Builder assignBuilder() {
@@ -66,7 +68,7 @@ public class NotificationHelper extends ExtendedDialogFragment {
                 .setTitle(R.string.helper_dialog_title)
                 .setPositiveButton(R.string.ok, (dialog, which) -> notificationHelper = null)
                 .setNegativeButton(R.string.dont_show, (dialog, id) -> {
-                    new PrefManager(activity).setBoolPref("helper_no_show_" + tag, true);
+                    preferenceRepository.get().setBoolPreference("helper_no_show_" + tag, true);
                     notificationHelper = null;
                     dismiss();
                 });
@@ -74,12 +76,17 @@ public class NotificationHelper extends ExtendedDialogFragment {
         return builder;
     }
 
-    public static NotificationHelper setHelperMessage(Context context, String message, String preferenceTag) {
+    public static NotificationHelper setHelperMessage(
+            Context context,
+            String message,
+            String preferenceTag
+    ) {
 
         try {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            if ((!new PrefManager(context).getBoolPref("helper_no_show_" + preferenceTag)
-                    || sharedPreferences.getBoolean("pref_common_show_help", false)
+            PreferenceRepository preferences = App.getInstance().getDaggerComponent().getPreferenceRepository().get();
+            if ((!preferences.getBoolPreference("helper_no_show_" + preferenceTag)
+                    || sharedPreferences.getBoolean(ALWAYS_SHOW_HELP_MESSAGES, false)
                     || preferenceTag.matches("\\d+"))
                     && notificationHelper == null) {
                 notificationHelper = new NotificationHelper();

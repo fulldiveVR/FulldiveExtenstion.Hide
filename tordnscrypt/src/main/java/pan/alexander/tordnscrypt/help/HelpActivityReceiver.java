@@ -1,44 +1,31 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.help;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.help;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+
 import androidx.fragment.app.DialogFragment;
+
 import android.util.Log;
 import android.widget.Toast;
 
@@ -48,17 +35,30 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
-import pan.alexander.tordnscrypt.utils.PrefManager;
-import pan.alexander.tordnscrypt.utils.RootCommands;
-import pan.alexander.tordnscrypt.utils.RootExecService;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
+import pan.alexander.tordnscrypt.iptables.Tethering;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.root.RootCommands;
+import pan.alexander.tordnscrypt.utils.root.RootExecService;
 import pan.alexander.tordnscrypt.utils.zipUtil.ZipFileManager;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
 
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.SAVE_ROOT_LOGS;
+import static pan.alexander.tordnscrypt.utils.root.RootCommandsMark.HELP_ACTIVITY_MARK;
+import static pan.alexander.tordnscrypt.utils.root.RootExecService.LOG_TAG;
+
+import javax.inject.Inject;
 
 public class HelpActivityReceiver extends BroadcastReceiver {
+
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public CachedExecutor cachedExecutor;
+
     private final Handler mHandler;
     private final String appDataDir;
     private final String cacheDir;
@@ -67,6 +67,7 @@ public class HelpActivityReceiver extends BroadcastReceiver {
     private DialogFragment progressDialog;
 
     public HelpActivityReceiver(Handler mHandler, String appDataDir, String cacheDir, String pathToSaveLogs) {
+        App.getInstance().getDaggerComponent().inject(this);
         this.mHandler = mHandler;
         this.appDataDir = appDataDir;
         this.cacheDir = cacheDir;
@@ -89,7 +90,7 @@ public class HelpActivityReceiver extends BroadcastReceiver {
             return;
         }
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(saveLogs(context, comResult));
+        cachedExecutor.submit(saveLogs(context, comResult));
     }
 
     Runnable saveLogs(final Context context, final RootCommands comResult) {
@@ -104,7 +105,7 @@ public class HelpActivityReceiver extends BroadcastReceiver {
             }
 
             if (isLogsExist()) {
-                FileOperations.moveBinaryFile(context, cacheDir
+                FileManager.moveBinaryFile(context, cacheDir
                         + "/logs", "InvizibleLogs.txt", pathToSaveLogs, "InvizibleLogs.txt");
             } else {
                 closeProgressDialog();
@@ -118,7 +119,7 @@ public class HelpActivityReceiver extends BroadcastReceiver {
         try {
             ZipFileManager zipFileManager = new ZipFileManager(cacheDir + "/logs/InvizibleLogs.txt");
             zipFileManager.createZip(context, cacheDir + "/logs_dir");
-            FileOperations.deleteDirSynchronous(context,cacheDir + "/logs_dir");
+            FileManager.deleteDirSynchronous(context, cacheDir + "/logs_dir");
         } catch (Exception e) {
             Log.e(LOG_TAG, "Create zip file for first method failed  " + e.getMessage() + " " + e.getCause());
         }
@@ -136,29 +137,15 @@ public class HelpActivityReceiver extends BroadcastReceiver {
         }
 
         try {
-            FileOperations.copyFolderSynchronous(context, appDataDir + "/logs", logsDirPath);
-            FileOperations.copyFolderSynchronous(context, appDataDir + "/shared_prefs", logsDirPath);
+            FileManager.copyFolderSynchronous(context, appDataDir + "/logs", logsDirPath);
+            FileManager.copyFolderSynchronous(context, appDataDir + "/shared_prefs", logsDirPath);
 
-            Process process = Runtime.getRuntime().exec("logcat -d");
-            StringBuilder log = new StringBuilder();
-            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    log.append(line);
-                    log.append(System.lineSeparator());
-                }
-            }
+            saveLogcat(logsDirPath);
 
-            try (FileWriter out = new FileWriter(logsDirPath + "/logcat.log")) {
-                out.write(log.toString());
-            }
+            saveDeviceInfo(logsDirPath);
 
-            process.destroy();
-
-            try (FileWriter out = new FileWriter(logsDirPath + "/device_info.log")) {
-                if (info != null) {
-                    out.write(info);
-                }
+            if (Tethering.apIsOn || Tethering.usbTetherOn) {
+                trySaveIfconfig(logsDirPath);
             }
 
             saveLogsMethodOne(context);
@@ -169,10 +156,63 @@ public class HelpActivityReceiver extends BroadcastReceiver {
         }
     }
 
+    private void saveLogcat(String logsDirPath) throws Exception {
+        Process process = Runtime.getRuntime().exec("logcat -d");
+        StringBuilder log = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line);
+                log.append(System.lineSeparator());
+            }
+        }
+
+        try (FileWriter out = new FileWriter(logsDirPath + "/logcat.log")) {
+            out.write(log.toString());
+        }
+
+        process.destroy();
+    }
+
+    private void saveDeviceInfo(String logsDirPath) throws Exception {
+        try (FileWriter out = new FileWriter(logsDirPath + "/device_info.log")) {
+            if (info != null) {
+                out.write(info);
+            }
+        }
+    }
+
+    private void trySaveIfconfig(String logsDirPath) {
+        try {
+            saveIfconfig(logsDirPath);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Collect ifconfig alternative method fault " + e.getMessage() + " " + e.getCause());
+        }
+    }
+
+    private void saveIfconfig(String logsDirPath) throws Exception {
+        Process process = Runtime.getRuntime().exec("ifconfig");
+        StringBuilder log = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line);
+                log.append(System.lineSeparator());
+            }
+        }
+
+        try (FileWriter out = new FileWriter(logsDirPath + "/ifconfig.log")) {
+            out.write(log.toString());
+        }
+
+        process.destroy();
+    }
+
     private void deleteRootExecLog(Context context) {
         File file = new File(appDataDir + "/logs/RootExec.log");
-        if (new PrefManager(context).getBoolPref("swRootCommandsLog") && file.isFile()) {
-            FileOperations.deleteFileSynchronous(context, appDataDir + "/logs", "RootExec.log");
+        if (preferenceRepository.get()
+                .getBoolPreference(SAVE_ROOT_LOGS) && file.isFile()) {
+            FileManager.deleteFileSynchronous(context, appDataDir + "/logs", "RootExec.log");
         }
     }
 
@@ -191,7 +231,7 @@ public class HelpActivityReceiver extends BroadcastReceiver {
             return false;
         }
 
-        return intent.getIntExtra("Mark", 0) == RootExecService.HelpActivityMark;
+        return intent.getIntExtra("Mark", 0) == HELP_ACTIVITY_MARK;
     }
 
     private void closeProgressDialog() {

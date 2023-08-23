@@ -1,7 +1,8 @@
-# VPN
+# InviZible Pro
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gedsh/invizible?style=plastic)
 ![GitHub Releases](https://img.shields.io/github/downloads/gedsh/invizible/latest/total?color=blue&style=plastic)
+[![Translation status](https://hosted.weblate.org/widgets/invizible/-/invizible/svg-badge.svg)](https://hosted.weblate.org/engage/invizible/?utm_source=widget)
 
 ### [Google Play stable version](https://play.google.com/store/apps/details?id=pan.alexander.tordnscrypt.gp)
 
@@ -9,13 +10,13 @@
 
 ### [IzzyOnDroid F-Droid beta version](https://apt.izzysoft.de/fdroid/index/apk/pan.alexander.tordnscrypt)
 
-### [F-Droid stable version](https://f-droid.org/packages/com.fulldive.tordnscrypt.stable/)
+### [F-Droid stable version](https://f-droid.org/packages/pan.alexander.tordnscrypt.stable/)
 
 ## Android application for Internet privacy and security
 
 *Keeps privacy, protects your device from dangerous sites, prevents tracking, gets access to blocked on-line resources*
 
-**VPN** includes well-known modules such as **DNSCrypt**, **Tor** and **Purple I2P**.
+**InviZible Pro** includes well-known modules such as **DNSCrypt**, **Tor** and **Purple I2P**.
 They are used to achieve maximum security, privacy and comfortable use of the Internet.
 
 ### DNSCrypt
@@ -24,12 +25,14 @@ They are used to achieve maximum security, privacy and comfortable use of the In
 * Can block ads *
 * Can protect against dangerous and malicious sites *
 * Can block "adult" sites *
-* Hides visited sites from your provider
+* Hides visited sites from your provider **
 * Prevents some types of resource blocks
 * Open-source
 
 **Depending on the selected dnscrypt server*
 **(Not available in Google Play version!)**
+
+***In case your ISP does not use DPI equipment*
 
 ### Tor
 * Encrypts Internet traffic
@@ -43,18 +46,18 @@ They are used to achieve maximum security, privacy and comfortable use of the In
 * Provides access to the hidden anonymous network Invisible Internet and "i2p" sites
 * Open-source
 
-To start using **VPN**, all you need is an android phone.
+To start using **InviZible Pro**, all you need is an android phone.
 Just run all three modules and enjoy safe and comfortable Internet surfing. However,
 if you want to get full control over the application and your Internet connection - no problem!
 There is access to a large number of both simple and professional settings.
-You can flexibly configure **VPN** itself, as well as its modules - **DNSCrypt**,
+You can flexibly configure **InviZible Pro** itself, as well as its modules - **DNSCrypt**,
 **Tor** and **Purple I2P**, to satisfy the most non-standard requirements.
 
-**VPN** is an all-in-one application. After installation, you can remove all of your VPN applications and ad blockers.
- In most cases, **VPN** works better, is more stable, and faster than free VPNs.
+**InviZible Pro** is an all-in-one application. After installation, you can remove all of your VPN applications and ad blockers.
+ In most cases, **InviZible Pro** works better, is more stable, and faster than free VPNs.
  It does not contain any ads, bloatware and does not spy upon its users.
  
-### Why VPN is better than other similar applications:
+### Why InviZible Pro is better than other similar applications:
 * There are no analogs))).
 * The only application that provides handy use of **DNSCrypt** on Android.
 * It is often more stable than the Orbot application, which also uses the Tor network.
@@ -70,7 +73,7 @@ You can flexibly configure **VPN** itself, as well as its modules - **DNSCrypt**
 
 ## Compatibility
 
-**VPN** can be used both with a rooted or non-rooted device.
+**InviZible Pro** can be used both with a rooted or non-rooted device.
 
 Please visit the [wiki](https://github.com/Gedsh/InviZible/wiki) to find out how to use it.
 
@@ -95,9 +98,9 @@ Telegram channel: [InviZiblePro](https://t.me/InviZibleProRus)
 
 Telegram group: [InviZiblePro_Group](https://t.me/InviZibleProRus_Group)
 
-There is support for the latest version of **VPN** only.
+There is support for the latest version of **InviZible Pro** only.
 
-There is no support for things that are not directly related to **VPN**.
+There is no support for things that are not directly related to **InviZible Pro**.
 
 There is no support for building and developing things by yourself.
 
@@ -109,7 +112,7 @@ To clone a project, use the command:
 git clone --recursive https://github.com/Gedsh/InviZible
 ```
 
-To build **VPN** please use **Android Studio**.
+To build **InviZible Pro** please use **Android Studio**.
 
 If you see something like this:
 _Illegal character in opaque part at index 2: C:\KStore\keystore.properties_
@@ -124,19 +127,19 @@ project(':filepicker').projectDir = new File('android-filepicker/filepicker')
 ```
 
 It is expected that you can solve build problems yourself, so there is no support for building. 
-If you cannot build yourself, there are prebuilt versions of **VPN** available [here](https://github.com/Gedsh/InviZible/releases/latest).
+If you cannot build yourself, there are prebuilt versions of **InviZible Pro** available [here](https://github.com/Gedsh/InviZible/releases/latest).
 
 #### Translating
 
-If you would like to translate this application into other languages,
-please send an email to the developer [invizible.soft@gmail.com](mailto:invizible.soft@gmail.com)
+[Translate InviZible on POEditor](https://poeditor.com/join/project/h6ulNL9gEd).
 
-Thanks to [POEditor](https://poeditor.com/), you can translate VPN into your language with pleasure and for free.
-Just follow this [link](https://poeditor.com/join/project/h6ulNL9gEd).
+[Translate InviZible on Hosted Weblate](https://hosted.weblate.org/engage/invizible/).
+
+[![Translation status](https://hosted.weblate.org/widgets/invizible/-/multi-auto.svg)](https://hosted.weblate.org/engage/invizible/?utm_source=widget)
 
 ## Attribution
 
-VPN uses:
+InviZible Pro uses:
 
 * [DNSCrypt](https://github.com/jedisct1/dnscrypt-proxy)
 * [Tor](https://www.torproject.org/)
@@ -166,16 +169,16 @@ and carries no guarantee from The Above Projects about quality, suitability or a
 
 [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt)
 
-Copyright (c) 2019-2021 Garmatin Oleksandr invizible.soft@gmail.com
+Copyright (c) 2019-2023 Garmatin Oleksandr invizible.soft@gmail.com
 
 All rights reserved
 
-This file is part of **VPN**.
+This file is part of **InviZible Pro**.
 
-**VPN** is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your discretion) any later version.
+**InviZible Pro** is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your discretion) any later version.
 
-**VPN** is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+**InviZible Pro** is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with **VPN**. If not, see [http://www.gnu.org/licenses/](https://www.gnu.org/licenses/)
+You should have received a copy of the GNU General Public License along with **InviZible Pro**. If not, see [http://www.gnu.org/licenses/](https://www.gnu.org/licenses/)
 
 

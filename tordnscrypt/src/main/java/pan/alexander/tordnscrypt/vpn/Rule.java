@@ -1,66 +1,45 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.vpn;
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.vpn;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Process;
 import android.preference.PreferenceManager;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import pan.alexander.tordnscrypt.App;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.settings.tor_apps.ApplicationData;
-import pan.alexander.tordnscrypt.settings.tor_apps.UnlockTorAppsFragment;
-import pan.alexander.tordnscrypt.utils.InstalledApplications;
-import pan.alexander.tordnscrypt.utils.PrefManager;
+import pan.alexander.tordnscrypt.utils.apps.InstalledApplicationsManager;
 
 import static pan.alexander.tordnscrypt.proxy.ProxyFragmentKt.CLEARNET_APPS_FOR_PROXY;
 import static pan.alexander.tordnscrypt.settings.tor_apps.UnlockTorAppsFragment.CLEARNET_APPS;
 import static pan.alexander.tordnscrypt.settings.tor_apps.UnlockTorAppsFragment.UNLOCK_APPS;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.loge;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.ALL_THROUGH_TOR;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.USE_PROXY;
 
 public class Rule {
     public int uid;
@@ -69,15 +48,15 @@ public class Rule {
     public boolean apply = true;
 
     private static boolean isSystem(String packageName, Context context) {
-        return Util.isSystem(packageName, context);
+        return VpnUtils.isSystem(packageName, context);
     }
 
     private static boolean hasInternet(String packageName, Context context) {
-        return Util.hasInternet(packageName, context);
+        return VpnUtils.hasInternet(packageName, context);
     }
 
     private static boolean isEnabled(PackageInfo info, Context context) {
-        return Util.isEnabled(info, context);
+        return VpnUtils.isEnabled(info, context);
     }
 
     private Rule(ApplicationData info) {
@@ -90,7 +69,7 @@ public class Rule {
         synchronized (context.getApplicationContext()) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            boolean routeAllThroughIniZible = prefs.getBoolean("pref_fast_all_through_tor", true);
+            boolean routeAllThroughIniZible = prefs.getBoolean(ALL_THROUGH_TOR, true);
 
             String unlockAppsStr;
             if (!routeAllThroughIniZible) {
@@ -99,15 +78,24 @@ public class Rule {
                 unlockAppsStr = CLEARNET_APPS;
             }
 
-            Set<String> setUnlockApps = new PrefManager(context).getSetStrPref(unlockAppsStr);
+            final PreferenceRepository preferences = App.getInstance().getDaggerComponent().getPreferenceRepository().get();
 
-            Set<String> setBypassProxy = new PrefManager(context).getSetStrPref(CLEARNET_APPS_FOR_PROXY);
+            Set<String> setUnlockApps = preferences.getStringSetPreference(unlockAppsStr);
+
+            boolean useProxy = prefs.getBoolean(USE_PROXY, false);
+            Set<String> setBypassProxy;
+            if (useProxy) {
+                setBypassProxy = preferences.getStringSetPreference(CLEARNET_APPS_FOR_PROXY);
+            } else {
+                setBypassProxy = new HashSet<>();
+            }
 
             // Build rule list
-            List<Rule> listRules = new CopyOnWriteArrayList<>();
+            List<Rule> listRules = new ArrayList<>();
 
-            InstalledApplications installedApplications = new InstalledApplications(context, Collections.emptySet());
-            List<ApplicationData> installedApps = installedApplications.getInstalledApps(false);
+            List<ApplicationData> installedApps = new InstalledApplicationsManager.Builder()
+                    .build()
+                    .getInstalledApps();
 
 
             for (ApplicationData info : installedApps)
@@ -124,7 +112,7 @@ public class Rule {
 
                     listRules.add(rule);
                 } catch (Throwable ex) {
-                    Log.e(LOG_TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
+                    loge("Rule getRules", ex, true);
                 }
 
             return listRules;

@@ -3,27 +3,28 @@
 #pragma ide diagnostic ignored "readability-magic-numbers"
 #pragma ide diagnostic ignored "cppcoreguidelines-avoid-magic-numbers"
 /*
-    This file is part of VPN.
+    This file is part of InviZible Pro.
 
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
 */
 
 #include "invizible.h"
 
 extern int own_uid;
+extern int tor_dns_port;
 
 int get_udp_timeout(const struct udp_session *u, int sessions, int maxsessions) {
     int timeout = (ntohs(u->dest) == 53 ? UDP_TIMEOUT_53 : UDP_TIMEOUT_ANY);
@@ -161,13 +162,13 @@ int has_udp_session(const struct arguments *args, const uint8_t *pkt, const uint
     if (ntohs(udphdr->dest) == 53)
         return !args->fwd53;
 
-    char dest[INET6_ADDRSTRLEN + 1];
+    /*char dest[INET6_ADDRSTRLEN + 1];
     if (version == 4) {
         inet_ntop(AF_INET, &ip4->daddr, dest, sizeof(dest));
         if (strcmp(dest, "10.191.0.1") == 0) {
             return false;
         }
-    }
+    }*/
 
     // Search session
     struct ng_session *cur = args->ctx->ng_session;
@@ -228,6 +229,8 @@ void block_udp(const struct arguments *args,
     s->udp.state = UDP_BLOCKED;
     s->socket = -1;
 
+    write_connection_unreach(args, s, EHOSTDOWN);
+
     s->next = args->ctx->ng_session;
     args->ctx->ng_session = s;
 }
@@ -267,9 +270,22 @@ jboolean handle_udp(const struct arguments *args,
         inet_ntop(AF_INET6, &ip6->ip6_dst, dest, sizeof(dest));
     }
 
+    if (cur != NULL && cur->socket < 0) {
+        write_connection_unreach(args, cur, EHOSTDOWN);
+        return 0;
+    }
+
     if (cur != NULL && cur->udp.state != UDP_ACTIVE) {
         log_android(ANDROID_LOG_INFO, "UDP ignore session from %s/%u to %s/%u state %d",
                     source, ntohs(udphdr->source), dest, ntohs(udphdr->dest), cur->udp.state);
+        return 0;
+    }
+
+    if (ntohs(udphdr->dest) == 53 && redirect == NULL && uid != own_uid) {
+        log_android(
+                ANDROID_LOG_ERROR, "Direct DNS connection for %s/%u to %s/%u uid %uid not allowed",
+                source, ntohs(udphdr->source), dest, ntohs(udphdr->dest), uid
+        );
         return 0;
     }
 
@@ -287,10 +303,15 @@ jboolean handle_udp(const struct arguments *args,
         s->udp.version = version;
 
         int rversion;
-        if (redirect == NULL)
+        if (redirect == NULL) {
             rversion = s->udp.version;
-        else
+        } else if (s->udp.version == 6 && strcmp(redirect->raddr, LOOPBACK_ADDRESS) == 0) {
+            strcpy(redirect->raddr, LOOPBACK_ADDRESS_IPv6);
+            rversion = 6;
+        } else {
             rversion = (strstr(redirect->raddr, ":") == NULL ? 4 : 6);
+        }
+
         s->udp.mss = (uint16_t) (rversion == 4 ? UDP4_MAXMSG : UDP6_MAXMSG);
 
         s->udp.sent = 0;
@@ -342,6 +363,43 @@ jboolean handle_udp(const struct arguments *args,
 
     cur->udp.time = time(NULL);
 
+    //handle onion websites
+    if (ntohs(udphdr->dest) == 53 && tor_dns_port > 0) {
+        struct dns_header *dns = (struct dns_header *) data;
+        int qcount = ntohs(dns->q_count);
+        if (dns->qr == 0 && dns->opcode == 0 && qcount > 0) {
+            // http://tools.ietf.org/html/rfc1035
+            char qname[DNS_QNAME_MAX + 1];
+            int32_t off = sizeof(struct dns_header);
+
+            uint16_t qtype;
+            uint16_t qclass;
+
+            for (int q = 0; q < 1; q++) {
+                off = get_qname(data, datalen, (uint16_t) off, qname);
+                if (off > 0 && off + 4 <= datalen) {
+                    // TODO multiple qnames?
+                    if (q == 0) {
+                        qtype = ntohs(*((uint16_t *) (data + off)));
+                        qclass = ntohs(*((uint16_t *) (data + off + 2)));
+                        log_android(ANDROID_LOG_INFO,
+                                    "DNS question %d qtype %d qclass %d qname %s",
+                                    q, qtype, qclass, qname);
+                    }
+                    off += 4;
+                } else {
+                    log_android(ANDROID_LOG_WARN,
+                                "DNS request Q invalid off %d datalen %d", off, datalen);
+                }
+            }
+
+            char *suffix = strrchr(qname, '.');
+            if (redirect != NULL && suffix != NULL && strcmp(suffix, ".onion") == 0) {
+                redirect->rport = tor_dns_port;
+            }
+        }
+    }
+
     int rversion;
     struct sockaddr_in addr4;
     struct sockaddr_in6 addr6;
@@ -357,7 +415,13 @@ jboolean handle_udp(const struct arguments *args,
             addr6.sin6_port = cur->udp.dest;
         }
     } else {
-        rversion = (strstr(redirect->raddr, ":") == NULL ? 4 : 6);
+
+        if (strstr(redirect->raddr, ":") == NULL) {
+            rversion = 4;
+        } else {
+            rversion = 6;
+        }
+
         log_android(ANDROID_LOG_INFO, "UDP%d redirect to %s/%u",
                     rversion, redirect->raddr, redirect->rport);
 

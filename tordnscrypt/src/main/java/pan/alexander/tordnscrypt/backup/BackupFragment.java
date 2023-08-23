@@ -1,38 +1,23 @@
 /*
- * This file is part of InviZible Pro.
- *     InviZible Pro is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *     InviZible Pro is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *     You should have received a copy of the GNU General Public License
- *     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
- *     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
- */
+    This file is part of InviZible Pro.
 
-package pan.alexander.tordnscrypt.backup;
-
-/*
-    This file is part of VPN.
-
-    VPN is free software: you can redistribute it and/or modify
+    InviZible Pro is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    VPN is distributed in the hope that it will be useful,
+    InviZible Pro is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with VPN.  If not, see <http://www.gnu.org/licenses/>.
+    along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2019-2021 by Garmatin Oleksandr invizible.soft@gmail.com
-*/
+    Copyright 2019-2023 by Garmatin Oleksandr invizible.soft@gmail.com
+ */
+
+package pan.alexander.tordnscrypt.backup;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -50,7 +35,6 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,33 +52,47 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import dagger.Lazy;
+import pan.alexander.tordnscrypt.App;
 import pan.alexander.tordnscrypt.R;
 import pan.alexander.tordnscrypt.dialogs.progressDialogs.PleaseWaitProgressDialog;
+import pan.alexander.tordnscrypt.domain.preferences.PreferenceRepository;
 import pan.alexander.tordnscrypt.settings.PathVars;
-import pan.alexander.tordnscrypt.utils.CachedExecutor;
+import pan.alexander.tordnscrypt.utils.executors.CachedExecutor;
 import pan.alexander.tordnscrypt.utils.Utils;
 import pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants;
-import pan.alexander.tordnscrypt.utils.file_operations.ExternalStoragePermissions;
-import pan.alexander.tordnscrypt.utils.file_operations.FileOperations;
-import pan.alexander.tordnscrypt.utils.file_operations.OnBinaryFileOperationsCompleteListener;
+import pan.alexander.tordnscrypt.utils.filemanager.ExternalStoragePermissions;
+import pan.alexander.tordnscrypt.utils.filemanager.FileManager;
+import pan.alexander.tordnscrypt.utils.filemanager.OnBinaryFileOperationsCompleteListener;
 
 import static android.app.Activity.RESULT_OK;
 import static pan.alexander.tordnscrypt.proxy.ProxyFragmentKt.CLEARNET_APPS_FOR_PROXY;
-import static pan.alexander.tordnscrypt.settings.firewall.FirewallFragmentKt.APPS_ALLOW_GSM_PREF;
-import static pan.alexander.tordnscrypt.settings.firewall.FirewallFragmentKt.APPS_ALLOW_LAN_PREF;
-import static pan.alexander.tordnscrypt.settings.firewall.FirewallFragmentKt.APPS_ALLOW_ROAMING;
-import static pan.alexander.tordnscrypt.settings.firewall.FirewallFragmentKt.APPS_ALLOW_VPN;
-import static pan.alexander.tordnscrypt.settings.firewall.FirewallFragmentKt.APPS_ALLOW_WIFI_PREF;
 import static pan.alexander.tordnscrypt.settings.tor_apps.UnlockTorAppsFragment.CLEARNET_APPS;
 import static pan.alexander.tordnscrypt.settings.tor_apps.UnlockTorAppsFragment.UNLOCK_APPS;
-import static pan.alexander.tordnscrypt.utils.RootExecService.LOG_TAG;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.loge;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.logi;
+import static pan.alexander.tordnscrypt.utils.logger.Logger.logw;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.APPS_ALLOW_GSM_PREF;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.APPS_ALLOW_LAN_PREF;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.APPS_ALLOW_ROAMING;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.APPS_ALLOW_VPN;
+import static pan.alexander.tordnscrypt.utils.preferences.PreferenceKeys.APPS_ALLOW_WIFI_PREF;
 import static pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants.deleteFile;
 import static pan.alexander.tordnscrypt.utils.enums.FileOperationsVariants.moveBinaryFile;
+
+import javax.inject.Inject;
 
 
 public class BackupFragment extends Fragment implements View.OnClickListener,
         DialogInterface.OnClickListener,
         OnBinaryFileOperationsCompleteListener {
+
+    @Inject
+    public Lazy<PathVars> pathVarsLazy;
+    @Inject
+    public Lazy<PreferenceRepository> preferenceRepository;
+    @Inject
+    public CachedExecutor cachedExecutor;
 
     final static Set<String> TAGS_TO_CONVERT = new HashSet<>(Arrays.asList(
             APPS_ALLOW_LAN_PREF,
@@ -128,11 +126,12 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        App.getInstance().getDaggerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
 
-        FileOperations.setOnFileOperationCompleteListener(this);
+        FileManager.setOnFileOperationCompleteListener(this);
     }
 
     @Override
@@ -156,7 +155,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
 
         etFilePath = view.findViewById(R.id.etPathBackup);
 
-        PathVars pathVars = PathVars.getInstance(view.getContext());
+        PathVars pathVars = pathVarsLazy.get();
         pathBackup = pathVars.getDefaultBackupPath();
         cacheDir = pathVars.getCacheDirPath(view.getContext());
 
@@ -227,20 +226,31 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
 
     private void restoreBackup(Activity activity) {
 
-        restoreHelper = new RestoreHelper(activity, appDataDir, cacheDir, pathBackup);
+        restoreHelper = new RestoreHelper(
+                activity, appDataDir, cacheDir, pathBackup
+        );
 
         ExternalStoragePermissions permissions = new ExternalStoragePermissions(activity);
-        if (!permissions.isReadPermissions()) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P && !permissions.isReadPermissions()) {
+
+            logw("BackupFragment restoreBackup fault. Requesting permission to read the external storage.");
+
             permissions.requestReadPermissions();
+
             return;
         }
 
         if (logsDirAccessible) {
 
+            logi("BackupFragment restoreBackup using the direct method.");
+
             openPleaseWaitDialog();
 
             restoreHelper.restoreAll(null, logsDirAccessible);
         } else {
+
+            logi("BackupFragment restoreBackup using SAF.");
+
             restoreHelper.openFileWithSAF();
         }
 
@@ -272,7 +282,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
         properties.selection_mode = DialogConfigs.SINGLE_MODE;
         properties.selection_type = DialogConfigs.DIR_SELECT;
         properties.root = new File(Environment.getExternalStorageDirectory().getPath());
-        properties.error_dir = new File(PathVars.getInstance(activity).getCacheDirPath(activity));
+        properties.error_dir = new File(pathVarsLazy.get().getCacheDirPath(activity));
         properties.offset = new File(Environment.getExternalStorageDirectory().getPath());
         properties.extensions = null;
 
@@ -302,7 +312,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
                 progress = PleaseWaitProgressDialog.getInstance();
                 progress.show(getParentFragmentManager(), "PleaseWaitProgressDialog");
             } catch (Exception ex) {
-                Log.e(LOG_TAG, "BackupFragment open progress fault " + ex.getMessage() + " " + ex.getCause());
+                loge("BackupFragment open progress fault", ex);
             }
         }
     }
@@ -314,7 +324,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
             return;
         }
 
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
             try {
                 while (progress != null) {
                     if (progress.isStateSaved()) {
@@ -330,7 +340,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
                     progress.dismiss();
                     progress = null;
                 }
-                Log.e(LOG_TAG, "BackupFragment close progress fault " + ex.getMessage() + " " + ex.getCause());
+                loge("BackupFragment close progress fault", ex);
             }
         });
     }
@@ -349,7 +359,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
     public void onDestroy() {
         super.onDestroy();
 
-        FileOperations.deleteOnFileOperationCompleteListener(this);
+        FileManager.deleteOnFileOperationCompleteListener(this);
 
         progress = null;
     }
@@ -405,7 +415,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
         } catch (Exception e) {
             closePleaseWaitDialog();
             showToast(getString(R.string.wrong));
-            Log.e(LOG_TAG, "BackupFragment onResultActivity exception " + e.getMessage() +" " + e.getCause());
+            loge("BackupFragment onResultActivity exception", e);
         }
     }
 
@@ -419,7 +429,7 @@ public class BackupFragment extends Fragment implements View.OnClickListener,
     }
 
     private void hideSelectionEditTextIfRequired(Activity activity) {
-        CachedExecutor.INSTANCE.getExecutorService().submit(() -> {
+        cachedExecutor.submit(() -> {
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 logsDirAccessible = Utils.INSTANCE.isLogsDirAccessible();

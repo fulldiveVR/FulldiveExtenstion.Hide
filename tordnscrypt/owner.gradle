@@ -21,7 +21,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 
 
     flavorDimensions "version", "processor"
@@ -96,12 +96,11 @@ android {
                 abiFilters 'arm64-v8a'
             }
         }
-
     }
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 133
 
         resConfigs "en", "ru-rRU", "ru-rUA", "pl", "de", "fa", "fi", "in", "fr", "ja", "zh", "es", "pt-rBR"
@@ -131,7 +130,7 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-    buildToolsVersion = '30.0.3'
+    buildToolsVersion = '33.0.2'
 
     bundle {
         language {

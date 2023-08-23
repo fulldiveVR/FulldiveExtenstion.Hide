@@ -18,11 +18,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
 def versionMajor = 5
-def versionMinor = 4
+def versionMinor = 5
 def versionPatch = 7
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     flavorDimensions "version", "processor"
 
@@ -78,7 +78,7 @@ android {
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
 
         resConfigs "en", "ru-rRU", "ru-rUA", "pl", "de", "fa", "fi", "in", "fr", "ja", "zh", "es", "pt-rBR"

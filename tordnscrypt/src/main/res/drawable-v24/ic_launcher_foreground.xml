@@ -1,72 +1,60 @@
-<!--
-  ~ This file is part of InviZible Pro.
-  ~     InviZible Pro is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU General Public License as published by
-  ~     the Free Software Foundation, either version 3 of the License, or
-  ~     (at your option) any later version.
-  ~     InviZible Pro is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU General Public License for more details.
-  ~     You should have received a copy of the GNU General Public License
-  ~     along with InviZible Pro.  If not, see <http://www.gnu.org/licenses/>.
-  ~     Copyright 2019-2022 by Garmatin Oleksandr invizible.soft@gmail.com
-  -->
-
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-  <group android:scaleX="0.14976563"
-      android:scaleY="0.14976563"
-      android:translateX="15.66"
-      android:translateY="15.66">
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+  <group android:scaleX="0.67"
+      android:scaleY="0.67"
+      android:translateX="168.96"
+      android:translateY="168.96">
     <path
-        android:pathData="M0,0h512v512h-512z"
+        android:pathData="M0,0h1024v1024h-1024z"
+        android:fillColor="#F18D8D"/>
+    <path
+        android:pathData="M0,0h1024v1024h-1024z"
         android:fillColor="#ffffff"/>
     <path
-        android:pathData="M253.851,64.284L149.767,92.32C146.027,93.327 143.605,96.81 143.963,100.665C144.098,102.113 144.167,103.583 144.167,105.066C144.167,128.818 126.609,148.47 103.767,151.749C99.857,152.312 97,155.608 97,159.559V285.677C97,379.688 174.785,411.908 252.64,447.268C254.788,448.244 257.018,448.244 259.165,447.268C337.02,411.908 414.805,379.688 414.805,285.677V159.558C414.805,155.608 411.948,152.312 408.039,151.749C385.196,148.47 367.638,128.817 367.638,105.066C367.638,103.583 367.707,102.113 367.842,100.665C368.2,96.81 365.778,93.327 362.039,92.32L257.954,64.284C256.548,63.905 255.257,63.905 253.851,64.284Z"
+        android:pathData="M509.7,107.6L289.6,166.9C281.7,169 276.6,176.4 277.3,184.5C277.6,187.6 277.7,190.7 277.7,193.8C277.7,244.1 240.6,285.6 192.3,292.6C184,293.7 178,300.7 178,309.1V575.8C178,774.5 342.5,842.7 507.1,917.5C511.7,919.5 516.4,919.5 520.9,917.5C685.5,842.7 850,774.5 850,575.8V309.1C850,300.7 844,293.7 835.7,292.6C787.4,285.6 750.3,244.1 750.3,193.8C750.3,190.7 750.4,187.6 750.7,184.5C751.5,176.4 746.4,169 738.4,166.9L518.3,107.6C515.4,106.8 512.6,106.8 509.7,107.6Z"
         android:fillType="evenOdd">
       <aapt:attr name="android:fillColor">
         <gradient 
-            android:startY="256"
-            android:startX="96.9998"
-            android:endY="256"
-            android:endX="414.805"
+            android:startX="265.8"
+            android:startY="294.1"
+            android:endX="737.3"
+            android:endY="783.7"
             android:type="linear">
-          <item android:offset="0" android:color="#FFFFEB4B"/>
-          <item android:offset="1" android:color="#FFFFB438"/>
+          <item android:offset="0" android:color="#FF9E52EC"/>
+          <item android:offset="1" android:color="#FF5A60E5"/>
         </gradient>
       </aapt:attr>
     </path>
     <path
-        android:pathData="M255.903,98.934L174.851,120.765C171.138,146.554 153.886,168.321 130.079,177.999V284.619C130.079,306.799 135.374,326.557 149.034,344.251C172.664,374.858 219.566,395.484 255.903,411.79C292.24,395.484 339.142,374.858 362.771,344.251C376.431,326.557 381.727,306.799 381.727,284.619V177.999C357.92,168.32 340.667,146.553 336.955,120.765L255.903,98.934Z"
+        android:pathData="M514,180.9L342.6,227C334.8,281.6 298.3,327.6 247.9,348.1V573.5C247.9,620.4 259.1,662.2 288,699.6C338,764.3 437.2,808 514,842.4C590.9,808 690,764.3 740,699.6C768.9,662.2 780.1,620.4 780.1,573.5V348.1C729.7,327.6 693.3,281.6 685.4,227L514,180.9Z"
         android:fillType="evenOdd">
       <aapt:attr name="android:fillColor">
         <gradient 
-            android:startY="255.361"
-            android:startX="130.079"
-            android:endY="255.361"
-            android:endX="381.727"
+            android:startX="286.3"
+            android:startY="417.7"
+            android:endX="741"
+            android:endY="548.7"
             android:type="linear">
           <item android:offset="0" android:color="#FFFFFFFF"/>
-          <item android:offset="1" android:color="#FFECF0F1"/>
+          <item android:offset="1" android:color="#FFECECFF"/>
         </gradient>
       </aapt:attr>
     </path>
     <path
-        android:pathData="M235.961,260.763C223.931,253.889 215.821,240.941 215.821,226.097C215.821,204.07 233.684,186.207 255.711,186.207H256.094C278.121,186.207 295.984,204.07 295.984,226.097C295.984,240.936 287.878,253.881 275.852,260.754V305.854C275.852,316.867 266.921,325.798 255.907,325.798C244.893,325.798 235.961,316.867 235.961,305.854V260.763Z">
+        android:pathData="M471.8,523.1C446.4,508.5 429.3,481.2 429.3,449.8C429.3,403.2 467,365.4 513.6,365.4H514.4C561,365.4 598.8,403.2 598.8,449.8C598.8,481.1 581.6,508.5 556.2,523.1V618.4C556.2,641.7 537.3,660.6 514,660.6C490.7,660.6 471.8,641.7 471.8,618.4V523.1Z">
       <aapt:attr name="android:fillColor">
         <gradient 
-            android:startY="325.798"
-            android:startX="255.902"
-            android:endY="186.207"
-            android:endX="255.902"
+            android:startX="429.6"
+            android:startY="395.6"
+            android:endX="535.4"
+            android:endY="535.2"
             android:type="linear">
-          <item android:offset="0" android:color="#FFFFCA47"/>
-          <item android:offset="1" android:color="#FFFF590D"/>
+          <item android:offset="0" android:color="#FF9C52EC"/>
+          <item android:offset="1" android:color="#FF5C5FE5"/>
         </gradient>
       </aapt:attr>
     </path>

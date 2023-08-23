@@ -27,6 +27,7 @@
             <stringArg name="classpath">
               <args>
                 <arg>$MODULE_DIR$/../../../tordnscrypt/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/fdroidArm64Debug/R.jar</arg>
+                <arg>$MODULE_DIR$/../../../tordnscrypt/build/intermediates/compile_app_classes_jar/fdroidArm64Debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/048a3123416434319419723f0812f2e3/transformed/jetified-viewbinding-8.1.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5e6b2e251bda8e2d5e55776eb64a54a9/transformed/jetified-Google-IAP-1.0.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/e95d0c01070d559f3bc57b30f937a714/transformed/material-1.9.0-api.jar</arg>

@@ -26,6 +26,8 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
+                <arg>$MODULE_DIR$/../../../tordnscrypt/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/fdroidArm64DebugAndroidTest/R.jar</arg>
+                <arg>$MODULE_DIR$/../../../tordnscrypt/build/intermediates/compile_app_classes_jar/fdroidArm64Debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/601d165bb11cdf7b89f1d6dda4ae2249/transformed/jetified-junit-1.1.5-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/e054a6b2b491483e6c0705a2166ffe4d/transformed/espresso-core-3.5.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/048a3123416434319419723f0812f2e3/transformed/jetified-viewbinding-8.1.1-api.jar</arg>
@@ -148,6 +150,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/d7515a93d27bd7f0c2e6d4edd6c6f899/transformed/jetified-firebase-annotations-16.1.0.jar</arg>
                 <arg>$USER_HOME$/sdk/platforms/android-33/android.jar</arg>
                 <arg>$USER_HOME$/sdk/build-tools/33.0.1/core-lambda-stubs.jar</arg>
+                <arg>$MODULE_DIR$/../../../tordnscrypt/build/tmp/kapt3/classes/fdroidArm64DebugAndroidTest</arg>
               </args>
             </stringArg>
             <stringArg name="destination" arg="$MODULE_DIR$/../../../tordnscrypt/build/tmp/kotlin-classes/fdroidArm64DebugAndroidTest" />

@@ -96,12 +96,12 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/250f29d87e421f1913af6aa88e80a4a8/transformed/jetified-kotlinx-coroutines-core-jvm-1.6.4.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/8542bebbdb9d3d388a5ce1dd7bf8a311/transformed/jetified-kotlinx-coroutines-android-1.6.4.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/57d7f3d45f3a7ff9baa423484ee2499a/transformed/jetified-kotlin-stdlib-jdk8-1.8.20.jar</arg>
-                <arg>$MODULE_DIR$/../../../android-filepicker/filepicker/build/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/2606c008e5d9980272eb0cb1cc7d80e6/transformed/jetified-dagger-2.45.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/ced3b6629493c2c954fa31df38acb1ab/transformed/jetified-okhttp-4.9.1.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/34583a8204bf239461006b282dcf4fb0/transformed/jetified-lottie-5.2.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/c09dec42908952de3973328f72a0363f/transformed/jetified-analytics-14.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/9ff8b9ca780a3588d9ccec593ea6de6d/transformed/multidex-2.0.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/11c6ab5546582a5412b1ae5794315b39/transformed/jetified-filepicker-1.1.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/45a3737988535ba08507cd7a0cd6d969/transformed/runner-1.5.2-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5fbd64049a39e72b800b438a35281c8b/transformed/jetified-junit-4.13.2.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/52dca531c719111ee0c487968af183d8/transformed/jetified-hamcrest-integration-1.3.jar</arg>
@@ -223,7 +223,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="FulldiveExtenstion.Hide.filepicker.main" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.ext:junit:1.1.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:core:1.5.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:monitor:1.6.1@aar" level="project" />
@@ -315,6 +314,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-measurement-impl:21.3.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-stats:17.0.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-measurement-sdk:21.3.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.github.angads25:filepicker:1.1.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.13.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.annotation:annotation-jvm:1.6.0" level="project" />

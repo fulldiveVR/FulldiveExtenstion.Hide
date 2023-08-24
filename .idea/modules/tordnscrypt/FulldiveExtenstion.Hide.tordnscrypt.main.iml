@@ -116,7 +116,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/34583a8204bf239461006b282dcf4fb0/transformed/jetified-lottie-5.2.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/c09dec42908952de3973328f72a0363f/transformed/jetified-analytics-14.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/d7515a93d27bd7f0c2e6d4edd6c6f899/transformed/jetified-firebase-annotations-16.1.0.jar</arg>
-                <arg>$MODULE_DIR$/../../../android-filepicker/filepicker/build/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/11c6ab5546582a5412b1ae5794315b39/transformed/jetified-filepicker-1.1.1-api.jar</arg>
                 <arg>$USER_HOME$/sdk/platforms/android-33/android.jar</arg>
                 <arg>$USER_HOME$/sdk/build-tools/33.0.1/core-lambda-stubs.jar</arg>
                 <arg>$MODULE_DIR$/../../../tordnscrypt/build/tmp/kapt3/classes/fdroidArm64Debug</arg>
@@ -201,7 +201,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 33 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="FulldiveExtenstion.Hide.filepicker.main" />
+    <orderEntry type="library" name="Gradle: androidx.databinding:viewbinding:8.1.1@aar" level="project" />
     <orderEntry type="module-library">
       <library name="Gradle: kaptGeneratedClasses">
         <CLASSES>
@@ -211,7 +211,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Gradle: androidx.databinding:viewbinding:8.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.multidex:multidex:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.fulldive:Google-IAP:1.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.6.1@aar" level="project" />
@@ -292,6 +291,7 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-impl:21.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-stats:17.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-sdk:21.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.angads25:filepicker:1.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation-jvm:1.6.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.8.20" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.8.20" level="project" />

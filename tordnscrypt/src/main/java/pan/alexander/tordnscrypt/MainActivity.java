@@ -69,6 +69,7 @@ import java.util.TimerTask;
 
 import dagger.Lazy;
 import pan.alexander.tordnscrypt.analytics.StatisticHelper;
+import pan.alexander.tordnscrypt.analytics.TrackerConstants;
 import pan.alexander.tordnscrypt.appextension.AppSettingsService;
 import pan.alexander.tordnscrypt.appextension.PopupManager;
 import pan.alexander.tordnscrypt.appextension.SubscriptionService;
@@ -128,7 +129,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 public class MainActivity extends LangAppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AppModeManagerCallback {
+    implements NavigationView.OnNavigationItemSelectedListener, AppModeManagerCallback {
 
     @Inject
     public Lazy<PreferenceRepository> preferenceRepository;
@@ -189,7 +190,7 @@ public class MainActivity extends LangAppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -329,7 +330,7 @@ public class MainActivity extends LangAppCompatActivity
 
         Intent intent = getIntent();
         if (intent.getBooleanExtra(ArpScannerKt.MITM_ATTACK_WARNING, false)
-                && (ArpScanner.getArpAttackDetected() || ArpScanner.getDhcpGatewayAttackDetected())) {
+            && (ArpScanner.getArpAttackDetected() || ArpScanner.getDhcpGatewayAttackDetected())) {
 
             handler.postDelayed(() -> {
                 DialogFragment commandResult = NotificationDialogFragment.newInstance(getString(R.string.notification_mitm));
@@ -417,7 +418,7 @@ public class MainActivity extends LangAppCompatActivity
         boolean busyBoxIsAvailable = preferences.getBoolPreference("bbOK");
 
         boolean mitmDetected = ArpScanner.getArpAttackDetected()
-                || ArpScanner.getDhcpGatewayAttackDetected();
+            || ArpScanner.getDhcpGatewayAttackDetected();
 
         fixTTL = fixTTL && !useModulesWithRoot;
 
@@ -515,7 +516,7 @@ public class MainActivity extends LangAppCompatActivity
         }
 
         if ((mode == PROXY_MODE || mode == ROOT_MODE && useModulesWithRoot)
-                && firewallNavigationItem != null) {
+            && firewallNavigationItem != null) {
             firewallNavigationItem.setVisible(false);
         } else if (firewallNavigationItem != null) {
             firewallNavigationItem.setVisible(true);
@@ -577,7 +578,7 @@ public class MainActivity extends LangAppCompatActivity
         }
 
         newIdentityMenuItem.setVisible(modulesStatus.getTorState() != STOPPED
-                && modulesStatus.getTorState() != ModuleState.UNDEFINED);
+            && modulesStatus.getTorState() != ModuleState.UNDEFINED);
     }
 
     public void showNewTorIdentityIcon(boolean show) {
@@ -896,6 +897,13 @@ public class MainActivity extends LangAppCompatActivity
         } else if (id == R.id.nav_Code) {
             Registration registration = new Registration(this);
             registration.showEnterCodeDialog();
+        } else if (id == R.id.nav_pro) {
+            StatisticHelper.INSTANCE.logAction(TrackerConstants.EVENT_PRO_TUTORIAL_OPENED_FROM_TOOLBAR);
+            Intent intent = new Intent(this, ProPurchaseActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_pro_activated) {
+            Intent intent = new Intent(this, ProPurchaseSuccessActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -907,7 +915,7 @@ public class MainActivity extends LangAppCompatActivity
         boolean rootIsAvailable = preferenceRepository.get().getBoolPreference(ROOT_IS_AVAILABLE);
         boolean busyBoxIsAvailable = preferenceRepository.get().getBoolPreference("bbOK");
         boolean mitmDetected = ArpScanner.getArpAttackDetected()
-                || ArpScanner.getDhcpGatewayAttackDetected();
+            || ArpScanner.getDhcpGatewayAttackDetected();
 
         if (mitmDetected) {
             DialogFragment commandResult = NotificationDialogFragment.newInstance(getString(R.string.notification_mitm));
@@ -1044,9 +1052,9 @@ public class MainActivity extends LangAppCompatActivity
         super.onStop();
 
         if (ModulesService.serviceIsRunning && modulesStatus.getMode() == VPN_MODE
-                && (modulesStatus.getDnsCryptState() == STOPPED || modulesStatus.getDnsCryptState() == FAULT || modulesStatus.getDnsCryptState() == ModuleState.UNDEFINED)
-                && (modulesStatus.getTorState() == STOPPED || modulesStatus.getTorState() == FAULT || modulesStatus.getTorState() == ModuleState.UNDEFINED)
-                && (modulesStatus.getItpdState() == STOPPED || modulesStatus.getItpdState() == FAULT || modulesStatus.getItpdState() == ModuleState.UNDEFINED)) {
+            && (modulesStatus.getDnsCryptState() == STOPPED || modulesStatus.getDnsCryptState() == FAULT || modulesStatus.getDnsCryptState() == ModuleState.UNDEFINED)
+            && (modulesStatus.getTorState() == STOPPED || modulesStatus.getTorState() == FAULT || modulesStatus.getTorState() == ModuleState.UNDEFINED)
+            && (modulesStatus.getItpdState() == STOPPED || modulesStatus.getItpdState() == FAULT || modulesStatus.getItpdState() == ModuleState.UNDEFINED)) {
             ModulesAux.stopModulesService(this);
         }
 

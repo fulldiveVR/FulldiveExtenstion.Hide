@@ -4,6 +4,13 @@
 ![GitHub Releases](https://img.shields.io/github/downloads/gedsh/invizible/latest/total?color=blue&style=plastic)
 [![Translation status](https://hosted.weblate.org/widgets/invizible/-/invizible/svg-badge.svg)](https://hosted.weblate.org/engage/invizible/?utm_source=widget)
 
+## 🛡️ Community & Support
+
+**[Join FullDive Discord →](https://discord.gg/FV3ucz5M2S)** - Get help in `🛡️ vpn-firewall-support`
+
+- 🐛 **Report bugs**: [GitHub Issues](https://github.com/fulldiveVR/FulldiveExtenstion.Hide/issues)
+
+
 ### [Google Play stable version](https://play.google.com/store/apps/details?id=pan.alexander.tordnscrypt.gp)
 
 ### [Download the latest version from Github](https://github.com/Gedsh/InviZible/releases/latest)
